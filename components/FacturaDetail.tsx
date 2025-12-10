@@ -190,22 +190,30 @@ export function FacturaDetail({ factura }: FacturaDetailProps) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {document.lines.map((line) => (
-                <TableRow key={line.lineNo}>
-                  <TableCell>{line.lineNo}</TableCell>
-                  <TableCell>
-                    <div className="font-medium">{line.productDescription}</div>
+              {document.lines && document.lines.length > 0 ? (
+                document.lines.map((line) => (
+                  <TableRow key={line.lineNo}>
+                    <TableCell>{line.lineNo}</TableCell>
+                    <TableCell>
+                      <div className="font-medium">{line.productDescription}</div>
                       {line.taxes && line.taxes.length > 0 && (
-                      <p className="text-xs text-muted-foreground">
+                        <p className="text-xs text-muted-foreground">
                           IVA: {line.taxes.find((tax) => tax.taxType === 'IVA')?.taxPercentage ?? 0}%
-                      </p>
-                    )}
+                        </p>
+                      )}
+                    </TableCell>
+                    <TableCell>{line.quantity}</TableCell>
+                    <TableCell>{formatCurrency(line.unitPrice, document.documentTotals.currency?.currencyCode)}</TableCell>
+                    <TableCell>{formatCurrency(line.quantity * line.unitPrice, document.documentTotals.currency?.currencyCode)}</TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={5} className="text-center text-muted-foreground">
+                    Sem linhas de produtos (recibo)
                   </TableCell>
-                  <TableCell>{line.quantity}</TableCell>
-                  <TableCell>{formatCurrency(line.unitPrice, document.documentTotals.currency?.currencyCode)}</TableCell>
-                  <TableCell>{formatCurrency(line.quantity * line.unitPrice, document.documentTotals.currency?.currencyCode)}</TableCell>
                 </TableRow>
-              ))}
+              )}
             </TableBody>
           </Table>
         </CardContent>
