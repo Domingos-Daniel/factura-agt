@@ -195,7 +195,7 @@ export function FacturaDetail({ factura }: FacturaDetailProps) {
                   <TableCell>{line.lineNo}</TableCell>
                   <TableCell>
                     <div className="font-medium">{line.productDescription}</div>
-                      {line.taxes > 0 && (
+                      {line.taxes && line.taxes.length > 0 && (
                       <p className="text-xs text-muted-foreground">
                           IVA: {line.taxes.find((tax) => tax.taxType === 'IVA')?.taxPercentage ?? 0}%
                       </p>
