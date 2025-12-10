@@ -1,8 +1,10 @@
 import { z } from 'zod';
 
-export const taxTypeEnum = z.enum(['IVA', 'IS', 'IEC']);
-export const documentStatusEnum = z.enum(['N', 'A', 'F', 'S']);
-export const documentTypeEnum = z.enum(['FT', 'FR', 'FA', 'NC', 'ND', 'AR', 'RC', 'RG']);
+export const taxTypeEnum = z.enum(['IVA', 'IS', 'IEC', 'NS']);
+export const documentStatusEnum = z.enum(['N', 'S', 'A', 'R', 'C']);
+export const documentTypeEnum = z.enum([
+  'FA','FT','FR','FG','AC','AR','TV','RC','RG','RE','ND','NC','AF','RP','RA','CS','LD'
+]);
 export const taxExemptionCodeEnum = z.enum([
   'I01', 'I02', 'I03', 'I04', 'I05', 'I06', 'I07', 'I08',
   'I09', 'I10', 'I11', 'I12', 'I13', 'I14', 'I15', 'I16'
@@ -17,13 +19,19 @@ export const softwareInfoSchema = z.object({
 
 export const taxLineSchema = z.object({
   taxType: taxTypeEnum,
-  taxCountry: z.string().length(2, 'Código do país deve ter 2 caracteres'),
+  taxCountryRegion: z.string().min(2).max(10),
   taxCode: z.string().min(1),
   taxPercentage: z.number().min(0).max(100),
   taxBase: z.number().min(0),
   taxAmount: z.number().min(0),
+  taxContribution: z.number().min(0).optional(),
   taxExemptionCode: taxExemptionCodeEnum.optional(),
   taxExemptionReason: z.string().optional(),
+}).superRefine((t, ctx) => {
+  // ISE/NS require exemption code
+  if ((t.taxCode === 'ISE' || t.taxType === 'NS') && !t.taxExemptionCode) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Código de isenção é obrigatório para ISE/NS' })
+  }
 });
 
 export const productLineSchema = z.object({
@@ -33,20 +41,26 @@ export const productLineSchema = z.object({
   quantity: z.number().min(0.01, 'Quantidade deve ser maior que zero'),
   unitOfMeasure: z.string().min(1, 'Unidade de medida é obrigatória'),
   unitPrice: z.number().min(0, 'Preço unitário deve ser positivo'),
+  unitPriceBase: z.number().min(0).optional(),
   taxPointDate: z.string().optional(),
   description: z.string().optional(),
   debitAmount: z.number().optional(),
   creditAmount: z.number().optional(),
-  tax: z.array(taxLineSchema).min(1, 'Pelo menos um imposto é obrigatório'),
+  taxes: z.array(taxLineSchema).min(1, 'Pelo menos um imposto é obrigatório'),
   taxExemptionReason: z.string().optional(),
   settlementAmount: z.number().optional(),
+  referenceInfo: z.object({ reference: z.string().min(1), reason: z.string().optional() }).optional(),
 });
 
 export const documentTotalsSchema = z.object({
   netTotal: z.number().min(0),
   taxPayable: z.number().min(0),
   grossTotal: z.number().min(0),
-  currency: z.string().length(3, 'Moeda deve ter 3 caracteres').default('AOA'),
+  currency: z.object({
+    currencyCode: z.string().length(3),
+    currencyAmount: z.number().min(0),
+    exchangeRate: z.number().min(0.000001),
+  }).optional(),
   settlementAmount: z.number().optional(),
   changeAmount: z.number().optional(),
 });
@@ -57,7 +71,20 @@ export const paymentMethodSchema = z.object({
   paymentDate: z.string(),
 });
 
+export const sourceDocumentIDSchema = z.object({
+  OriginatingON: z.string().min(1),
+  documentDate: z.string(), // YYYY-MM-DD
+});
+
+export const paymentSourceDocumentSchema = z.object({
+  lineNo: z.number().int().min(1),
+  sourceDocumentID: sourceDocumentIDSchema,
+  debitAmount: z.number().min(0).optional(),
+  creditAmount: z.number().min(0).optional(),
+});
+
 export const paymentReceiptSchema = z.object({
+  sourceDocuments: z.array(paymentSourceDocumentSchema).optional(),
   paymentRefNo: z.string().optional(),
   paymentDate: z.string().optional(),
   paymentMethod: z.array(paymentMethodSchema).optional(),
@@ -65,7 +92,7 @@ export const paymentReceiptSchema = z.object({
 
 export const withholdingTaxSchema = z.object({
   withholdingTaxType: z.string().min(1),
-  withholdingTaxDescription: z.string().min(1),
+  withholdingTaxDescription: z.string().min(1).optional(),
   withholdingTaxAmount: z.number().min(0),
 });
 
@@ -96,11 +123,34 @@ export const documentSchema = z.object({
   billingAddress: z.string().optional(),
   shipToAddress: z.string().optional(),
   lines: z.array(productLineSchema)
-    .min(1, 'Pelo menos uma linha de produto é obrigatória')
-    .max(1000, 'Máximo de 1000 linhas por documento'),
+    .max(1000, 'Máximo de 1000 linhas por documento')
+    .optional(),
   paymentReceipt: paymentReceiptSchema.optional(),
   documentTotals: documentTotalsSchema,
   withholdingTaxList: z.array(withholdingTaxSchema).optional(),
+}).superRefine((d, ctx) => {
+  // AR/RC/RG são recibos e podem não ter lines, mas devem ter paymentReceipt
+  const receiptTypes = ['AR','RC','RG'] as const
+  if (receiptTypes.includes(d.documentType as any)) {
+    if (!d.paymentReceipt) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Recibos (AR/RC/RG) requerem paymentReceipt' })
+    }
+    // Recibos não devem ter lines
+    if (d.lines && d.lines.length > 0) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Recibos (AR/RC/RG) não devem ter linhas de produto' })
+    }
+  } else {
+    // Outros documentos devem ter lines
+    if (!d.lines || d.lines.length === 0) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Documento requer pelo menos uma linha de produto' })
+    }
+  }
+  // NC requer referenceInfo em pelo menos uma linha
+  if (d.documentType === 'NC' && d.lines) {
+    if (!d.lines.some(l => !!l.referenceInfo)) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Nota de Crédito requer referência ao documento original' })
+    }
+  }
 });
 
 export const facturaSchema = z.object({

@@ -37,11 +37,12 @@ export function calculateLineTaxes(
     if (iecAmount > 0) {
       taxes.push({
         taxType: 'IEC',
-        taxCountry: 'AO',
+        taxCountryRegion: 'AO',
         taxCode: 'IEC001',
         taxPercentage: 0, // IEC pode ser taxa fixa
         taxBase: baseAmount,
         taxAmount: Math.ceil(iecAmount), // Arredondamento por excesso
+        taxContribution: Math.ceil(iecAmount),
       });
     }
   }
@@ -52,11 +53,12 @@ export function calculateLineTaxes(
     if (isAmount > 0) {
       taxes.push({
         taxType: 'IS',
-        taxCountry: 'AO',
+        taxCountryRegion: 'AO',
         taxCode: isVerba,
         taxPercentage: 0,
         taxBase: baseAmount,
         taxAmount: Math.ceil(isAmount), // Arredondamento por excesso
+        taxContribution: Math.ceil(isAmount),
       });
     }
   }
@@ -69,22 +71,24 @@ export function calculateLineTaxes(
     // Se há isenção, IVA é zero mas ainda registamos a linha
     taxes.push({
       taxType: 'IVA',
-      taxCountry: 'AO',
-      taxCode: 'IVA',
-      taxPercentage: IVA_TAXA_NORMAL,
+      taxCountryRegion: 'AO',
+      taxCode: 'ISE',
+      taxPercentage: 0,
       taxBase: ivaBase,
       taxAmount: 0,
+      taxContribution: 0,
       taxExemptionCode: ivaExemption,
     });
   } else {
     ivaAmount = calcularIVA(ivaBase);
     taxes.push({
       taxType: 'IVA',
-      taxCountry: 'AO',
-      taxCode: 'IVA',
+      taxCountryRegion: 'AO',
+      taxCode: 'NOR',
       taxPercentage: IVA_TAXA_NORMAL,
       taxBase: ivaBase,
-      taxAmount: ivaAmount,
+      taxAmount: Math.ceil(ivaAmount),
+      taxContribution: Math.ceil(ivaAmount),
     });
   }
   
@@ -119,8 +123,8 @@ export function calculateDocumentTotals(lines: ProductLine[]): {
     const lineAmount = line.quantity * line.unitPrice;
     netTotal += lineAmount;
     
-    line.tax.forEach((tax) => {
-      taxPayable += tax.taxAmount;
+    line.taxes.forEach((tax) => {
+      taxPayable += (tax.taxContribution ?? tax.taxAmount);
     });
   });
   

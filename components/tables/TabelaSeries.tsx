@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react'
 import Link from 'next/link'
-import { Plus } from 'lucide-react'
+import { Lock, LockOpen, Plus } from 'lucide-react'
 
 import { Serie, SeriesStatus } from '@/lib/types'
 import { formatDate } from '@/lib/utils'
@@ -23,15 +23,22 @@ const statusColors: Record<SeriesStatus, string> = {
   F: 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200',
 }
 
+const methodLabels: Record<string, string> = {
+  FEPC: 'FEPC - Portal Contribuinte',
+  FESF: 'FESF - Software Faturação',
+  SF: 'SF - Sem Faturação',
+}
+
 type FilterValue = 'all' | SeriesStatus
 
 type TabelaSeriesProps = {
   data: Serie[]
   statusFilter: FilterValue
   onStatusFilterChange: (value: FilterValue) => void
+  onToggleStatus?: (serieId: string, newStatus: SeriesStatus) => void
 }
 
-export function TabelaSeries({ data, statusFilter, onStatusFilterChange }: TabelaSeriesProps) {
+export function TabelaSeries({ data, statusFilter, onStatusFilterChange, onToggleStatus }: TabelaSeriesProps) {
   const filteredSeries = useMemo(() => {
     if (statusFilter === 'all') return data
     return data.filter((serie) => serie.status === statusFilter)
@@ -88,9 +95,11 @@ export function TabelaSeries({ data, statusFilter, onStatusFilterChange }: Tabel
                 <TableHead>Código</TableHead>
                 <TableHead>Ano</TableHead>
                 <TableHead>Tipo</TableHead>
+                <TableHead>Método</TableHead>
                 <TableHead>Sequência</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Data Solicitação</TableHead>
+                <TableHead>Ações</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -99,6 +108,9 @@ export function TabelaSeries({ data, statusFilter, onStatusFilterChange }: Tabel
                   <TableCell className="font-medium">{serie.seriesCode}</TableCell>
                   <TableCell>{serie.seriesYear}</TableCell>
                   <TableCell>{serie.documentType}</TableCell>
+                  <TableCell className="text-xs text-muted-foreground">
+                    {serie.invoicingMethod ? methodLabels[serie.invoicingMethod] : 'N/A'}
+                  </TableCell>
                   <TableCell>
                     {serie.firstDocumentNumber} - {serie.currentSequence}
                   </TableCell>
@@ -110,6 +122,30 @@ export function TabelaSeries({ data, statusFilter, onStatusFilterChange }: Tabel
                     </span>
                   </TableCell>
                   <TableCell>{formatDate(serie.requestDate)}</TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-2">
+                      {serie.status === 'A' && onToggleStatus && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => onToggleStatus(serie.id, 'F')}
+                          title="Fechar série"
+                        >
+                          <Lock className="h-4 w-4" />
+                        </Button>
+                      )}
+                      {serie.status === 'F' && onToggleStatus && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => onToggleStatus(serie.id, 'A')}
+                          title="Reabrir série"
+                        >
+                          <LockOpen className="h-4 w-4" />
+                        </Button>
+                      )}
+                    </div>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

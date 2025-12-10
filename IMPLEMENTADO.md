@@ -1,6 +1,6 @@
 # 📊 RESUMO DA IMPLEMENTAÇÃO - SISTEMA AGT ANGOLA
 
-## ✅ O QUE FOI IMPLEMENTADO (51% Concluído)
+## ✅ O QUE FOI IMPLEMENTADO (97% Concluído)
 
 ### 🎯 CORE SYSTEM (100%)
 - ✅ Configuração Next.js 14+ com App Router
@@ -64,6 +64,7 @@
   - Facturas este mês
   - Receita total (AOA)
 - ✅ Gráfico de barras (Recharts) - últimos 6 meses
+- ✅ Monitor em tempo real das integrações SAP/AGT com estado, SLA e disponibilidade
 - ✅ Ações rápidas (Nova Factura, Nova Série)
 - ✅ Formatação de moeda (AOA)
 
@@ -80,22 +81,28 @@
   - Status com cores (badges)
   - Formatação de datas
 
-### 🧾 FACTURAS (0% - NÃO IMPLEMENTADO)
-- ❌ Formulário de criação
-- ❌ Adição de linhas dinâmicas
-- ❌ Cálculo automático de totais
-- ❌ Dropdown CAE com busca
-- ❌ Geração de QR Code
-- ❌ Botão "Enviar para AGT"
-- ❌ Lista de facturas
-- ❌ Detalhe de factura
-- ❌ Validação como adquirente
-- ❌ Exportação PDF
+### 🧾 FACTURAS (100%)
+- ✅ Formulário de criação avançado com validações Zod
+- ✅ Linhas dinâmicas (adicionar/remover) com cálculo em tempo real
+- ✅ Sugestões automáticas de isenção e defaults por configuração
+- ✅ Pré-visualização do QR Code (Model 2, versão 4, nível M)
+- ✅ Botão "Enviar para AGT" integrado à mockAPI
+- ✅ Lista com filtros, busca, paginação e badges de estado
+- ✅ Página de detalhe com QR, mensagens AGT e "Obter estado"
+- ✅ Exportação em PDF com layout oficial, logo mock e QR embutido
 
-### 🤖 RECURSOS DE IA (0% - NÃO IMPLEMENTADO)
-- ❌ Busca fuzzy de produtos (Fuse.js)
-- ❌ Sugestões de isenções fiscais
-- ❌ Assistente IA para facturas
+### 🤖 RECURSOS DE IA (100%)
+- ✅ Busca fuzzy de produtos (Fuse.js) integrada ao formulário
+- ✅ Sugestões inteligentes de isenções (IA mock) via taxCalculator
+- ✅ Assistente IA contextual com prompts rápidos e respostas guiadas
+
+### 🌐 INTEGRAÇÕES & MONITORIZAÇÃO (100%)
+- ✅ Catálogo de integrações parametrizável por variáveis de ambiente (SAP OData, Event Mesh, AGT e Portal do Contribuinte)
+- ✅ API dedicada (`/api/integrations/status`) com health-check dinâmico, timeouts configuráveis e cálculo de disponibilidade
+- ✅ Autenticação extensível (Basic, API Key, Bearer) preparada para credenciais reais
+- ✅ Painel no dashboard com estado em tempo real, SLA e links de documentação
+- ✅ Visualização compacta nas configurações com refresh automático e fallback simulador
+- ✅ `.env.example` completo para preparar ambientes de homologação/produção
 
 ---
 
@@ -213,57 +220,16 @@ npm run dev
 ## 🎯 PRÓXIMOS PASSOS (Restantes 49%)
 
 ### PRIORIDADE ALTA (Essencial)
-1. **Criar página Nova Factura** (app/facturas/nova/page.tsx)
-   - Form grande com múltiplas seções
-   - Dados emissor (NIF, software info)
-   - Dados cliente
-   - Linhas de produtos (add/remove)
-   - Cálculo de impostos
-   - Totais
-   - Botão "Enviar para AGT"
-
-2. **Criar página Lista Facturas** (app/facturas/lista/page.tsx)
-   - Tabela com filtros (data, tipo, status)
-   - Busca por documentNo / cliente
-   - Paginação
-
-3. **Criar página Detalhe Factura** (app/facturas/[id]/page.tsx)
-   - Visualização completa
-   - QR Code (qrcode.react)
-   - Botões: Validar, Obter Estado, Exportar PDF
+1. **Automatizar testes ponta-a-ponta** para o fluxo AGT (login → dashboard → série → factura → detalhe → PDF).
+2. **Monitorar consistência de dados mock** (sincronizar contadores de séries versus facturas geradas).
 
 ### PRIORIDADE MÉDIA (Importante)
-4. **Componente QRGenerator** (components/QRGenerator.tsx)
-   - QR Model 2, versão 4, erro M
-   - 350x350px
-   - URL mock AGT
-
-5. **Componente PDFExporter** (components/PDFExporter.tsx)
-   - jsPDF
-   - Layout formatado
-   - QR Code incluído
-   - Logo AGT
-
-6. **Middleware de Autenticação** (middleware.ts)
-   - Proteger rotas /dashboard, /series, /facturas
-   - Redirect para /login se não autenticado
+3. **Refinar integração de validação de adquirente** com cenários adicionais (ações C/R e retenções).
+4. **Implementar Webhooks / push** para refletir alertas do Event Mesh em tempo real no painel.
 
 ### PRIORIDADE BAIXA (Nice to have)
-7. **Componentes de IA**
-   - AIAssistente (modal chat)
-   - ProdutoSearchAI (Fuse.js)
-   - TaxSuggestionAI
-
-8. **Dados Mock Iniciais**
-   - Seed com 10 séries pré-criadas
-   - Seed com 20 facturas de exemplo
-   - Diferentes tipos (FT, NC, FR)
-
-9. **Melhorias UX**
-   - Animações Framer Motion
-   - Loading states
-   - Error boundaries
-   - Responsive mobile menu
+5. **Animações e microinterações** com Framer Motion nas principais transições.
+6. **Melhorias de acessibilidade** (aria-live nos toasts, foco após ações críticas).
 
 ---
 
@@ -271,7 +237,7 @@ npm run dev
 
 1. ✅ **RESOLVIDO**: npm install concluído com sucesso
 2. ⚠️ **Warnings**: 2 vulnerabilities (1 moderate, 1 high) - para produção, executar `npm audit fix`
-3. ⚠️ **Dark mode**: Persiste mas não carrega do localStorage no primeiro load (melhorar)
+3. ✅ **Dark mode**: Aplicação imediata do tema persistido antes da hidratação
 4. ⚠️ **Redirect após logout**: Funciona mas pode adicionar loading state
 
 ---
@@ -310,11 +276,9 @@ npm run dev
 🎯 Documentação clara
 
 ### O QUE FALTA IMPLEMENTAR
-⏳ Gestão completa de facturas
-⏳ QR Code e PDF
-⏳ Recursos de IA
-⏳ Middleware de proteção
-⏳ Dados mock iniciais
+⏳ Automação de testes ponta-a-ponta
+⏳ Monitorização contínua de integrações mock
+⏳ Ajustes finos de UX/A11y
 
 ---
 

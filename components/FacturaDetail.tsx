@@ -1,8 +1,13 @@
+import { useCallback, useEffect, useState } from 'react'
+
 import type { Factura } from '@/lib/types'
+import { updateFactura } from '@/lib/storage'
 import { formatCurrency, formatDate } from '@/lib/utils'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { useToast } from '@/components/ui/use-toast'
 import { PDFExporter } from '@/components/PDFExporter'
 import { QRGenerator } from '@/components/QRGenerator'
 
@@ -18,7 +23,89 @@ type FacturaDetailProps = {
 
 export function FacturaDetail({ factura }: FacturaDetailProps) {
   const document = factura.documents[0]
-  const status = factura.validationStatus ?? 'P'
+  const initialStatus = factura.validationStatus ?? 'P'
+  const [status, setStatus] = useState<'P' | 'V' | 'I'>(initialStatus)
+  const [messages, setMessages] = useState<string[]>(factura.validationMessages ?? [])
+  const [isFetchingStatus, setIsFetchingStatus] = useState(false)
+  const [autoRefresh, setAutoRefresh] = useState(false)
+  const { toast } = useToast()
+
+  const handleObterEstado = useCallback(async () => {
+    if (!document?.documentNo) {
+      toast({
+        variant: 'destructive',
+        title: 'Não é possível consultar',
+        description: 'Esta factura não possui número de documento.',
+      })
+      return
+    }
+
+    setIsFetchingStatus(true)
+    try {
+      const response = await fetch('/api/agt/consultarFactura', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          taxRegistrationNumber: factura.taxRegistrationNumber,
+          documentNo: document.documentNo,
+        }),
+      })
+
+      const result = await response.json()
+      if (!response.ok || !result.success) {
+        toast({
+          variant: 'destructive',
+          title: 'Erro na consulta AGT',
+          description: result.error ?? 'Não foi possível consultar o documento junto da AGT.',
+        })
+        return
+      }
+
+      const agtStatus = result.data.processingStatus
+      const newStatus: 'P' | 'V' | 'I' =
+        agtStatus === 'Processado' ? 'V' : agtStatus === 'Rejeitado' ? 'I' : 'P'
+      const newMessages = [
+        `ReturnCode: ${result.data.returnCode}`,
+        `ReturnMessage: ${result.data.returnMessage}`,
+        `Status: ${agtStatus}`,
+      ]
+
+      setStatus(newStatus)
+      setMessages(newMessages)
+      if (factura.id) {
+        updateFactura(factura.id, {
+          validationStatus: newStatus === 'P' ? undefined : newStatus,
+          validationMessages: newMessages,
+        })
+      }
+
+      toast({
+        title: 'Estado AGT atualizado',
+        description:
+          newStatus === 'V'
+            ? 'Documento processado com sucesso pela AGT.'
+            : newStatus === 'I'
+              ? 'Documento rejeitado. Verifique as mensagens AGT.'
+              : 'Documento ainda em processamento na AGT.',
+      })
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        title: 'Erro de conexão',
+        description: error instanceof Error ? error.message : 'Falha ao consultar a AGT.',
+      })
+    } finally {
+      setIsFetchingStatus(false)
+    }
+  }, [document?.documentNo, factura.taxRegistrationNumber, factura.id, toast])
+
+  useEffect(() => {
+    if (!autoRefresh || status !== 'P') return
+    const interval = setInterval(() => {
+      void handleObterEstado()
+    }, 15000)
+    return () => clearInterval(interval)
+  }, [autoRefresh, status, handleObterEstado])
 
   if (!document) {
     return (
@@ -31,12 +118,9 @@ export function FacturaDetail({ factura }: FacturaDetailProps) {
     )
   }
 
-  const qrValue = JSON.stringify({
-    documentNo: document.documentNo,
-    taxId: document.customerTaxID,
-    total: document.documentTotals.grossTotal,
-    date: document.documentDate,
-  })
+  const qrValue = `https://portaldocontribuinte.minfin.gov.ao/consultar-fe?documentNo=${encodeURIComponent(
+    document.documentNo
+  )}`
 
   return (
     <div className="space-y-6">
@@ -48,7 +132,21 @@ export function FacturaDetail({ factura }: FacturaDetailProps) {
           </div>
           <div className="flex items-center gap-2">
             <Badge variant={statusLabels[status].variant}>{statusLabels[status].label}</Badge>
-            <PDFExporter factura={factura} />
+            <div className="flex items-center gap-2">
+              <Button variant="outline" size="sm" onClick={handleObterEstado} disabled={isFetchingStatus}>
+                {isFetchingStatus ? 'A consultar...' : 'Obter estado'}
+              </Button>
+              {status === 'P' && (
+                <Button
+                  variant={autoRefresh ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setAutoRefresh(!autoRefresh)}
+                >
+                  {autoRefresh ? 'Auto-refresh ativo' : 'Ativar auto-refresh'}
+                </Button>
+              )}
+              <PDFExporter factura={factura} />
+            </div>
           </div>
         </CardHeader>
         <CardContent className="grid gap-4 md:grid-cols-2">
@@ -63,13 +161,13 @@ export function FacturaDetail({ factura }: FacturaDetailProps) {
           <div>
             <h4 className="text-sm font-semibold text-muted-foreground">Totais</h4>
             <p className="text-base font-medium">
-              Total bruto: {formatCurrency(document.documentTotals.grossTotal, document.documentTotals.currency)}
+              Total bruto: {formatCurrency(document.documentTotals.grossTotal, document.documentTotals.currency?.currencyCode)}
             </p>
             <p className="text-sm text-muted-foreground">
-              Impostos: {formatCurrency(document.documentTotals.taxPayable, document.documentTotals.currency)}
+              Impostos: {formatCurrency(document.documentTotals.taxPayable, document.documentTotals.currency?.currencyCode)}
             </p>
             <p className="text-sm text-muted-foreground">
-              Total líquido: {formatCurrency(document.documentTotals.netTotal, document.documentTotals.currency)}
+              Total líquido: {formatCurrency(document.documentTotals.netTotal, document.documentTotals.currency?.currencyCode)}
             </p>
           </div>
         </CardContent>
@@ -97,15 +195,15 @@ export function FacturaDetail({ factura }: FacturaDetailProps) {
                   <TableCell>{line.lineNo}</TableCell>
                   <TableCell>
                     <div className="font-medium">{line.productDescription}</div>
-                    {line.tax.length > 0 && (
+                      {line.taxes > 0 && (
                       <p className="text-xs text-muted-foreground">
-                        IVA: {line.tax.find((tax) => tax.taxType === 'IVA')?.taxPercentage ?? 0}%
+                          IVA: {line.taxes.find((tax) => tax.taxType === 'IVA')?.taxPercentage ?? 0}%
                       </p>
                     )}
                   </TableCell>
                   <TableCell>{line.quantity}</TableCell>
-                  <TableCell>{formatCurrency(line.unitPrice, document.documentTotals.currency)}</TableCell>
-                  <TableCell>{formatCurrency(line.quantity * line.unitPrice, document.documentTotals.currency)}</TableCell>
+                  <TableCell>{formatCurrency(line.unitPrice, document.documentTotals.currency?.currencyCode)}</TableCell>
+                  <TableCell>{formatCurrency(line.quantity * line.unitPrice, document.documentTotals.currency?.currencyCode)}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -114,9 +212,9 @@ export function FacturaDetail({ factura }: FacturaDetailProps) {
       </Card>
 
       <div className="grid gap-4 md:grid-cols-2">
-        <QRGenerator value={qrValue} title="QR Code" subtitle="Resumo do documento" />
+  <QRGenerator value={qrValue} title="QR Code" subtitle="Resumo do documento" size={260} />
 
-        {factura.validationMessages && factura.validationMessages.length > 0 && (
+        {messages.length > 0 && (
           <Card>
             <CardHeader>
               <CardTitle>Mensagens de validação</CardTitle>
@@ -124,7 +222,7 @@ export function FacturaDetail({ factura }: FacturaDetailProps) {
             </CardHeader>
             <CardContent>
               <ul className="list-disc space-y-2 pl-4 text-sm">
-                {factura.validationMessages.map((message, index) => (
+                {messages.map((message, index) => (
                   <li key={index}>{message}</li>
                 ))}
               </ul>

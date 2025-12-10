@@ -27,6 +27,7 @@ import type { AppConfig } from '@/lib/types'
 import { seedMockData } from '@/lib/mockData'
 import { getIntegrations, testIntegration, resetIntegrations, syncIntegration } from '@/lib/integrations'
 import type { Integration } from '@/lib/integrations'
+import { IntegrationStatusBoard } from '@/components/integrations/IntegrationStatusBoard'
 
 const currencyOptions = [
   { value: 'AOA', label: 'AOA - Kwanza' },
@@ -61,6 +62,10 @@ export default function ConfiguracoesPage() {
     aiAssistantsEnabled: DEFAULT_APP_CONFIG.aiAssistantsEnabled,
     autoSuggestTaxes: DEFAULT_APP_CONFIG.autoSuggestTaxes,
   })
+  const [systemSettings, setSystemSettings] = useState({
+    systemName: DEFAULT_APP_CONFIG.systemName || 'Sistema AGT',
+    systemSubtitle: DEFAULT_APP_CONFIG.systemSubtitle || 'Faturação Eletrónica',
+  })
 
   useEffect(() => {
     if (!isAuthenticated()) {
@@ -76,6 +81,10 @@ export default function ConfiguracoesPage() {
       defaultCountry: currentConfig.defaultCountry,
       aiAssistantsEnabled: currentConfig.aiAssistantsEnabled,
       autoSuggestTaxes: currentConfig.autoSuggestTaxes,
+    })
+    setSystemSettings({
+      systemName: currentConfig.systemName || 'Sistema AGT',
+      systemSubtitle: currentConfig.systemSubtitle || 'Faturação Eletrónica',
     })
 
     const auth = getAuth()
@@ -136,6 +145,19 @@ export default function ConfiguracoesPage() {
     })
   }
 
+  const handleSystemSettingsSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const updated = updateAppConfig({
+      systemName: systemSettings.systemName,
+      systemSubtitle: systemSettings.systemSubtitle,
+    })
+    setConfig(updated)
+    toast({
+      title: 'Configurações do sistema guardadas',
+      description: 'O nome e subtítulo do sistema foram atualizados.',
+    })
+  }
+
   const handleSeedData = () => {
     seedMockData()
     toast({
@@ -163,6 +185,10 @@ export default function ConfiguracoesPage() {
       defaultCountry: reset.defaultCountry,
       aiAssistantsEnabled: reset.aiAssistantsEnabled,
       autoSuggestTaxes: reset.autoSuggestTaxes,
+    })
+    setSystemSettings({
+      systemName: reset.systemName || 'Sistema AGT',
+      systemSubtitle: reset.systemSubtitle || 'Faturação Eletrónica',
     })
     setProfile({
       companyName: reset.companyName,
@@ -224,6 +250,8 @@ export default function ConfiguracoesPage() {
     odata: 'SAP OData',
     rest: 'RESTful',
     queue: 'Mensageria',
+    portal: 'Portal Web',
+    status: 'Status API',
   }
 
   const statusVariant: Record<Integration['status'], 'default' | 'secondary' | 'destructive'> = {
@@ -387,6 +415,40 @@ export default function ConfiguracoesPage() {
             </form>
           </CardContent>
         </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Aparência do Sistema</CardTitle>
+            <CardDescription>Personalize o nome e subtítulo exibidos no cabeçalho da aplicação.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form className="grid gap-4 md:grid-cols-2" onSubmit={handleSystemSettingsSubmit}>
+              <div className="space-y-2">
+                <Label htmlFor="systemName">Nome do Sistema</Label>
+                <Input
+                  id="systemName"
+                  value={systemSettings.systemName}
+                  onChange={(event) => setSystemSettings((prev) => ({ ...prev, systemName: event.target.value }))}
+                  placeholder="Sistema AGT"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="systemSubtitle">Subtítulo do Sistema</Label>
+                <Input
+                  id="systemSubtitle"
+                  value={systemSettings.systemSubtitle}
+                  onChange={(event) => setSystemSettings((prev) => ({ ...prev, systemSubtitle: event.target.value }))}
+                  placeholder="Faturação Eletrónica"
+                />
+              </div>
+              <div className="md:col-span-2 flex justify-end">
+                <Button type="submit">Guardar aparência</Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+
+        <IntegrationStatusBoard variant="compact" autoRefreshMs={90_000} />
 
         <Card>
           <CardHeader>

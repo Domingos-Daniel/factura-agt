@@ -20,6 +20,8 @@ const DEFAULT_CONFIG: AppConfig = {
   defaultCountry: 'AO',
   aiAssistantsEnabled: true,
   autoSuggestTaxes: true,
+  systemName: 'Sistema AGT',
+  systemSubtitle: 'Faturação Eletrónica',
 };
 
 // ==================== AUTH ====================
@@ -61,6 +63,67 @@ export function isAuthenticated(): boolean {
   return expiresAt > new Date();
 }
 
+// ==================== SEED INITIALIZATION ====================
+
+function initializeFacturasSeed(): void {
+  if (typeof window === 'undefined') return;
+  
+  // Importar seed dinamicamente para evitar problemas SSR
+  import('./seedFacturas').then(({ seedFacturas }) => {
+    const enrichedSeed = seedFacturas.map(f => ({
+      ...f,
+      id: f.submissionGUID,
+      createdAt: f.submissionTimeStamp,
+      updatedAt: f.submissionTimeStamp
+    }));
+    localStorage.setItem(KEYS.FACTURAS, JSON.stringify(enrichedSeed));
+  }).catch(err => {
+    console.warn('Erro ao carregar seed de facturas:', err);
+  });
+}
+
+function initializeSeriesSeed(): void {
+  if (typeof window === 'undefined') return;
+  
+  const mockSeries: Serie[] = [
+    {
+      id: 'serie-ft-2025',
+      seriesCode: 'FT2025',
+      seriesYear: 2025,
+      documentType: 'FT',
+      firstDocumentNumber: 1,
+      currentSequence: 100,
+      status: 'A',
+      invoicingMethod: 'FESF',
+      requestDate: '2025-01-01T00:00:00Z'
+    },
+    {
+      id: 'serie-ar-2025',
+      seriesCode: 'AR2025',
+      seriesYear: 2025,
+      documentType: 'AR',
+      firstDocumentNumber: 1,
+      currentSequence: 50,
+      status: 'A',
+      invoicingMethod: 'FESF',
+      requestDate: '2025-01-01T00:00:00Z'
+    },
+    {
+      id: 'serie-nc-2025',
+      seriesCode: 'NC2025',
+      seriesYear: 2025,
+      documentType: 'NC',
+      firstDocumentNumber: 1,
+      currentSequence: 10,
+      status: 'F',
+      invoicingMethod: 'FESF',
+      requestDate: '2025-01-01T00:00:00Z'
+    }
+  ];
+  
+  localStorage.setItem(KEYS.SERIES, JSON.stringify(mockSeries));
+}
+
 // ==================== FACTURAS ====================
 
 export function saveFacturas(facturas: Factura[]): void {
@@ -71,7 +134,17 @@ export function saveFacturas(facturas: Factura[]): void {
 export function getFacturas(): Factura[] {
   if (typeof window === 'undefined') return [];
   const data = localStorage.getItem(KEYS.FACTURAS);
-  if (!data) return [];
+  if (!data) {
+    // Primeira vez: carregar seed
+    initializeFacturasSeed();
+    const newData = localStorage.getItem(KEYS.FACTURAS);
+    if (!newData) return [];
+    try {
+      return JSON.parse(newData);
+    } catch {
+      return [];
+    }
+  }
   try {
     return JSON.parse(data);
   } catch {
@@ -125,7 +198,17 @@ export function saveSeries(series: Serie[]): void {
 export function getSeries(): Serie[] {
   if (typeof window === 'undefined') return [];
   const data = localStorage.getItem(KEYS.SERIES);
-  if (!data) return [];
+  if (!data) {
+    // Primeira vez: carregar seed
+    initializeSeriesSeed();
+    const newData = localStorage.getItem(KEYS.SERIES);
+    if (!newData) return [];
+    try {
+      return JSON.parse(newData);
+    } catch {
+      return [];
+    }
+  }
   try {
     return JSON.parse(data);
   } catch {
@@ -232,4 +315,12 @@ export function clearAllData(): void {
   Object.values(KEYS).forEach((key) => {
     localStorage.removeItem(key);
   });
+}
+
+// Função para resetar dados com seed
+export function resetWithSeed(): void {
+  if (typeof window === 'undefined') return;
+  clearAllData();
+  initializeFacturasSeed();
+  initializeSeriesSeed();
 }

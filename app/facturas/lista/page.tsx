@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { Plus } from 'lucide-react'
 
 import type { Factura } from '@/lib/types'
-import { listarFacturasAPI } from '@/lib/mockAPI'
+import { getFacturas } from '@/lib/storage'
 import { MainLayout } from '@/components/layout/MainLayout'
 import { Button } from '@/components/ui/button'
 import { TabelaFacturas } from '@/components/tables/TabelaFacturas'
@@ -17,19 +17,14 @@ export default function ListaFacturasPage() {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    let isMounted = true
-
-    listarFacturasAPI().then((response) => {
-      if (!isMounted) return
-      if (response.success && response.data) {
-        setFacturas(response.data)
-      }
+    // Carregar facturas do localStorage (com seed automático na primeira vez)
+    const loadFacturas = () => {
+      const data = getFacturas()
+      setFacturas(data)
       setIsLoading(false)
-    })
-
-    return () => {
-      isMounted = false
     }
+    
+    loadFacturas()
   }, [])
 
   return (

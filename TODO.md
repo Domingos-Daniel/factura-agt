@@ -86,9 +86,18 @@
 - [x] 13.1 Criar README.md completo
 - [x] 13.2 Adicionar dados mock de exemplo
 - [x] 13.3 Corrigir cálculo de totais das linhas de factura
-- [ ] 13.4 Testar fluxo completo
+- [x] 13.4 Testar fluxo completo
+
+## ✅ FASE 14: MONITORIZAÇÃO & INTEGRAÇÕES
+- [x] 14.1 Publicar `.env.example` com endpoints reais SAP/AGT
+- [x] 14.2 Criar catálogo de integrações server-side (`lib/server/integrationCatalogue.ts`)
+- [x] 14.3 Expor API `/api/integrations/status` com health check dinâmico
+- [x] 14.4 Adicionar painel de monitorização ao dashboard
+- [x] 14.5 Adicionar painel compacto de estado nas configurações
+- [ ] 14.6 Integrar webhooks do SAP Event Mesh para alertas automáticos
+- [ ] 14.7 Persistir histórico de uptime/latência para relatórios
 
 ---
 
 **Status**: ⚡ EM PROGRESSO - Base funcional implementada!
-**Progresso**: 59/62 tarefas concluídas (95%)
+**Progresso**: 64/68 tarefas concluídas (94%)

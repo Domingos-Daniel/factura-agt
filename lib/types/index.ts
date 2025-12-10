@@ -1,48 +1,44 @@
 // Tipos base do sistema AGT Angola
 
-export type DocumentType = 
+export type DocumentType =
+  | 'FA' // Factura de Adiantamento
   | 'FT' // Factura
-  | 'FR' // Factura Recibo
-  | 'FA' // Factura Adiantamento
-  | 'NC' // Nota de Crédito
+  | 'FR' // Factura/Recibo
+  | 'FG' // Factura Global
+  | 'AC' // Aviso de Cobrança
+  | 'AR' // Aviso de Cobrança/Recibo
+  | 'TV' // Talão de Venda
+  | 'RC' // Recibo Emitido
+  | 'RG' // Outros Recibos Emitidos
+  | 'RE' // Estorno ou Recibo de Estorno
   | 'ND' // Nota de Débito
-  | 'AR' // Aviso de Recebimento
-  | 'RC' // Recibo
-  | 'RG'; // Recibo Global
+  | 'NC' // Nota de Crédito
+  | 'AF' // Factura/Recibo de Autofacturação
+  | 'RP' // Prémio ou Recibo de Prémio
+  | 'RA' // Resseguro Aceite
+  | 'CS' // Imputação a Co-seguradoras
+  | 'LD'; // Imputação a Co-seguradora Líder
 
-export type DocumentStatus = 
+export type DocumentStatus =
   | 'N' // Normal
+  | 'S' // Autofacturação
   | 'A' // Anulado
-  | 'F' // Facturado
-  | 'S'; // Substituição
+  | 'R' // Resumo
+  | 'C'; // Correcção
 
 export type SeriesStatus = 
   | 'A' // Aberta
   | 'U' // Em Uso
   | 'F'; // Fechada
 
-export type TaxType = 
+export type TaxType =
   | 'IVA' // Imposto sobre o Valor Acrescentado
-  | 'IS'  // Imposto de Selo
-  | 'IEC'; // Imposto Especial de Consumo
+  | 'IS' // Imposto de Selo
+  | 'IEC' // Imposto Especial de Consumo
+  | 'NS'; // Não sujeito a IVA, IS ou IEC
 
-export type TaxExemptionCode = 
-  | 'I01' // Isenção de IVA - Exportação
-  | 'I02' // Isenção de IVA - Imunidade
-  | 'I03' // Isenção de IVA - Não sujeição
-  | 'I04' // Isenção de IVA - Regime de exclusão
-  | 'I05' // Isenção de IVA - Regime de não sujeição
-  | 'I06' // Isenção de IVA - Regime de isenção
-  | 'I07' // Isenção de IVA - Regime especial
-  | 'I08' // Isenção de IVA - Regime transitório
-  | 'I09' // Isenção de IVA - Regime de margem
-  | 'I10' // Isenção de IVA - Operações triangulares
-  | 'I11' // Isenção de IVA - Inversão do sujeito passivo
-  | 'I12' // Isenção de IVA - Autoliquidação
-  | 'I13' // Isenção de IVA - Regime de caixa
-  | 'I14' // Isenção de IVA - Outros
-  | 'I15' // Isenção de IVA - Regime especial de bens em segunda mão
-  | 'I16'; // Isenção de IVA - Regime especial de agências de viagens
+// Código de motivo de isenção: conforme Tabelas 4/5/6 (ex.: M10.., S01.., I01..)
+export type TaxExemptionCode = string;
 
 export interface AppConfig {
   companyName: string
@@ -54,6 +50,8 @@ export interface AppConfig {
   defaultCountry: string
   aiAssistantsEnabled: boolean
   autoSuggestTaxes: boolean
+  systemName?: string
+  systemSubtitle?: string
 }
 
 export interface SoftwareInfo {
@@ -65,11 +63,13 @@ export interface SoftwareInfo {
 
 export interface TaxLine {
   taxType: TaxType;
-  taxCountry: string;
+  taxCountryRegion: string;
   taxCode: string;
   taxPercentage: number;
   taxBase: number;
   taxAmount: number;
+  // Valor calculado de imposto que contribui para o total do documento (arredondado por excesso a 2 casas decimais)
+  taxContribution?: number;
   taxExemptionCode?: TaxExemptionCode;
   taxExemptionReason?: string;
 }
@@ -81,20 +81,31 @@ export interface ProductLine {
   quantity: number;
   unitOfMeasure: string;
   unitPrice: number;
+  // Preço unitário deduzido de descontos (sem impostos)
+  unitPriceBase?: number;
   taxPointDate?: string;
   description?: string;
   debitAmount?: number;
   creditAmount?: number;
-  tax: TaxLine[];
+  // Impostos calculados para a linha
+  taxes: TaxLine[];
   taxExemptionReason?: string;
+  // Valor total de descontos aplicáveis à linha
   settlementAmount?: number;
+  // Referência a documento base (ex.: NC)
+  referenceInfo?: { reference: string; reason?: string };
 }
 
 export interface DocumentTotals {
   netTotal: number;
   taxPayable: number;
   grossTotal: number;
-  currency: string;
+  // Informação de moeda quando diferente de AOA
+  currency?: {
+    currencyCode: string; // ISO 4217
+    currencyAmount: number; // Valor total na moeda estrangeira
+    exchangeRate: number; // Taxa de câmbio para AOA
+  };
   settlementAmount?: number;
   changeAmount?: number;
 }
@@ -105,7 +116,21 @@ export interface PaymentMethod {
   paymentDate: string;
 }
 
+export interface SourceDocumentID {
+  OriginatingON: string;
+  documentDate: string; // YYYY-MM-DD
+}
+
+export interface PaymentSourceDocument {
+  lineNo: number;
+  sourceDocumentID: SourceDocumentID;
+  debitAmount?: number;
+  creditAmount?: number;
+}
+
 export interface PaymentReceipt {
+  // Dados do recibo (AR/RC/RG): documentos de origem regularizados
+  sourceDocuments?: PaymentSourceDocument[];
   paymentRefNo?: string;
   paymentDate?: string;
   paymentMethod?: PaymentMethod[];
@@ -113,7 +138,7 @@ export interface PaymentReceipt {
 
 export interface WithholdingTax {
   withholdingTaxType: string;
-  withholdingTaxDescription: string;
+  withholdingTaxDescription?: string;
   withholdingTaxAmount: number;
 }
 
@@ -171,6 +196,7 @@ export interface Serie {
   lastDocumentNumber?: number;
   currentSequence: number;
   status: SeriesStatus;
+  invoicingMethod?: 'FEPC' | 'FESF' | 'SF';
   requestDate: string;
   approvalDate?: string;
   closureDate?: string;

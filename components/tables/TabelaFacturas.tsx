@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { Search } from 'lucide-react'
 
@@ -34,6 +34,8 @@ export function TabelaFacturas({ data }: TabelaFacturasProps) {
   const [searchTerm, setSearchTerm] = useState('')
   const [documentType, setDocumentType] = useState<FilterValue>('all')
   const [statusFilter, setStatusFilter] = useState<'all' | 'P' | 'V' | 'I'>('all')
+  const [page, setPage] = useState(1)
+  const pageSize = 8
 
   const filteredFacturas = useMemo(() => {
     return data.filter((factura) => {
@@ -54,6 +56,23 @@ export function TabelaFacturas({ data }: TabelaFacturasProps) {
       return matchesSearch && matchesDocType && matchesStatus
     })
   }, [data, searchTerm, documentType, statusFilter])
+
+  const totalPages = Math.max(1, Math.ceil(filteredFacturas.length / pageSize))
+
+  const paginatedFacturas = useMemo(() => {
+    const startIndex = (page - 1) * pageSize
+    return filteredFacturas.slice(startIndex, startIndex + pageSize)
+  }, [filteredFacturas, page, pageSize])
+
+  useEffect(() => {
+    setPage(1)
+  }, [searchTerm, documentType, statusFilter])
+
+  useEffect(() => {
+    if (page > totalPages) {
+      setPage(totalPages)
+    }
+  }, [page, totalPages])
 
   return (
     <Card>
@@ -122,7 +141,7 @@ export function TabelaFacturas({ data }: TabelaFacturasProps) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredFacturas.map((factura) => {
+              {paginatedFacturas.map((factura) => {
                 const documento = factura.documents[0]
                 const validationStatus = factura.validationStatus ?? 'P'
                 return (
@@ -152,6 +171,35 @@ export function TabelaFacturas({ data }: TabelaFacturasProps) {
               })}
             </TableBody>
           </Table>
+        )}
+
+        {filteredFacturas.length > 0 && (
+          <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-sm text-muted-foreground">
+              A mostrar {(page - 1) * pageSize + 1} – {Math.min(page * pageSize, filteredFacturas.length)} de {filteredFacturas.length} facturas
+            </p>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setPage((prev) => Math.max(1, prev - 1))}
+                disabled={page === 1}
+              >
+                Anterior
+              </Button>
+              <span className="text-sm font-medium">
+                Página {page} de {totalPages}
+              </span>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setPage((prev) => Math.min(totalPages, prev + 1))}
+                disabled={page === totalPages}
+              >
+                Seguinte
+              </Button>
+            </div>
+          </div>
         )}
       </CardContent>
     </Card>

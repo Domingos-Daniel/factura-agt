@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
-import { solicitarSerieAPI } from '@/lib/mockAPI'
+import { solicitarSerie } from '@/lib/api'
 import { type SeriesFormData } from '@/lib/schemas/seriesSchema'
 import { MainLayout } from '@/components/layout/MainLayout'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -17,28 +17,12 @@ export default function NovaSeriesPage() {
   const { toast } = useToast()
 
   const handleSubmit = async (data: SeriesFormData) => {
-    try {
-      const result = await solicitarSerieAPI(data)
-
-      if (result.success) {
-        toast({
-          title: 'Série criada com sucesso',
-          description: `Série ${data.seriesCode} foi criada.`,
-        })
-        router.push('/series/lista')
-      } else {
-        toast({
-          variant: 'destructive',
-          title: 'Erro ao criar série',
-          description: result.error,
-        })
-      }
-    } catch (error) {
-      toast({
-        variant: 'destructive',
-        title: 'Erro',
-        description: 'Ocorreu um erro ao processar a solicitação',
-      })
+    const result = await solicitarSerie<typeof data, any>(data)
+    if (result.ok) {
+      toast({ title: 'Série criada com sucesso', description: `Série ${data.seriesCode} foi criada.` })
+      router.push('/series/lista')
+    } else {
+      toast({ variant: 'destructive', title: 'Erro ao criar série', description: result.error })
     }
   }
 
