@@ -1,11 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { loginSchema, type LoginFormData } from '@/lib/schemas/authSchema'
-import { loginAPI } from '@/lib/mockAPI'
 import { saveAuth } from '@/lib/storage'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -16,7 +15,7 @@ import { FileText, Loader2 } from 'lucide-react'
 
 export const dynamic = 'force-dynamic'
 
-export default function LoginPage() {
+function LoginFormContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { toast } = useToast()
@@ -34,7 +33,13 @@ export default function LoginPage() {
     setIsLoading(true)
     
     try {
-      const result = await loginAPI(data.nif, data.password)
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nif: data.nif, password: data.password }),
+      })
+      
+      const result = await response.json()
       
       if (result.success && result.data) {
         saveAuth(result.data)
@@ -130,5 +135,17 @@ export default function LoginPage() {
         </CardContent>
       </Card>
     </div>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 dark:from-gray-900 dark:to-gray-800">
+        <div className="animate-pulse">Carregando...</div>
+      </div>
+    }>
+      <LoginFormContent />
+    </Suspense>
   )
 }
