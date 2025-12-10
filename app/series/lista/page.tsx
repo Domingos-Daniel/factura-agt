@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react'
 import { getSeries, updateSerie } from '@/lib/storage'
 import { Serie, SeriesStatus } from '@/lib/types'
+
+export const dynamic = 'force-dynamic'
 import { MainLayout } from '@/components/layout/MainLayout'
 import { TabelaSeries } from '@/components/tables/TabelaSeries'
 import { useToast } from '@/components/ui/use-toast'

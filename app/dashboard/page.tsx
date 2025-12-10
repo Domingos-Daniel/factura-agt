@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+
+export const dynamic = 'force-dynamic'
 import { FileText, FileStack, TrendingUp, Plus } from 'lucide-react'
 
 import { isAuthenticated, getFacturas, getSeries } from '@/lib/storage'

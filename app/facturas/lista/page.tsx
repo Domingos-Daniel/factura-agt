@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Plus } from 'lucide-react'
 
+export const dynamic = 'force-dynamic'
+
 import type { Factura } from '@/lib/types'
 import { getFacturas } from '@/lib/storage'
 import { MainLayout } from '@/components/layout/MainLayout'

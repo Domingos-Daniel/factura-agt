@@ -4,6 +4,8 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { isAuthenticated } from '@/lib/storage'
 
+export const dynamic = 'force-dynamic'
+
 export default function HomePage() {
   const router = useRouter()
   
