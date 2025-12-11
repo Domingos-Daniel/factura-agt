@@ -1,0 +1,291 @@
+{
+  "info": {
+    "name": "AGT API - Integração SAP",
+    "description": "Collection completa para testes de integração SAP → AGT",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{jwt_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000/api",
+      "type": "string"
+    },
+    {
+      "key": "jwt_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "nif_empresa",
+      "value": "999888777",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Autenticação",
+      "item": [
+        {
+          "name": "Login - Obter Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.collectionVariables.set('jwt_token', jsonData.data.token);",
+                  "    console.log('Token saved:', jsonData.data.token);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nif\": \"123456789\",\n  \"password\": \"admin123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Gestão de Séries",
+      "item": [
+        {
+          "name": "Solicitar Nova Série",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nif\": \"{{nif_empresa}}\",\n  \"documentType\": \"FT\",\n  \"designation\": \"Factura Vendas - Matriz Luanda\",\n  \"fiscalYear\": 2025\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/agt/solicitarSerie",
+              "host": ["{{base_url}}"],
+              "path": ["agt", "solicitarSerie"]
+            }
+          }
+        },
+        {
+          "name": "Listar Séries Aprovadas",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/agt/listarSeries?nif={{nif_empresa}}",
+              "host": ["{{base_url}}"],
+              "path": ["agt", "listarSeries"],
+              "query": [
+                {
+                  "key": "nif",
+                  "value": "{{nif_empresa}}"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Facturas",
+      "item": [
+        {
+          "name": "Registar Factura Simples",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nif\": \"{{nif_empresa}}\",\n  \"documentType\": \"FT\",\n  \"seriesNumber\": \"FT 2025/00001\",\n  \"issueDate\": \"2025-12-11T10:30:00\",\n  \"client\": {\n    \"nif\": \"123456789\",\n    \"name\": \"Cliente Teste Lda\",\n    \"address\": \"Rua da Independência, 456, Luanda\",\n    \"phone\": \"+244 923 456 789\",\n    \"email\": \"cliente@teste.ao\"\n  },\n  \"lines\": [\n    {\n      \"lineNumber\": 1,\n      \"productCode\": \"PROD001\",\n      \"description\": \"Produto Teste\",\n      \"quantity\": 10,\n      \"unit\": \"UN\",\n      \"unitPrice\": 1000.00,\n      \"discount\": 0,\n      \"taxes\": [\n        {\n          \"type\": \"IVA\",\n          \"rate\": 14,\n          \"amount\": 1400.00\n        }\n      ]\n    }\n  ],\n  \"totals\": {\n    \"subtotal\": 10000.00,\n    \"totalTax\": 1400.00,\n    \"totalDiscount\": 0,\n    \"total\": 11400.00\n  },\n  \"payment\": {\n    \"method\": \"TB\",\n    \"amount\": 11400.00,\n    \"currency\": \"AOA\"\n  },\n  \"observations\": \"Factura teste via SAP\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/agt/registarFactura",
+              "host": ["{{base_url}}"],
+              "path": ["agt", "registarFactura"]
+            }
+          }
+        },
+        {
+          "name": "Registar Factura Completa (SAP ECC)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nif\": \"{{nif_empresa}}\",\n  \"documentType\": \"FT\",\n  \"seriesNumber\": \"FT 2025/00123\",\n  \"issueDate\": \"2025-12-11T10:30:00\",\n  \"client\": {\n    \"nif\": \"123456789\",\n    \"name\": \"Empresa ABC Lda\",\n    \"address\": \"Rua da Liberdade, 123, Luanda\",\n    \"phone\": \"+244 923 456 789\",\n    \"email\": \"contato@empresaabc.ao\"\n  },\n  \"lines\": [\n    {\n      \"lineNumber\": 1,\n      \"productCode\": \"MAT001\",\n      \"description\": \"Computador Portátil HP\",\n      \"quantity\": 5,\n      \"unit\": \"UN\",\n      \"unitPrice\": 10000.00,\n      \"discount\": 0,\n      \"taxes\": [\n        {\n          \"type\": \"IVA\",\n          \"rate\": 14,\n          \"amount\": 7000.00\n        }\n      ]\n    },\n    {\n      \"lineNumber\": 2,\n      \"productCode\": \"MAT002\",\n      \"description\": \"Monitor LG 27 polegadas\",\n      \"quantity\": 2,\n      \"unit\": \"UN\",\n      \"unitPrice\": 50000.00,\n      \"discount\": 0,\n      \"taxes\": [\n        {\n          \"type\": \"IVA\",\n          \"rate\": 14,\n          \"amount\": 14000.00\n        }\n      ]\n    }\n  ],\n  \"totals\": {\n    \"subtotal\": 150000.00,\n    \"totalTax\": 21000.00,\n    \"totalDiscount\": 0,\n    \"total\": 171000.00\n  },\n  \"payment\": {\n    \"method\": \"TB\",\n    \"amount\": 171000.00,\n    \"currency\": \"AOA\"\n  },\n  \"observations\": \"Factura gerada via SAP ECC - Doc: 90000123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/agt/registarFactura",
+              "host": ["{{base_url}}"],
+              "path": ["agt", "registarFactura"]
+            }
+          }
+        },
+        {
+          "name": "Registar Nota de Crédito",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nif\": \"{{nif_empresa}}\",\n  \"documentType\": \"NC\",\n  \"seriesNumber\": \"NC 2025/00045\",\n  \"issueDate\": \"2025-12-11T14:20:00\",\n  \"relatedDocument\": \"FT2025-00100-AGT-ABC123\",\n  \"client\": {\n    \"nif\": \"123456789\",\n    \"name\": \"Empresa ABC Lda\",\n    \"address\": \"Rua da Liberdade, 123, Luanda\"\n  },\n  \"lines\": [\n    {\n      \"lineNumber\": 1,\n      \"productCode\": \"MAT001\",\n      \"description\": \"Computador Portátil HP - DEVOLUÇÃO\",\n      \"quantity\": -1,\n      \"unit\": \"UN\",\n      \"unitPrice\": 10000.00,\n      \"discount\": 0,\n      \"taxes\": [\n        {\n          \"type\": \"IVA\",\n          \"rate\": 14,\n          \"amount\": -1400.00\n        }\n      ]\n    }\n  ],\n  \"totals\": {\n    \"subtotal\": -10000.00,\n    \"totalTax\": -1400.00,\n    \"totalDiscount\": 0,\n    \"total\": -11400.00\n  },\n  \"payment\": {\n    \"method\": \"TB\",\n    \"amount\": -11400.00,\n    \"currency\": \"AOA\"\n  },\n  \"observations\": \"Devolução de produto defeituoso - Ref SAP: 90000124\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/agt/registarFactura",
+              "host": ["{{base_url}}"],
+              "path": ["agt", "registarFactura"]
+            }
+          }
+        },
+        {
+          "name": "Consultar Factura",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nif\": \"{{nif_empresa}}\",\n  \"documentCode\": \"FT2025-00123-AGT-XYZ789\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/agt/consultarFactura",
+              "host": ["{{base_url}}"],
+              "path": ["agt", "consultarFactura"]
+            }
+          }
+        },
+        {
+          "name": "Obter Estado Documento",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/agt/obterEstado?codigo=FT2025-00123-AGT-XYZ789",
+              "host": ["{{base_url}}"],
+              "path": ["agt", "obterEstado"],
+              "query": [
+                {
+                  "key": "codigo",
+                  "value": "FT2025-00123-AGT-XYZ789"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Listar Facturas",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/agt/listarFacturas?nif={{nif_empresa}}&limit=50",
+              "host": ["{{base_url}}"],
+              "path": ["agt", "listarFacturas"],
+              "query": [
+                {
+                  "key": "nif",
+                  "value": "{{nif_empresa}}"
+                },
+                {
+                  "key": "limit",
+                  "value": "50"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Validações",
+      "item": [
+        {
+          "name": "Validar Documento (Pré-envio)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nif\": \"{{nif_empresa}}\",\n  \"documentType\": \"FT\",\n  \"totals\": {\n    \"subtotal\": 10000.00,\n    \"totalTax\": 1400.00,\n    \"total\": 11400.00\n  },\n  \"lines\": [\n    {\n      \"quantity\": 10,\n      \"unitPrice\": 1000.00,\n      \"taxes\": [{\"type\": \"IVA\", \"rate\": 14}]\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/agt/validarDocumento",
+              "host": ["{{base_url}}"],
+              "path": ["agt", "validarDocumento"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Status e Monitorização",
+      "item": [
+        {
+          "name": "Status Integrações",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/integrations/status",
+              "host": ["{{base_url}}"],
+              "path": ["integrations", "status"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

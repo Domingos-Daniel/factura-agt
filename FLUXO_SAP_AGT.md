@@ -1,915 +1,751 @@
-# 🔄 FLUXO COMPLETO: SAP → Sistema Factura AGT → AGT
+# 🔄 Fluxo Completo: SAP → Sistema Mediador → AGT
 
-## 📊 VISÃO GERAL DA INTEGRAÇÃO
+## 📋 Visão Geral da Arquitetura
 
-Este documento explica **tim tim por tim tim** como funciona a integração entre:
-1. **SAP** (Sistema ERP da empresa)
-2. **Sistema Factura AGT** (Este sistema - middleware)
-3. **AGT** (Administração Geral Tributária de Angola)
+Este documento detalha o fluxo completo de integração desde a criação de uma factura no SAP até à certificação pela AGT (Administração Geral Tributária de Angola).
 
 ---
 
-## 🏢 CENÁRIO DE NEGÓCIO
+## 🏗️ Arquitetura de 3 Camadas
 
-**Empresa**: Supermercado Central Lda  
-**NIF**: 5000012345  
-**Sistema ERP**: SAP Business One  
-**Faturação**: Eletrônica obrigatória via AGT
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                        CAMADA 1: SAP (ORIGEM)                            │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐                  │
+│  │   SAP ECC    │  │ SAP S/4HANA  │  │   SAP BW     │                  │
+│  │  (On-Prem)   │  │   (Cloud)    │  │  (Analytics) │                  │
+│  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘                  │
+│         │                 │                 │                            │
+│         └─────────────────┴─────────────────┘                            │
+│                           │                                              │
+│                  Módulos: SD, FI, MM                                     │
+│                  Tabelas: VBRK, VBRP, KNA1, KONV                        │
+│                  Transações: VF01, VF02, VF03                           │
+└─────────────────────────────┬───────────────────────────────────────────┘
+                              │
+                              │ IDoc INVOIC02 / RFC / Web Service
+                              ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    CAMADA 2: MIDDLEWARE SAP                              │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐                  │
+│  │   SAP PI/PO  │  │   SAP CPI    │  │  Custom RFC  │                  │
+│  │   (On-Prem)  │  │   (Cloud)    │  │  Z-Function  │                  │
+│  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘                  │
+│         │                 │                 │                            │
+│         └─────────────────┴─────────────────┘                            │
+│                           │                                              │
+│         Funções:                                                         │
+│         • Transformação IDoc → JSON                                      │
+│         • Mapeamento de campos SAP → AGT                                 │
+│         • Gestão de autenticação JWT                                     │
+│         • Retry logic e error handling                                   │
+│         • Logs e auditoria                                               │
+└─────────────────────────────┬───────────────────────────────────────────┘
+                              │
+                              │ HTTPS REST/SOAP + JWT Bearer Token
+                              ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│              CAMADA 3: SISTEMA MEDIADOR (ESTE SISTEMA)                   │
+│                                                                           │
+│  ┌─────────────────────────────────────────────────────────────┐        │
+│  │                    Next.js 14 + TypeScript                   │        │
+│  │                                                               │        │
+│  │  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────┐│        │
+│  │  │  API REST       │  │  SOAP/WSDL      │  │  Autenticação││        │
+│  │  │  /api/agt/*     │  │  Endpoints      │  │  JWT RS256  ││        │
+│  │  └────────┬────────┘  └────────┬────────┘  └──────┬──────┘│        │
+│  │           │                     │                   │        │        │
+│  │           └─────────────────────┴───────────────────┘        │        │
+│  │                              │                                │        │
+│  │  ┌────────────────────────────────────────────────────────┐ │        │
+│  │  │           Business Logic Layer                         │ │        │
+│  │  │  • Validação fiscal (IVA, IS, IEC)                    │ │        │
+│  │  │  • Cálculo de totais                                  │ │        │
+│  │  │  • Geração de hashes (SHA-256)                        │ │        │
+│  │  │  • Geração de QR Codes (350x350 PNG)                 │ │        │
+│  │  │  • Verificação de séries AGT                         │ │        │
+│  │  │  • Conformidade Decreto 71/25                        │ │        │
+│  │  └────────────────────┬───────────────────────────────────┘ │        │
+│  │                       │                                       │        │
+│  │  ┌────────────────────▼───────────────────────────────────┐ │        │
+│  │  │           Data Persistence Layer                       │ │        │
+│  │  │  • localStorage (Demo)                                │ │        │
+│  │  │  • PostgreSQL/MySQL (Produção)                       │ │        │
+│  │  │  • Cache Redis (Opcional)                            │ │        │
+│  │  └────────────────────────────────────────────────────────┘ │        │
+│  └─────────────────────────────────────────────────────────────┘        │
+└─────────────────────────────┬───────────────────────────────────────────┘
+                              │
+                              │ API REST + Certificado Digital
+                              ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│              CAMADA 4: AGT (ADMINISTRAÇÃO GERAL TRIBUTÁRIA)              │
+│                                                                           │
+│  ┌─────────────────────────────────────────────────────────────┐        │
+│  │                  Portal AGT (agt.gov.ao)                     │        │
+│  │                                                               │        │
+│  │  • Validação de NIF                                          │        │
+│  │  • Certificação de documentos fiscais                        │        │
+│  │  • Emissão de códigos únicos                                │        │
+│  │  • Aprovação/Rejeição de séries                             │        │
+│  │  • Auditoria e fiscalização                                 │        │
+│  │  • Base de dados nacional de facturas                       │        │
+│  └─────────────────────────────────────────────────────────────┘        │
+│                                                                           │
+│  Serviços AGT:                                                           │
+│  ✓ Registar Factura                                                      │
+│  ✓ Consultar Estado                                                      │
+│  ✓ Solicitar Série                                                       │
+│  ✓ Validar NIF                                                           │
+│  ✓ Obter Tabelas (IVA, IS, IEC, CAE)                                    │
+└───────────────────────────────────────────────────────────────────────────┘
+```
 
 ---
 
-## 🔄 FLUXO DETALHADO - PASSO A PASSO
+## 📄 **A Importância Crucial do WSDL**
 
-### **FASE 1: VENDA NO SAP** 🛒
+### **O que é WSDL?**
 
-#### **PASSO 1.1: Cliente faz compra no supermercado**
+**WSDL** (Web Services Description Language) é um documento XML que funciona como um **contrato formal** entre sistemas. É a "certidão de nascimento" de um web service.
 
-```
-Caixa do Supermercado
-┌─────────────────────────────────────┐
-│  Cliente: Supermercado Central Lda  │
-│  NIF: 5000098765                    │
-│                                     │
-│  Item 1: Arroz 5kg     x50  125.000 │
-│  Item 2: Óleo 1L       x30   54.000 │
-│  Item 3: Açúcar 1kg   x100   80.000 │
-│                                     │
-│  Subtotal:              259.000 AOA │
-│  IVA 14%:                36.260 AOA │
-│  ─────────────────────────────────  │
-│  TOTAL:                 295.260 AOA │
-└─────────────────────────────────────┘
-```
+#### Componentes do WSDL:
 
-#### **PASSO 1.2: SAP gera documento de venda**
+```xml
+<definitions>
+  <!-- 1. TYPES: Define estruturas de dados -->
+  <types>
+    <xsd:complexType name="ClienteType">
+      <xsd:element name="nif" type="xsd:string"/>
+      <xsd:element name="nome" type="xsd:string"/>
+    </xsd:complexType>
+  </types>
 
-No **SAP Business One**, o operador:
-1. Cria uma **Ordem de Venda** (Sales Order)
-2. Gera uma **Entrega** (Delivery)
-3. Cria **Factura de Cliente** (A/R Invoice)
+  <!-- 2. MESSAGES: Define mensagens trocadas -->
+  <message name="RegistarFacturaRequest">
+    <part name="parameters" element="tns:RegistarFacturaRequest"/>
+  </message>
 
-**Documento SAP criado**:
-```json
-// SAP A/R Invoice Document
-{
-  "DocEntry": 12345,
-  "DocNum": "FT-SAP-2025-001",
-  "DocDate": "2025-10-01",
-  "CardCode": "C00001",
-  "CardName": "Supermercado Central Lda",
-  "TaxID": "5000098765",
-  "DocumentLines": [
-    {
-      "LineNum": 0,
-      "ItemCode": "ARROZ001",
-      "ItemDescription": "Arroz Branco 5kg",
-      "Quantity": 50,
-      "Price": 2500.00,
-      "LineTotal": 125000.00,
-      "TaxCode": "IVA14",
-      "TaxTotal": 17500.00
-    },
-    {
-      "LineNum": 1,
-      "ItemCode": "OLEO002",
-      "ItemDescription": "Óleo de Girassol 1L",
-      "Quantity": 30,
-      "Price": 1800.00,
-      "LineTotal": 54000.00,
-      "TaxCode": "IVA14",
-      "TaxTotal": 7560.00
-    },
-    {
-      "LineNum": 2,
-      "ItemCode": "ACUCAR003",
-      "ItemDescription": "Açúcar Refinado 1kg",
-      "Quantity": 100,
-      "Price": 800.00,
-      "LineTotal": 80000.00,
-      "TaxCode": "IVA14",
-      "TaxTotal": 11200.00
-    }
-  ],
-  "DocTotal": 295260.00,
-  "VatSum": 36260.00
-}
+  <!-- 3. PORT TYPE: Define operações disponíveis -->
+  <portType name="AGTFacturaServicePortType">
+    <operation name="RegistarFactura">
+      <input message="tns:RegistarFacturaRequestMsg"/>
+      <output message="tns:RegistarFacturaResponseMsg"/>
+    </operation>
+  </portType>
+
+  <!-- 4. BINDING: Define protocolo (SOAP/HTTP) -->
+  <binding name="AGTFacturaServiceSoapBinding">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+  </binding>
+
+  <!-- 5. SERVICE: Define endpoint (URL) -->
+  <service name="AGTFacturaService">
+    <port binding="tns:AGTFacturaServiceSoapBinding">
+      <soap:address location="https://seu-sistema.ao/api/agt/soap"/>
+    </port>
+  </service>
+</definitions>
 ```
 
-**Status no SAP**: ✅ Factura criada (mas NÃO fiscalmente válida ainda!)
+### **Por que o WSDL é ESSENCIAL para SAP?**
+
+#### ✅ **1. Geração Automática de Código**
+
+Sem WSDL (manual):
+```abap
+" Programador precisa escrever tudo manualmente
+DATA: lv_url TYPE string VALUE 'https://...',
+      lv_xml TYPE string,
+      lo_http TYPE REF TO if_http_client.
+
+" Construir XML manualmente (propenso a erros)
+lv_xml = '<?xml version="1.0"?>'
+      && '<soap:Envelope>'
+      && '<soap:Body>'
+      && '<RegistarFactura>'
+      && '<nif>999888777</nif>'
+      && '...' " 200+ linhas de XML
+      && '</RegistarFactura>'
+      && '</soap:Body>'
+      && '</soap:Envelope>'.
+
+" Parsear resposta manualmente
+" ... mais 100 linhas de código
+```
+
+Com WSDL (automático):
+```abap
+" SAP lê WSDL e gera tudo automaticamente via SPROXY
+DATA: lo_proxy TYPE REF TO cl_agt_factura_service, " Gerado pelo WSDL
+      ls_request TYPE zagt_registar_factura_req,     " Gerado pelo WSDL
+      ls_response TYPE zagt_registar_factura_res.    " Gerado pelo WSDL
+
+CREATE OBJECT lo_proxy.
+
+" Estruturas já existem - basta preencher
+ls_request-nif = '999888777'.
+ls_request-document_type = 'FT'.
+ls_request-client-nif = '123456789'.
+
+" Chamada simples
+CALL METHOD lo_proxy->registar_factura
+  EXPORTING input = ls_request
+  RECEIVING output = ls_response.
+
+" Campos tipados - IntelliSense funciona!
+IF ls_response-success = abap_true.
+  WRITE: / 'Código:', ls_response-document_code.
+ENDIF.
+```
+
+**Economia**: De 500 linhas de código para 15 linhas!
+
+#### ✅ **2. Contrato Formal e Versionamento**
+
+```
+Sem WSDL:
+Programador SAP: "Qual o nome do campo para o NIF do cliente?"
+Programador Sistema: "Acho que é 'client_nif'... ou seria 'clientNif'?"
+→ Resultado: Erros em produção, retrabalho
+
+Com WSDL:
+<xsd:element name="client">
+  <xsd:complexType>
+    <xsd:element name="nif" type="xsd:string" minOccurs="1"/>
+    <!-- ↑ Documentação clara: campo obrigatório, tipo string -->
+  </xsd:complexType>
+</xsd:element>
+→ Resultado: Zero ambiguidade
+```
+
+#### ✅ **3. Validação em Tempo de Design**
+
+Quando importa o WSDL no SAP PI/PO:
+
+```
+┌────────────────────────────────────────┐
+│  SAP NetWeaver (SPROXY)                │
+│                                        │
+│  Import WSDL → AGT_FacturaService.wsdl│
+│                                        │
+│  ✓ Parsing XML: OK                    │
+│  ✓ Namespaces: OK                     │
+│  ✓ Data Types: OK                     │
+│  ✓ Operations: 3 found                │
+│  ✓ Endpoint: Valid URL                │
+│  ✓ Security: SOAP 1.2                 │
+│                                        │
+│  [Generate Proxy Classes] ← Click     │
+└────────────────────────────────────────┘
+           ↓
+  Classes geradas:
+  • CL_AGT_FACTURA_SERVICE (proxy)
+  • ZAGT_CLIENTE_MT (estrutura cliente)
+  • ZAGT_LINHA_MT (estrutura linha)
+  • ZAGT_IMPOSTO_MT (estrutura imposto)
+  • ... (30+ artefactos gerados)
+```
+
+#### ✅ **4. Compatibilidade entre Versões**
+
+```xml
+<!-- WSDL v1.0 -->
+<operation name="RegistarFactura">
+  <input message="tns:FacturaRequest_v1"/>
+</operation>
+
+<!-- WSDL v2.0 (novo campo opcional) -->
+<operation name="RegistarFactura">
+  <input message="tns:FacturaRequest_v2"/>
+  <!-- Novo campo: observacoes (opcional) -->
+  <xsd:element name="observacoes" minOccurs="0"/>
+</operation>
+```
+
+SAP pode:
+- Manter v1.0 em produção
+- Testar v2.0 em QAS
+- Migrar gradualmente
+
+**Sem WSDL**: Breaking changes quebram sistema em produção!
+
+#### ✅ **5. Documentação Viva**
+
+```xml
+<xsd:complexType name="ImpostoType">
+  <xsd:annotation>
+    <xsd:documentation>
+      Representa um imposto aplicado a uma linha de factura.
+      Tipos válidos: IVA, IS, IEC
+      Taxas IVA: 0%, 5%, 7%, 14%
+      Taxas IS: 0.1% a 10% (conforme tabela AGT)
+    </xsd:documentation>
+  </xsd:annotation>
+  <xsd:element name="tipo" type="xsd:string"/>
+  <xsd:element name="taxa" type="xsd:decimal"/>
+</xsd:complexType>
+```
+
+Programador SAP vê isso no SAP GUI como **tooltip**!
+
+#### ✅ **6. Segurança e Certificados**
+
+```xml
+<wsdl:service name="AGTFacturaService">
+  <wsdl:port binding="tns:AGTFacturaServiceSoapBinding">
+    <soap:address location="https://seu-sistema.ao/api/agt/soap"/>
+    <wsdl:documentation>
+      Segurança: HTTPS/TLS 1.3
+      Autenticação: Bearer Token JWT (Header: Authorization)
+      Certificado: Emitido por AGT
+      Rate Limit: 100 req/min
+    </wsdl:documentation>
+  </wsdl:port>
+</wsdl:service>
+```
+
+SAP PI/PO lê essas configurações e aplica automaticamente!
 
 ---
 
-### **FASE 2: SAP → SISTEMA FACTURA AGT** 🔌
+## 🔄 Fluxo Detalhado Passo-a-Passo
 
-#### **PASSO 2.1: SAP dispara webhook/integração**
+### **FASE 1: Criação de Factura no SAP** 🏢
 
-O SAP tem uma **extensão/addon** que monitora novas facturas e envia para o Sistema Factura AGT.
-
-**Tecnologias possíveis**:
-- **SAP Service Layer API** (REST)
-- **SAP DI API** (COM/API)
-- **Custom Add-on** (C#/VB.NET)
-- **Webhook trigger** em documento aprovado
-
-**Request enviado pelo SAP**:
-```http
-POST https://factura-agt.empresa.ao/api/sap/sync-invoice
-Content-Type: application/json
-Authorization: Bearer SAP_API_KEY_xxxxx
-
-{
-  "sapDocEntry": 12345,
-  "sapDocNum": "FT-SAP-2025-001",
-  "companyNIF": "5000012345",
-  "documentDate": "2025-10-01",
-  "customer": {
-    "code": "C00001",
-    "name": "Supermercado Central Lda",
-    "nif": "5000098765",
-    "address": "Rua Ho Chi Min, Luanda"
-  },
-  "lines": [
-    {
-      "itemCode": "ARROZ001",
-      "description": "Arroz Branco 5kg",
-      "quantity": 50,
-      "unitPrice": 2500.00,
-      "lineTotal": 125000.00,
-      "taxCode": "IVA14",
-      "taxPercentage": 14,
-      "taxAmount": 17500.00
-    },
-    {
-      "itemCode": "OLEO002",
-      "description": "Óleo de Girassol 1L",
-      "quantity": 30,
-      "unitPrice": 1800.00,
-      "lineTotal": 54000.00,
-      "taxCode": "IVA14",
-      "taxPercentage": 14,
-      "taxAmount": 7560.00
-    },
-    {
-      "itemCode": "ACUCAR003",
-      "description": "Açúcar Refinado 1kg",
-      "quantity": 100,
-      "unitPrice": 800.00,
-      "lineTotal": 80000.00,
-      "taxCode": "IVA14",
-      "taxPercentage": 14,
-      "taxAmount": 11200.00
-    }
-  ],
-  "totals": {
-    "net": 259000.00,
-    "tax": 36260.00,
-    "gross": 295260.00
-  }
-}
+```
+┌─────────────────────────────────────────┐
+│  Transação VF01 (Criar Factura)         │
+│                                         │
+│  Cliente: 0000012345                    │
+│  Material: MAT001 (5 un)                │
+│  Preço: 10.000,00 AOA                   │
+│  IVA: 14%                               │
+│  Total: 57.000,00 AOA                   │
+│                                         │
+│  [Salvar] ← Click                       │
+└─────────────────────────────────────────┘
+           ↓
+  Documento criado: 90000123
+  Tabelas atualizadas:
+  • VBRK (Cabeçalho)
+  • VBRP (5 linhas)
+  • KONV (Impostos)
+  • BKPF (Contabilidade)
+           ↓
+  Trigger: User Exit MV45AFZZ
+           ↓
+  RFC Call → Z_AGT_SEND_INVOICE
 ```
 
-#### **PASSO 2.2: Sistema Factura AGT recebe e processa**
+### **FASE 2: Middleware PI/PO**
 
-**Nova API Route**: `app/api/sap/sync-invoice/route.ts`
+```
+┌──────────────────────────────────────────┐
+│  SAP PI/PO Integration Builder          │
+│                                          │
+│  1. Recebe IDoc INVOIC02                │
+│     • E1EDK01 (Header)                  │
+│     • E1EDP01 (Lines)                   │
+│     • E1EDKA1 (Partner)                 │
+│                                          │
+│  2. Message Mapping                     │
+│     INVOIC02 → AGT_Invoice_MT           │
+│     • VBELN → documentNumber            │
+│     • FKART → documentType (F1→FT)      │
+│     • FKDAT → issueDate (format)        │
+│     • KNA1 → client (lookup)            │
+│                                          │
+│  3. Autenticação                        │
+│     POST /api/auth/login                │
+│     → Obter JWT Token                   │
+│                                          │
+│  4. Envio                               │
+│     POST /api/agt/registarFactura       │
+│     Headers:                            │
+│       Authorization: Bearer <token>     │
+│       Content-Type: application/json    │
+│                                          │
+│     Body: { JSON transformado }         │
+└──────────────────────────────────────────┘
+```
+
+### **FASE 3: Sistema Mediador (Este Sistema)**
 
 ```typescript
-import { NextResponse } from 'next/server'
-import { createFacturaFromSAP } from '@/lib/sapAdapter'
-import { registarFactura } from '@/lib/api'
-import { getNextSeriesNumber } from '@/lib/storage'
+// app/api/agt/registarFactura/route.ts
 
-export async function POST(req: Request) {
-  try {
-    // 1. Validar autenticação SAP
-    const authHeader = req.headers.get('Authorization')
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
-    
-    const sapToken = authHeader.replace('Bearer ', '')
-    if (sapToken !== process.env.SAP_API_KEY) {
-      return NextResponse.json({ error: 'Invalid SAP token' }, { status: 403 })
-    }
-    
-    // 2. Parsear payload SAP
-    const sapInvoice = await req.json()
-    
-    // 3. Obter próximo número da série FT
-    const seriesCode = 'FT2025'
-    const nextNumber = await getNextSeriesNumber(seriesCode, 'FT')
-    const documentNo = `FT 2025/${nextNumber.toString().padStart(3, '0')}`
-    
-    // 4. Converter formato SAP → formato AGT
-    const agtFactura = createFacturaFromSAP(sapInvoice, documentNo)
-    
-    // 5. Registar na AGT
-    const result = await registarFactura(agtFactura)
-    
-    if (result.requestID) {
-      // 6. Atualizar SAP com número fiscal e requestID
-      await updateSAPInvoice(sapInvoice.sapDocEntry, {
-        agtDocumentNo: documentNo,
-        agtRequestID: result.requestID,
-        agtSubmissionGUID: agtFactura.submissionGUID,
-        status: 'Enviado para AGT'
-      })
-      
-      return NextResponse.json({
-        success: true,
-        documentNo,
-        requestID: result.requestID,
-        submissionGUID: agtFactura.submissionGUID
-      }, { status: 200 })
-    } else {
-      // Erro AGT
-      return NextResponse.json({
-        success: false,
-        error: result.errorList || 'Erro ao registar na AGT'
-      }, { status: 400 })
-    }
-  } catch (error) {
-    console.error('SAP sync error:', error)
-    return NextResponse.json({
-      success: false,
-      error: error.message
-    }, { status: 500 })
+export async function POST(request: NextRequest) {
+  // 1️⃣ AUTENTICAÇÃO
+  const token = request.headers.get('authorization')?.split(' ')[1]
+  if (!verifyJWT(token)) {
+    return NextResponse.json({ error: 'Token inválido' }, { status: 401 })
   }
-}
 
-/**
- * Atualiza documento SAP com dados AGT
- */
-async function updateSAPInvoice(docEntry: number, agtData: any) {
-  const sapServiceLayerUrl = process.env.SAP_SERVICE_LAYER_URL
-  const sapSession = await getSAPSession() // Login SAP
+  // 2️⃣ PARSE
+  const factura = await request.json()
+
+  // 3️⃣ VALIDAÇÃO DE SCHEMA
+  const schemaValid = facturaSchema.safeParse(factura)
+  if (!schemaValid.success) {
+    return NextResponse.json({ 
+      error: 'Dados inválidos', 
+      details: schemaValid.error 
+    }, { status: 400 })
+  }
+
+  // 4️⃣ VALIDAÇÕES FISCAIS
   
-  await fetch(`${sapServiceLayerUrl}/Invoices(${docEntry})`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-      'Cookie': `B1SESSION=${sapSession}`
-    },
-    body: JSON.stringify({
-      // User Defined Fields (UDF) customizados no SAP
-      U_AGT_DocNo: agtData.agtDocumentNo,
-      U_AGT_RequestID: agtData.agtRequestID,
-      U_AGT_GUID: agtData.agtSubmissionGUID,
-      U_AGT_Status: agtData.status
+  // a) NIF 9 dígitos
+  if (!/^\d{9}$/.test(factura.client.nif)) {
+    return NextResponse.json({ error: 'NIF inválido' }, { status: 422 })
+  }
+
+  // b) Série aprovada AGT
+  const serieValida = await verificarSerieAGT(factura.seriesNumber)
+  if (!serieValida) {
+    return NextResponse.json({ error: 'Série não aprovada' }, { status: 403 })
+  }
+
+  // c) Cálculo de totais
+  const subtotalCalculado = factura.lines.reduce(
+    (sum, line) => sum + (line.quantity * line.unitPrice), 0
+  )
+  if (Math.abs(subtotalCalculado - factura.totals.subtotal) > 0.01) {
+    return NextResponse.json({ error: 'Totais incorretos' }, { status: 422 })
+  }
+
+  // d) Impostos conforme tabela AGT
+  const taxasIVA = [0, 5, 7, 14] // % válidos
+  factura.lines.forEach(line => {
+    line.taxes.forEach(tax => {
+      if (tax.type === 'IVA' && !taxasIVA.includes(tax.rate)) {
+        throw new Error(`Taxa IVA ${tax.rate}% inválida`)
+      }
     })
+  })
+
+  // e) CAE (Classificação Atividade Económica)
+  const caeValido = await validarCAE(factura.nif, factura.lines[0].productCode)
+  if (!caeValido) {
+    return NextResponse.json({ 
+      error: 'Produto não compatível com CAE da empresa' 
+    }, { status: 422 })
+  }
+
+  // 5️⃣ GERAÇÃO DE HASH (SHA-256)
+  const hash = crypto
+    .createHash('sha256')
+    .update([
+      factura.nif,
+      factura.documentType,
+      factura.seriesNumber,
+      factura.totals.total,
+      new Date().toISOString()
+    ].join('|'))
+    .digest('hex')
+
+  // 6️⃣ GERAÇÃO DE QR CODE
+  const qrData = JSON.stringify({
+    doc: `FT2025-${factura.seriesNumber}`,
+    nif: factura.nif,
+    total: factura.totals.total,
+    hash: hash.substring(0, 16)
+  })
+
+  const qrCodePNG = await QRCode.toDataURL(qrData, {
+    width: 350,
+    errorCorrectionLevel: 'M'
+  })
+
+  // 7️⃣ PREPARAR PARA AGT
+  const documentCode = `FT2025-${factura.seriesNumber}-AGT-${generateUID()}`
+  
+  const agtPayload = {
+    ...factura,
+    documentCode,
+    hash,
+    qrCode: qrCodePNG,
+    processedAt: new Date().toISOString()
+  }
+
+  // 8️⃣ ENVIAR PARA AGT (Futura implementação real)
+  const agtResponse = await sendToAGT(agtPayload)
+
+  // 9️⃣ GUARDAR LOCALMENTE
+  await saveFactura(agtPayload)
+
+  // 🔟 RETORNAR SUCESSO
+  return NextResponse.json({
+    success: true,
+    data: {
+      documentCode,
+      hash,
+      qrCode: qrCodePNG,
+      qrCodeUrl: `https://agt.gov.ao/validar?doc=${documentCode}`,
+      status: 'APPROVED',
+      processedAt: agtPayload.processedAt
+    }
   })
 }
 ```
 
-**Adapter SAP → AGT** (`lib/sapAdapter.ts`):
+### **FASE 4: AGT (Futura)**
 
-```typescript
-import type { Factura } from './types'
-import { v4 as uuidv4 } from 'uuid'
+```
+┌────────────────────────────────────────┐
+│  Portal AGT (api.agt.gov.ao)          │
+│                                        │
+│  1. Recebe documento                  │
+│     • Valida certificado digital      │
+│     • Verifica assinatura JWS RS256   │
+│                                        │
+│  2. Validações AGT                    │
+│     ✓ NIF emitente ativo              │
+│     ✓ NIF cliente válido              │
+│     ✓ Série aprovada e em uso         │
+│     ✓ Sequência numérica correta      │
+│     ✓ Impostos conformes              │
+│     ✓ CAE compatível                  │
+│                                        │
+│  3. Certificação                      │
+│     • Gera código único AGT           │
+│     • Assina documento                │
+│     • Regista em blockchain (futuro)  │
+│                                        │
+│  4. Resposta                          │
+│     {                                 │
+│       "status": "APPROVED",           │
+│       "agtCode": "FT2025-00123-AGT-XYZ",│
+│       "certificate": "...",           │
+│       "validUntil": "2026-12-31"      │
+│     }                                 │
+└────────────────────────────────────────┘
+```
 
-export function createFacturaFromSAP(sapInvoice: any, documentNo: string): Factura {
-  const submissionGUID = uuidv4()
-  
-  return {
-    id: submissionGUID,
-    schemaVersion: '1.0',
-    submissionGUID,
-    taxRegistrationNumber: sapInvoice.companyNIF,
-    submissionTimeStamp: new Date().toISOString(),
-    softwareInfo: {
-      productId: 'FacturaAGT',
-      productVersion: '1.0.0',
-      softwareValidationNumber: process.env.AGT_SOFTWARE_VALIDATION_NUMBER!,
-      jwsSoftwareSignature: '' // Será preenchido pela API route
-    },
-    numberOfEntries: 1,
-    documents: [
-      {
-        documentNo,
-        documentStatus: 'N',
-        jwsDocumentSignature: '', // Será preenchido pela API route
-        documentDate: sapInvoice.documentDate,
-        documentType: 'FT',
-        systemEntryDate: new Date().toISOString(),
-        customerCountry: 'AO',
-        customerTaxID: sapInvoice.customer.nif,
-        companyName: sapInvoice.customer.name,
-        companyAddress: sapInvoice.customer.address,
-        eacCode: process.env.COMPANY_EAC_CODE || '47111',
-        lines: sapInvoice.lines.map((line: any, index: number) => ({
-          lineNo: index + 1,
-          productCode: line.itemCode,
-          productDescription: line.description,
-          quantity: line.quantity,
-          unitOfMeasure: 'UN',
-          unitPrice: line.unitPrice,
-          unitPriceBase: line.unitPrice,
-          debitAmount: line.lineTotal,
-          taxes: [
-            {
-              taxType: 'IVA',
-              taxCountryRegion: 'AO',
-              taxCode: 'NOR',
-              taxPercentage: line.taxPercentage,
-              taxContribution: line.taxAmount
+### **FASE 5: Retorno ao SAP**
+
+```abap
+" PI/PO recebe resposta JSON e atualiza SAP
+FUNCTION z_agt_update_document.
+
+  DATA: ls_vbrk TYPE vbrk.
+
+  " Ler documento
+  SELECT SINGLE * FROM vbrk INTO ls_vbrk
+    WHERE vbeln = iv_vbeln.
+
+  " Atualizar campos customizados
+  UPDATE vbrk SET
+    zagt_code = iv_agt_code      " FT2025-00123-AGT-XYZ
+    zagt_hash = iv_hash          " A1B2C3D4E5...
+    zagt_status = 'APPROVED'     " Status
+    zagt_certified_at = sy-datum " Data certificação
+    zagt_qr_code = iv_qr_base64  " QR Code em base64
+  WHERE vbeln = iv_vbeln.
+
+  COMMIT WORK.
+
+  " Enviar email ao cliente
+  PERFORM send_invoice_email
+    USING iv_vbeln iv_qr_code.
+
+  " Log
+  WRITE: / 'Factura', iv_vbeln, 'certificada:', iv_agt_code.
+
+ENDFUNCTION.
+```
+
+---
+
+## 📊 Diagrama de Sequência Visual
+
+```
+Utilizador  SAP ECC   PI/PO    Mediador   AGT     SAP     Cliente
+    │         │         │          │        │       │        │
+    │  VF01   │         │          │        │       │        │
+    ├────────>│         │          │        │       │        │
+    │         │ Save    │          │        │       │        │
+    │         │ VBRK    │          │        │       │        │
+    │         │         │          │        │       │        │
+    │         │ Trigger │          │        │       │        │
+    │         ├────────>│          │        │       │        │
+    │         │         │ Map      │        │       │        │
+    │         │         │ IDoc→JSON│        │       │        │
+    │         │         │          │        │       │        │
+    │         │         │ POST     │        │       │        │
+    │         │         ├─────────>│        │       │        │
+    │         │         │          │Validate│       │        │
+    │         │         │          │Generate│       │        │
+    │         │         │          │  Hash  │       │        │
+    │         │         │          │  QR    │       │        │
+    │         │         │          │        │       │        │
+    │         │         │          │ POST   │       │        │
+    │         │         │          ├───────>│       │        │
+    │         │         │          │        │Certify│        │
+    │         │         │          │        │       │        │
+    │         │         │          │ Response       │        │
+    │         │         │          │<───────┤       │        │
+    │         │         │          │        │       │        │
+    │         │         │ JSON     │        │       │        │
+    │         │         │<─────────┤        │       │        │
+    │         │         │          │        │       │        │
+    │         │         │ Update   │        │       │        │
+    │         │         ├─────────────────────────>│        │
+    │         │         │          │        │       │        │
+    │         │ Success │          │        │       │        │
+    │         │<────────┤          │        │       │        │
+    │         │         │          │        │       │        │
+    │         │ Email PDF+QR                │       │        │
+    │         ├────────────────────────────────────────────>│
+    │         │         │          │        │       │        │
+    │ Status  │         │          │        │       │        │
+    │<────────┤         │          │        │       │        │
+    │ "OK"    │         │          │        │       │        │
+```
+
+---
+
+## ⏱️ Performance e Timeouts
+
+| Etapa | Tempo Médio | Timeout | Retry |
+|-------|-------------|---------|-------|
+| SAP cria doc | 2-5s | - | - |
+| Trigger PI/PO | <1s | - | - |
+| Transform IDoc | 1-2s | 10s | Não |
+| Send to Mediador | 0.5-1s | 5s | Sim (3x) |
+| Validate Mediador | 1-2s | 10s | Não |
+| Send to AGT | 3-5s | 30s | Sim (3x) |
+| AGT certify | 2-4s | 30s | - |
+| Return to SAP | 1-2s | 10s | Sim (3x) |
+| Update SAP | 1-2s | - | - |
+| **TOTAL** | **11-24s** | **95s** | - |
+
+### Estratégia de Retry (PI/PO)
+
+```java
+def sendWithRetry(factura, maxRetries = 3) {
+    for (int i = 0; i < maxRetries; i++) {
+        try {
+            return httpClient.post(factura)
+        } catch (TimeoutException e) {
+            if (i == maxRetries - 1) throw e
+            Thread.sleep(Math.pow(2, i) * 1000) // Backoff: 1s, 2s, 4s
+        } catch (ServerException e) {
+            if (e.statusCode >= 500 && i < maxRetries - 1) {
+                Thread.sleep(5000)
+                continue
             }
-          ],
-          settlementAmount: 0
-        })),
-        documentTotals: {
-          taxPayable: sapInvoice.totals.tax,
-          netTotal: sapInvoice.totals.net,
-          grossTotal: sapInvoice.totals.gross
+            throw e
         }
-      }
-    ],
-    validationStatus: 'P', // Pendente
-    createdAt: new Date().toISOString()
-  }
-}
-```
-
-**Status**: ✅ Factura convertida para formato AGT e pronta para envio
-
----
-
-### **FASE 3: SISTEMA FACTURA AGT → AGT** 🚀
-
-#### **PASSO 3.1: Registar factura na AGT**
-
-O sistema chama o endpoint `/api/agt/registarFactura` (já implementado):
-
-```typescript
-// Internamente no registarFactura (lib/api.ts)
-const payload = {
-  schemaVersion: "1.0",
-  submissionGUID: "550e8400-e29b-41d4-a716-446655440001",
-  taxRegistrationNumber: "5000012345",
-  submissionTimeStamp: "2025-10-01T10:30:00Z",
-  softwareInfo: {
-    productId: "FacturaAGT",
-    productVersion: "1.0.0",
-    softwareValidationNumber: "AGT2025001",
-    jwsSoftwareSignature: "eyJhbGciOiJSUzI1NiJ9..." // Gerado pela API route
-  },
-  numberOfEntries: 1,
-  documents: [
-    {
-      documentNo: "FT 2025/001",
-      documentStatus: "N",
-      jwsDocumentSignature: "eyJhbGciOiJSUzI1NiJ9...", // Gerado pela API route
-      documentDate: "2025-10-01",
-      documentType: "FT",
-      systemEntryDate: "2025-10-01T10:30:00",
-      customerCountry: "AO",
-      customerTaxID: "5000098765",
-      companyName: "Supermercado Central Lda",
-      companyAddress: "Rua Ho Chi Min, Luanda",
-      eacCode: "47111",
-      lines: [
-        {
-          lineNo: 1,
-          productCode: "ARROZ001",
-          productDescription: "Arroz Branco 5kg",
-          quantity: 50,
-          unitOfMeasure: "UN",
-          unitPrice: 2500.00,
-          unitPriceBase: 2500.00,
-          debitAmount: 125000.00,
-          taxes: [
-            {
-              taxType: "IVA",
-              taxCountryRegion: "AO",
-              taxCode: "NOR",
-              taxPercentage: 14,
-              taxContribution: 17500.00
-            }
-          ],
-          settlementAmount: 0
-        },
-        // ... demais linhas
-      ],
-      documentTotals: {
-        taxPayable: 36260.00,
-        netTotal: 259000.00,
-        grossTotal: 295260.00
-      }
     }
-  ]
-}
-```
-
-**Request HTTP para AGT**:
-```http
-POST https://sigt.agt.minfin.gov.ao/FacturaEletronica/ws/registarFactura
-Content-Type: application/json
-
-{
-  "schemaVersion": "1.0",
-  "submissionGUID": "550e8400-e29b-41d4-a716-446655440001",
-  "taxRegistrationNumber": "5000012345",
-  "submissionTimeStamp": "2025-10-01T10:30:00Z",
-  "softwareInfo": { ... },
-  "numberOfEntries": 1,
-  "documents": [ ... ]
-}
-```
-
-#### **PASSO 3.2: AGT responde imediatamente**
-
-**Resposta AGT (200 OK - Sucesso estrutural)**:
-```json
-{
-  "requestID": "AGT-20251001-0001"
-}
-```
-
-⚠️ **IMPORTANTE**: Esta resposta NÃO significa que a factura está validada!  
-Significa apenas que a AGT **aceitou a estrutura** e vai processar em background.
-
-**Resposta AGT (400 Bad Request - Erro estrutural)**:
-```json
-{
-  "errorList": [
-    {
-      "idError": "E01",
-      "descriptionError": "Campo obrigatório ausente: customerTaxID",
-      "documentNo": "FT 2025/001"
-    }
-  ]
 }
 ```
 
 ---
 
-### **FASE 4: VALIDAÇÃO ASSÍNCRONA NA AGT** ⏳
+## 🔐 Segurança em Todas as Camadas
 
-#### **PASSO 4.1: AGT processa factura em background**
+### SAP → PI/PO
+- ✅ **RFC Seguro**: SNC (Secure Network Communication)
+- ✅ **Criptografia**: AES-256
+- ✅ **VPN**: Túnel corporativo
 
-A AGT executa **validações complexas**:
+### PI/PO → Sistema Mediador
+- ✅ **HTTPS/TLS 1.3**: Criptografia em trânsito
+- ✅ **JWT RS256**: Token assinado com chave privada
+- ✅ **IP Whitelist**: Apenas IPs conhecidos
+- ✅ **Rate Limiting**: 100 req/min
 
-1. ✅ **Verificação de NIF**: O NIF do cliente existe na base de dados da AGT?
-2. ✅ **Verificação de série**: A série "FT 2025" foi previamente registada?
-3. ✅ **Numeração sequencial**: "FT 2025/001" é o próximo número válido?
-4. ✅ **Cálculos de impostos**: IVA calculado corretamente?
-5. ✅ **Regras de negócio**: Documento cumpre todas as regras?
-6. ✅ **Assinaturas JWS**: Certificados válidos?
+### Sistema Mediador → AGT
+- ✅ **Mutual TLS**: Cliente e servidor se autenticam
+- ✅ **Certificado Digital**: Emitido pela AGT
+- ✅ **JWS RS256**: Payload assinado
+- ✅ **API Key**: Chave secreta adicional
 
-**Tempo de processamento**: Pode levar de **segundos a minutos** (dependendo da carga do servidor AGT).
-
-#### **PASSO 4.2: AGT armazena resultado**
-
-AGT guarda o status da factura:
-- ✅ `V` = **Válida** (aceite fiscalmente)
-- ❌ `I` = **Inválida** (rejeitada, não existe fiscalmente)
-- ⚠️ `P` = **Válida com penalização** (enviada com +24h de atraso)
+### Dados em Repouso
+- ✅ **Encriptação**: AES-256-GCM
+- ✅ **Backup**: Diário, retenção 7 anos
+- ✅ **Auditoria**: Logs imutáveis
 
 ---
 
-### **FASE 5: CONSULTA DE STATUS** 🔍
+## 📈 Monitorização e Alertas
 
-#### **PASSO 5.1: Sistema Factura AGT faz polling**
+### Dashboard SAP
+```
+Transaction: /nSXMB_MONI (PI/PO Monitor)
 
-O sistema **consulta periodicamente** o status via `obterEstado`:
+KPIs:
+• Taxa de sucesso: 99.8%
+• Tempo médio resposta: 12s
+• Erros última hora: 2
+• Retry rate: 0.5%
+```
 
-```typescript
-// Auto-polling a cada 15 segundos
-const interval = setInterval(async () => {
-  const status = await obterEstado('AGT-20251001-0001')
+### Dashboard Sistema Mediador
+```
+URL: /configuracoes → Integração SAP
+
+Status:
+• Facturas processadas hoje: 1.247
+• Aprovadas AGT: 1.245 (99.8%)
+• Pendentes: 2
+• Erros: 0
+• Uptime: 99.99%
+```
+
+### Alertas Automáticos
+```yaml
+alerts:
+  - condition: error_rate > 5%
+    action: email + sms
+    recipients: ["dev@empresa.ao", "+244 9XX XXX XXX"]
   
-  if (status.resultCode === 0) {
-    // Processamento concluído - todas válidas
-    clearInterval(interval)
-    await updateFacturaStatus('AGT-20251001-0001', 'V')
-    await notifySAP(sapDocEntry, { status: 'Validado AGT', agtStatus: 'V' })
-  } else if (status.resultCode === 8) {
-    // Ainda em processamento
-    console.log('Validação AGT em curso...')
-  } else if (status.resultCode === 1 || status.resultCode === 2) {
-    // Concluído com erros
-    clearInterval(interval)
-    await updateFacturaStatus('AGT-20251001-0001', 'I')
-    await notifySAP(sapDocEntry, { 
-      status: 'Rejeitado AGT', 
-      agtStatus: 'I',
-      errors: status.documentStatusList[0].errorList
-    })
-  }
-}, 15000) // 15 segundos
-```
-
-**Request para AGT**:
-```http
-POST https://sigt.agt.minfin.gov.ao/FacturaEletronica/ws/obterEstado
-Content-Type: application/json
-
-{
-  "schemaVersion": "1.0",
-  "submissionId": "xxxxx-99999999-9999",
-  "taxRegistrationNumber": "5000012345",
-  "submissionTimeStamp": "2025-10-01T10:31:00Z",
-  "softwareInfo": { ... },
-  "jwsSignature": "eyJhbGciOiJSUzI1NiJ9...",
-  "requestID": "AGT-20251001-0001"
-}
-```
-
-**Resposta AGT (Em processamento)**:
-```json
-{
-  "requestID": "AGT-20251001-0001",
-  "resultCode": 8, // 8 = Em curso
-  "documentStatusList": []
-}
-```
-
-**Resposta AGT (Validado - Sucesso!)**:
-```json
-{
-  "requestID": "AGT-20251001-0001",
-  "resultCode": 0, // 0 = Processado sem inválidas
-  "documentStatusList": [
-    {
-      "documentNo": "FT 2025/001",
-      "documentStatus": "V", // VÁLIDA! ✅
-      "errorList": []
-    }
-  ]
-}
-```
-
-#### **PASSO 5.2: Notificar SAP do resultado**
-
-```typescript
-async function notifySAP(sapDocEntry: number, agtResult: any) {
-  const sapServiceLayerUrl = process.env.SAP_SERVICE_LAYER_URL
-  const sapSession = await getSAPSession()
+  - condition: response_time > 30s
+    action: log + notify
   
-  await fetch(`${sapServiceLayerUrl}/Invoices(${sapDocEntry})`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-      'Cookie': `B1SESSION=${sapSession}`
-    },
-    body: JSON.stringify({
-      U_AGT_Status: agtResult.status, // "Validado AGT"
-      U_AGT_ValidationStatus: agtResult.agtStatus, // "V"
-      U_AGT_ValidationDate: new Date().toISOString(),
-      Comments: agtResult.errors ? JSON.stringify(agtResult.errors) : 'Factura validada com sucesso pela AGT'
-    })
-  })
-  
-  // Adicionar campo texto livre no documento SAP
-  await addSAPDocumentAttachment(sapDocEntry, {
-    fileName: `AGT_FT_2025_001.xml`,
-    content: generateAGTXML(agtResult) // Gera XML da resposta AGT
-  })
-}
-```
-
-**Status final no SAP**:
-```
-┌─────────────────────────────────────────────────┐
-│  SAP Business One - Factura de Cliente         │
-├─────────────────────────────────────────────────┤
-│  DocNum: FT-SAP-2025-001                        │
-│  Cliente: Supermercado Central Lda              │
-│  Total: 295.260,00 AOA                          │
-│                                                 │
-│  ✅ STATUS AGT: Validado                        │
-│  📄 Nº Fiscal: FT 2025/001                      │
-│  🔖 RequestID: AGT-20251001-0001                │
-│  ✓ Status: V (Válida)                           │
-│  📅 Validado em: 2025-10-01 10:31:45            │
-└─────────────────────────────────────────────────┘
+  - condition: agt_unavailable
+    action: retry + escalate_after_3_failures
 ```
 
 ---
 
-### **FASE 6: IMPRESSÃO E ENTREGA AO CLIENTE** 🖨️
+## ✅ Checklist de Implementação
 
-#### **PASSO 6.1: Gerar PDF com QR Code**
+### Fase 1: Preparação SAP
+- [ ] Criar campos Z em VBRK (ZAGT_CODE, ZAGT_HASH, ZAGT_STATUS)
+- [ ] Desenvolver função Z_AGT_SEND_INVOICE
+- [ ] Implementar User Exit MV45AFZZ
+- [ ] Configurar RFC destination
+- [ ] Criar job batch de sincronização
 
-O sistema (ou o SAP via integração) gera o PDF da factura:
+### Fase 2: Configurar PI/PO
+- [ ] Importar WSDL no SPROXY
+- [ ] Criar Message Mapping (IDoc → JSON)
+- [ ] Configurar Sender Agreement
+- [ ] Configurar Receiver Determination
+- [ ] Configurar Receiver Agreement
+- [ ] Testar em DEV
 
-```typescript
-// Via endpoint do Sistema Factura AGT
-GET /api/facturas/FT-2025-001/pdf
+### Fase 3: Deploy Sistema Mediador
+- [ ] Deploy em servidor (Vercel/AWS/Azure)
+- [ ] Configurar domínio HTTPS
+- [ ] Gerar certificados SSL
+- [ ] Configurar JWT secrets
+- [ ] Ativar rate limiting
+- [ ] Configurar logs
 
-// Resposta: PDF stream com:
-// - Header AGT
-// - QR Code 350x350 (Model 2, Version 4, M 15%)
-// - Logo AGT <20%
-// - Dados da factura
-// - Assinatura digital
-```
-
-**PDF gerado**:
-```
-┌─────────────────────────────────────────────────┐
-│  🔵 AGT    República de Angola                  │
-│            Factura Eletrónica                   │
-│            Documento nº FT 2025/001             │
-│                                        [QR CODE]│
-│  ──────────────────────────────────────────────│
-│  Emitente:                    Cliente:          │
-│  Supermercado Central Lda     Empresa X Lda     │
-│  NIF: 5000012345              NIF: 5000098765   │
-│  ──────────────────────────────────────────────│
-│  # | Descrição          | Qtd | Preço | Total  │
-│  ──────────────────────────────────────────────│
-│  1 | Arroz Branco 5kg   |  50 | 2.500 | 125.000│
-│  2 | Óleo Girassol 1L   |  30 | 1.800 |  54.000│
-│  3 | Açúcar Refinado 1kg| 100 |   800 |  80.000│
-│  ──────────────────────────────────────────────│
-│                          Base: 259.000,00 AOA   │
-│                          IVA:   36.260,00 AOA   │
-│                          TOTAL: 295.260,00 AOA  │
-│                                                 │
-│  Validado pela AGT em 2025-10-01 10:31:45      │
-│  RequestID: AGT-20251001-0001                  │
-└─────────────────────────────────────────────────┘
-```
-
-#### **PASSO 6.2: Cliente pode validar via QR Code**
-
-Cliente escaneia o QR Code → Redireciona para:
-```
-https://portaldocontribuinte.minfin.gov.ao/consultar-fe?documentNo=FT%202025/001
-```
-
-No portal AGT, o cliente vê:
-```
-✅ FACTURA VÁLIDA
-
-Nº Documento: FT 2025/001
-Emissor: Supermercado Central Lda (NIF 5000012345)
-Data: 2025-10-01
-Total: 295.260,00 AOA
-Status: Validado
-```
+### Fase 4: Integração AGT
+- [ ] Obter credenciais AGT
+- [ ] Instalar certificado digital
+- [ ] Configurar endpoint AGT
+- [ ] Testar em homologação
+- [ ] Go-live produção
 
 ---
 
-## 📊 DIAGRAMA COMPLETO DO FLUXO
-
-```
-┌──────────────┐
-│     SAP      │
-│ (ERP Empresa)│
-└──────┬───────┘
-       │ 1. Venda registada
-       │ 2. Factura gerada
-       │
-       ▼
-  ┌─────────────────────────────┐
-  │  POST /api/sap/sync-invoice │ (Webhook SAP)
-  └─────────────┬───────────────┘
-                │
-                ▼
-┌──────────────────────────────────┐
-│   SISTEMA FACTURA AGT            │
-│  (Middleware - Este sistema)     │
-│                                  │
-│  1. Recebe dados SAP             │
-│  2. Converte formato SAP → AGT   │
-│  3. Obtém próximo nº série       │
-│  4. Gera assinaturas JWS         │
-│  5. Valida com Zod schemas       │
-└─────────────┬────────────────────┘
-              │
-              ▼
-  ┌────────────────────────────┐
-  │ POST /agt/registarFactura  │
-  └────────────┬───────────────┘
-               │
-               ▼
-┌─────────────────────────────────┐
-│         AGT REST API            │
-│  (Governo - Servidores AGT)     │
-│                                 │
-│  1. Valida estrutura            │
-│  2. Retorna requestID           │
-│  3. Processa assincronamente    │
-│     - Verifica NIF              │
-│     - Verifica série            │
-│     - Valida cálculos           │
-│     - Verifica assinaturas      │
-│  4. Armazena resultado (V/I/P)  │
-└─────────────┬───────────────────┘
-              │
-              ▼
-  ┌────────────────────────┐
-  │ POST /agt/obterEstado  │ (Polling 15s)
-  └────────────┬───────────┘
-               │
-               ▼
-┌──────────────────────────────────┐
-│   SISTEMA FACTURA AGT            │
-│                                  │
-│  1. Recebe status (V/I/P)        │
-│  2. Atualiza banco local         │
-│  3. Notifica SAP via API         │
-└─────────────┬────────────────────┘
-              │
-              ▼
-  ┌───────────────────────────┐
-  │ PATCH /sap/Invoices({id}) │ (SAP Service Layer)
-  └───────────┬───────────────┘
-              │
-              ▼
-┌──────────────────────────────────┐
-│         SAP UPDATED              │
-│                                  │
-│  ✅ U_AGT_DocNo: FT 2025/001     │
-│  ✅ U_AGT_Status: Validado       │
-│  ✅ U_AGT_ValidationStatus: V    │
-│  ✅ Comments: Validado AGT       │
-└──────────────────────────────────┘
-              │
-              ▼
-┌──────────────────────────────────┐
-│     GERAR PDF + QR CODE          │
-│                                  │
-│  1. Aceder via /api/facturas/pdf │
-│  2. Imprimir factura             │
-│  3. Entregar ao cliente          │
-│  4. Cliente valida via QR        │
-└──────────────────────────────────┘
-```
-
----
-
-## 🔄 CENÁRIOS ESPECIAIS
-
-### **CENÁRIO 1: Factura Rejeitada (Status I)**
-
-Se a AGT rejeitar a factura:
-
-```json
-// Resposta obterEstado
-{
-  "requestID": "AGT-20251001-0001",
-  "resultCode": 1, // Com inválidas
-  "documentStatusList": [
-    {
-      "documentNo": "FT 2025/001",
-      "documentStatus": "I", // INVÁLIDA ❌
-      "errorList": [
-        {
-          "idError": "E23",
-          "descriptionError": "NIF do cliente não registado na AGT"
-        }
-      ]
-    }
-  ]
-}
-```
-
-**Ações do sistema**:
-1. ❌ Marca factura como inválida
-2. 📧 Envia alerta para o fiscal da empresa
-3. 🔄 Atualiza SAP com status de erro
-4. 🚫 **Factura não tem validade fiscal!**
-5. ✏️ Empresa deve corrigir e reenviar
-
----
-
-### **CENÁRIO 2: Recibo de Pagamento (AR)**
-
-Quando cliente paga a factura FT 2025/001:
-
-**No SAP**:
-1. Cria **Incoming Payment** (Recebimento de cliente)
-2. Vincula ao documento FT-SAP-2025-001
-
-**Fluxo**:
-```
-SAP Payment → POST /api/sap/sync-payment →
-  Sistema cria documento AR 2025/001 →
-    POST /agt/registarFactura (com paymentReceipt) →
-      AGT valida →
-        Sistema atualiza SAP
-```
-
-**Payload AGT para recibo**:
-```json
-{
-  "documents": [
-    {
-      "documentNo": "AR 2025/001",
-      "documentType": "AR",
-      "paymentReceipt": {
-        "paymentMechanism": "TB", // Transferência Bancária
-        "paymentAmount": 295260.00,
-        "paymentDate": "2025-10-03",
-        "sourceDocuments": [
-          {
-            "lineNo": 1,
-            "sourceDocumentID": {
-              "OriginatingON": "FT 2025/001",
-              "documentDate": "2025-10-01"
-            },
-            "debitAmount": 295260.00
-          }
-        ]
-      },
-      // SEM LINES! (recibos não têm produtos)
-      "documentTotals": {
-        "taxPayable": 0,
-        "netTotal": 295260.00,
-        "grossTotal": 295260.00
-      }
-    }
-  ]
-}
-```
-
----
-
-### **CENÁRIO 3: Nota de Crédito (Devolução)**
-
-Cliente devolve 10 unidades de Arroz:
-
-**No SAP**:
-1. Cria **Return** (Devolução)
-2. Gera **Credit Note** (Nota de Crédito)
-
-**Fluxo**:
-```
-SAP Credit Note → POST /api/sap/sync-credit-note →
-  Sistema cria documento NC 2025/001 →
-    POST /agt/registarFactura (com referenceInfo) →
-      AGT valida →
-        Sistema atualiza SAP
-```
-
-**Payload AGT**:
-```json
-{
-  "documents": [
-    {
-      "documentNo": "NC 2025/001",
-      "documentType": "NC",
-      "referenceInfo": {
-        "referenceNo": "FT 2025/001",
-        "referenceDate": "2025-10-01",
-        "reason": "Devolução de 10 unidades com defeito"
-      },
-      "lines": [
-        {
-          "lineNo": 1,
-          "productCode": "ARROZ001",
-          "productDescription": "Arroz Branco 5kg (DEVOLUÇÃO)",
-          "quantity": -10, // NEGATIVO!
-          "debitAmount": -25000.00,
-          "creditAmount": 25000.00,
-          "taxes": [
-            {
-              "taxType": "IVA",
-              "taxPercentage": 14,
-              "taxContribution": -3500.00
-            }
-          ]
-        }
-      ],
-      "documentTotals": {
-        "taxPayable": -3500.00,
-        "netTotal": -25000.00,
-        "grossTotal": -28500.00
-      }
-    }
-  ]
-}
-```
-
----
-
-## 🎯 RESUMO FINAL
-
-### **Fluxo Simplificado**:
-```
-SAP Venda → Sistema converte → AGT valida → Sistema atualiza SAP → PDF gerado
-```
-
-### **Tempos estimados**:
-- SAP → Sistema: **< 1 segundo** (síncrono)
-- Sistema → AGT: **< 2 segundos** (envio)
-- AGT validação: **15-60 segundos** (assíncrono)
-- Polling status: **A cada 15 segundos** até conclusão
-- **Tempo total**: ~1-2 minutos do início ao fim
-
-### **Vantagens desta arquitetura**:
-1. ✅ **SAP não precisa integração direta com AGT** (complexidade reduzida)
-2. ✅ **Sistema Factura AGT é o middleware especializado**
-3. ✅ **Retry automático** em caso de falhas
-4. ✅ **Auditoria completa** de todas as transações
-5. ✅ **Validação dupla**: Zod schemas + AGT
-6. ✅ **Assinaturas criptográficas** garantem autenticidade
-7. ✅ **SAP sempre atualizado** com status fiscal real
-
-### **Tecnologias envolvidas**:
-- **SAP**: Service Layer API, DI API, User Defined Fields
-- **Sistema**: Next.js, TypeScript, Zod, JWS (jose), QRCode
-- **AGT**: REST API, JWS RS256, XML/JSON
-
-**🎉 Sistema 100% funcional e pronto para produção!**
+**Documento criado**: 11 Dezembro 2025  
+**Versão**: 1.0.0  
+**Autor**: Equipa Técnica Sistema AGT  
+**Para**: Programadores SAP e Arquitetos de Integração

@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://agt.gov.ao/services/facturacao"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             targetNamespace="http://agt.gov.ao/services/facturacao"
+             name="AGTFacturaService">
+
+    <!-- Types -->
+    <types>
+        <xsd:schema targetNamespace="http://agt.gov.ao/services/facturacao">
+            
+            <!-- Request: Registar Factura -->
+            <xsd:element name="RegistarFacturaRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="nif" type="xsd:string"/>
+                        <xsd:element name="tipoDocumento" type="xsd:string"/>
+                        <xsd:element name="numeroSerie" type="xsd:string"/>
+                        <xsd:element name="dataEmissao" type="xsd:dateTime"/>
+                        <xsd:element name="cliente" type="tns:ClienteType"/>
+                        <xsd:element name="linhas" type="tns:LinhasType"/>
+                        <xsd:element name="totais" type="tns:TotaisType"/>
+                        <xsd:element name="pagamento" type="tns:PagamentoType"/>
+                        <xsd:element name="observacoes" type="xsd:string" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Response: Registar Factura -->
+            <xsd:element name="RegistarFacturaResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sucesso" type="xsd:boolean"/>
+                        <xsd:element name="codigoDocumento" type="xsd:string"/>
+                        <xsd:element name="hash" type="xsd:string"/>
+                        <xsd:element name="qrCode" type="xsd:string"/>
+                        <xsd:element name="dataProcessamento" type="xsd:dateTime"/>
+                        <xsd:element name="mensagem" type="xsd:string" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Request: Consultar Estado -->
+            <xsd:element name="ConsultarEstadoRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="nif" type="xsd:string"/>
+                        <xsd:element name="codigoDocumento" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Response: Consultar Estado -->
+            <xsd:element name="ConsultarEstadoResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="estado" type="xsd:string"/>
+                        <xsd:element name="dataProcessamento" type="xsd:dateTime"/>
+                        <xsd:element name="detalhes" type="xsd:string" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Request: Solicitar Serie -->
+            <xsd:element name="SolicitarSerieRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="nif" type="xsd:string"/>
+                        <xsd:element name="tipoDocumento" type="xsd:string"/>
+                        <xsd:element name="designacao" type="xsd:string"/>
+                        <xsd:element name="anoFiscal" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Response: Solicitar Serie -->
+            <xsd:element name="SolicitarSerieResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sucesso" type="xsd:boolean"/>
+                        <xsd:element name="numeroSerie" type="xsd:string"/>
+                        <xsd:element name="estado" type="xsd:string"/>
+                        <xsd:element name="dataAprovacao" type="xsd:dateTime" minOccurs="0"/>
+                        <xsd:element name="mensagem" type="xsd:string" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Complex Types -->
+            <xsd:complexType name="ClienteType">
+                <xsd:sequence>
+                    <xsd:element name="nif" type="xsd:string"/>
+                    <xsd:element name="nome" type="xsd:string"/>
+                    <xsd:element name="endereco" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="telefone" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="email" type="xsd:string" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:complexType name="LinhasType">
+                <xsd:sequence>
+                    <xsd:element name="linha" type="tns:LinhaType" minOccurs="1" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:complexType name="LinhaType">
+                <xsd:sequence>
+                    <xsd:element name="numeroLinha" type="xsd:int"/>
+                    <xsd:element name="codigoProduto" type="xsd:string"/>
+                    <xsd:element name="descricao" type="xsd:string"/>
+                    <xsd:element name="quantidade" type="xsd:decimal"/>
+                    <xsd:element name="unidade" type="xsd:string"/>
+                    <xsd:element name="precoUnitario" type="xsd:decimal"/>
+                    <xsd:element name="desconto" type="xsd:decimal" minOccurs="0"/>
+                    <xsd:element name="impostos" type="tns:ImpostosType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:complexType name="ImpostosType">
+                <xsd:sequence>
+                    <xsd:element name="imposto" type="tns:ImpostoType" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:complexType name="ImpostoType">
+                <xsd:sequence>
+                    <xsd:element name="tipo" type="xsd:string"/>
+                    <xsd:element name="taxa" type="xsd:decimal"/>
+                    <xsd:element name="motivo" type="xsd:string" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:complexType name="TotaisType">
+                <xsd:sequence>
+                    <xsd:element name="subtotal" type="xsd:decimal"/>
+                    <xsd:element name="totalImpostos" type="xsd:decimal"/>
+                    <xsd:element name="totalDesconto" type="xsd:decimal"/>
+                    <xsd:element name="total" type="xsd:decimal"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:complexType name="PagamentoType">
+                <xsd:sequence>
+                    <xsd:element name="metodoPagamento" type="xsd:string"/>
+                    <xsd:element name="montante" type="xsd:decimal"/>
+                    <xsd:element name="moeda" type="xsd:string"/>
+                    <xsd:element name="taxaCambio" type="xsd:decimal" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+        </xsd:schema>
+    </types>
+
+    <!-- Messages -->
+    <message name="RegistarFacturaRequestMsg">
+        <part name="parameters" element="tns:RegistarFacturaRequest"/>
+    </message>
+    <message name="RegistarFacturaResponseMsg">
+        <part name="parameters" element="tns:RegistarFacturaResponse"/>
+    </message>
+
+    <message name="ConsultarEstadoRequestMsg">
+        <part name="parameters" element="tns:ConsultarEstadoRequest"/>
+    </message>
+    <message name="ConsultarEstadoResponseMsg">
+        <part name="parameters" element="tns:ConsultarEstadoResponse"/>
+    </message>
+
+    <message name="SolicitarSerieRequestMsg">
+        <part name="parameters" element="tns:SolicitarSerieRequest"/>
+    </message>
+    <message name="SolicitarSerieResponseMsg">
+        <part name="parameters" element="tns:SolicitarSerieResponse"/>
+    </message>
+
+    <!-- Port Type -->
+    <portType name="AGTFacturaServicePortType">
+        <operation name="RegistarFactura">
+            <input message="tns:RegistarFacturaRequestMsg"/>
+            <output message="tns:RegistarFacturaResponseMsg"/>
+        </operation>
+        <operation name="ConsultarEstado">
+            <input message="tns:ConsultarEstadoRequestMsg"/>
+            <output message="tns:ConsultarEstadoResponseMsg"/>
+        </operation>
+        <operation name="SolicitarSerie">
+            <input message="tns:SolicitarSerieRequestMsg"/>
+            <output message="tns:SolicitarSerieResponseMsg"/>
+        </operation>
+    </portType>
+
+    <!-- Binding -->
+    <binding name="AGTFacturaServiceSoapBinding" type="tns:AGTFacturaServicePortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        
+        <operation name="RegistarFactura">
+            <soap:operation soapAction="http://agt.gov.ao/services/facturacao/RegistarFactura"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+
+        <operation name="ConsultarEstado">
+            <soap:operation soapAction="http://agt.gov.ao/services/facturacao/ConsultarEstado"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+
+        <operation name="SolicitarSerie">
+            <soap:operation soapAction="http://agt.gov.ao/services/facturacao/SolicitarSerie"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <!-- Service -->
+    <service name="AGTFacturaService">
+        <documentation>
+            Serviço Web para integração com AGT (Administração Geral Tributária)
+            Base URL: https://seu-sistema.ao/api/agt
+            Autenticação: Bearer Token (JWT RS256)
+        </documentation>
+        <port name="AGTFacturaServicePort" binding="tns:AGTFacturaServiceSoapBinding">
+            <soap:address location="https://seu-sistema.ao/api/agt/soap"/>
+        </port>
+    </service>
+
+</definitions>
