@@ -1,0 +1,750 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  =============================================================================
+  WSDL OFICIAL - FACTURAÇÃO ELECTRÓNICA AGT ANGOLA
+  =============================================================================
+  
+  Serviço Web de Facturação Electrónica
+  Versão: 1.0
+  
+  Baseado nas especificações técnicas oficiais da AGT:
+  "ESTRUTURA DE DADOS DE SOFTWARE, MODELO DE FACTURAÇÃO ELECTRÓNICA,
+   ESPECIFICAÇÕES TÉCNICAS E PROCEDIMENTAIS"
+  
+  Departamento de Facturação Electrónica - AGT Angola
+  Decreto Executivo 683/25
+  Decreto Presidencial 71/25
+  
+  Serviços implementados:
+  1. registarFactura    - Registar facturas electrónicas
+  2. obterEstado        - Obter estado de validação
+  3. listarFacturas     - Listar facturas de um período
+  4. consultarFactura   - Consultar factura específica
+  5. solicitarSerie     - Criar série de numeração
+  6. listarSeries       - Listar séries existentes
+  7. validarDocumento   - Confirmar/rejeitar documento
+  
+  NOTA: Este WSDL está preparado para operação SOAP sobre HTTP POST.
+        A AGT utiliza preferencialmente REST/JSON, mas este WSDL
+        permite integração via SOAP para sistemas legados.
+-->
+<definitions 
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://agt.minfin.gov.ao/facturacao/v1"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://agt.minfin.gov.ao/facturacao/v1"
+    name="AGTFacturacaoElectronicaService">
+
+    <!-- ================================================================== -->
+    <!-- TIPOS DE DADOS (XML SCHEMA)                                        -->
+    <!-- ================================================================== -->
+    <types>
+        <xsd:schema targetNamespace="http://agt.minfin.gov.ao/facturacao/v1"
+                    elementFormDefault="qualified">
+
+            <!-- ========================================================== -->
+            <!-- TIPOS SIMPLES                                              -->
+            <!-- ========================================================== -->
+            
+            <!-- Tipo de Documento de Facturação -->
+            <xsd:simpleType name="DocumentTypeType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="FA"/><!-- Factura de Adiantamento -->
+                    <xsd:enumeration value="FT"/><!-- Factura -->
+                    <xsd:enumeration value="FR"/><!-- Factura/Recibo -->
+                    <xsd:enumeration value="FG"/><!-- Factura Global -->
+                    <xsd:enumeration value="AC"/><!-- Aviso de Cobrança -->
+                    <xsd:enumeration value="AR"/><!-- Aviso de Cobrança/Recibo -->
+                    <xsd:enumeration value="TV"/><!-- Talão de Venda -->
+                    <xsd:enumeration value="RC"/><!-- Recibo Emitido -->
+                    <xsd:enumeration value="RG"/><!-- Outros Recibos Emitidos -->
+                    <xsd:enumeration value="RE"/><!-- Estorno ou Recibo de Estorno -->
+                    <xsd:enumeration value="ND"/><!-- Nota de Débito -->
+                    <xsd:enumeration value="NC"/><!-- Nota de Crédito -->
+                    <xsd:enumeration value="AF"/><!-- Factura/Recibo de Autofacturação -->
+                    <xsd:enumeration value="RP"/><!-- Prémio ou Recibo de Prémio -->
+                    <xsd:enumeration value="RA"/><!-- Resseguro Aceite -->
+                    <xsd:enumeration value="CS"/><!-- Imputação a Co-seguradoras -->
+                    <xsd:enumeration value="LD"/><!-- Imputação a Co-seguradora Líder -->
+                </xsd:restriction>
+            </xsd:simpleType>
+
+            <!-- Estado do Documento -->
+            <xsd:simpleType name="DocumentStatusType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="N"/><!-- Normal -->
+                    <xsd:enumeration value="S"/><!-- Autofacturação -->
+                    <xsd:enumeration value="A"/><!-- Anulado -->
+                    <xsd:enumeration value="R"/><!-- Resumo -->
+                    <xsd:enumeration value="C"/><!-- Correcção -->
+                </xsd:restriction>
+            </xsd:simpleType>
+
+            <!-- Motivo de Anulação -->
+            <xsd:simpleType name="CancelReasonType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="I"/><!-- Incorrecta identificação -->
+                    <xsd:enumeration value="N"/><!-- Não enviado ao adquirente -->
+                </xsd:restriction>
+            </xsd:simpleType>
+
+            <!-- Sistema de Imposto -->
+            <xsd:simpleType name="TaxTypeType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="IVA"/>
+                    <xsd:enumeration value="IS"/>
+                    <xsd:enumeration value="IEC"/>
+                    <xsd:enumeration value="NS"/><!-- Não sujeito -->
+                </xsd:restriction>
+            </xsd:simpleType>
+
+            <!-- Código IVA -->
+            <xsd:simpleType name="IVATaxCodeType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="NOR"/><!-- Normal -->
+                    <xsd:enumeration value="INT"/><!-- Intermédia -->
+                    <xsd:enumeration value="RED"/><!-- Reduzida -->
+                    <xsd:enumeration value="ISE"/><!-- Isento -->
+                    <xsd:enumeration value="OUT"/><!-- Outra -->
+                </xsd:restriction>
+            </xsd:simpleType>
+
+            <!-- Estado da Série -->
+            <xsd:simpleType name="SeriesStatusType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="A"/><!-- Aberta -->
+                    <xsd:enumeration value="U"/><!-- Em utilização -->
+                    <xsd:enumeration value="F"/><!-- Fechada -->
+                </xsd:restriction>
+            </xsd:simpleType>
+
+            <!-- Método de Facturação -->
+            <xsd:simpleType name="InvoicingMethodType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="FEPC"/><!-- Portal do Contribuinte -->
+                    <xsd:enumeration value="FESF"/><!-- Software de Facturação -->
+                    <xsd:enumeration value="SF"/><!-- Não electrónica -->
+                </xsd:restriction>
+            </xsd:simpleType>
+
+            <!-- Estado de Validação -->
+            <xsd:simpleType name="ValidationStatusType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="V"/><!-- Válida -->
+                    <xsd:enumeration value="I"/><!-- Inválida -->
+                    <xsd:enumeration value="P"/><!-- Válida com penalização -->
+                </xsd:restriction>
+            </xsd:simpleType>
+
+            <!-- Código de Resultado -->
+            <xsd:simpleType name="ResultCodeType">
+                <xsd:restriction base="xsd:int">
+                    <xsd:enumeration value="0"/><!-- Sem inválidas -->
+                    <xsd:enumeration value="1"/><!-- Com válidas e inválidas -->
+                    <xsd:enumeration value="2"/><!-- Sem válidas -->
+                    <xsd:enumeration value="7"/><!-- Prematura/repetitiva -->
+                    <xsd:enumeration value="8"/><!-- Em curso -->
+                    <xsd:enumeration value="9"/><!-- Cancelado -->
+                </xsd:restriction>
+            </xsd:simpleType>
+
+            <!-- Acção de Validação -->
+            <xsd:simpleType name="ValidationActionType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="C"/><!-- Confirmar -->
+                    <xsd:enumeration value="R"/><!-- Rejeitar -->
+                </xsd:restriction>
+            </xsd:simpleType>
+
+            <!-- NIF -->
+            <xsd:simpleType name="NIFType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:maxLength value="15"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+
+            <!-- GUID/UUID -->
+            <xsd:simpleType name="GUIDType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:pattern value="[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+
+            <!-- Assinatura JWS -->
+            <xsd:simpleType name="JWSSignatureType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:minLength value="256"/>
+                    <xsd:maxLength value="256"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+
+            <!-- ========================================================== -->
+            <!-- TIPOS COMPLEXOS                                            -->
+            <!-- ========================================================== -->
+
+            <!-- Detalhes do Software -->
+            <xsd:complexType name="SoftwareInfoDetailType">
+                <xsd:sequence>
+                    <xsd:element name="productId" type="xsd:string"/>
+                    <xsd:element name="productVersion" type="xsd:string"/>
+                    <xsd:element name="softwareValidationNumber" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <!-- Informação do Software -->
+            <xsd:complexType name="SoftwareInfoType">
+                <xsd:sequence>
+                    <xsd:element name="softwareInfoDetail" type="tns:SoftwareInfoDetailType"/>
+                    <xsd:element name="jwsSoftwareSignature" type="tns:JWSSignatureType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <!-- Entrada de Imposto -->
+            <xsd:complexType name="TaxEntryType">
+                <xsd:sequence>
+                    <xsd:element name="taxType" type="tns:TaxTypeType"/>
+                    <xsd:element name="taxCountryRegion" type="xsd:string"/>
+                    <xsd:element name="taxCode" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="taxBase" type="xsd:decimal" minOccurs="0"/>
+                    <xsd:element name="taxPercentage" type="xsd:decimal" minOccurs="0"/>
+                    <xsd:element name="taxAmount" type="xsd:decimal" minOccurs="0"/>
+                    <xsd:element name="taxContribution" type="xsd:decimal" minOccurs="0"/>
+                    <xsd:element name="taxExemptionCode" type="xsd:string" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <!-- Referência -->
+            <xsd:complexType name="ReferenceInfoType">
+                <xsd:sequence>
+                    <xsd:element name="reference" type="xsd:string"/>
+                    <xsd:element name="reason" type="xsd:string" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <!-- Linha do Documento -->
+            <xsd:complexType name="DocumentLineType">
+                <xsd:sequence>
+                    <xsd:element name="lineNumber" type="xsd:int"/>
+                    <xsd:element name="productCode" type="xsd:string"/>
+                    <xsd:element name="productDescription" type="xsd:string"/>
+                    <xsd:element name="quantity" type="xsd:decimal"/>
+                    <xsd:element name="unitOfMeasure" type="xsd:string"/>
+                    <xsd:element name="unitPrice" type="xsd:decimal"/>
+                    <xsd:element name="unitPriceBase" type="xsd:decimal"/>
+                    <xsd:element name="referenceInfo" type="tns:ReferenceInfoType" minOccurs="0"/>
+                    <xsd:element name="debitAmount" type="xsd:decimal" minOccurs="0"/>
+                    <xsd:element name="creditAmount" type="xsd:decimal" minOccurs="0"/>
+                    <xsd:element name="taxes" type="tns:TaxEntryType" minOccurs="0" maxOccurs="unbounded"/>
+                    <xsd:element name="settlementAmount" type="xsd:decimal"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <!-- ID Documento Origem -->
+            <xsd:complexType name="SourceDocumentIDType">
+                <xsd:sequence>
+                    <xsd:element name="OriginatingON" type="xsd:string"/>
+                    <xsd:element name="documentDate" type="xsd:date"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <!-- Documento Origem -->
+            <xsd:complexType name="SourceDocumentType">
+                <xsd:sequence>
+                    <xsd:element name="lineNo" type="xsd:int"/>
+                    <xsd:element name="sourceDocumentID" type="tns:SourceDocumentIDType"/>
+                    <xsd:element name="debitAmount" type="xsd:decimal" minOccurs="0"/>
+                    <xsd:element name="creditAmount" type="xsd:decimal" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <!-- Recibo de Pagamento -->
+            <xsd:complexType name="PaymentReceiptType">
+                <xsd:sequence>
+                    <xsd:element name="sourceDocuments" type="tns:SourceDocumentType" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <!-- Moeda -->
+            <xsd:complexType name="CurrencyType">
+                <xsd:sequence>
+                    <xsd:element name="currencyCode" type="xsd:string"/>
+                    <xsd:element name="currencyAmount" type="xsd:decimal"/>
+                    <xsd:element name="exchangeRate" type="xsd:decimal"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <!-- Totais do Documento -->
+            <xsd:complexType name="DocumentTotalsType">
+                <xsd:sequence>
+                    <xsd:element name="taxPayable" type="xsd:decimal"/>
+                    <xsd:element name="netTotal" type="xsd:decimal"/>
+                    <xsd:element name="grossTotal" type="xsd:decimal"/>
+                    <xsd:element name="currency" type="tns:CurrencyType" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <!-- Retenção na Fonte -->
+            <xsd:complexType name="WithholdingTaxType">
+                <xsd:sequence>
+                    <xsd:element name="withholdingTaxType" type="xsd:string"/>
+                    <xsd:element name="withholdingTaxDescription" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="withholdingTaxAmount" type="xsd:decimal"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <!-- Documento -->
+            <xsd:complexType name="DocumentType">
+                <xsd:sequence>
+                    <xsd:element name="documentNo" type="xsd:string"/>
+                    <xsd:element name="documentStatus" type="tns:DocumentStatusType"/>
+                    <xsd:element name="documentCancelReason" type="tns:CancelReasonType" minOccurs="0"/>
+                    <xsd:element name="rejectedDocumentNo" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="jwsDocumentSignature" type="tns:JWSSignatureType"/>
+                    <xsd:element name="documentDate" type="xsd:date"/>
+                    <xsd:element name="documentType" type="tns:DocumentTypeType"/>
+                    <xsd:element name="eacCode" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="systemEntryDate" type="xsd:dateTime"/>
+                    <xsd:element name="customerCountry" type="xsd:string"/>
+                    <xsd:element name="customerTaxID" type="xsd:string"/>
+                    <xsd:element name="companyName" type="xsd:string"/>
+                    <xsd:element name="lines" type="tns:DocumentLineType" minOccurs="0" maxOccurs="unbounded"/>
+                    <xsd:element name="paymentReceipt" type="tns:PaymentReceiptType" minOccurs="0"/>
+                    <xsd:element name="documentTotals" type="tns:DocumentTotalsType"/>
+                    <xsd:element name="withholdingTaxList" type="tns:WithholdingTaxType" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <!-- Erro -->
+            <xsd:complexType name="ErrorEntryType">
+                <xsd:sequence>
+                    <xsd:element name="idError" type="xsd:string"/>
+                    <xsd:element name="descriptionError" type="xsd:string"/>
+                    <xsd:element name="documentNo" type="xsd:string" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <!-- Estado de Documento -->
+            <xsd:complexType name="DocumentStatusEntryType">
+                <xsd:sequence>
+                    <xsd:element name="documentNo" type="xsd:string"/>
+                    <xsd:element name="documentStatus" type="tns:ValidationStatusType"/>
+                    <xsd:element name="errorList" type="tns:ErrorEntryType" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <!-- Informação de Série -->
+            <xsd:complexType name="SeriesInfoType">
+                <xsd:sequence>
+                    <xsd:element name="seriesCode" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="seriesYear" type="xsd:int" minOccurs="0"/>
+                    <xsd:element name="documentType" type="tns:DocumentTypeType" minOccurs="0"/>
+                    <xsd:element name="seriesStatus" type="tns:SeriesStatusType" minOccurs="0"/>
+                    <xsd:element name="seriesCreationDate" type="xsd:date"/>
+                    <xsd:element name="firstDocumentCreated" type="xsd:string"/>
+                    <xsd:element name="lastDocumentCreated" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="invoicingMethod" type="tns:InvoicingMethodType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <!-- ========================================================== -->
+            <!-- ELEMENTOS DE PEDIDO E RESPOSTA                             -->
+            <!-- ========================================================== -->
+
+            <!-- 1. REGISTAR FACTURA -->
+            <xsd:element name="RegistarFacturaRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="schemaVersion" type="xsd:string"/>
+                        <xsd:element name="submissionGUID" type="tns:GUIDType"/>
+                        <xsd:element name="taxRegistrationNumber" type="tns:NIFType"/>
+                        <xsd:element name="submissionTimeStamp" type="xsd:dateTime"/>
+                        <xsd:element name="softwareInfo" type="tns:SoftwareInfoType"/>
+                        <xsd:element name="numberOfEntries" type="xsd:int"/>
+                        <xsd:element name="documents" type="tns:DocumentType" maxOccurs="30"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="RegistarFacturaResponse">
+                <xsd:complexType>
+                    <xsd:choice>
+                        <xsd:element name="requestID" type="xsd:string"/>
+                        <xsd:element name="errorList" type="tns:ErrorEntryType" maxOccurs="unbounded"/>
+                    </xsd:choice>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- 2. OBTER ESTADO -->
+            <xsd:element name="ObterEstadoRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="schemaVersion" type="xsd:string"/>
+                        <xsd:element name="submissionId" type="xsd:string"/>
+                        <xsd:element name="taxRegistrationNumber" type="tns:NIFType"/>
+                        <xsd:element name="submissionTimeStamp" type="xsd:dateTime"/>
+                        <xsd:element name="softwareInfo" type="tns:SoftwareInfoType"/>
+                        <xsd:element name="jwsSignature" type="tns:JWSSignatureType"/>
+                        <xsd:element name="requestID" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="ObterEstadoResponse">
+                <xsd:complexType>
+                    <xsd:choice>
+                        <xsd:element name="statusResult">
+                            <xsd:complexType>
+                                <xsd:sequence>
+                                    <xsd:element name="requestID" type="xsd:string"/>
+                                    <xsd:element name="resultCode" type="tns:ResultCodeType"/>
+                                    <xsd:element name="documentStatusList" type="tns:DocumentStatusEntryType" minOccurs="0" maxOccurs="unbounded"/>
+                                </xsd:sequence>
+                            </xsd:complexType>
+                        </xsd:element>
+                        <xsd:element name="errorEntry" type="tns:ErrorEntryType"/>
+                    </xsd:choice>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- 3. LISTAR FACTURAS -->
+            <xsd:element name="ListarFacturasRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="schemaVersion" type="xsd:string"/>
+                        <xsd:element name="submissionId" type="xsd:string"/>
+                        <xsd:element name="taxRegistrationNumber" type="tns:NIFType"/>
+                        <xsd:element name="submissionTimeStamp" type="xsd:dateTime"/>
+                        <xsd:element name="softwareInfo" type="tns:SoftwareInfoType"/>
+                        <xsd:element name="jwsSignature" type="tns:JWSSignatureType"/>
+                        <xsd:element name="queryStartDate" type="xsd:date"/>
+                        <xsd:element name="queryEndDate" type="xsd:date"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="ListarFacturasResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="documentResultCount" type="xsd:int"/>
+                        <xsd:element name="documentResultList" minOccurs="0" maxOccurs="unbounded">
+                            <xsd:complexType>
+                                <xsd:sequence>
+                                    <xsd:element name="documentNo" type="xsd:string"/>
+                                    <xsd:element name="documentDate" type="xsd:date"/>
+                                </xsd:sequence>
+                            </xsd:complexType>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- 4. CONSULTAR FACTURA -->
+            <xsd:element name="ConsultarFacturaRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="schemaVersion" type="xsd:string"/>
+                        <xsd:element name="submissionId" type="xsd:string"/>
+                        <xsd:element name="taxRegistrationNumber" type="tns:NIFType"/>
+                        <xsd:element name="submissionTimeStamp" type="xsd:dateTime"/>
+                        <xsd:element name="softwareInfo" type="tns:SoftwareInfoType"/>
+                        <xsd:element name="jwsSignature" type="tns:JWSSignatureType"/>
+                        <xsd:element name="documentNo" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="ConsultarFacturaResponse">
+                <xsd:complexType>
+                    <xsd:choice>
+                        <xsd:sequence>
+                            <xsd:element name="documentNo" type="xsd:string"/>
+                            <xsd:element name="validationStatus" type="tns:ValidationStatusType" minOccurs="0"/>
+                            <xsd:element name="documents" type="tns:DocumentType" maxOccurs="unbounded"/>
+                        </xsd:sequence>
+                        <xsd:element name="errorEntry" type="tns:ErrorEntryType"/>
+                    </xsd:choice>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- 5. SOLICITAR SÉRIE -->
+            <xsd:element name="SolicitarSerieRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="schemaVersion" type="xsd:string"/>
+                        <xsd:element name="submissionId" type="xsd:string"/>
+                        <xsd:element name="taxRegistrationNumber" type="tns:NIFType"/>
+                        <xsd:element name="submissionTimeStamp" type="xsd:dateTime"/>
+                        <xsd:element name="softwareInfo" type="tns:SoftwareInfoType"/>
+                        <xsd:element name="jwsSignature" type="tns:JWSSignatureType"/>
+                        <xsd:element name="seriesCode" type="xsd:string"/>
+                        <xsd:element name="seriesYear" type="xsd:int"/>
+                        <xsd:element name="documentType" type="tns:DocumentTypeType"/>
+                        <xsd:element name="firstDocumentNumber" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="SolicitarSerieResponse">
+                <xsd:complexType>
+                    <xsd:choice>
+                        <xsd:element name="resultCode" type="xsd:int"/>
+                        <xsd:element name="errorList" type="tns:ErrorEntryType" maxOccurs="unbounded"/>
+                    </xsd:choice>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- 6. LISTAR SÉRIES -->
+            <xsd:element name="ListarSeriesRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="schemaVersion" type="xsd:string"/>
+                        <xsd:element name="submissionId" type="xsd:string"/>
+                        <xsd:element name="taxRegistrationNumber" type="tns:NIFType"/>
+                        <xsd:element name="submissionTimeStamp" type="xsd:dateTime"/>
+                        <xsd:element name="softwareInfo" type="tns:SoftwareInfoType"/>
+                        <xsd:element name="jwsSignature" type="tns:JWSSignatureType"/>
+                        <xsd:element name="seriesCode" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="seriesYear" type="xsd:int" minOccurs="0"/>
+                        <xsd:element name="documentType" type="tns:DocumentTypeType" minOccurs="0"/>
+                        <xsd:element name="seriesStatus" type="tns:SeriesStatusType" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="ListarSeriesResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="seriesResultCount" type="xsd:int"/>
+                        <xsd:element name="seriesInfo" type="tns:SeriesInfoType" minOccurs="0" maxOccurs="unbounded"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- 7. VALIDAR DOCUMENTO -->
+            <xsd:element name="ValidarDocumentoRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="schemaVersion" type="xsd:string"/>
+                        <xsd:element name="submissionId" type="xsd:string"/>
+                        <xsd:element name="taxRegistrationNumber" type="tns:NIFType"/>
+                        <xsd:element name="submissionTimeStamp" type="xsd:dateTime"/>
+                        <xsd:element name="softwareInfo" type="tns:SoftwareInfoType"/>
+                        <xsd:element name="jwsSignature" type="tns:JWSSignatureType"/>
+                        <xsd:element name="documentNo" type="xsd:string"/>
+                        <xsd:element name="action" type="tns:ValidationActionType"/>
+                        <xsd:element name="deductibleVATPercentage" type="xsd:decimal" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="ValidarDocumentoResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="actionResultCode" type="xsd:string"/>
+                        <xsd:element name="documentStatusCode" type="xsd:string"/>
+                        <xsd:element name="errorList" type="tns:ErrorEntryType" minOccurs="0" maxOccurs="unbounded"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+        </xsd:schema>
+    </types>
+
+    <!-- ================================================================== -->
+    <!-- MENSAGENS                                                          -->
+    <!-- ================================================================== -->
+    
+    <!-- 1. Registar Factura -->
+    <message name="RegistarFacturaInput">
+        <part name="parameters" element="tns:RegistarFacturaRequest"/>
+    </message>
+    <message name="RegistarFacturaOutput">
+        <part name="parameters" element="tns:RegistarFacturaResponse"/>
+    </message>
+
+    <!-- 2. Obter Estado -->
+    <message name="ObterEstadoInput">
+        <part name="parameters" element="tns:ObterEstadoRequest"/>
+    </message>
+    <message name="ObterEstadoOutput">
+        <part name="parameters" element="tns:ObterEstadoResponse"/>
+    </message>
+
+    <!-- 3. Listar Facturas -->
+    <message name="ListarFacturasInput">
+        <part name="parameters" element="tns:ListarFacturasRequest"/>
+    </message>
+    <message name="ListarFacturasOutput">
+        <part name="parameters" element="tns:ListarFacturasResponse"/>
+    </message>
+
+    <!-- 4. Consultar Factura -->
+    <message name="ConsultarFacturaInput">
+        <part name="parameters" element="tns:ConsultarFacturaRequest"/>
+    </message>
+    <message name="ConsultarFacturaOutput">
+        <part name="parameters" element="tns:ConsultarFacturaResponse"/>
+    </message>
+
+    <!-- 5. Solicitar Série -->
+    <message name="SolicitarSerieInput">
+        <part name="parameters" element="tns:SolicitarSerieRequest"/>
+    </message>
+    <message name="SolicitarSerieOutput">
+        <part name="parameters" element="tns:SolicitarSerieResponse"/>
+    </message>
+
+    <!-- 6. Listar Séries -->
+    <message name="ListarSeriesInput">
+        <part name="parameters" element="tns:ListarSeriesRequest"/>
+    </message>
+    <message name="ListarSeriesOutput">
+        <part name="parameters" element="tns:ListarSeriesResponse"/>
+    </message>
+
+    <!-- 7. Validar Documento -->
+    <message name="ValidarDocumentoInput">
+        <part name="parameters" element="tns:ValidarDocumentoRequest"/>
+    </message>
+    <message name="ValidarDocumentoOutput">
+        <part name="parameters" element="tns:ValidarDocumentoResponse"/>
+    </message>
+
+    <!-- ================================================================== -->
+    <!-- PORT TYPE (INTERFACE)                                              -->
+    <!-- ================================================================== -->
+    <portType name="AGTFacturacaoPortType">
+        
+        <operation name="registarFactura">
+            <documentation>
+                Registar facturas electrónicas.
+                Recebe até 30 documentos e retorna um requestID para consulta posterior.
+            </documentation>
+            <input message="tns:RegistarFacturaInput"/>
+            <output message="tns:RegistarFacturaOutput"/>
+        </operation>
+
+        <operation name="obterEstado">
+            <documentation>
+                Obter estado de validação das facturas previamente registadas.
+            </documentation>
+            <input message="tns:ObterEstadoInput"/>
+            <output message="tns:ObterEstadoOutput"/>
+        </operation>
+
+        <operation name="listarFacturas">
+            <documentation>
+                Listar facturas electrónicas de um período.
+            </documentation>
+            <input message="tns:ListarFacturasInput"/>
+            <output message="tns:ListarFacturasOutput"/>
+        </operation>
+
+        <operation name="consultarFactura">
+            <documentation>
+                Consultar dados detalhados de uma factura específica.
+            </documentation>
+            <input message="tns:ConsultarFacturaInput"/>
+            <output message="tns:ConsultarFacturaOutput"/>
+        </operation>
+
+        <operation name="solicitarSerie">
+            <documentation>
+                Solicitar criação de série de numeração de facturas.
+            </documentation>
+            <input message="tns:SolicitarSerieInput"/>
+            <output message="tns:SolicitarSerieOutput"/>
+        </operation>
+
+        <operation name="listarSeries">
+            <documentation>
+                Listar séries de numeração registadas.
+            </documentation>
+            <input message="tns:ListarSeriesInput"/>
+            <output message="tns:ListarSeriesOutput"/>
+        </operation>
+
+        <operation name="validarDocumento">
+            <documentation>
+                Confirmar ou rejeitar documento como adquirente.
+                Prazo: 2 meses após emissão.
+            </documentation>
+            <input message="tns:ValidarDocumentoInput"/>
+            <output message="tns:ValidarDocumentoOutput"/>
+        </operation>
+
+    </portType>
+
+    <!-- ================================================================== -->
+    <!-- BINDING (SOAP 1.1)                                                 -->
+    <!-- ================================================================== -->
+    <binding name="AGTFacturacaoSOAPBinding" type="tns:AGTFacturacaoPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+        <operation name="registarFactura">
+            <soap:operation soapAction="http://agt.minfin.gov.ao/facturacao/v1/registarFactura"/>
+            <input><soap:body use="literal"/></input>
+            <output><soap:body use="literal"/></output>
+        </operation>
+
+        <operation name="obterEstado">
+            <soap:operation soapAction="http://agt.minfin.gov.ao/facturacao/v1/obterEstado"/>
+            <input><soap:body use="literal"/></input>
+            <output><soap:body use="literal"/></output>
+        </operation>
+
+        <operation name="listarFacturas">
+            <soap:operation soapAction="http://agt.minfin.gov.ao/facturacao/v1/listarFacturas"/>
+            <input><soap:body use="literal"/></input>
+            <output><soap:body use="literal"/></output>
+        </operation>
+
+        <operation name="consultarFactura">
+            <soap:operation soapAction="http://agt.minfin.gov.ao/facturacao/v1/consultarFactura"/>
+            <input><soap:body use="literal"/></input>
+            <output><soap:body use="literal"/></output>
+        </operation>
+
+        <operation name="solicitarSerie">
+            <soap:operation soapAction="http://agt.minfin.gov.ao/facturacao/v1/solicitarSerie"/>
+            <input><soap:body use="literal"/></input>
+            <output><soap:body use="literal"/></output>
+        </operation>
+
+        <operation name="listarSeries">
+            <soap:operation soapAction="http://agt.minfin.gov.ao/facturacao/v1/listarSeries"/>
+            <input><soap:body use="literal"/></input>
+            <output><soap:body use="literal"/></output>
+        </operation>
+
+        <operation name="validarDocumento">
+            <soap:operation soapAction="http://agt.minfin.gov.ao/facturacao/v1/validarDocumento"/>
+            <input><soap:body use="literal"/></input>
+            <output><soap:body use="literal"/></output>
+        </operation>
+
+    </binding>
+
+    <!-- ================================================================== -->
+    <!-- SERVICE                                                            -->
+    <!-- ================================================================== -->
+    <service name="AGTFacturacaoElectronicaService">
+        <documentation>
+            Serviço de Facturação Electrónica da AGT - Angola
+            
+            Este serviço implementa os 7 webservices definidos no Anexo III
+            das especificações técnicas do Decreto Executivo 683/25.
+            
+            Versão: 1.0
+            Contacto: correspondencia.agt@minfin.gov.ao
+            Website: www.agt.minfin.gov.ao
+        </documentation>
+        
+        <!-- Endpoint de Produção (a ser definido pela AGT) -->
+        <port name="AGTFacturacaoSOAPPort" binding="tns:AGTFacturacaoSOAPBinding">
+            <soap:address location="https://api.agt.minfin.gov.ao/facturacao-electronica/v1/soap"/>
+        </port>
+    </service>
+
+</definitions>
