@@ -443,22 +443,47 @@ export async function GET(request: NextRequest) {
   // Se pedir ?wsdl, retorna o WSDL
   if (searchParams.has('wsdl') || searchParams.has('WSDL')) {
     try {
-      const fs = await import('fs/promises');
-      const path = await import('path');
-      const wsdlPath = path.join(process.cwd(), 'public', 'wsdl', 'AGT_FacturacaoElectronica_v1.wsdl');
-      const wsdlContent = await fs.readFile(wsdlPath, 'utf-8');
-      
+      const fs = await import('fs/promises')
+      const path = await import('path')
+
+      // Try a list of known WSDL filenames (fallbacks) to be resilient on deploy
+      const candidates = [
+        'AGT_FacturacaoElectronica_v1.wsdl',
+        'AGT_FacturaService_v2.wsdl',
+        'AGT_FacturaService.wsdl',
+      ]
+      const base = path.join(process.cwd(), 'public', 'wsdl')
+      let wsdlContent: string | null = null
+      let foundFile: string | null = null
+      for (const c of candidates) {
+        const p = path.join(base, c)
+        try {
+          wsdlContent = await fs.readFile(p, 'utf-8')
+          foundFile = c
+          break
+        } catch (err) {
+          // ignore and try next
+        }
+      }
+
+      if (!wsdlContent) {
+        throw new Error('WSDL não encontrado em /public/wsdl (candidatos: ' + candidates.join(', ') + ')')
+      }
+
+      // Return the found WSDL
       return new NextResponse(wsdlContent, {
         status: 200,
         headers: {
           'Content-Type': 'application/xml; charset=utf-8',
+          'X-AGT-WSDL-Source': foundFile ?? 'unknown',
         },
-      });
+      })
     } catch (error) {
+      console.error('WSDL serve error:', (error as Error).message)
       return new NextResponse(buildSoapFault('Server', 'WSDL não encontrado'), {
         status: 500,
         headers: { 'Content-Type': 'application/xml; charset=utf-8' },
-      });
+      })
     }
   }
   
