@@ -466,6 +466,22 @@ export async function GET(request: NextRequest) {
       }
 
       if (!wsdlContent) {
+        // fallback para WSDL embutido em tempo de build
+        try {
+          const { getBuiltWsdl } = await import('@/lib/wsdl');
+          const built = getBuiltWsdl();
+          if (built && built.trim().length > 0) {
+            return new NextResponse(built, {
+              status: 200,
+              headers: {
+                'Content-Type': 'application/xml; charset=utf-8',
+                'X-AGT-WSDL-Source': 'built-inline',
+              },
+            });
+          }
+        } catch (e) {
+          // ignore and continue to throw
+        }
         throw new Error('WSDL não encontrado em /public/wsdl (candidatos: ' + candidates.join(', ') + ')')
       }
 
