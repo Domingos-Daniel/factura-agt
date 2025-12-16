@@ -421,8 +421,7 @@ function escapeXml(str: string): string {
     .replace(/'/g, '&apos;');
 }
 
-// Export helpers for unit tests and reuse
-export { convertSoapToJson, jsonToXmlContent, escapeXml };
+
 
 // =============================================================================
 // SERVIÇO MOCK (AGTMockService é um objeto, não classe)
