@@ -95,6 +95,28 @@ https://seu-sistema.ao/api/agt
 | Método | Endpoint | Descrição |
 |--------|----------|-----------|
 | POST | `/registarFactura` | Registar nova factura |
+
+### Testes e WSDL (novas instruções)
+
+- O serviço SOAP está disponível em: `https://seu-sistema.ao/api/soap` e o WSDL oficial em `?wsdl`.
+- Antes de ligar o SAP ao endpoint, execute os testes locais:
+  - Instale dependências: `npm install` (ver `devDependencies` para `ts-node`)
+  - Validar WSDL: `npm run validate:wsdl`
+  - Executar testes de schemas: `npm run test:schemas`
+  - Executar testes de mapeamento SOAP: `npm run test:soap`
+
+- Variáveis de ambiente importantes para integração com AGT real:
+  - `AGT_BASE_URL` — URL base da API AGT (ex.: `https://sandbox.agt.gov.ao/api/efatura/v1`)
+  - `AGT_AUTH_TYPE` / `AGT_AUTH_VALUE` — tipo de autenticação e token/credenciais
+  - `AGT_PRIVATE_KEY` — chave privada do emissor (usada para gerar JWS; protegido em produção)
+
+- Para testar com SAP (PI/PO ou CPI):
+  1. Configure o canal SOAP/HTTP para o endpoint `https://seu-sistema.ao/api/soap`.
+  2. Aponte o `SOAPAction` para a operação (ex: `http://agt.minfin.gov.ao/facturacao/v1/registarFactura`).
+  3. Use o WSDL fornecido para gerar o cliente SOAP no PI/PO ou CPI.
+  4. Envie um `RegistarFactura` de teste e verifique o retorno `requestID` ou `errorList`.
+
+> Nota: Localmente o sistema usa um Mock AGT se `AGT_BASE_URL` não estiver definido (`AGT_USE_MOCK=true`). Para testar com a AGT real defina `AGT_USE_MOCK=false` e `AGT_BASE_URL`.
 | POST | `/consultarFactura` | Consultar factura por código |
 | GET | `/obterEstado?codigo={cod}` | Obter estado do documento |
 | POST | `/solicitarSerie` | Solicitar série de numeração |

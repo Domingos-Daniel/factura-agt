@@ -1,12 +1,23 @@
 import { NextResponse } from 'next/server'
 import { createAgtClient } from '@/lib/server/agtClient'
 import { makeDocumentSignature, makeSoftwareInfoSignature } from '@/lib/server/jws'
+import { registarFacturaRequest, zodToErrorList } from '@/lib/schemas/agtSchemas'
+import { ZodError } from 'zod'
 
 export const dynamic = 'force-dynamic'
 
 export async function POST(req: Request) {
   try {
     const payload = await req.json()
+    // Validate with the formal schema and return AGT-style errorList on validation errors
+    try {
+      registarFacturaRequest.parse(payload)
+    } catch (e: any) {
+      if (e instanceof ZodError) {
+        return NextResponse.json({ errorList: zodToErrorList(e) }, { status: 400 })
+      }
+      return NextResponse.json({ error: 'Payload inválido' }, { status: 400 })
+    }
     const privKey = process.env.AGT_PRIVATE_KEY
     if (privKey && payload?.softwareInfo && payload?.documents) {
       try {

@@ -8,6 +8,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
+    ,
+    "validate:wsdl": "node scripts/validate-wsdl.js",
+    "test:schemas": "node -r ts-node/register scripts/test-schemas.ts",
+    "test:soap": "node -r ts-node/register scripts/test-soap-mapping.ts",
+    "test:jws": "node -r ts-node/register scripts/test-jws.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.0",
@@ -47,6 +52,7 @@
     "zod": "^3.23.0"
   },
   "devDependencies": {
+    "ts-node": "^10.9.1",
     "eslint": "^8",
     "eslint-config-next": "14.2.0",
     "tailwindcss-animate": "^1.0.7"

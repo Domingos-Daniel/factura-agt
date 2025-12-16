@@ -19,6 +19,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { XMLParser, XMLBuilder } from 'fast-xml-parser';
 import { AGTMockService } from '@/lib/server/agtMockService';
+import {
+  registarFacturaRequest,
+  obterEstadoRequest,
+  listarFacturasRequest,
+  consultarFacturaRequest,
+  solicitarSerieRequest,
+  listarSeriesRequest,
+  validarDocumentoRequest,
+  zodToErrorList,
+} from '@/lib/schemas/agtSchemas'
+import { ZodError } from 'zod'
 
 export const dynamic = 'force-dynamic';
 
@@ -133,8 +144,8 @@ function convertSoapToJson(data: any, operation: string): any {
       return {
         schemaVersion: data.schemaVersion || '1.0.0',
         taxRegistrationNumber: data.taxRegistrationNumber,
-        startDate: data.startDate,
-        endDate: data.endDate,
+        queryStartDate: data.queryStartDate || data.startDate,
+        queryEndDate: data.queryEndDate || data.endDate,
         jwsSignature: data.jwsSignature || '',
         softwareInfo: convertSoftwareInfo(data.softwareInfo),
       };
@@ -152,11 +163,10 @@ function convertSoapToJson(data: any, operation: string): any {
       return {
         schemaVersion: data.schemaVersion || '1.0.0',
         taxRegistrationNumber: data.taxRegistrationNumber,
-        expectedInitialDate: data.expectedInitialDate,
-        invoicingMethod: data.invoicingMethod || 'FESF',
-        seriesType: data.seriesType,
-        documentClassification: data.documentClassification || 'F',
-        typePrinter: data.typePrinter || 'N',
+        seriesCode: data.seriesCode,
+        seriesYear: data.seriesYear,
+        documentType: data.documentType,
+        firstDocumentNumber: data.firstDocumentNumber,
         jwsSignature: data.jwsSignature || '',
         softwareInfo: convertSoftwareInfo(data.softwareInfo),
       };
@@ -165,7 +175,9 @@ function convertSoapToJson(data: any, operation: string): any {
       return {
         schemaVersion: data.schemaVersion || '1.0.0',
         taxRegistrationNumber: data.taxRegistrationNumber,
-        status: data.status,
+        seriesCode: data.seriesCode,
+        seriesYear: data.seriesYear,
+        documentType: data.documentType,
         jwsSignature: data.jwsSignature || '',
         softwareInfo: convertSoftwareInfo(data.softwareInfo),
       };
@@ -409,6 +421,9 @@ function escapeXml(str: string): string {
     .replace(/'/g, '&apos;');
 }
 
+// Export helpers for unit tests and reuse
+export { convertSoapToJson, jsonToXmlContent, escapeXml };
+
 // =============================================================================
 // SERVIÇO MOCK (AGTMockService é um objeto, não classe)
 // =============================================================================
@@ -539,6 +554,45 @@ export async function POST(request: NextRequest) {
     
     // Converter para JSON
     const jsonRequest = convertSoapToJson(requestData, operation);
+    // Validar a estrutura com Zod conforme operação
+    try {
+      switch (operation) {
+        case 'registarFactura':
+          registarFacturaRequest.parse(jsonRequest)
+          break
+        case 'obterEstado':
+          obterEstadoRequest.parse(jsonRequest)
+          break
+        case 'listarFacturas':
+          listarFacturasRequest.parse(jsonRequest)
+          break
+        case 'consultarFactura':
+          consultarFacturaRequest.parse(jsonRequest)
+          break
+        case 'solicitarSerie':
+          solicitarSerieRequest.parse(jsonRequest)
+          break
+        case 'listarSeries':
+          listarSeriesRequest.parse(jsonRequest)
+          break
+        case 'validarDocumento':
+          validarDocumentoRequest.parse(jsonRequest)
+          break
+        default:
+          break
+      }
+    } catch (e: any) {
+      if (e instanceof ZodError) {
+        const msgs = e.errors.map((er: any) => er.message).join('; ')
+        return new NextResponse(
+          buildSoapFault('Client', 'E96: solicitação mal efectuada - erro de estrutura: ' + msgs),
+          {
+            status: 400,
+            headers: { 'Content-Type': 'application/xml; charset=utf-8' },
+          }
+        )
+      }
+    }
     
     // Executar operação
     let result: any;

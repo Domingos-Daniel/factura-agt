@@ -1,12 +1,22 @@
 import { NextResponse } from 'next/server'
 import { createAgtClient } from '@/lib/server/agtClient'
 import { makeListarFacturasSignature } from '@/lib/server/jws'
+import { listarFacturasRequest, zodToErrorList } from '@/lib/schemas/agtSchemas'
+import { ZodError } from 'zod'
 
 export const dynamic = 'force-dynamic'
 
 export async function POST(req: Request) {
   try {
     const payload = await req.json()
+    try {
+      listarFacturasRequest.parse(payload)
+    } catch (e: any) {
+      if (e instanceof ZodError) {
+        return NextResponse.json({ errorList: zodToErrorList(e) }, { status: 400 })
+      }
+      return NextResponse.json({ error: 'Payload inválido' }, { status: 400 })
+    }
     const privKey = process.env.AGT_PRIVATE_KEY
     if (privKey && payload?.taxRegistrationNumber && payload?.queryStartDate && payload?.queryEndDate) {
       try {
