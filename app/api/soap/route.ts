@@ -28,7 +28,7 @@ import {
   listarSeriesRequest,
   validarDocumentoRequest,
   zodToErrorList,
-} from '@/lib/schemas/agtSchemas'
+} from '@/lib/schemas'
 import { ZodError } from 'zod'
 
 export const dynamic = 'force-dynamic';

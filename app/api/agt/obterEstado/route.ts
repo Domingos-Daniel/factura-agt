@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createAgtClient } from '@/lib/server/agtClient'
 import { makeObterEstadoSignature } from '@/lib/server/jws'
-import { obterEstadoRequest, zodToErrorList } from '@/lib/schemas/agtSchemas'
+import { obterEstadoRequest, zodToErrorList } from '@/lib/schemas'
 import { ZodError } from 'zod'
 
 export const dynamic = 'force-dynamic'
