@@ -101,7 +101,10 @@ function validateBasicRequest(request: {
   if (!request.submissionTimeStamp) {
     return { idError: 'E003', descriptionError: 'submissionTimeStamp é obrigatório' };
   }
-  const pid = request.softwareInfo?.softwareInfoDetail?.productId || request.softwareInfo?.productId;
+
+  // Aceita ambos os formatos de softwareInfo (nested ou flat). Usar any para evitar erros de typing.
+  const si: any = (request as any).softwareInfo;
+  const pid = si?.softwareInfoDetail?.productId || si?.productId;
   if (!pid) {
     return { idError: 'E004', descriptionError: 'softwareInfo é obrigatório' };
   }
