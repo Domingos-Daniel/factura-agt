@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createAgtClient } from '@/lib/server/agtClient'
 import { makeDocumentSignature, makeSoftwareInfoSignature } from '@/lib/server/jws'
-import { registarFacturaRequest, zodToErrorList } from '@/lib/schemas'
+import { registarFacturaRequest, zodToErrorList, normalizeSoftwareInfo } from '@/lib/schemas'
 import { ZodError } from 'zod'
 
 export const dynamic = 'force-dynamic'
@@ -11,6 +11,8 @@ export async function POST(req: Request) {
     const payload = await req.json()
     // Validate with the formal schema and return AGT-style errorList on validation errors
     try {
+      // Normalizar softwareInfo caso venha em softwareInfo.softwareInfoDetail
+      try { normalizeSoftwareInfo(payload) } catch (err) {}
       registarFacturaRequest.parse(payload)
     } catch (e: any) {
       if (e instanceof ZodError) {

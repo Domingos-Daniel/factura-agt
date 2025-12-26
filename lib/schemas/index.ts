@@ -99,6 +99,37 @@ export function zodToErrorList(e: ZodError) {
 // Re-export utilitites
 export { seriesSchema, loginSchema };
 
+/**
+ * Normaliza o campo softwareInfo para o formato esperado pelos schemas.
+ * Aceita ambos os formatos:
+ * 1) softwareInfo: { productId, productVersion, softwareValidationNumber, jwsSoftwareSignature }
+ * 2) softwareInfo: { softwareInfoDetail: { productId, productVersion, softwareValidationNumber }, jwsSoftwareSignature }
+ */
+export function normalizeSoftwareInfo(payload: any) {
+  if (!payload || typeof payload !== 'object') return;
+
+  // payload may be the whole request or nested under payload.softwareInfo
+  const target = payload.softwareInfo ? payload : { softwareInfo: payload };
+  const si = target.softwareInfo;
+  if (!si) return;
+
+  if (si.softwareInfoDetail && typeof si.softwareInfoDetail === 'object') {
+    const detail = si.softwareInfoDetail;
+    const jws = si.jwsSoftwareSignature || si.jwsSignature || si.jws;
+    target.softwareInfo = {
+      productId: detail.productId || detail.productID || detail.productId,
+      productVersion: detail.productVersion || detail.productVersion,
+      softwareValidationNumber: detail.softwareValidationNumber || detail.softwareValidationNumber,
+      jwsSoftwareSignature: jws || si.jwsSoftwareSignature || si.jwsSignature || si.jws,
+    };
+
+    // If payload was the object itself (not nested), keep changes
+    if (!payload.softwareInfo) {
+      payload.softwareInfo = target.softwareInfo;
+    }
+  }
+}
+
 export type RegistarFacturaRequest = z.infer<typeof registarFacturaRequest>;
 export type ObterEstadoRequest = z.infer<typeof obterEstadoRequest>;
 export type ListarFacturasRequest = z.infer<typeof listarFacturasRequest>;

@@ -28,6 +28,7 @@ import {
   listarSeriesRequest,
   validarDocumentoRequest,
   zodToErrorList,
+  normalizeSoftwareInfo,
 } from '@/lib/schemas'
 import { ZodError } from 'zod'
 
@@ -594,6 +595,8 @@ export async function POST(request: NextRequest) {
     
     // Converter para JSON
     const jsonRequest = convertSoapToJson(requestData, operation);
+    // Normalizar softwareInfo se necessário
+    try { normalizeSoftwareInfo(jsonRequest) } catch (err) {}
     // Validar a estrutura com Zod conforme operação
     try {
       switch (operation) {

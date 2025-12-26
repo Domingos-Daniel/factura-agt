@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createAgtClient } from '@/lib/server/agtClient'
 import { makeListarFacturasSignature } from '@/lib/server/jws'
-import { listarFacturasRequest, zodToErrorList } from '@/lib/schemas'
+import { listarFacturasRequest, zodToErrorList, normalizeSoftwareInfo } from '@/lib/schemas'
 import { ZodError } from 'zod'
 
 export const dynamic = 'force-dynamic'
@@ -10,6 +10,7 @@ export async function POST(req: Request) {
   try {
     const payload = await req.json()
     try {
+      try { normalizeSoftwareInfo(payload) } catch (err) {}
       listarFacturasRequest.parse(payload)
     } catch (e: any) {
       if (e instanceof ZodError) {
