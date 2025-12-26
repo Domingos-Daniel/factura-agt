@@ -74,14 +74,14 @@ async function run() {
   const requestID = (regRes.response as any).requestID;
 
   // 2) ObterEstado (imediato: pending)
-  const obterRes1 = await AGTMockService.obterEstado({ schemaVersion: '1.0', taxRegistrationNumber: nif, requestID, submissionTimeStamp: formatISO(now), jwsSignature: '' });
+  const obterRes1 = await AGTMockService.obterEstado({ schemaVersion: '1.0', submissionId: submissionGUID, taxRegistrationNumber: nif, requestID, submissionTimeStamp: formatISO(now), jwsSignature: '', softwareInfo: { softwareInfoDetail: { productId: 'TEST_SOFT', productVersion: '1.0', softwareValidationNumber: 'VAL-TEST' }, jwsSoftwareSignature: 'X'.repeat(256) } });
   console.log('obterEstado (immediate) ->', obterRes1.httpStatus, JSON.stringify(obterRes1.response).slice(0,400));
   await assert(obterRes1.httpStatus === 200 && obterRes1.response.statusResult?.requestID === requestID, 'obterEstado must include requestID');
 
   // Wait to allow mock processing to mark as processed
   await new Promise((r) => setTimeout(r, 2200));
 
-  const obterRes2 = await AGTMockService.obterEstado({ schemaVersion: '1.0', taxRegistrationNumber: nif, requestID, submissionTimeStamp: formatISO(now), jwsSignature: '' });
+  const obterRes2 = await AGTMockService.obterEstado({ schemaVersion: '1.0', submissionId: submissionGUID, taxRegistrationNumber: nif, requestID, submissionTimeStamp: formatISO(now), jwsSignature: '', softwareInfo: { softwareInfoDetail: { productId: 'TEST_SOFT', productVersion: '1.0', softwareValidationNumber: 'VAL-TEST' }, jwsSoftwareSignature: 'X'.repeat(256) } });
   console.log('obterEstado (after processing) ->', obterRes2.httpStatus, JSON.stringify(obterRes2.response).slice(0,500));
   await assert(obterRes2.httpStatus === 200 && obterRes2.response.statusResult?.documentStatusList, 'obterEstado after processing must include documentStatusList');
 
