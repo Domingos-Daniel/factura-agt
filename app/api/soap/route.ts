@@ -42,7 +42,9 @@ const xmlParser = new XMLParser({
   ignoreAttributes: false,
   attributeNamePrefix: '@_',
   removeNSPrefix: true,
-  parseTagValue: true,
+  // Manter valores como strings para evitar conversões automáticas (ex: "1" -> 1)
+  // e permitir parsing controlado nas funções de conversão.
+  parseTagValue: false,
   trimValues: true,
 });
 
@@ -66,36 +68,29 @@ const AGT_NS = 'http://agt.minfin.gov.ao/facturacao/v1';
 
 /**
  * Extrai a operação do SOAPAction header ou do body
+ * Normaliza o nome para camelCase (ex: RegistarFactura -> registarFactura)
  */
 function extractOperation(soapAction: string | null, body: any): string | null {
   if (soapAction) {
-    // SOAPAction: "http://agt.gov.ao/services/facturacao/RegistarFactura"
     const match = soapAction.match(/\/([^\/]+)$/);
     if (match) {
-      return match[1].replace(/"/g, '');
+      const opRaw = match[1].replace(/"/g, '');
+      return opRaw.charAt(0).toLowerCase() + opRaw.slice(1);
     }
   }
-  
-  // Tentar extrair do body
+
+  // Tentar extrair do body (cobre variações de capitalização / namespaces)
   if (body?.Envelope?.Body) {
     const bodyContent = body.Envelope.Body;
-    const operations = [
-      'registarFacturaRequest',
-      'obterEstadoRequest',
-      'listarFacturasRequest',
-      'consultarFacturaRequest',
-      'solicitarSerieRequest',
-      'listarSeriesRequest',
-      'validarDocumentoRequest',
-    ];
-    
-    for (const op of operations) {
-      if (bodyContent[op]) {
-        return op.replace('Request', '');
+    const keys = Object.keys(bodyContent || {});
+    for (const k of keys) {
+      if (k.toLowerCase().endsWith('request')) {
+        const opName = k.slice(0, -'Request'.length);
+        return opName.charAt(0).toLowerCase() + opName.slice(1);
       }
     }
   }
-  
+
   return null;
 }
 
@@ -105,9 +100,26 @@ function extractOperation(soapAction: string | null, body: any): string | null {
 function extractRequestData(body: any, operation: string): any {
   const bodyContent = body?.Envelope?.Body;
   if (!bodyContent) return null;
-  
+
   const requestKey = `${operation}Request`;
-  return bodyContent[requestKey] || bodyContent;
+  // Se existir a chave exacta (camelCase), retorna-a
+  if (bodyContent[requestKey]) return bodyContent[requestKey];
+
+  // Se o body tiver um único filho, assume que é o request (cobre RegistarFacturaRequest com capitalização)
+  const keys = Object.keys(bodyContent);
+  if (keys.length === 1) {
+    const single = bodyContent[keys[0]];
+    if (single && typeof single === 'object') return single;
+  }
+
+  // Tenta encontrar qualquer filho que termine em 'Request' (case-insensitive)
+  for (const k of keys) {
+    if (k.toLowerCase().endsWith('request')) {
+      return bodyContent[k];
+    }
+  }
+
+  return bodyContent;
 }
 
 /**
@@ -123,15 +135,18 @@ function ensureArray<T>(value: T | T[] | undefined): T[] {
  */
 function convertSoapToJson(data: any, operation: string): any {
   switch (operation) {
-    case 'registarFactura':
+    case 'registarFactura': {
+      const docs = ensureArray(data.documents?.document || data.documents).map(convertDocument);
       return {
         schemaVersion: data.schemaVersion || '1.0.0',
         taxRegistrationNumber: data.taxRegistrationNumber,
         submissionTimeStamp: data.submissionTimeStamp || new Date().toISOString(),
         submissionGUID: data.submissionGUID || crypto.randomUUID(),
         softwareInfo: convertSoftwareInfo(data.softwareInfo),
-        documents: ensureArray(data.documents?.document || data.documents).map(convertDocument),
+        numberOfEntries: data.numberOfEntries ? parseInt(data.numberOfEntries) : docs.length,
+        documents: docs,
       };
+    }
       
     case 'obterEstado':
       return {
@@ -240,6 +255,7 @@ function convertDocument(doc: any): any {
     customerTaxID: doc.customerTaxID,
     customerCountry: doc.customerCountry || 'AO',
     companyName: doc.companyName,
+    eacCode: doc.eacCode || doc.eaccode || undefined,
     lines: ensureArray(doc.lines?.line || doc.lines).map(convertLine),
     documentTotals: convertTotals(doc.documentTotals),
     paymentReceipt: doc.paymentReceipt ? convertPaymentReceipt(doc.paymentReceipt) : undefined,
@@ -264,7 +280,7 @@ function convertLine(line: any): any {
     unitPriceBase: line.unitPriceBase ? parseFloat(line.unitPriceBase) : undefined,
     taxPointDate: line.taxPointDate,
     settlementAmount: line.settlementAmount ? parseFloat(line.settlementAmount) : undefined,
-    taxLines: ensureArray(line.taxLines?.taxLine || line.taxLines).map(convertTaxLine),
+    taxes: ensureArray(line.taxes?.tax || line.taxLines?.taxLine || line.taxes || line.taxLines).map(convertTaxLine),
   };
 }
 
@@ -274,6 +290,7 @@ function convertLine(line: any): any {
 function convertTaxLine(tax: any): any {
   return {
     taxType: tax.taxType || 'IVA',
+    taxCountryRegion: tax.taxCountryRegion || tax.country || 'AO',
     taxCode: tax.taxCode || 'NOR',
     taxPercentage: parseFloat(tax.taxPercentage) || 14,
     taxBase: parseFloat(tax.taxBase) || 0,
@@ -287,15 +304,26 @@ function convertTaxLine(tax: any): any {
  * Converte totais do documento
  */
 function convertTotals(totals: any): any {
-  if (!totals) {
-    return { taxPayable: 0, netTotal: 0, grossTotal: 0, currency: 'AOA' };
-  }
-  return {
-    taxPayable: parseFloat(totals.taxPayable) || 0,
-    netTotal: parseFloat(totals.netTotal) || 0,
-    grossTotal: parseFloat(totals.grossTotal) || 0,
-    currency: totals.currency || 'AOA',
+  const res: any = {
+    taxPayable: parseFloat(totals?.taxPayable || '0') || 0,
+    netTotal: parseFloat(totals?.netTotal || '0') || 0,
+    grossTotal: parseFloat(totals?.grossTotal || '0') || 0,
   };
+
+  if (totals && totals.currency) {
+    if (typeof totals.currency === 'string') {
+      // Interpretar string como currencyCode
+      res.currency = { currencyCode: totals.currency, currencyAmount: 0, exchangeRate: 0 };
+    } else if (typeof totals.currency === 'object') {
+      res.currency = {
+        currencyCode: totals.currency.currencyCode || totals.currency.code || undefined,
+        currencyAmount: parseFloat(totals.currency.currencyAmount || '0') || 0,
+        exchangeRate: parseFloat(totals.currency.exchangeRate || '0') || 0,
+      };
+    }
+  }
+
+  return res;
 }
 
 /**
@@ -626,9 +654,11 @@ export async function POST(request: NextRequest) {
       }
     } catch (e: any) {
       if (e instanceof ZodError) {
-        const msgs = e.errors.map((er: any) => er.message).join('; ')
+        const errorList = zodToErrorList(e);
+        // Log details to server console to aid debugging
+        try { console.error('SOAP validation failed', { operation, jsonRequest, errorList }) } catch (err) {}
         return new NextResponse(
-          buildSoapFault('Client', 'E96: solicitação mal efectuada - erro de estrutura: ' + msgs),
+          buildSoapFault('Client', 'E96: solicitação mal efectuada - ' + JSON.stringify(errorList)),
           {
             status: 400,
             headers: { 'Content-Type': 'application/xml; charset=utf-8' },
@@ -641,6 +671,9 @@ export async function POST(request: NextRequest) {
     let result: any;
     
     try {
+      // Log curto do request para depuração (limitado)
+      try { if (operation === 'registarFactura') console.log('SOAP jsonRequest:', JSON.stringify(jsonRequest, null, 2).slice(0, 2000)); } catch (e) {}
+
       switch (operation) {
         case 'registarFactura':
         case 'RegistarFactura':
@@ -696,6 +729,14 @@ export async function POST(request: NextRequest) {
       );
     }
     
+    // Se o serviço devolveu erro, anexa debug curto para diagnóstico
+    try {
+      if (result && result.httpStatus && result.httpStatus !== 200) {
+        result.response = result.response || {};
+        result.response._debug = { jsonRequest: JSON.parse(JSON.stringify(jsonRequest)) };
+      }
+    } catch (err) {}
+
     // Construir resposta SOAP
     const soapResponse = buildSoapResponse(operation, result);
     

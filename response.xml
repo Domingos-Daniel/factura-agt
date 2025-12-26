@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:fact="http://agt.minfin.gov.ao/facturacao/v1">
+  <soap:Header/>
+  <soap:Body>
+    <fact:registarFacturaResponse>
+            <fact:response>
+        <fact:requestID>SFKFB-88573298-1202</fact:requestID>
+
+      </fact:response>
+      <fact:httpStatus>200</fact:httpStatus>
+
+    </fact:registarFacturaResponse>
+  </soap:Body>
+</soap:Envelope>

@@ -101,7 +101,8 @@ function validateBasicRequest(request: {
   if (!request.submissionTimeStamp) {
     return { idError: 'E003', descriptionError: 'submissionTimeStamp é obrigatório' };
   }
-  if (!request.softwareInfo?.softwareInfoDetail?.productId) {
+  const pid = request.softwareInfo?.softwareInfoDetail?.productId || request.softwareInfo?.productId;
+  if (!pid) {
     return { idError: 'E004', descriptionError: 'softwareInfo é obrigatório' };
   }
   return null;

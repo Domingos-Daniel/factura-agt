@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope
+  xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:tns="https://factura-agt.vercel.app/facturacao/v1">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <tns:RegistarFacturaRequest>
+      <schemaVersion>1.0</schemaVersion>
+      <submissionGUID>11111111-2222-3333-4444-555555555555</submissionGUID>
+      <taxRegistrationNumber>123456789</taxRegistrationNumber>
+      <submissionTimeStamp>2025-12-26T12:00:00Z</submissionTimeStamp>
+
+      <softwareInfo>
+        <softwareInfoDetail>
+          <productId>EXEMPLO_SOFT</productId>
+          <productVersion>1.0.0</productVersion>
+          <softwareValidationNumber>VAL-0001</softwareValidationNumber>
+        </softwareInfoDetail>
+        <jwsSoftwareSignature>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</jwsSoftwareSignature>
+      </softwareInfo>
+
+      <numberOfEntries>1</numberOfEntries>
+
+      <documents>
+        <documentNo>FT2025-0001</documentNo>
+        <documentStatus>N</documentStatus>
+        <jwsDocumentSignature>BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB</jwsDocumentSignature>
+        <documentDate>2025-12-26</documentDate>
+        <documentType>FT</documentType>
+        <eacCode>CAE001</eacCode>
+        <systemEntryDate>2025-12-26T12:00:00Z</systemEntryDate>
+        <customerCountry>AO</customerCountry>
+        <customerTaxID>987654321</customerTaxID>
+        <companyName>Cliente Exemplo Lda</companyName>
+
+        <lines>
+          <lineNumber>1</lineNumber>
+          <productDescription>Serviço de Teste</productDescription>
+          <quantity>1.00</quantity>
+          <unitOfMeasure>UN</unitOfMeasure>
+          <unitPrice>100.00</unitPrice>
+          <unitPriceBase>100.00</unitPriceBase>
+
+          <taxes>
+            <taxType>IVA</taxType>
+            <taxCountryRegion>AO</taxCountryRegion>
+            <taxCode>NOR</taxCode>
+            <taxPercentage>14.00</taxPercentage>
+            <taxBase>100.00</taxBase>
+            <taxAmount>14.00</taxAmount>
+          </taxes>
+
+          <settlementAmount>0.00</settlementAmount>
+        </lines>
+
+        <documentTotals>
+          <taxPayable>14.00</taxPayable>
+          <netTotal>100.00</netTotal>
+          <grossTotal>114.00</grossTotal>
+        </documentTotals>
+      </documents>
+    </tns:RegistarFacturaRequest>
+  </soapenv:Body>
+</soapenv:Envelope>
