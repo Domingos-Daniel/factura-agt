@@ -738,12 +738,12 @@
             
             Versão: 1.0
             Contacto: correspondencia.agt@minfin.gov.ao
-            Website: www.agt.minfin.gov.ao
+            Website: factura-agt.vercel.app
         </documentation>
         
-        <!-- Endpoint de Produção (a ser definido pela AGT) -->
+        <!-- Endpoint de Produção (ajustado para o middleware) -->
         <port name="AGTFacturacaoSOAPPort" binding="tns:AGTFacturacaoSOAPBinding">
-            <soap:address location="https://api.agt.minfin.gov.ao/facturacao-electronica/v1/soap"/>
+            <soap:address location="https://factura-agt.vercel.app/api/soap"/>
         </port>
     </service>
 
