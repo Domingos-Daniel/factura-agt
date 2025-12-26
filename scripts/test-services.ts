@@ -83,38 +83,38 @@ async function run() {
 
   const obterRes2 = await AGTMockService.obterEstado({ schemaVersion: '1.0', submissionId: submissionGUID, taxRegistrationNumber: nif, requestID, submissionTimeStamp: formatISO(now), jwsSignature: '', softwareInfo: { softwareInfoDetail: { productId: 'TEST_SOFT', productVersion: '1.0', softwareValidationNumber: 'VAL-TEST' }, jwsSoftwareSignature: 'X'.repeat(256) } });
   console.log('obterEstado (after processing) ->', obterRes2.httpStatus, JSON.stringify(obterRes2.response).slice(0,500));
-  await assert(obterRes2.httpStatus === 200 && obterRes2.response.statusResult?.documentStatusList, 'obterEstado after processing must include documentStatusList');
+  await assert(obterRes2.httpStatus === 200 && !!obterRes2.response.statusResult?.documentStatusList, 'obterEstado after processing must include documentStatusList');
 
   // 3) ListarFacturas
   const start = new Date(now.getTime() - 24 * 3600 * 1000).toISOString().split('T')[0];
   const end = new Date(now.getTime() + 24 * 3600 * 1000).toISOString().split('T')[0];
-  const listarRes = await AGTMockService.listarFacturas({ schemaVersion: '1.0', taxRegistrationNumber: nif, queryStartDate: start, queryEndDate: end });
+  const listarRes = await AGTMockService.listarFacturas({ schemaVersion: '1.0', submissionId: submissionGUID, taxRegistrationNumber: nif, queryStartDate: start, queryEndDate: end, submissionTimeStamp: formatISO(now), softwareInfo: { softwareInfoDetail: { productId: 'TEST_SOFT', productVersion: '1.0', softwareValidationNumber: 'VAL-TEST' }, jwsSoftwareSignature: 'X'.repeat(256) }, jwsSignature: '' });
   console.log('listarFacturas ->', listarRes.httpStatus, JSON.stringify(listarRes.response));
   await assert(listarRes.httpStatus === 200 && (listarRes.response.documentResultCount || 0) >= 1, 'listarFacturas should return at least one document');
 
   // 4) ConsultarFactura
-  const consultarRes = await AGTMockService.consultarFactura({ schemaVersion: '1.0', taxRegistrationNumber: nif, documentNo: 'FT2025-TEST-001' });
+  const consultarRes = await AGTMockService.consultarFactura({ schemaVersion: '1.0', submissionId: submissionGUID, taxRegistrationNumber: nif, documentNo: 'FT2025-TEST-001', submissionTimeStamp: formatISO(now), softwareInfo: { softwareInfoDetail: { productId: 'TEST_SOFT', productVersion: '1.0', softwareValidationNumber: 'VAL-TEST' }, jwsSoftwareSignature: 'X'.repeat(256) }, jwsSignature: '' });
   console.log('consultarFactura ->', consultarRes.httpStatus, JSON.stringify(consultarRes.response).slice(0,400));
   await assert(consultarRes.httpStatus === 200 && (consultarRes.response as any).documents?.length === 1, 'consultarFactura should return the document');
 
   // 5) SolicitarSerie
   const year = new Date().getFullYear();
-  const solicRes = await AGTMockService.solicitarSerie({ schemaVersion: '1.0', taxRegistrationNumber: nif, seriesCode: `S${year}01`, seriesYear: year, documentType: 'FT', firstDocumentNumber: 1 });
+  const solicRes = await AGTMockService.solicitarSerie({ schemaVersion: '1.0', submissionId: submissionGUID, taxRegistrationNumber: nif, seriesCode: `S${year}01`, seriesYear: year, documentType: 'FT', firstDocumentNumber: 1, submissionTimeStamp: formatISO(now), softwareInfo: { softwareInfoDetail: { productId: 'TEST_SOFT', productVersion: '1.0', softwareValidationNumber: 'VAL-TEST' }, jwsSoftwareSignature: 'X'.repeat(256) }, jwsSignature: '' });
   console.log('solicitarSerie ->', solicRes.httpStatus, JSON.stringify(solicRes.response));
   await assert(solicRes.httpStatus === 200 && (solicRes.response as any).resultCode === 1, 'solicitarSerie should succeed');
 
   // 6) ListarSeries
-  const listarSeriesRes = await AGTMockService.listarSeries({ schemaVersion: '1.0', taxRegistrationNumber: nif });
+  const listarSeriesRes = await AGTMockService.listarSeries({ schemaVersion: '1.0', submissionId: submissionGUID, taxRegistrationNumber: nif, submissionTimeStamp: formatISO(now), softwareInfo: { softwareInfoDetail: { productId: 'TEST_SOFT', productVersion: '1.0', softwareValidationNumber: 'VAL-TEST' }, jwsSoftwareSignature: 'X'.repeat(256) }, jwsSignature: '' });
   console.log('listarSeries ->', listarSeriesRes.httpStatus, JSON.stringify(listarSeriesRes.response));
   await assert(listarSeriesRes.httpStatus === 200 && (listarSeriesRes.response.seriesResultCount || 0) >= 1, 'listarSeries should list the created series');
 
   // 7) ValidarDocumento (confirm)
-  const validarRes = await AGTMockService.validarDocumento({ schemaVersion: '1.0', taxRegistrationNumber: '987654321', documentNo: 'FT2025-TEST-001', emitterTaxRegistrationNumber: nif, action: 'C' });
+  const validarRes = await AGTMockService.validarDocumento({ schemaVersion: '1.0', submissionId: submissionGUID, taxRegistrationNumber: '987654321', documentNo: 'FT2025-TEST-001', action: 'C', submissionTimeStamp: formatISO(now), softwareInfo: { softwareInfoDetail: { productId: 'TEST_SOFT', productVersion: '1.0', softwareValidationNumber: 'VAL-TEST' }, jwsSoftwareSignature: 'X'.repeat(256) }, jwsSignature: '' });
   console.log('validarDocumento ->', validarRes.httpStatus, JSON.stringify(validarRes.response));
   await assert(validarRes.httpStatus === 200 && (validarRes.response as any).actionResultCode === 'C_OK', 'validarDocumento should return C_OK on first confirmation');
 
   // 8) ValidarDocumento (confirm again -> should be NOK)
-  const validarRes2 = await AGTMockService.validarDocumento({ schemaVersion: '1.0', taxRegistrationNumber: '987654321', documentNo: 'FT2025-TEST-001', emitterTaxRegistrationNumber: nif, action: 'C' });
+  const validarRes2 = await AGTMockService.validarDocumento({ schemaVersion: '1.0', submissionId: submissionGUID, taxRegistrationNumber: '987654321', documentNo: 'FT2025-TEST-001', action: 'C', submissionTimeStamp: formatISO(now), softwareInfo: { softwareInfoDetail: { productId: 'TEST_SOFT', productVersion: '1.0', softwareValidationNumber: 'VAL-TEST' }, jwsSoftwareSignature: 'X'.repeat(256) }, jwsSignature: '' });
   console.log('validarDocumento (again) ->', validarRes2.httpStatus, JSON.stringify(validarRes2.response));
   await assert(validarRes2.httpStatus === 200 && (validarRes2.response as any).actionResultCode !== 'C_OK', 'second validation should not be C_OK');
 
