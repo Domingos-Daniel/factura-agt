@@ -9,7 +9,15 @@
 
   console.log('Running HTTP integration tests against', base);
 
-  // 1) registarFactura (JSON)
+  // 0) Create a seeded factura for SAP tests (convenience endpoint when using mock)
+  console.log('- Testing POST /api/mock/seed (creates a record and returns requestID)');
+  let res = await fetch(base + '/api/mock/seed', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ taxRegistrationNumber: nif }) });
+  let json = await res.json();
+  console.log('  status=', res.status, 'body=', JSON.stringify(json));
+  ok(res.status === 200 && json.requestID, 'mock seed failed');
+  const requestID = json.requestID;
+
+  // 1) registarFactura (JSON) - also keep original check to ensure regular registration still works
   const regPayload = {
     schemaVersion: '1.0',
     submissionGUID: '11111111-2222-3333-4444-555555555555',
@@ -52,11 +60,11 @@
   };
 
   console.log('- Testing POST /api/agt/registarFactura');
-  let res = await fetch(base + '/api/agt/registarFactura', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(regPayload) });
-  let json = await res.json();
+  res = await fetch(base + '/api/agt/registarFactura', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(regPayload) });
+  json = await res.json();
   console.log('  status=', res.status, 'body=', JSON.stringify(json).slice(0,400));
   ok(res.status === 200 && json.requestID, 'registarFactura failed');
-  const requestID = json.requestID;
+  // note: we keep using requestID from seed to test obterEstado below
 
   // 2) obterEstado (immediate)
   console.log('- Testing POST /api/agt/obterEstado (immediate)');
