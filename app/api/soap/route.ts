@@ -133,27 +133,39 @@ function ensureArray<T>(value: T | T[] | undefined): T[] {
 /**
  * Converte dados SOAP para formato JSON do serviço
  */
+function findField(obj: any, name: string) {
+  if (!obj || typeof obj !== 'object') return undefined;
+  const target = name.toLowerCase().replace(/[^a-z0-9]/g, '');
+  for (const k of Object.keys(obj)) {
+    const kn = String(k).toLowerCase().replace(/[^a-z0-9]/g, '');
+    if (kn === target) return obj[k];
+  }
+  return undefined;
+}
+
 function convertSoapToJson(data: any, operation: string): any {
   switch (operation) {
     case 'registarFactura': {
       const docs = ensureArray(data.documents?.document || data.documents).map(convertDocument);
       return {
-        schemaVersion: data.schemaVersion || '1.0.0',
-        taxRegistrationNumber: data.taxRegistrationNumber,
-        submissionTimeStamp: data.submissionTimeStamp || new Date().toISOString(),
-        submissionGUID: data.submissionGUID || crypto.randomUUID(),
+        schemaVersion: findField(data, 'schemaVersion') || data.schemaVersion || '1.0.0',
+        taxRegistrationNumber: findField(data, 'taxRegistrationNumber') || data.taxRegistrationNumber,
+        submissionTimeStamp: findField(data, 'submissionTimeStamp') || data.submissionTimeStamp || new Date().toISOString(),
+        submissionGUID: findField(data, 'submissionGUID') || data.submissionGUID || crypto.randomUUID(),
         softwareInfo: convertSoftwareInfo(data.softwareInfo),
-        numberOfEntries: data.numberOfEntries ? parseInt(data.numberOfEntries) : docs.length,
+        numberOfEntries: (findField(data, 'numberOfEntries') || data.numberOfEntries) ? parseInt(findField(data, 'numberOfEntries') || data.numberOfEntries) : docs.length,
         documents: docs,
       };
     }
-      
+
     case 'obterEstado':
       return {
-        schemaVersion: data.schemaVersion || '1.0.0',
-        taxRegistrationNumber: data.taxRegistrationNumber,
-        requestID: data.requestID,
-        jwsSignature: data.jwsSignature || '',
+        schemaVersion: findField(data, 'schemaVersion') || data.schemaVersion || '1.0.0',
+        taxRegistrationNumber: findField(data, 'taxRegistrationNumber') || data.taxRegistrationNumber,
+        requestID: findField(data, 'requestID') || data.requestID,
+        submissionTimeStamp: findField(data, 'submissionTimeStamp') || data.submissionTimeStamp || new Date().toISOString(),
+        jwsSignature: findField(data, 'jwsSignature') || data.jwsSignature || '',
+        softwareInfo: convertSoftwareInfo(data.softwareInfo),
       };
       
     case 'listarFacturas':

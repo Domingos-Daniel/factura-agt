@@ -12,7 +12,9 @@
     "validate:wsdl": "node scripts/validate-wsdl.js",
     "test:schemas": "node -r ts-node/register scripts/test-schemas.ts",
     "test:soap": "node -r ts-node/register scripts/test-soap-mapping.ts",
-    "test:jws": "node -r ts-node/register scripts/test-jws.ts"
+    "test:jws": "node -r ts-node/register scripts/test-jws.ts",
+    "test:services": "node -r ts-node/register scripts/test-services.ts",
+    "test:all": "npm run test:services"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.0",

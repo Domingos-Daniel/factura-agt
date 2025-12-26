@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:fact="http://agt.minfin.gov.ao/facturacao/v1">
+  <soap:Header/>
+  <soap:Body>
+    <fact:obterEstadoResponse>
+            <fact:response>
+        <fact:errorEntry>
+          <fact:idError>E051</fact:idError>
+          <fact:descriptionError>requestID não encontrado</fact:descriptionError>
+
+        </fact:errorEntry>
+        <fact:_debug>
+          <fact:jsonRequest>
+            <fact:schemaVersion>1.0</fact:schemaVersion>
+            <fact:taxRegistrationNumber>123456789</fact:taxRegistrationNumber>
+            <fact:requestID>AGT-20251227-32d94997</fact:requestID>
+            <fact:submissionTimeStamp>2025-12-27T10:00:00Z</fact:submissionTimeStamp>
+            <fact:jwsSignature>PLACEHOLDER_JWS_256_CHARS_IF_NEEDED</fact:jwsSignature>
+            <fact:softwareInfo>
+              <fact:productId>TEST_SOFT</fact:productId>
+              <fact:productVersion>1.0</fact:productVersion>
+              <fact:softwareValidationNumber>VAL-TEST</fact:softwareValidationNumber>
+              <fact:jwsSoftwareSignature>...</fact:jwsSoftwareSignature>
+
+            </fact:softwareInfo>
+
+          </fact:jsonRequest>
+
+        </fact:_debug>
+
+      </fact:response>
+      <fact:httpStatus>422</fact:httpStatus>
+
+    </fact:obterEstadoResponse>
+  </soap:Body>
+</soap:Envelope>
