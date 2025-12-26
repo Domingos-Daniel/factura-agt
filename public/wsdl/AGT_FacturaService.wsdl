@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
              xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-             xmlns:tns="http://agt.gov.ao/services/facturacao"
+             xmlns:tns="https://factura-agt.vercel.app/services/facturacao"
              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-             targetNamespace="http://agt.gov.ao/services/facturacao"
+             targetNamespace="https://factura-agt.vercel.app/services/facturacao"
              name="AGTFacturaService">
 
     <!-- Types -->
     <types>
-        <xsd:schema targetNamespace="http://agt.gov.ao/services/facturacao">
+        <xsd:schema targetNamespace="https://factura-agt.vercel.app/services/facturacao">
             
             <!-- Request: Registar Factura -->
             <xsd:element name="RegistarFacturaRequest">
@@ -195,7 +195,7 @@
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         
         <operation name="RegistarFactura">
-            <soap:operation soapAction="http://agt.gov.ao/services/facturacao/RegistarFactura"/>
+            <soap:operation soapAction="https://factura-agt.vercel.app/services/facturacao/RegistarFactura"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -205,7 +205,7 @@
         </operation>
 
         <operation name="ConsultarEstado">
-            <soap:operation soapAction="http://agt.gov.ao/services/facturacao/ConsultarEstado"/>
+            <soap:operation soapAction="https://factura-agt.vercel.app/services/facturacao/ConsultarEstado"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -215,7 +215,7 @@
         </operation>
 
         <operation name="SolicitarSerie">
-            <soap:operation soapAction="http://agt.gov.ao/services/facturacao/SolicitarSerie"/>
+            <soap:operation soapAction="https://factura-agt.vercel.app/services/facturacao/SolicitarSerie"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -228,12 +228,12 @@
     <!-- Service -->
     <service name="AGTFacturaService">
         <documentation>
-            Serviço Web para integração com AGT (Administração Geral Tributária)
-            Base URL: https://seu-sistema.ao/api/agt
+            Serviço Web para integração com a camada middleware factura-agt.vercel.app
+            Base URL: https://factura-agt.vercel.app/api/agt
             Autenticação: Bearer Token (JWT RS256)
         </documentation>
         <port name="AGTFacturaServicePort" binding="tns:AGTFacturaServiceSoapBinding">
-            <soap:address location="https://seu-sistema.ao/api/agt/soap"/>
+            <soap:address location="https://factura-agt.vercel.app/api/soap"/>
         </port>
     </service>
 

@@ -26,12 +26,6 @@ export async function GET(request: NextRequest) {
   const accept = request.headers.get('Accept') || 'text/html';
   const wsdlContent = getBuiltWsdl();
 
-  // Determinar protocolo e host a partir do request para gerar WSDL/HTML com endpoints corretos
-  const proto = request.headers.get('x-forwarded-proto') || (request.headers.get('referer')?.startsWith('http://') ? 'http' : 'https') || 'https';
-  const host = request.headers.get('host') || 'factura-agt.vercel.app';
-  const wsdlUrl = `${proto}://${host}/api/wsdl`;
-  const soapUrl = `${proto}://${host}/api/soap`;
-
   if (!wsdlContent) {
     // WSDL não disponível
     const errorHtml = `
@@ -61,13 +55,9 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  // Se cliente pediu XML/SOAP, retorna WSDL puro com endpoint ajustado para este host
+  // Se cliente pediu XML/SOAP, retorna WSDL puro
   if (accept.includes('xml') || accept.includes('soap') || accept.includes('*/*')) {
-    // Substitui o endereço SOAP no WSDL para apontar para o middleware atual
-    const adjustedWsdl = wsdlContent.replace(/<soap:address\s+location="[^"]*"\s*\/>/i, `<soap:address location="${soapUrl}"/>`);
-    // Atualiza campo Website para refletir o host (apenas informativo)
-    const adjustedWsdl2 = adjustedWsdl.replace(/Website:\s*[^\r\n<]+/, `Website: ${host}`);
-    return new NextResponse(adjustedWsdl2, {
+    return new NextResponse(wsdlContent, {
       status: 200,
       headers: {
         'Content-Type': 'application/xml; charset=utf-8',
@@ -256,7 +246,7 @@ export async function GET(request: NextRequest) {
             <div class="section">
               <h2>📋 URL do WSDL</h2>
               <p>Use esta URL para importar o WSDL diretamente no SAP, SoapUI ou qualquer SOAP client:</p>
-              <div class="wsdl-url" id="wsdlUrl">${wsdlUrl}</div>
+              <div class="wsdl-url" id="wsdlUrl">https://factura-agt.vercel.app/api/wsdl</div>
               <button class="copy-btn" onclick="copyToClipboard()">📋 Copiar URL</button>
             </div>
 
@@ -285,7 +275,7 @@ export async function GET(request: NextRequest) {
                 </li>
                 <li class="step" data-step="3">
                   <strong>Cole a URL do WSDL</strong><br>
-                  <div class="code-block">${wsdlUrl}</div>
+                  <div class="code-block">https://factura-agt.vercel.app/api/wsdl</div>
                 </li>
                 <li class="step" data-step="4">
                   <strong>Importar e Configurar</strong><br>
@@ -303,7 +293,7 @@ export async function GET(request: NextRequest) {
               <h2>🧪 Importar no SoapUI</h2>
               <ol>
                 <li class="step" data-step="1"><strong>Abrir SoapUI</strong> e criar novo SOAP Project</li>
-                <li class="step" data-step="2"><strong>Colar URL:</strong> <code>${wsdlUrl}</code></li>
+                <li class="step" data-step="2"><strong>Colar URL:</strong> <code>https://factura-agt.vercel.app/api/wsdl</code></li>
                 <li class="step" data-step="3"><strong>Clicar em OK</strong> — o projeto é importado com as 7 operações</li>
                 <li class="step" data-step="4"><strong>Testar operações</strong> (ex: registarFactura, obterEstado, etc.)</li>
               </ol>
@@ -318,11 +308,11 @@ export async function GET(request: NextRequest) {
               <ol>
                 <li class="step" data-step="1"><strong>New → Request</strong></li>
                 <li class="step" data-step="2"><strong>Method: POST</strong></li>
-                <li class="step" data-step="3"><strong>URL:</strong> <code>${soapUrl}</code></li>
+                <li class="step" data-step="3"><strong>URL:</strong> <code>https://factura-agt.vercel.app/api/soap</code></li>
                 <li class="step" data-step="4">
                   <strong>Headers:</strong>
                   <div class="code-block">Content-Type: text/xml
-SOAPAction: http://agt.gov.ao/services/facturacao/RegistarFactura</div>
+SOAPAction: https://factura-agt.vercel.app/facturacao/v1/registarFactura</div>
                 </li>
                 <li class="step" data-step="5">
                   <strong>Body (raw XML)</strong> — use exemplos da documentação

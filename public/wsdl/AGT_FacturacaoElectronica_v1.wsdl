@@ -31,16 +31,16 @@
 <definitions 
     xmlns="http://schemas.xmlsoap.org/wsdl/"
     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-    xmlns:tns="http://agt.minfin.gov.ao/facturacao/v1"
+    xmlns:tns="https://factura-agt.vercel.app/facturacao/v1"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    targetNamespace="http://agt.minfin.gov.ao/facturacao/v1"
+    targetNamespace="https://factura-agt.vercel.app/facturacao/v1"
     name="AGTFacturacaoElectronicaService">
 
     <!-- ================================================================== -->
     <!-- TIPOS DE DADOS (XML SCHEMA)                                        -->
     <!-- ================================================================== -->
     <types>
-        <xsd:schema targetNamespace="http://agt.minfin.gov.ao/facturacao/v1"
+<xsd:schema targetNamespace="https://factura-agt.vercel.app/facturacao/v1"
                     elementFormDefault="qualified">
 
             <!-- ========================================================== -->
@@ -683,43 +683,43 @@
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
 
         <operation name="registarFactura">
-            <soap:operation soapAction="http://agt.minfin.gov.ao/facturacao/v1/registarFactura"/>
+            <soap:operation soapAction="https://factura-agt.vercel.app/facturacao/v1/registarFactura"/>
             <input><soap:body use="literal"/></input>
             <output><soap:body use="literal"/></output>
         </operation>
 
         <operation name="obterEstado">
-            <soap:operation soapAction="http://agt.minfin.gov.ao/facturacao/v1/obterEstado"/>
+            <soap:operation soapAction="https://factura-agt.vercel.app/facturacao/v1/obterEstado"/>
             <input><soap:body use="literal"/></input>
             <output><soap:body use="literal"/></output>
         </operation>
 
         <operation name="listarFacturas">
-            <soap:operation soapAction="http://agt.minfin.gov.ao/facturacao/v1/listarFacturas"/>
+            <soap:operation soapAction="https://factura-agt.vercel.app/facturacao/v1/listarFacturas"/>
             <input><soap:body use="literal"/></input>
             <output><soap:body use="literal"/></output>
         </operation>
 
         <operation name="consultarFactura">
-            <soap:operation soapAction="http://agt.minfin.gov.ao/facturacao/v1/consultarFactura"/>
+            <soap:operation soapAction="https://factura-agt.vercel.app/facturacao/v1/consultarFactura"/>
             <input><soap:body use="literal"/></input>
             <output><soap:body use="literal"/></output>
         </operation>
 
         <operation name="solicitarSerie">
-            <soap:operation soapAction="http://agt.minfin.gov.ao/facturacao/v1/solicitarSerie"/>
+            <soap:operation soapAction="https://factura-agt.vercel.app/facturacao/v1/solicitarSerie"/>
             <input><soap:body use="literal"/></input>
             <output><soap:body use="literal"/></output>
         </operation>
 
         <operation name="listarSeries">
-            <soap:operation soapAction="http://agt.minfin.gov.ao/facturacao/v1/listarSeries"/>
+            <soap:operation soapAction="https://factura-agt.vercel.app/facturacao/v1/listarSeries"/>
             <input><soap:body use="literal"/></input>
             <output><soap:body use="literal"/></output>
         </operation>
 
         <operation name="validarDocumento">
-            <soap:operation soapAction="http://agt.minfin.gov.ao/facturacao/v1/validarDocumento"/>
+            <soap:operation soapAction="https://factura-agt.vercel.app/facturacao/v1/validarDocumento"/>
             <input><soap:body use="literal"/></input>
             <output><soap:body use="literal"/></output>
         </operation>
@@ -738,10 +738,10 @@
             
             Versão: 1.0
             Contacto: correspondencia.agt@minfin.gov.ao
-            Website: factura-agt.vercel.app
+            Website: www.agt.minfin.gov.ao
         </documentation>
         
-        <!-- Endpoint de Produção (ajustado para o middleware) -->
+        <!-- Endpoint de Produção (a ser definido pela AGT) -->
         <port name="AGTFacturacaoSOAPPort" binding="tns:AGTFacturacaoSOAPBinding">
             <soap:address location="https://factura-agt.vercel.app/api/soap"/>
         </port>
