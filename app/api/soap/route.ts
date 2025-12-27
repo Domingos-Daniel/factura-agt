@@ -180,10 +180,11 @@ function convertSoapToJson(data: any, operation: string): any {
       
     case 'consultarFactura':
       return {
-        schemaVersion: data.schemaVersion || '1.0.0',
-        taxRegistrationNumber: data.taxRegistrationNumber,
-        documentNo: data.documentNo,
-        jwsSignature: data.jwsSignature || '',
+        schemaVersion: findField(data, 'schemaVersion') || data.schemaVersion || '1.0.0',
+        taxRegistrationNumber: findField(data, 'taxRegistrationNumber') || data.taxRegistrationNumber,
+        documentNo: findField(data, 'documentNo') || data.documentNo,
+        submissionTimeStamp: findField(data, 'submissionTimeStamp') || data.submissionTimeStamp || new Date().toISOString(),
+        jwsSignature: findField(data, 'jwsSignature') || data.jwsSignature || '',
         softwareInfo: convertSoftwareInfo(data.softwareInfo),
       };
       

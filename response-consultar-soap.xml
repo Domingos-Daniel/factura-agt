@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:fact="http://agt.minfin.gov.ao/facturacao/v1">
+  <soap:Header/>
+  <soap:Body>
+    <fact:consultarFacturaResponse>
+            <fact:response>
+        <fact:documentNo>FT2025-HTTP-001</fact:documentNo>
+        <fact:validationStatus>V</fact:validationStatus>
+        <fact:documents>
+          <fact:documentNo>FT2025-HTTP-001</fact:documentNo>
+          <fact:documentStatus>N</fact:documentStatus>
+          <fact:documentDate>2025-12-27</fact:documentDate>
+          <fact:documentType>FT</fact:documentType>
+          <fact:eacCode>CAE001</fact:eacCode>
+          <fact:systemEntryDate>2025-12-27T01:19:36+01:00</fact:systemEntryDate>
+          <fact:customerCountry>AO</fact:customerCountry>
+          <fact:customerTaxID>987654321</fact:customerTaxID>
+          <fact:companyName>Cliente Seed Lda</fact:companyName>
+          <fact:lines>
+            <fact:lineNo>1</fact:lineNo>
+            <fact:productDescription>Seed product</fact:productDescription>
+            <fact:quantity>1</fact:quantity>
+            <fact:unitOfMeasure>UN</fact:unitOfMeasure>
+            <fact:unitPrice>100</fact:unitPrice>
+            <fact:unitPriceBase>100</fact:unitPriceBase>
+            <fact:taxes>
+              <fact:taxType>IVA</fact:taxType>
+              <fact:taxCountryRegion>AO</fact:taxCountryRegion>
+              <fact:taxCode>NOR</fact:taxCode>
+              <fact:taxPercentage>14</fact:taxPercentage>
+              <fact:taxBase>100</fact:taxBase>
+              <fact:taxAmount>14</fact:taxAmount>
+
+            </fact:taxes>
+            <fact:settlementAmount>0</fact:settlementAmount>
+
+          </fact:lines>
+          <fact:documentTotals>
+            <fact:taxPayable>14</fact:taxPayable>
+            <fact:netTotal>100</fact:netTotal>
+            <fact:grossTotal>114</fact:grossTotal>
+            <fact:currency>
+              <fact:currencyCode>AOA</fact:currencyCode>
+              <fact:currencyAmount>114</fact:currencyAmount>
+              <fact:exchangeRate>1</fact:exchangeRate>
+
+            </fact:currency>
+
+          </fact:documentTotals>
+          <fact:jwsDocumentSignature>YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY</fact:jwsDocumentSignature>
+
+        </fact:documents>
+
+      </fact:response>
+      <fact:httpStatus>200</fact:httpStatus>
+
+    </fact:consultarFacturaResponse>
+  </soap:Body>
+</soap:Envelope>
