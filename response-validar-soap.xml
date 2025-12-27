@@ -4,8 +4,13 @@
   <soap:Body>
     <fact:validarDocumentoResponse>
             <fact:response>
-        <fact:actionResultCode>C_OK</fact:actionResultCode>
-        <fact:documentStatusCode>S_V</fact:documentStatusCode>
+        <fact:actionResultCode>C_NOK</fact:actionResultCode>
+        <fact:documentStatusCode>S_RG</fact:documentStatusCode>
+        <fact:errorList>
+          <fact:idError>E082</fact:idError>
+          <fact:descriptionError>Documento não encontrado ou não pertence ao adquirente</fact:descriptionError>
+
+        </fact:errorList>
 
       </fact:response>
       <fact:httpStatus>200</fact:httpStatus>

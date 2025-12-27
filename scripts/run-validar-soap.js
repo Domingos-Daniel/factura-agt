@@ -3,8 +3,8 @@
   const base = 'http://localhost:3000';
 
   try {
-    // Seed a deterministic invoice
-    const seedRes = await fetch(`${base}/api/mock/seed?documentNo=FT2025-VALIDAR-001&taxRegistrationNumber=123456789`);
+    // Seed a deterministic invoice for validarDocumento
+    const seedRes = await fetch(`${base}/api/mock/seed/validar?documentNo=FT2025-VALIDAR-001&acquirerTaxRegistrationNumber=987654321&emitterTaxRegistrationNumber=123456789`);
     const seedJson = await seedRes.json();
     console.log('seed status=', seedRes.status, 'body=', JSON.stringify(seedJson));
     const requestID = seedJson.requestID;
