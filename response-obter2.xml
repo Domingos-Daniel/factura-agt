@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:fact="http://agt.minfin.gov.ao/facturacao/v1">
+  <soap:Header/>
+  <soap:Body>
+    <fact:obterEstadoResponse>
+            <fact:response>
+        <fact:statusResult>
+          <fact:requestID>AGT-20251227-32d94997</fact:requestID>
+          <fact:resultCode>0</fact:resultCode>
+          <fact:documentStatusList>
+            <fact:documentNo>FT-SEED-1766794125814</fact:documentNo>
+            <fact:documentStatus>V</fact:documentStatus>
+
+          </fact:documentStatusList>
+
+        </fact:statusResult>
+
+      </fact:response>
+      <fact:httpStatus>200</fact:httpStatus>
+
+    </fact:obterEstadoResponse>
+  </soap:Body>
+</soap:Envelope>
