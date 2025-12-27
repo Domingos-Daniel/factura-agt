@@ -20,7 +20,29 @@ async function seedHandler(req: Request) {
   }
 
   try {
-    const body = req.method === 'GET' ? Object.fromEntries(new URL(req.url).searchParams) : await req.json().catch(() => ({}))
+    const urlParams = Object.fromEntries(new URL(req.url).searchParams)
+
+    // If caller provided a requestID, return the full seeded record so users can copy fields
+    if (urlParams.requestID) {
+      const stored = AGTMockService.storage.facturas.get(String(urlParams.requestID))
+      if (!stored) {
+        return NextResponse.json({ error: 'requestID não encontrado' }, { status: 404 })
+      }
+
+      // Return helpful sample fields to copy into SOAP envelopes
+      return NextResponse.json({
+        requestID: stored.requestID,
+        taxRegistrationNumber: stored.request.taxRegistrationNumber,
+        submissionGUID: stored.request.submissionGUID,
+        submissionTimeStamp: stored.request.submissionTimeStamp,
+        documents: stored.request.documents,
+        createdAt: stored.createdAt,
+        status: stored.status,
+      }, { status: 200 })
+    }
+
+    // Normal seeding behaviour (create a new seeded invoice)
+    const body = req.method === 'GET' ? urlParams : await req.json().catch(() => ({}))
     const now = new Date()
     const taxRegistrationNumber = body.taxRegistrationNumber || '123456789'
     const submissionGUID = body.submissionGUID || `seed-${Date.now()}`
