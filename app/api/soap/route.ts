@@ -196,13 +196,14 @@ function convertSoapToJson(data: any, operation: string): any {
       
     case 'solicitarSerie':
       return {
-        schemaVersion: data.schemaVersion || '1.0.0',
-        taxRegistrationNumber: data.taxRegistrationNumber,
-        seriesCode: data.seriesCode,
-        seriesYear: data.seriesYear,
-        documentType: data.documentType,
-        firstDocumentNumber: data.firstDocumentNumber,
-        jwsSignature: data.jwsSignature || '',
+        schemaVersion: findField(data, 'schemaVersion') || data.schemaVersion || '1.0.0',
+        taxRegistrationNumber: findField(data, 'taxRegistrationNumber') || data.taxRegistrationNumber,
+        seriesCode: findField(data, 'seriesCode') || data.seriesCode,
+        seriesYear: parseInt(findField(data, 'seriesYear') || data.seriesYear) || undefined,
+        documentType: findField(data, 'documentType') || data.documentType,
+        firstDocumentNumber: parseInt(findField(data, 'firstDocumentNumber') || data.firstDocumentNumber) || 1,
+        submissionTimeStamp: findField(data, 'submissionTimeStamp') || data.submissionTimeStamp || new Date().toISOString(),
+        jwsSignature: findField(data, 'jwsSignature') || data.jwsSignature || '',
         softwareInfo: convertSoftwareInfo(data.softwareInfo),
       };
       
