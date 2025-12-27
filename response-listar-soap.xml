@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <soap:Fault>
+      <faultcode>soap:Client</faultcode>
+      <faultstring>E96: solicitação mal efectuada - [{&quot;idError&quot;:&quot;EVAL001&quot;,&quot;descriptionError&quot;:&quot;startDate: Required&quot;},{&quot;idError&quot;:&quot;EVAL002&quot;,&quot;descriptionError&quot;:&quot;endDate: Required&quot;}]</faultstring>
+    </soap:Fault>
+  </soap:Body>
+</soap:Envelope>

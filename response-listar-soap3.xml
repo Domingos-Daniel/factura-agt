@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:fact="http://agt.minfin.gov.ao/facturacao/v1">
+  <soap:Header/>
+  <soap:Body>
+    <fact:listarFacturasResponse>
+            <fact:response>
+        <fact:documentResultCount>1</fact:documentResultCount>
+        <fact:documentResultList>
+          <fact:documentNo>FT2025-LISTAR-001</fact:documentNo>
+          <fact:documentDate>2025-12-27</fact:documentDate>
+
+        </fact:documentResultList>
+
+      </fact:response>
+      <fact:httpStatus>200</fact:httpStatus>
+
+    </fact:listarFacturasResponse>
+  </soap:Body>
+</soap:Envelope>

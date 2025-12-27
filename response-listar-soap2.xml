@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:fact="http://agt.minfin.gov.ao/facturacao/v1">
+  <soap:Header/>
+  <soap:Body>
+    <fact:listarFacturasResponse>
+            <fact:response>
+        <fact:documentResultCount>0</fact:documentResultCount>
+        <fact:_debug>
+          <fact:jsonRequest>
+            <fact:schemaVersion>1.0</fact:schemaVersion>
+            <fact:taxRegistrationNumber>123456789</fact:taxRegistrationNumber>
+            <fact:queryStartDate>2025-12-25</fact:queryStartDate>
+            <fact:queryEndDate>2025-12-29</fact:queryEndDate>
+            <fact:startDate>2025-12-25</fact:startDate>
+            <fact:endDate>2025-12-29</fact:endDate>
+            <fact:jwsSignature>PLACEHOLDER_JWS</fact:jwsSignature>
+            <fact:softwareInfo>
+              <fact:productId>TEST_SOFT</fact:productId>
+              <fact:productVersion>1.0</fact:productVersion>
+              <fact:softwareValidationNumber>VAL-TEST</fact:softwareValidationNumber>
+              <fact:jwsSoftwareSignature>...</fact:jwsSoftwareSignature>
+
+            </fact:softwareInfo>
+
+          </fact:jsonRequest>
+
+        </fact:_debug>
+
+      </fact:response>
+      <fact:httpStatus>400</fact:httpStatus>
+
+    </fact:listarFacturasResponse>
+  </soap:Body>
+</soap:Envelope>

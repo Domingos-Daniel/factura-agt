@@ -169,11 +169,17 @@ function convertSoapToJson(data: any, operation: string): any {
       };
       
     case 'listarFacturas':
+      const start = data.queryStartDate || data.startDate;
+      const end = data.queryEndDate || data.endDate;
       return {
         schemaVersion: data.schemaVersion || '1.0.0',
         taxRegistrationNumber: data.taxRegistrationNumber,
-        queryStartDate: data.queryStartDate || data.startDate,
-        queryEndDate: data.queryEndDate || data.endDate,
+        queryStartDate: start,
+        queryEndDate: end,
+        // also set canonical names expected by Zod / REST handlers
+        startDate: start,
+        endDate: end,
+        submissionTimeStamp: findField(data, 'submissionTimeStamp') || data.submissionTimeStamp || new Date().toISOString(),
         jwsSignature: data.jwsSignature || '',
         softwareInfo: convertSoftwareInfo(data.softwareInfo),
       };

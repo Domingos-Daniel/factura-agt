@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:tns="https://factura-agt.vercel.app/facturacao/v1">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <tns:ListarFacturasRequest>
+      <schemaVersion>1.0</schemaVersion>
+      <taxRegistrationNumber>123456789</taxRegistrationNumber>
+      <startDate>2025-12-25</startDate>
+      <endDate>2025-12-29</endDate>
+      <submissionTimeStamp>2025-12-27T00:00:00Z</submissionTimeStamp>
+      <jwsSignature>PLACEHOLDER_JWS</jwsSignature>
+      <softwareInfo>
+        <softwareInfoDetail>
+          <productId>TEST_SOFT</productId>
+          <productVersion>1.0</productVersion>
+          <softwareValidationNumber>VAL-TEST</softwareValidationNumber>
+        </softwareInfoDetail>
+        <jwsSoftwareSignature>...</jwsSoftwareSignature>
+      </softwareInfo>
+    </tns:ListarFacturasRequest>
+  </soapenv:Body>
+</soapenv:Envelope>
