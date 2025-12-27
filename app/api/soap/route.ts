@@ -219,13 +219,15 @@ function convertSoapToJson(data: any, operation: string): any {
       
     case 'validarDocumento':
       return {
-        schemaVersion: data.schemaVersion || '1.0.0',
-        taxRegistrationNumber: data.taxRegistrationNumber,
-        documentNo: data.documentNo,
-        emitterTaxRegistrationNumber: data.emitterTaxRegistrationNumber,
-        action: data.action,
-        rejectionReason: data.rejectionReason,
-        jwsSignature: data.jwsSignature || '',
+        schemaVersion: findField(data, 'schemaVersion') || data.schemaVersion || '1.0.0',
+        taxRegistrationNumber: findField(data, 'taxRegistrationNumber') || data.taxRegistrationNumber,
+        submissionId: findField(data, 'submissionId') || data.submissionId,
+        submissionTimeStamp: findField(data, 'submissionTimeStamp') || data.submissionTimeStamp || new Date().toISOString(),
+        documentNo: findField(data, 'documentNo') || data.documentNo,
+        emitterTaxRegistrationNumber: findField(data, 'emitterTaxRegistrationNumber') || data.emitterTaxRegistrationNumber,
+        action: findField(data, 'action') || data.action,
+        rejectionReason: findField(data, 'rejectionReason') || data.rejectionReason,
+        jwsSignature: findField(data, 'jwsSignature') || data.jwsSignature || '',
         softwareInfo: convertSoftwareInfo(data.softwareInfo),
       };
       

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="https://factura-agt.vercel.app/facturacao/v1">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <tns:ValidarDocumentoRequest>
+      <schemaVersion>1.0</schemaVersion>
+      <submissionId>EIZSO-77428518-7143</submissionId>
+      <taxRegistrationNumber>987654321</taxRegistrationNumber>
+      <emitterTaxRegistrationNumber>123456789</emitterTaxRegistrationNumber>
+      <submissionTimeStamp>2025-12-27T00:46:39.891Z</submissionTimeStamp>
+      <softwareInfo>
+        <softwareInfoDetail>
+          <productId>TEST_SOFT</productId>
+          <productVersion>1.0</productVersion>
+          <softwareValidationNumber>VAL-TEST</softwareValidationNumber>
+        </softwareInfoDetail>
+        <jwsSoftwareSignature>...</jwsSoftwareSignature>
+      </softwareInfo>
+      <jwsSignature>PLACEHOLDER_JWS</jwsSignature>
+      <documentNo>FT2025-VALIDAR-001</documentNo>
+      <action>C</action>
+    </tns:ValidarDocumentoRequest>
+  </soapenv:Body>
+</soapenv:Envelope>
