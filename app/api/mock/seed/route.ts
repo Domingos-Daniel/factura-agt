@@ -5,13 +5,22 @@ import { formatISO } from 'date-fns'
 export const dynamic = 'force-dynamic'
 
 export async function POST(req: Request) {
+  return seedHandler(req)
+}
+
+export async function GET(req: Request) {
+  // Allow simple browser access: pass query params to seedHandler
+  return seedHandler(req)
+}
+
+async function seedHandler(req: Request) {
   // Only allow in mock mode
   if (process.env.AGT_USE_MOCK !== 'true' && process.env.USE_MOCK !== 'true') {
     return NextResponse.json({ error: 'Mock endpoints are disabled' }, { status: 403 })
   }
 
   try {
-    const body = await req.json().catch(() => ({}))
+    const body = req.method === 'GET' ? Object.fromEntries(new URL(req.url).searchParams) : await req.json().catch(() => ({}))
     const now = new Date()
     const taxRegistrationNumber = body.taxRegistrationNumber || '123456789'
     const submissionGUID = body.submissionGUID || `seed-${Date.now()}`

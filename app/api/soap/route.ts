@@ -686,6 +686,46 @@ export async function POST(request: NextRequest) {
       // Log curto do request para depuração (limitado)
       try { if (operation === 'registarFactura') console.log('SOAP jsonRequest:', JSON.stringify(jsonRequest, null, 2).slice(0, 2000)); } catch (e) {}
 
+      // Auto-seed behaviour for mock: if using mock and calling obterEstado with a requestID
+      // that doesn't exist yet, create a lightweight seed so testers can call obterEstado directly.
+      if ((process.env.AGT_USE_MOCK === 'true' || process.env.USE_MOCK === 'true') && (operation === 'obterEstado' || operation.toLowerCase() === 'obterestado')) {
+        try {
+          const rid = jsonRequest.requestID
+          if (rid && !mockService.storage.facturas.has(rid)) {
+            const now = new Date()
+            const fakeRequest: any = {
+              schemaVersion: jsonRequest.schemaVersion || '1.0',
+              submissionGUID: jsonRequest.submissionGUID || `seed-${Date.now()}`,
+              taxRegistrationNumber: jsonRequest.taxRegistrationNumber || '123456789',
+              submissionTimeStamp: jsonRequest.submissionTimeStamp || now.toISOString(),
+              softwareInfo: jsonRequest.softwareInfo || { softwareInfoDetail: { productId: 'SEED_SOFT', productVersion: '1.0', softwareValidationNumber: 'SEED' }, jwsSoftwareSignature: '' },
+              numberOfEntries: 1,
+              documents: [
+                {
+                  documentNo: `FT-SEED-${Date.now()}`,
+                  documentStatus: 'N',
+                  documentDate: now.toISOString().split('T')[0],
+                  documentType: 'FT',
+                  eacCode: 'CAE001',
+                  systemEntryDate: now.toISOString(),
+                  customerCountry: 'AO',
+                  customerTaxID: '987654321',
+                  companyName: 'Cliente Seed Lda',
+                  lines: [ { lineNo: 1, productDescription: 'Seed product', quantity: 1, unitOfMeasure: 'UN', unitPrice: 100, unitPriceBase: 100, taxes: [ { taxType: 'IVA', taxCountryRegion: 'AO', taxCode: 'NOR', taxPercentage: 14, taxBase: 100, taxAmount: 14 } ], settlementAmount: 0 } ],
+                  documentTotals: { taxPayable: 14, netTotal: 100, grossTotal: 114, currency: { currencyCode: 'AOA', currencyAmount: 114, exchangeRate: 1 } },
+                  jwsDocumentSignature: ''
+                }
+              ]
+            }
+            const entry: any = { request: fakeRequest, requestID: rid, status: 'processed' as const, validationResults: new Map([[fakeRequest.documents[0].documentNo, 'V']]), createdAt: new Date() }
+            mockService.storage.facturas.set(rid, entry as any)
+            console.log('SOAP auto-seed created for requestID', rid)
+          }
+        } catch (seedErr) {
+          // ignore seeding errors
+        }
+      }
+
       switch (operation) {
         case 'registarFactura':
         case 'RegistarFactura':
