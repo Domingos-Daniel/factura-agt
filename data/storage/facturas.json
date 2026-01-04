@@ -1,0 +1,199 @@
+{
+  "metadata": {
+    "lastUpdated": "2026-01-04T21:16:09.207Z",
+    "version": "1.0",
+    "totalFacturas": 3,
+    "totalSeries": 1,
+    "totalOperations": 7
+  },
+  "facturas": [
+    {
+      "id": "FT-123456789-1767561369099-liuk44",
+      "type": "factura",
+      "serviceName": "mock",
+      "status": "registered",
+      "requestID": "req-001",
+      "request": {
+        "schemaVersion": "1.0",
+        "submissionGUID": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+        "taxRegistrationNumber": "123456789",
+        "submissionTimeStamp": "2026-01-04T21:16:09.088Z",
+        "numberOfEntries": 1,
+        "documents": [
+          {
+            "documentNo": "FT2025-001",
+            "documentDate": "2026-01-04",
+            "customerTaxID": "987654321",
+            "companyName": "Cliente 1"
+          }
+        ]
+      },
+      "response": {
+        "returnCode": "0",
+        "requestID": "req-001"
+      },
+      "errors": [],
+      "createdAt": "2026-01-04T21:16:09.099Z",
+      "updatedAt": "2026-01-04T21:16:09.099Z",
+      "metadata": {
+        "nif": "123456789",
+        "documentNo": "FT2025-001",
+        "submissionGUID": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
+      }
+    },
+    {
+      "id": "FT-123456789-1767561369117-m2o3bh",
+      "type": "factura",
+      "serviceName": "mock",
+      "status": "registered",
+      "requestID": "req-002",
+      "request": {
+        "schemaVersion": "1.0",
+        "submissionGUID": "bbbbbbbb",
+        "taxRegistrationNumber": "123456789",
+        "submissionTimeStamp": "2026-01-04T21:16:09.088Z",
+        "numberOfEntries": 1,
+        "documents": [
+          {
+            "documentNo": "FT2025-002",
+            "documentDate": "2026-01-04",
+            "customerTaxID": "987654321",
+            "companyName": "Cliente 1"
+          }
+        ]
+      },
+      "response": {
+        "returnCode": "0",
+        "requestID": "req-002"
+      },
+      "errors": [],
+      "createdAt": "2026-01-04T21:16:09.117Z",
+      "updatedAt": "2026-01-04T21:16:09.117Z",
+      "metadata": {
+        "nif": "123456789",
+        "documentNo": "FT2025-002",
+        "submissionGUID": "bbbbbbbb"
+      }
+    },
+    {
+      "id": "FT-123456789-1767561369131-euhurt",
+      "type": "factura",
+      "serviceName": "mock",
+      "status": "registered",
+      "requestID": "req-003",
+      "request": {
+        "schemaVersion": "1.0",
+        "submissionGUID": "cccccccc",
+        "taxRegistrationNumber": "123456789",
+        "submissionTimeStamp": "2026-01-04T21:16:09.088Z",
+        "numberOfEntries": 1,
+        "documents": [
+          {
+            "documentNo": "FT2025-003",
+            "documentDate": "2026-01-04",
+            "customerTaxID": "987654321",
+            "companyName": "Cliente 1"
+          }
+        ]
+      },
+      "response": {
+        "returnCode": "0",
+        "requestID": "req-003"
+      },
+      "errors": [],
+      "createdAt": "2026-01-04T21:16:09.131Z",
+      "updatedAt": "2026-01-04T21:16:09.131Z",
+      "metadata": {
+        "nif": "123456789",
+        "documentNo": "FT2025-003",
+        "submissionGUID": "cccccccc"
+      }
+    }
+  ],
+  "series": [
+    {
+      "id": "SR-123456789-1767561369150-g9wmqo",
+      "type": "serie",
+      "serviceName": "mock",
+      "status": "registered",
+      "request": {
+        "taxRegistrationNumber": "123456789",
+        "seriesCode": "SERIE001",
+        "seriesYear": 2025
+      },
+      "response": {
+        "resultCode": 1
+      },
+      "errors": [],
+      "createdAt": "2026-01-04T21:16:09.150Z",
+      "updatedAt": "2026-01-04T21:16:09.150Z",
+      "metadata": {
+        "nif": "123456789",
+        "documentNo": "SERIE001"
+      }
+    }
+  ],
+  "validations": [
+    {
+      "id": "VAL-FT2025-001-1767561369169-yk6x23",
+      "type": "validacao",
+      "serviceName": "mock",
+      "status": "validated",
+      "request": {
+        "taxRegistrationNumber": "987654321",
+        "documentNo": "FT2025-001",
+        "action": "C"
+      },
+      "response": {
+        "actionResultCode": "C_OK"
+      },
+      "createdAt": "2026-01-04T21:16:09.169Z",
+      "updatedAt": "2026-01-04T21:16:09.169Z",
+      "metadata": {
+        "documentNo": "FT2025-001"
+      }
+    }
+  ],
+  "consultations": [
+    {
+      "id": "CONS-obterEstado-123456789-1767561369190-f7ns43",
+      "type": "consulta",
+      "serviceName": "mock",
+      "status": "registered",
+      "request": {
+        "taxRegistrationNumber": "123456789",
+        "requestID": "req-001"
+      },
+      "response": {
+        "returnCode": "0"
+      },
+      "createdAt": "2026-01-04T21:16:09.190Z",
+      "updatedAt": "2026-01-04T21:16:09.190Z",
+      "metadata": {
+        "nif": "123456789",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "CONS-listarFacturas-123456789-1767561369207-hnjbrd",
+      "type": "consulta",
+      "serviceName": "mock",
+      "status": "registered",
+      "request": {
+        "taxRegistrationNumber": "123456789",
+        "periodStart": "2026-01-04",
+        "periodEnd": "2026-01-04"
+      },
+      "response": {
+        "returnCode": "0",
+        "documentResultCount": 3
+      },
+      "createdAt": "2026-01-04T21:16:09.207Z",
+      "updatedAt": "2026-01-04T21:16:09.207Z",
+      "metadata": {
+        "nif": "123456789",
+        "documentNo": "listarFacturas"
+      }
+    }
+  ]
+}

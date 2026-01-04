@@ -42,6 +42,7 @@ import {
 } from '../types/agt-official';
 
 import { generateSubmissionId } from './agtClientOfficial';
+import { FacturaRepository } from './facturaRepository';
 
 // =============================================================================
 // ARMAZENAMENTO EM MEMÓRIA (PARA MOCK)
@@ -74,6 +75,22 @@ const mockStorage: MockStorage = {
  */
 function generateRequestID(): string {
   return generateSubmissionId();
+}
+
+/**
+ * Helper para salvar operações de consulta
+ */
+function saveConsultationToRepository(
+  operationType: 'obterEstado' | 'listarFacturas' | 'consultarFactura' | 'listarSeries',
+  request: any,
+  response: any,
+): void {
+  try {
+    FacturaRepository.saveConsultationOperation('mock', request, response, operationType);
+  } catch (error) {
+    // Não falhar a operação se houver erro ao salvar no repositório
+    console.warn(`Aviso ao salvar ${operationType} no repositório:`, error);
+  }
 }
 
 /**
@@ -342,6 +359,10 @@ export async function mockRegistarFactura(
     validationResults: new Map(),
     createdAt: new Date(),
   });
+
+  // Salvar no repositório
+  const response = { requestID };
+  FacturaRepository.saveFacturaOperation('mock', request, response, requestID);
   
   // Simular processamento assíncrono (validação diferida)
   setTimeout(() => {
@@ -361,7 +382,7 @@ export async function mockRegistarFactura(
   }, 2000); // Simular 2 segundos de processamento
   
   return {
-    response: { requestID },
+    response,
     httpStatus: 200,
   };
 }
@@ -456,14 +477,19 @@ export async function mockObterEstado(
     resultCode = 2; // Sem facturas válidas
   }
   
-  return {
-    response: {
-      statusResult: {
-        requestID: request.requestID,
-        resultCode,
-        documentStatusList,
-      },
+  const response = {
+    statusResult: {
+      requestID: request.requestID,
+      resultCode,
+      documentStatusList,
     },
+  };
+
+  // Salvar no repositório
+  saveConsultationToRepository('obterEstado', request, response);
+  
+  return {
+    response,
     httpStatus: 200,
   };
 }
@@ -509,11 +535,16 @@ export async function mockListarFacturas(
     }
   });
   
+  const response = {
+    documentResultCount: documentResultList.length,
+    documentResultList,
+  };
+
+  // Salvar no repositório
+  saveConsultationToRepository('listarFacturas', request, response);
+  
   return {
-    response: {
-      documentResultCount: documentResultList.length,
-      documentResultList,
-    },
+    response,
     httpStatus: 200,
   };
 }
@@ -573,16 +604,23 @@ export async function mockConsultarFactura(
   });
   
   if (foundResponse) {
+    // Salvar no repositório
+    saveConsultationToRepository('consultarFactura', request, foundResponse as any);
     return foundResponse;
   }
   
+  const errorResponse = { 
+    errorEntry: { 
+      idError: 'E061', 
+      descriptionError: 'Documento não encontrado' 
+    } 
+  };
+
+  // Salvar no repositório
+  saveConsultationToRepository('consultarFactura', request, errorResponse);
+  
   return {
-    response: { 
-      errorEntry: { 
-        idError: 'E061', 
-        descriptionError: 'Documento não encontrado' 
-      } 
-    },
+    response: errorResponse,
     httpStatus: 422,
   };
 }
@@ -699,9 +737,13 @@ export async function mockSolicitarSerie(
   };
   
   mockStorage.series.set(seriesKey, seriesInfo);
+
+  // Salvar no repositório
+  const response: AGTSolicitarSerieResponse = { resultCode: 1 };
+  FacturaRepository.saveSerieOperation('mock', request, response);
   
   return {
-    response: { resultCode: 1 },
+    response,
     httpStatus: 200,
   };
 }
@@ -749,11 +791,16 @@ export async function mockListarSeries(
     seriesInfo.push(series);
   });
   
+  const response = {
+    seriesResultCount: seriesInfo.length,
+    seriesInfo,
+  };
+
+  // Salvar no repositório
+  saveConsultationToRepository('listarSeries', request, response);
+  
   return {
-    response: {
-      seriesResultCount: seriesInfo.length,
-      seriesInfo,
-    },
+    response,
     httpStatus: 200,
   };
 }
@@ -850,12 +897,16 @@ export async function mockValidarDocumento(
     action: request.action,
     date: new Date(),
   });
+
+  // Salvar no repositório
+  const response: AGTConfirmRejectResult = {
+    actionResultCode: (request.action === 'C' ? 'C_OK' : 'R_OK') as any,
+    documentStatusCode: currentStatus as any,
+  };
+  FacturaRepository.saveValidationOperation('mock', request, response, request.action);
   
   return {
-    response: {
-      actionResultCode: request.action === 'C' ? 'C_OK' : 'R_OK',
-      documentStatusCode: currentStatus as any,
-    },
+    response,
     httpStatus: 200,
   };
 }

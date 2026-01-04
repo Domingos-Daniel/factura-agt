@@ -7,8 +7,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
-    ,
+    "lint": "next lint",
     "validate:wsdl": "node scripts/validate-wsdl.js",
     "test:schemas": "node -r ts-node/register scripts/test-schemas.ts",
     "test:soap": "node -r ts-node/register scripts/test-soap-mapping.ts",
@@ -26,7 +25,6 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-toast": "^1.1.5",
     "@tanstack/react-table": "^8.16.0",
-    "@types/node": "^20.12.0",
     "@types/react": "^18.3.0",
     "@types/react-dom": "^18.3.0",
     "@types/uuid": "^9.0.8",
@@ -49,14 +47,15 @@
     "recharts": "^2.12.0",
     "tailwind-merge": "^2.3.0",
     "tailwindcss": "^3.4.0",
-    "typescript": "^5.4.0",
     "uuid": "^9.0.1",
     "zod": "^3.23.0"
   },
   "devDependencies": {
-    "ts-node": "^10.9.1",
+    "@types/node": "^25.0.3",
     "eslint": "^8",
     "eslint-config-next": "14.2.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
   }
 }
