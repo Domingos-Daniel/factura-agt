@@ -417,8 +417,8 @@ export async function mockObterEstado(
     };
   }
   
-  // Verificar se o pedido existe
-  const stored = mockStorage.facturas.get(request.requestID);
+  // Query from FacturaRepository (persistent storage)
+  const stored = FacturaRepository.getFacturaByRequestId(request.requestID);
   if (!stored) {
     return {
       response: { 
@@ -458,15 +458,13 @@ export async function mockObterEstado(
   }
   
   // Retornar resultados
-  const documentStatusList = Array.from(stored.validationResults.entries()).map(
-    ([documentNo, status]) => ({
-      documentNo,
-      documentStatus: status,
-    })
-  );
+  const documentStatusList = stored.request.documents.map((doc: any) => ({
+    documentNo: doc.documentNo,
+    documentStatus: stored.status === 'registered' || stored.status === 'validated' ? 'V' : 'I', // V = válido, I = inválido
+  }));
   
-  const hasInvalid = documentStatusList.some(d => d.documentStatus === 'I');
-  const hasValid = documentStatusList.some(d => d.documentStatus === 'V' || d.documentStatus === 'P');
+  const hasInvalid = documentStatusList.some((d: any) => d.documentStatus === 'I');
+  const hasValid = documentStatusList.some((d: any) => d.documentStatus === 'V' || d.documentStatus === 'P');
   
   let resultCode: 0 | 1 | 2;
   if (!hasInvalid) {
@@ -512,19 +510,21 @@ export async function mockListarFacturas(
     };
   }
   
+  // Query from FacturaRepository (persistent storage)
+  const allFacturas = FacturaRepository.listAllFacturas();
+  
   // Filtrar facturas pelo período e NIF
   const startDate = new Date(request.queryStartDate);
   const endDate = new Date(request.queryEndDate);
   
   const documentResultList: { documentNo: string; documentDate: string }[] = [];
   
-  // Usar forEach em vez de for...of para compatibilidade
-  mockStorage.facturas.forEach((stored) => {
-    if (stored.request.taxRegistrationNumber !== request.taxRegistrationNumber) {
-      return;
+  for (const factura of allFacturas) {
+    if (factura.request.taxRegistrationNumber !== request.taxRegistrationNumber) {
+      continue;
     }
     
-    for (const doc of stored.request.documents) {
+    for (const doc of factura.request.documents) {
       const docDate = new Date(doc.documentDate);
       if (docDate >= startDate && docDate <= endDate) {
         documentResultList.push({
@@ -533,7 +533,7 @@ export async function mockListarFacturas(
         });
       }
     }
-  });
+  }
   
   const response = {
     documentResultCount: documentResultList.length,
@@ -579,29 +579,34 @@ export async function mockConsultarFactura(
     };
   }
   
-  // Procurar documento
+  // Query from FacturaRepository (persistent storage)
+  const allFacturas = FacturaRepository.listAllFacturas();
   let foundResponse: { response: any; httpStatus: number } | null = null;
   
-  mockStorage.facturas.forEach((stored) => {
-    if (foundResponse) return;
+  for (const stored of allFacturas) {
     if (stored.request.taxRegistrationNumber !== request.taxRegistrationNumber) {
-      return;
+      continue;
     }
     
     const doc = stored.request.documents.find((d: any) => d.documentNo === request.documentNo);
     if (doc) {
-      const validationStatus = stored.validationResults.get(doc.documentNo);
+      // Get validation status from stored metadata or response
+      let validationStatus = 'V'; // Default to valid
+      if (stored.status === 'error' || stored.status === 'rejected') {
+        validationStatus = 'I';
+      }
       
       foundResponse = {
         response: {
           documentNo: doc.documentNo,
-          validationStatus: validationStatus === 'I' ? undefined : (validationStatus || 'V'),
+          validationStatus: validationStatus === 'I' ? undefined : validationStatus,
           documents: [doc],
         },
         httpStatus: 200,
       };
+      break;
     }
-  });
+  }
   
   if (foundResponse) {
     // Salvar no repositório
@@ -766,30 +771,45 @@ export async function mockListarSeries(
     };
   }
   
+  // Query from FacturaRepository (persistent storage)
+  const allSeries = FacturaRepository.listAllSeries();
+  
   // Filtrar séries
   const seriesInfo: AGTSeriesInfo[] = [];
   
-  mockStorage.series.forEach((series, key) => {
-    if (!key.startsWith(request.taxRegistrationNumber)) {
-      return;
+  for (const series of allSeries) {
+    if (series.request.taxRegistrationNumber !== request.taxRegistrationNumber) {
+      continue;
     }
     
     // Aplicar filtros
-    if (request.seriesCode && series.seriesCode !== request.seriesCode) {
-      return;
+    if (request.seriesCode && series.request.seriesCode !== request.seriesCode) {
+      continue;
     }
-    if (request.seriesYear && series.seriesYear !== request.seriesYear) {
-      return;
+    if (request.seriesYear && series.request.seriesYear !== request.seriesYear) {
+      continue;
     }
-    if (request.documentType && series.documentType !== request.documentType) {
-      return;
+    if (request.documentType && series.request.documentType !== request.documentType) {
+      continue;
     }
-    if (request.seriesStatus && series.seriesStatus !== request.seriesStatus) {
-      return;
+    if (request.seriesStatus && (series.status === 'registered' || series.status === 'validated') === (request.seriesStatus === 'A')) {
+      // Skip if filter doesn't match
+      if (request.seriesStatus !== 'A' || (series.status !== 'registered' && series.status !== 'validated')) {
+        continue;
+      }
     }
     
-    seriesInfo.push(series);
-  });
+    const seriesData: AGTSeriesInfo = {
+      seriesCode: series.request.seriesCode,
+      seriesYear: series.request.seriesYear,
+      documentType: series.request.documentType,
+      seriesStatus: series.status === 'registered' || series.status === 'validated' ? 'A' : series.status as any,
+      seriesCreationDate: new Date(series.createdAt).toISOString().split('T')[0],
+      firstDocumentCreated: String(series.request.firstDocumentNumber),
+      invoicingMethod: 'FESF',
+    };
+    seriesInfo.push(seriesData);
+  }
   
   const response = {
     seriesResultCount: seriesInfo.length,

@@ -318,6 +318,14 @@ export const FacturaRepository = {
   },
 
   /**
+   * Obtém factura pelo requestID (para obterEstado)
+   */
+  getFacturaByRequestId(requestID: string): StoredFacturaOperation | null {
+    const data = loadData();
+    return data.facturas.find(f => f.requestID === requestID) || null;
+  },
+
+  /**
    * Lista todas as facturas
    */
   listAllFacturas(): StoredFacturaOperation[] {
