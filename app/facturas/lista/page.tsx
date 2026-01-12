@@ -19,11 +19,56 @@ export default function ListaFacturasPage() {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    // Carregar facturas do localStorage (com seed automático na primeira vez)
-    const loadFacturas = () => {
-      const data = getFacturas()
-      setFacturas(data)
-      setIsLoading(false)
+    // Carregar facturas do localStorage E do arquivo JSON
+    const loadFacturas = async () => {
+      try {
+        // 1. Carregar do localStorage (mocks + seed)
+        const localFacturas = getFacturas()
+        console.log('📦 LocalStorage facturas:', localFacturas.length)
+        
+        // 2. Carregar do JSON (importações Excel)
+        let jsonFacturas: Factura[] = []
+        try {
+          const response = await fetch('/api/facturas/list')
+          if (response.ok) {
+            const data = await response.json()
+            jsonFacturas = data.facturas || []
+            console.log('📄 JSON facturas:', jsonFacturas.length, jsonFacturas)
+          } else {
+            console.warn('⚠️ API retornou erro:', response.status)
+          }
+        } catch (error) {
+          console.error('❌ Erro ao carregar facturas do JSON:', error)
+        }
+        
+        // 3. Combinar (remover duplicados por ID)
+        const allFacturas = [...localFacturas]
+        const existingIds = new Set(localFacturas.map(f => f.id))
+        
+        jsonFacturas.forEach(factura => {
+          if (!existingIds.has(factura.id)) {
+            allFacturas.push(factura)
+            console.log('➕ Adicionando factura do JSON:', factura.id, factura.documents?.[0]?.documentNo)
+          }
+        })
+        
+        console.log('✅ Total facturas combinadas:', allFacturas.length)
+        
+        // 4. Ordenar por data (mais recentes primeiro)
+        allFacturas.sort((a, b) => {
+          const dateA = new Date(a.submissionTimeStamp || a.createdAt || 0)
+          const dateB = new Date(b.submissionTimeStamp || b.createdAt || 0)
+          return dateB.getTime() - dateA.getTime()
+        })
+        
+        setFacturas(allFacturas)
+      } catch (error) {
+        console.error('❌ Erro ao carregar facturas:', error)
+        // Fallback: mostrar apenas localStorage
+        setFacturas(getFacturas())
+      } finally {
+        setIsLoading(false)
+      }
     }
     
     loadFacturas()

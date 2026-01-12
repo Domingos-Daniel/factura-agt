@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { FileStack, FileSpreadsheet, FileText, LayoutDashboard, Settings } from 'lucide-react'
+import { FileStack, FileSpreadsheet, FileText, LayoutDashboard, Settings, Upload } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -111,6 +111,17 @@ export function Sidebar() {
                   <FileSpreadsheet className="h-4 w-4" />
                 </div>
                 Listar Facturas
+              </Button>
+            </Link>
+            <Link href="/facturas/importar">
+              <Button
+                variant="ghost"
+                className={getActiveClasses('/facturas/importar', 'bg-blue-500/10 hover:text-blue-600 dark:hover:text-blue-400')}
+              >
+                <div className={getIconClasses('/facturas/importar', 'bg-blue-500/20')}>
+                  <Upload className="h-4 w-4" />
+                </div>
+                Importar Excel
               </Button>
             </Link>
           </div>

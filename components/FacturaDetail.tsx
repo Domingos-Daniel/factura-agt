@@ -29,6 +29,7 @@ export function FacturaDetail({ factura }: FacturaDetailProps) {
   const [isFetchingStatus, setIsFetchingStatus] = useState(false)
   const [autoRefresh, setAutoRefresh] = useState(false)
   const { toast } = useToast()
+  const requestID = factura.requestID
 
   const handleObterEstado = useCallback(async () => {
     if (!document?.documentNo) {
@@ -170,6 +171,12 @@ export function FacturaDetail({ factura }: FacturaDetailProps) {
               Total líquido: {formatCurrency(document.documentTotals.netTotal, document.documentTotals.currency?.currencyCode)}
             </p>
           </div>
+          {requestID && (
+            <div className="md:col-span-2">
+              <h4 className="text-sm font-semibold text-muted-foreground">Request ID AGT</h4>
+              <p className="font-mono text-sm">{requestID}</p>
+            </div>
+          )}
         </CardContent>
       </Card>
 

@@ -97,7 +97,21 @@
 - [ ] 14.6 Integrar webhooks do SAP Event Mesh para alertas automáticos
 - [ ] 14.7 Persistir histórico de uptime/latência para relatórios
 
+## ✅ FASE 15: IMPORTAÇÃO EXCEL
+- [x] 15.1 Criar excelParser.ts com suporte AGT + SAP (24 campos AGT + 15 SAP)
+- [x] 15.2 Criar excelMapping.ts com dual format (processAGTFormat + processSAPFormat)
+- [x] 15.3 Criar ExcelUploader.tsx componente de upload
+- [x] 15.4 Criar ExcelPreview.tsx com detecção de template vazio
+- [x] 15.5 Criar API route /api/excel/process (com estrutura correta Next.js 14)
+- [x] 15.6 Criar página app/facturas/importar/page.tsx
+- [x] 15.7 Criar modelo-planilha-exemplo.xlsx com dados reais
+- [x] 15.8 Adicionar suporte a JSON fields (LINE, DOCUMENT_TOTALS)
+- [x] 15.9 Corrigir API route structure (process/route.ts)
+- [x] 15.10 Corrigir integração com agtClient (usar createAgtClient direto)
+- [x] 15.11 Adicionar fallback para JWS signatures em modo MOCK
+- [x] 15.12 Documentação: FORMATO_EXCEL_AGT.md, TEMPLATE_EXCEL_EXPLICACAO.md, COMO_IMPORTAR_EXCEL.md
+
 ---
 
-**Status**: ⚡ EM PROGRESSO - Base funcional implementada!
-**Progresso**: 64/68 tarefas concluídas (94%)
+**Status**: ⚡ EM PROGRESSO - Base funcional implementada + Excel Import ✅!
+**Progresso**: 76/80 tarefas concluídas (95%)

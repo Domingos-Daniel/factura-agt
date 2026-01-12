@@ -137,6 +137,7 @@ export function TabelaFacturas({ data }: TabelaFacturasProps) {
                 <TableHead>Data</TableHead>
                 <TableHead>Total</TableHead>
                 <TableHead>Estado</TableHead>
+                <TableHead>Origem</TableHead>
                 <TableHead className="text-right">Ações</TableHead>
               </TableRow>
             </TableHeader>
@@ -144,6 +145,7 @@ export function TabelaFacturas({ data }: TabelaFacturasProps) {
               {paginatedFacturas.map((factura) => {
                 const documento = factura.documents[0]
                 const validationStatus = factura.validationStatus ?? 'P'
+                const isImported = !!factura.requestID // Tem requestID = importado via Excel
                 return (
                   <TableRow key={factura.id ?? factura.submissionGUID}>
                     <TableCell className="font-medium">{documento?.documentNo}</TableCell>
@@ -158,6 +160,17 @@ export function TabelaFacturas({ data }: TabelaFacturasProps) {
                       <span className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${statusColors[validationStatus]}`}>
                         {statusLabels[validationStatus]}
                       </span>
+                    </TableCell>
+                    <TableCell>
+                      {isImported ? (
+                        <span className="inline-flex items-center rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                          📊 Excel
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center rounded-full bg-gray-100 px-2 py-1 text-xs font-medium text-gray-800 dark:bg-gray-800 dark:text-gray-200">
+                          ✍️ Manual
+                        </span>
+                      )}
                     </TableCell>
                     <TableCell className="text-right">
                       <Link href={`/facturas/${factura.id ?? factura.submissionGUID}`}>
