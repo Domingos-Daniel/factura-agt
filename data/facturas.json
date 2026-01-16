@@ -1151,5 +1151,493 @@
     "validationStatus": "V",
     "createdAt": "2026-01-12T11:42:52.023Z",
     "updatedAt": "2026-01-12T11:42:52.023Z"
+  },
+  {
+    "schemaVersion": "1.0",
+    "submissionGUID": "b7d8cab1-9311-4293-a0d5-38aa092c44a1",
+    "taxRegistrationNumber": "999888777",
+    "submissionTimeStamp": "2026-01-16T17:36:16.489Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "FacturAGT",
+        "productVersion": "1.0.0",
+        "softwareValidationNumber": "AGT-2025-001"
+      },
+      "jwsSoftwareSignature": "placeholder"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "FT 2025/00001",
+        "documentStatus": "N",
+        "documentType": "FT",
+        "documentDate": "2025-01-11",
+        "eacCode": "12110",
+        "systemEntryDate": "2025-01-11T10:00:00Z",
+        "customerCountry": "AO",
+        "customerTaxID": "123456789",
+        "companyName": "Empresa ABC Lda",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "productCode": "PROD001",
+            "productDescription": "Produto Teste",
+            "quantity": 10,
+            "unitOfMeasure": "UN",
+            "unitPrice": 5000,
+            "unitPriceBase": 5000,
+            "debitAmount": 50000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxAmount": 7000,
+                "taxContribution": 7000
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "netTotal": 50000,
+          "taxPayable": 7000,
+          "grossTotal": 57000
+        }
+      }
+    ],
+    "id": "b7d8cab1-9311-4293-a0d5-38aa092c44a1",
+    "requestID": "REQ-1768584977207",
+    "validationStatus": "V",
+    "createdAt": "2026-01-16T17:36:17.207Z",
+    "updatedAt": "2026-01-16T17:36:17.207Z"
+  },
+  {
+    "schemaVersion": "1.0",
+    "submissionGUID": "e73f6463-4d93-43d9-b109-36c483a81698",
+    "taxRegistrationNumber": "999888777",
+    "submissionTimeStamp": "2026-01-16T17:36:16.489Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "FacturAGT",
+        "productVersion": "1.0.0",
+        "softwareValidationNumber": "AGT-2025-001"
+      },
+      "jwsSoftwareSignature": "placeholder"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "FT 2025/00002",
+        "documentStatus": "N",
+        "documentType": "FT",
+        "documentDate": "2025-01-11",
+        "eacCode": "12110",
+        "systemEntryDate": "2025-01-11T10:30:00Z",
+        "customerCountry": "AO",
+        "customerTaxID": "987654321",
+        "companyName": "Empresa XYZ Inc",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "productCode": "PROD002",
+            "productDescription": "Serviço Consultoria",
+            "quantity": 5,
+            "unitOfMeasure": "HOR",
+            "unitPrice": 15000,
+            "unitPriceBase": 15000,
+            "debitAmount": 75000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxAmount": 10500,
+                "taxContribution": 10500
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "netTotal": 75000,
+          "taxPayable": 10500,
+          "grossTotal": 85500
+        }
+      }
+    ],
+    "id": "e73f6463-4d93-43d9-b109-36c483a81698",
+    "requestID": "REQ-1768584977755",
+    "validationStatus": "V",
+    "createdAt": "2026-01-16T17:36:17.755Z",
+    "updatedAt": "2026-01-16T17:36:17.755Z"
+  },
+  {
+    "schemaVersion": "1.0",
+    "submissionGUID": "f9152393-2051-4b70-9792-ad6c48c174a5",
+    "taxRegistrationNumber": "999888777",
+    "submissionTimeStamp": "2026-01-16T17:39:34.782Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "FacturAGT",
+        "productVersion": "1.0.0",
+        "softwareValidationNumber": "AGT-2025-001"
+      },
+      "jwsSoftwareSignature": "placeholder"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "FT 2025/00001",
+        "documentStatus": "N",
+        "documentType": "FT",
+        "documentDate": "2025-01-11",
+        "eacCode": "12110",
+        "systemEntryDate": "2025-01-11T10:00:00Z",
+        "customerCountry": "AO",
+        "customerTaxID": "123456789",
+        "companyName": "Empresa ABC Lda",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "productCode": "PROD001",
+            "productDescription": "Produto Teste",
+            "quantity": 10,
+            "unitOfMeasure": "UN",
+            "unitPrice": 5000,
+            "unitPriceBase": 5000,
+            "debitAmount": 50000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxAmount": 7000,
+                "taxContribution": 7000
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "netTotal": 50000,
+          "taxPayable": 7000,
+          "grossTotal": 57000
+        }
+      }
+    ],
+    "id": "f9152393-2051-4b70-9792-ad6c48c174a5",
+    "requestID": "REQ-1768585175876",
+    "validationStatus": "V",
+    "createdAt": "2026-01-16T17:39:35.876Z",
+    "updatedAt": "2026-01-16T17:39:35.876Z"
+  },
+  {
+    "schemaVersion": "1.0",
+    "submissionGUID": "16a5cbc6-68bd-4dc6-a584-35acc8d44078",
+    "taxRegistrationNumber": "999888777",
+    "submissionTimeStamp": "2026-01-16T17:39:34.782Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "FacturAGT",
+        "productVersion": "1.0.0",
+        "softwareValidationNumber": "AGT-2025-001"
+      },
+      "jwsSoftwareSignature": "placeholder"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "FT 2025/00002",
+        "documentStatus": "N",
+        "documentType": "FT",
+        "documentDate": "2025-01-11",
+        "eacCode": "12110",
+        "systemEntryDate": "2025-01-11T10:30:00Z",
+        "customerCountry": "AO",
+        "customerTaxID": "987654321",
+        "companyName": "Empresa XYZ Inc",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "productCode": "PROD002",
+            "productDescription": "Serviço Consultoria",
+            "quantity": 5,
+            "unitOfMeasure": "HOR",
+            "unitPrice": 15000,
+            "unitPriceBase": 15000,
+            "debitAmount": 75000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxAmount": 10500,
+                "taxContribution": 10500
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "netTotal": 75000,
+          "taxPayable": 10500,
+          "grossTotal": 85500
+        }
+      }
+    ],
+    "id": "16a5cbc6-68bd-4dc6-a584-35acc8d44078",
+    "requestID": "REQ-1768585176558",
+    "validationStatus": "V",
+    "createdAt": "2026-01-16T17:39:36.558Z",
+    "updatedAt": "2026-01-16T17:39:36.558Z"
+  },
+  {
+    "schemaVersion": "1.0",
+    "submissionGUID": "aaba7cd1-15cc-4a20-84d7-ff195b581c39",
+    "taxRegistrationNumber": "999888777",
+    "submissionTimeStamp": "2026-01-16T17:40:32.531Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "FacturAGT",
+        "productVersion": "1.0.0",
+        "softwareValidationNumber": "AGT-2025-001"
+      },
+      "jwsSoftwareSignature": "placeholder"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "FT 2025/00001",
+        "documentStatus": "N",
+        "documentType": "FT",
+        "documentDate": "2025-01-11",
+        "eacCode": "12110",
+        "systemEntryDate": "2025-01-11T10:00:00Z",
+        "customerCountry": "AO",
+        "customerTaxID": "123456789",
+        "companyName": "Empresa ABC Lda",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "productCode": "PROD001",
+            "productDescription": "Produto Teste",
+            "quantity": 10,
+            "unitOfMeasure": "UN",
+            "unitPrice": 5000,
+            "unitPriceBase": 5000,
+            "debitAmount": 50000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxAmount": 7000,
+                "taxContribution": 7000
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "netTotal": 50000,
+          "taxPayable": 7000,
+          "grossTotal": 57000
+        }
+      }
+    ],
+    "id": "aaba7cd1-15cc-4a20-84d7-ff195b581c39",
+    "requestID": "REQ-1768585233238",
+    "validationStatus": "V",
+    "createdAt": "2026-01-16T17:40:33.239Z",
+    "updatedAt": "2026-01-16T17:40:33.239Z"
+  },
+  {
+    "schemaVersion": "1.0",
+    "submissionGUID": "563e70ac-0266-4fee-9e3a-1a8808db554e",
+    "taxRegistrationNumber": "999888777",
+    "submissionTimeStamp": "2026-01-16T17:40:32.531Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "FacturAGT",
+        "productVersion": "1.0.0",
+        "softwareValidationNumber": "AGT-2025-001"
+      },
+      "jwsSoftwareSignature": "placeholder"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "FT 2025/00002",
+        "documentStatus": "N",
+        "documentType": "FT",
+        "documentDate": "2025-01-11",
+        "eacCode": "12110",
+        "systemEntryDate": "2025-01-11T10:30:00Z",
+        "customerCountry": "AO",
+        "customerTaxID": "987654321",
+        "companyName": "Empresa XYZ Inc",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "productCode": "PROD002",
+            "productDescription": "Serviço Consultoria",
+            "quantity": 5,
+            "unitOfMeasure": "HOR",
+            "unitPrice": 15000,
+            "unitPriceBase": 15000,
+            "debitAmount": 75000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxAmount": 10500,
+                "taxContribution": 10500
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "netTotal": 75000,
+          "taxPayable": 10500,
+          "grossTotal": 85500
+        }
+      }
+    ],
+    "id": "563e70ac-0266-4fee-9e3a-1a8808db554e",
+    "requestID": "REQ-1768585233770",
+    "validationStatus": "V",
+    "createdAt": "2026-01-16T17:40:33.771Z",
+    "updatedAt": "2026-01-16T17:40:33.771Z"
+  },
+  {
+    "schemaVersion": "1.0",
+    "submissionGUID": "5dfec5ed-f9d3-49ae-99f8-6a7320fb52f6",
+    "taxRegistrationNumber": "999888777",
+    "submissionTimeStamp": "2026-01-16T17:44:11.868Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "FacturAGT",
+        "productVersion": "1.0.0",
+        "softwareValidationNumber": "AGT-2025-001"
+      },
+      "jwsSoftwareSignature": "placeholder"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "FT 2025/00001",
+        "documentStatus": "N",
+        "documentType": "FT",
+        "documentDate": "2025-01-11",
+        "eacCode": "12110",
+        "systemEntryDate": "2025-01-11T10:00:00Z",
+        "customerCountry": "AO",
+        "customerTaxID": "123456789",
+        "companyName": "Empresa ABC Lda",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "productCode": "PROD001",
+            "productDescription": "Produto Teste",
+            "quantity": 10,
+            "unitOfMeasure": "UN",
+            "unitPrice": 5000,
+            "unitPriceBase": 5000,
+            "debitAmount": 50000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxAmount": 7000,
+                "taxContribution": 7000
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "netTotal": 50000,
+          "taxPayable": 7000,
+          "grossTotal": 57000
+        }
+      }
+    ],
+    "id": "5dfec5ed-f9d3-49ae-99f8-6a7320fb52f6",
+    "requestID": "202600000184641",
+    "validationStatus": "V",
+    "createdAt": "2026-01-16T17:44:12.638Z",
+    "updatedAt": "2026-01-16T17:44:12.638Z"
+  },
+  {
+    "schemaVersion": "1.0",
+    "submissionGUID": "0d21e8ac-9a7d-4cb8-9711-12790f4f7bad",
+    "taxRegistrationNumber": "999888777",
+    "submissionTimeStamp": "2026-01-16T17:44:11.868Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "FacturAGT",
+        "productVersion": "1.0.0",
+        "softwareValidationNumber": "AGT-2025-001"
+      },
+      "jwsSoftwareSignature": "placeholder"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "FT 2025/00002",
+        "documentStatus": "N",
+        "documentType": "FT",
+        "documentDate": "2025-01-11",
+        "eacCode": "12110",
+        "systemEntryDate": "2025-01-11T10:30:00Z",
+        "customerCountry": "AO",
+        "customerTaxID": "987654321",
+        "companyName": "Empresa XYZ Inc",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "productCode": "PROD002",
+            "productDescription": "Serviço Consultoria",
+            "quantity": 5,
+            "unitOfMeasure": "HOR",
+            "unitPrice": 15000,
+            "unitPriceBase": 15000,
+            "debitAmount": 75000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxAmount": 10500,
+                "taxContribution": 10500
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "netTotal": 75000,
+          "taxPayable": 10500,
+          "grossTotal": 85500
+        }
+      }
+    ],
+    "id": "0d21e8ac-9a7d-4cb8-9711-12790f4f7bad",
+    "requestID": "202600000184642",
+    "validationStatus": "V",
+    "createdAt": "2026-01-16T17:44:13.354Z",
+    "updatedAt": "2026-01-16T17:44:13.354Z"
   }
 ]

@@ -58,6 +58,7 @@ function createSoftwareInfo(): { softwareInfoDetail: typeof SOFTWARE_INFO; jwsSo
  */
 export function transformToAGTFormat(payload: any): any {
   const taxRegistrationNumber = payload.taxRegistrationNumber || process.env.AGT_NIF_TEST || ''
+  const documents = payload.documents || []
   
   const transformed = {
     schemaVersion: SCHEMA_VERSION,
@@ -65,8 +66,9 @@ export function transformToAGTFormat(payload: any): any {
     taxRegistrationNumber,
     submissionTimeStamp: payload.submissionTimeStamp || new Date().toISOString(),
     softwareInfo: payload.softwareInfo || createSoftwareInfo(),
+    numberOfEntries: payload.numberOfEntries || documents.length,  // OBRIGATÓRIO
     // jwsSignature para documentos: assina os campos necessários
-    documents: payload.documents?.map((doc: any) => ({
+    documents: documents.map((doc: any) => ({
       ...doc,
       jwsDocumentSignature: doc.jwsDocumentSignature || generateJWS({
         taxRegistrationNumber,

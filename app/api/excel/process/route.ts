@@ -9,7 +9,6 @@ import {
   groupExcelRowsToAGTDocuments,
 } from '@/lib/excelMapping'
 import { createAgtClient } from '@/lib/server/agtClient'
-import { makeDocumentSignature, makeSoftwareInfoSignature } from '@/lib/server/jws'
 import { Factura } from '@/lib/types'
 import { readFileSync, writeFileSync, existsSync } from 'fs'
 import { join } from 'path'
@@ -71,7 +70,8 @@ export async function POST(request: NextRequest) {
 
     // Processar cada documento
     const agtClient = createAgtClient()
-    const privKey = process.env.AGT_PRIVATE_KEY
+    console.log('📡 AGT Client criado:', agtClient.constructor.name)
+    // Nota: assinaturas JWS são geradas pelo agtTransformer (dummy signatures para HML)
     const results = []
     const savedFacturas: Factura[] = []
     
@@ -87,35 +87,24 @@ export async function POST(request: NextRequest) {
             documents: [singleDoc],
           }
           
-          // Aplicar assinaturas JWS se temos chave privada válida
-          if (privKey && individualAgtDoc.softwareInfo) {
-            try {
-              individualAgtDoc.softwareInfo.jwsSoftwareSignature = makeSoftwareInfoSignature(individualAgtDoc.softwareInfo, privKey)
-              const jws = makeDocumentSignature({
-                documentNo: singleDoc.documentNo,
-                taxRegistrationNumber: individualAgtDoc.taxRegistrationNumber,
-                issueDate: singleDoc.documentDate,
-                grossTotal: singleDoc.documentTotals.grossTotal,
-                systemEntryDate: singleDoc.systemEntryDate,
-              }, privKey)
-              individualAgtDoc.documents[0] = { ...singleDoc, jwsSignatureToken: jws }
-            } catch (jwsError) {
-              console.warn('JWS signature failed, continuing without signatures:', jwsError)
-            }
-          }
+          // As assinaturas JWS são geradas automaticamente pelo agtTransformer.ts
+          // quando o payload passa por transformToAGTFormat()
+          console.log('📤 Enviando documento:', singleDoc.documentNo)
 
           const response = await agtClient.registarFactura(individualAgtDoc)
+          console.log('📥 Resposta AGT:', JSON.stringify(response, null, 2))
           const requestID = response?.requestID || `REQ-${Date.now()}`
+          console.log('🎫 Request ID obtido:', requestID)
           
           // Salvar factura no storage com requestID
-          const facturaToSave: Factura = {
+          const facturaToSave = {
             ...individualAgtDoc,
             id: individualAgtDoc.submissionGUID,
             requestID: requestID,
             validationStatus: 'V',
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
-          }
+          } as unknown as Factura
           savedFacturas.push(facturaToSave)
           
           results.push({
