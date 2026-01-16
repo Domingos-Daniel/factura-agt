@@ -2,7 +2,7 @@
 // Note: Endpoints, auth and timeouts come from environment variables.
 
 import 'server-only'
-import { transformToAGTFormat } from './agtTransformer'
+import { transformToAGTFormat, addRequiredFields } from './agtTransformer'
 
 export type AgtClientOptions = {
   baseUrl: string
@@ -77,22 +77,28 @@ export class AgtClient {
     return this.post<typeof transformed, { requestID: string } | { errorList: any[] }>(`/registarFactura`, transformed)
   }
   obterEstado<T>(payload: T) {
-    return this.post<T, any>(`/obterEstado`, payload)
+    const withRequired = addRequiredFields(payload)
+    return this.post<typeof withRequired, any>(`/obterEstado`, withRequired)
   }
   listarFacturas<T>(payload: T) {
-    return this.post<T, any>(`/listarFacturas`, payload)
+    const withRequired = addRequiredFields(payload)
+    return this.post<typeof withRequired, any>(`/listarFacturas`, withRequired)
   }
   consultarFactura<T>(payload: T) {
-    return this.post<T, any>(`/consultarFactura`, payload)
+    const withRequired = addRequiredFields(payload)
+    return this.post<typeof withRequired, any>(`/consultarFactura`, withRequired)
   }
   solicitarSerie<T>(payload: T) {
-    return this.post<T, any>(`/solicitarSerie`, payload)
+    const withRequired = addRequiredFields(payload)
+    return this.post<typeof withRequired, any>(`/solicitarSerie`, withRequired)
   }
   listarSeries<T>(payload: T) {
-    return this.post<T, any>(`/listarSeries`, payload)
+    const withRequired = addRequiredFields(payload)
+    return this.post<typeof withRequired, any>(`/listarSeries`, withRequired)
   }
   validarDocumento<T>(payload: T) {
-    return this.post<T, any>(`/validarDocumento`, payload)
+    const withRequired = addRequiredFields(payload)
+    return this.post<typeof withRequired, any>(`/validarDocumento`, withRequired)
   }
 }
 
@@ -150,18 +156,4 @@ export function createAgtClient(): AgtClient | any {
     timeoutMs: timeout,
     maxRetries,
   })
-}
-    // Importa dinamicamente o Mock Client
-    const { createMockAgtClient } = require('./mockAgtClient')
-    console.log('🔧 [AGT] Usando Mock Client (desenvolvimento)')
-    return createMockAgtClient()
-  }
-  
-  const baseUrl = process.env.AGT_BASE_URL!
-  const authType = (process.env.AGT_AUTH_TYPE as 'none' | 'basic' | 'apiKey' | 'bearer') || 'none'
-  const authValue = process.env.AGT_AUTH_VALUE
-  const timeoutMs = Number(process.env.AGT_TIMEOUT_MS || '15000')
-  const maxRetries = Number(process.env.AGT_MAX_RETRIES || '2')
-  console.log('🌐 [AGT] Usando Client real:', baseUrl)
-  return new AgtClient({ baseUrl, auth: { type: authType, value: authValue }, timeoutMs, maxRetries })
 }

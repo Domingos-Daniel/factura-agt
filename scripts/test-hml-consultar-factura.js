@@ -1,5 +1,5 @@
 /**
- * Script de teste para Obter Estado de Factura no ambiente HML da AGT
+ * Script de teste para Consultar Factura no ambiente HML da AGT
  */
 
 const https = require('https')
@@ -13,7 +13,7 @@ const HML_CONFIG = {
 }
 
 console.log('\n╔════════════════════════════════════════════════════════╗')
-console.log('║   TESTE OBTER ESTADO - AGT HML                        ║')
+console.log('║   TESTE CONSULTAR FACTURA - AGT HML                   ║')
 console.log('╚════════════════════════════════════════════════════════╝\n')
 
 console.log('📋 Configuração:')
@@ -22,12 +22,12 @@ console.log(`   Username: ${HML_CONFIG.username}`)
 console.log(`   NIF Teste: ${HML_CONFIG.nifTest}`)
 console.log('')
 
-// Criar payload para obter estado
-function createObterEstadoPayload(requestID) {
+// Criar payload para consultar factura
+function createConsultarFacturaPayload(documentNo) {
   return {
     schemaVersion: '1.0',
     taxRegistrationNumber: HML_CONFIG.nifTest,
-    requestID: requestID,
+    documentNo: documentNo,
     submissionTimeStamp: new Date().toISOString(),
     jwsSignature: 'TEST-JWS-SIGNATURE-HML',
     softwareInfo: {
@@ -41,17 +41,17 @@ function createObterEstadoPayload(requestID) {
   }
 }
 
-async function testObterEstado(requestID) {
-  const payload = createObterEstadoPayload(requestID)
+async function testConsultarFactura(documentNo) {
+  const payload = createConsultarFacturaPayload(documentNo)
   
-  console.log('📄 Payload Obter Estado:')
+  console.log('📄 Payload Consultar Factura:')
   console.log(JSON.stringify(payload, null, 2))
   console.log('')
   
   const authHeader = 'Basic ' + Buffer.from(`${HML_CONFIG.username}:${HML_CONFIG.password}`).toString('base64')
   
   return new Promise((resolve, reject) => {
-    const url = new URL('/sigt/fe/v1/obterEstado', 'https://sifphml.minfin.gov.ao')
+    const url = new URL('/sigt/fe/v1/consultarFactura', 'https://sifphml.minfin.gov.ao')
     
     const options = {
       hostname: url.hostname,
@@ -90,29 +90,22 @@ async function testObterEstado(requestID) {
           console.log(JSON.stringify(parsed, null, 2))
           
           if (res.statusCode === 200 || res.statusCode === 201) {
-            console.log('\n✅ ESTADO OBTIDO COM SUCESSO!')
+            console.log('\n✅ FACTURA CONSULTADA COM SUCESSO!')
             
-            if (parsed.resultCode === '0') {
-              console.log('\n📊 Status da Factura:')
-              parsed.errorList?.forEach((doc) => {
-                if (doc.documentNo) {
-                  console.log(`\n   Documento: ${doc.documentNo}`)
-                  console.log(`   Status: ${doc.validationStatus || 'Pendente'}`)
-                  if (doc.qrCode) {
-                    console.log(`   QR Code: ${doc.qrCode.substring(0, 50)}...`)
-                  }
-                  if (doc.hashCode) {
-                    console.log(`   Hash: ${doc.hashCode}`)
-                  }
-                  if (doc.certificateNo) {
-                    console.log(`   Certificado: ${doc.certificateNo}`)
-                  }
-                }
-              })
-            } else {
-              console.log(`\n⚠️  Result Code: ${parsed.resultCode}`)
-              if (parsed.resultMessage) {
-                console.log(`   Message: ${parsed.resultMessage}`)
+            if (parsed.document) {
+              console.log('\n📊 Detalhes da Factura:')
+              console.log(`   - Documento: ${parsed.document.documentNo}`)
+              console.log(`   - Tipo: ${parsed.document.documentType}`)
+              console.log(`   - Data: ${parsed.document.documentDate}`)
+              console.log(`   - Status: ${parsed.document.validationStatus || 'N/A'}`)
+              if (parsed.document.qrCode) {
+                console.log(`   - QR Code: ${parsed.document.qrCode.substring(0, 50)}...`)
+              }
+              if (parsed.document.hashCode) {
+                console.log(`   - Hash: ${parsed.document.hashCode}`)
+              }
+              if (parsed.document.certificateNo) {
+                console.log(`   - Certificado: ${parsed.document.certificateNo}`)
               }
             }
             
@@ -120,24 +113,17 @@ async function testObterEstado(requestID) {
           } else if (res.statusCode === 401) {
             console.log('\n❌ ERRO DE AUTENTICAÇÃO')
             reject(new Error('Autenticação falhou'))
-          } else if (res.statusCode === 400) {
-            console.log('\n❌ ERRO DE VALIDAÇÃO')
-            console.log('   Verifique o RequestID')
-            reject(new Error('RequestID inválido'))
+          } else if (res.statusCode === 404) {
+            console.log('\n❌ FACTURA NÃO ENCONTRADA')
+            reject(new Error('Factura não existe'))
           } else {
             console.log(`\n⚠️ RESPOSTA INESPERADA: ${res.statusCode}`)
             resolve(parsed)
           }
         } catch (error) {
           console.log(data)
-          
-          if (res.statusCode === 200 || res.statusCode === 201) {
-            console.log('\n✅ ESTADO OBTIDO (resposta não-JSON)')
-            resolve({ statusCode: res.statusCode, data })
-          } else {
-            console.log('\n❌ ERRO AO PROCESSAR RESPOSTA')
-            reject(error)
-          }
+          console.log('\n❌ ERRO AO PROCESSAR RESPOSTA')
+          reject(error)
         }
       })
     })
@@ -158,13 +144,13 @@ async function testObterEstado(requestID) {
   })
 }
 
-// Obter RequestID do argumento ou usar o do teste anterior
-const requestID = process.argv[2] || '202600000184282'
+// Obter número do documento do argumento ou usar número de teste
+const documentNo = process.argv[2] || 'FT HML2026/0116-001'
 
-console.log(`🔍 Consultando RequestID: ${requestID}\n`)
+console.log(`🔍 Consultando Documento: ${documentNo}\n`)
 
 // Executar teste
-testObterEstado(requestID)
+testConsultarFactura(documentNo)
   .then((result) => {
     console.log('\n╔════════════════════════════════════════════════════════╗')
     console.log('║              TESTE CONCLUÍDO COM SUCESSO              ║')

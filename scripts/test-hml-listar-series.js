@@ -1,5 +1,5 @@
 /**
- * Script de teste para Obter Estado de Factura no ambiente HML da AGT
+ * Script de teste para Listar Séries no ambiente HML da AGT
  */
 
 const https = require('https')
@@ -13,7 +13,7 @@ const HML_CONFIG = {
 }
 
 console.log('\n╔════════════════════════════════════════════════════════╗')
-console.log('║   TESTE OBTER ESTADO - AGT HML                        ║')
+console.log('║   TESTE LISTAR SÉRIES - AGT HML                       ║')
 console.log('╚════════════════════════════════════════════════════════╝\n')
 
 console.log('📋 Configuração:')
@@ -22,36 +22,26 @@ console.log(`   Username: ${HML_CONFIG.username}`)
 console.log(`   NIF Teste: ${HML_CONFIG.nifTest}`)
 console.log('')
 
-// Criar payload para obter estado
-function createObterEstadoPayload(requestID) {
+// Criar payload para listar séries
+function createListarSeriesPayload() {
   return {
-    schemaVersion: '1.0',
     taxRegistrationNumber: HML_CONFIG.nifTest,
-    requestID: requestID,
-    submissionTimeStamp: new Date().toISOString(),
-    jwsSignature: 'TEST-JWS-SIGNATURE-HML',
-    softwareInfo: {
-      softwareInfoDetail: {
-        productId: 'SafeFacturas',
-        productVersion: '1.0.0',
-        softwareValidationNumber: 'HML-TEST-001'
-      },
-      jwsSoftwareSignature: 'TEST-SIGNATURE-HML'
-    }
+    schemaVersion: '1.0',
+    submissionTimeStamp: new Date().toISOString()
   }
 }
 
-async function testObterEstado(requestID) {
-  const payload = createObterEstadoPayload(requestID)
+async function testListarSeries() {
+  const payload = createListarSeriesPayload()
   
-  console.log('📄 Payload Obter Estado:')
+  console.log('📄 Payload Listar Séries:')
   console.log(JSON.stringify(payload, null, 2))
   console.log('')
   
   const authHeader = 'Basic ' + Buffer.from(`${HML_CONFIG.username}:${HML_CONFIG.password}`).toString('base64')
   
   return new Promise((resolve, reject) => {
-    const url = new URL('/sigt/fe/v1/obterEstado', 'https://sifphml.minfin.gov.ao')
+    const url = new URL('/sigt/fe/v1/listarSeries', 'https://sifphml.minfin.gov.ao')
     
     const options = {
       hostname: url.hostname,
@@ -90,54 +80,33 @@ async function testObterEstado(requestID) {
           console.log(JSON.stringify(parsed, null, 2))
           
           if (res.statusCode === 200 || res.statusCode === 201) {
-            console.log('\n✅ ESTADO OBTIDO COM SUCESSO!')
+            console.log('\n✅ SÉRIES LISTADAS COM SUCESSO!')
             
-            if (parsed.resultCode === '0') {
-              console.log('\n📊 Status da Factura:')
-              parsed.errorList?.forEach((doc) => {
-                if (doc.documentNo) {
-                  console.log(`\n   Documento: ${doc.documentNo}`)
-                  console.log(`   Status: ${doc.validationStatus || 'Pendente'}`)
-                  if (doc.qrCode) {
-                    console.log(`   QR Code: ${doc.qrCode.substring(0, 50)}...`)
-                  }
-                  if (doc.hashCode) {
-                    console.log(`   Hash: ${doc.hashCode}`)
-                  }
-                  if (doc.certificateNo) {
-                    console.log(`   Certificado: ${doc.certificateNo}`)
-                  }
+            if (parsed.series && Array.isArray(parsed.series)) {
+              console.log(`\n📊 Total de Séries: ${parsed.series.length}`)
+              parsed.series.forEach((serie, idx) => {
+                console.log(`\n   Série ${idx + 1}:`)
+                console.log(`   - Tipo Documento: ${serie.documentType}`)
+                console.log(`   - Série: ${serie.series}`)
+                console.log(`   - Ano: ${serie.year}`)
+                if (serie.lastDocumentNo) {
+                  console.log(`   - Último Nº: ${serie.lastDocumentNo}`)
                 }
               })
-            } else {
-              console.log(`\n⚠️  Result Code: ${parsed.resultCode}`)
-              if (parsed.resultMessage) {
-                console.log(`   Message: ${parsed.resultMessage}`)
-              }
             }
             
             resolve(parsed)
           } else if (res.statusCode === 401) {
             console.log('\n❌ ERRO DE AUTENTICAÇÃO')
             reject(new Error('Autenticação falhou'))
-          } else if (res.statusCode === 400) {
-            console.log('\n❌ ERRO DE VALIDAÇÃO')
-            console.log('   Verifique o RequestID')
-            reject(new Error('RequestID inválido'))
           } else {
             console.log(`\n⚠️ RESPOSTA INESPERADA: ${res.statusCode}`)
             resolve(parsed)
           }
         } catch (error) {
           console.log(data)
-          
-          if (res.statusCode === 200 || res.statusCode === 201) {
-            console.log('\n✅ ESTADO OBTIDO (resposta não-JSON)')
-            resolve({ statusCode: res.statusCode, data })
-          } else {
-            console.log('\n❌ ERRO AO PROCESSAR RESPOSTA')
-            reject(error)
-          }
+          console.log('\n❌ ERRO AO PROCESSAR RESPOSTA')
+          reject(error)
         }
       })
     })
@@ -158,13 +127,8 @@ async function testObterEstado(requestID) {
   })
 }
 
-// Obter RequestID do argumento ou usar o do teste anterior
-const requestID = process.argv[2] || '202600000184282'
-
-console.log(`🔍 Consultando RequestID: ${requestID}\n`)
-
 // Executar teste
-testObterEstado(requestID)
+testListarSeries()
   .then((result) => {
     console.log('\n╔════════════════════════════════════════════════════════╗')
     console.log('║              TESTE CONCLUÍDO COM SUCESSO              ║')
