@@ -5,8 +5,8 @@
 
 // Informações do Software de Facturação (obtidas na certificação)
 export const SOFTWARE_INFO = {
-  productId: 'SafeFacturas',
-  productVersion: '1.0.0',
+  productId: process.env.AGT_SOFTWARE_PRODUCT_ID || 'SafeFacturas',
+  productVersion: process.env.AGT_SOFTWARE_VERSION || '1.0.0',
   // Este número é atribuído pela AGT após certificação do software
   softwareValidationNumber: process.env.AGT_SOFTWARE_VALIDATION_NUMBER || 'HML-TEST-001',
 }

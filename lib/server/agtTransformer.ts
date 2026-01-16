@@ -7,7 +7,7 @@
  * - Todos os payloads precisam de: submissionUUID, softwareInfo, jwsSignature
  */
 
-// Configurações de software (ajustar para valores certificados)
+// Configurações de software (valores certificados do parceiro)
 const SOFTWARE_INFO = {
   productId: process.env.AGT_SOFTWARE_PRODUCT_ID || 'SafeFacturas',
   productVersion: process.env.AGT_SOFTWARE_VERSION || '1.0.0',
