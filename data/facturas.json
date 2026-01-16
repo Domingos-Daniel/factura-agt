@@ -56,9 +56,20 @@
     ],
     "id": "996c5729-d3cc-4151-a4a0-8a35930e9f3a",
     "requestID": "AGT-20260111-c4b64106",
-    "validationStatus": "V",
+    "validationStatus": "E",
     "createdAt": "2026-01-11T15:59:23.743Z",
-    "updatedAt": "2026-01-11T15:59:23.743Z"
+    "updatedAt": "2026-01-11T15:59:23.743Z",
+    "validationDate": "2026-01-16T15:37:20.559Z",
+    "validationResult": {
+      "status": "Com Erros",
+      "errors": [
+        {
+          "code": "W001",
+          "message": "Valor total não confere com soma das linhas",
+          "field": "documentTotals.grossTotal"
+        }
+      ]
+    }
   },
   {
     "schemaVersion": "1.0",

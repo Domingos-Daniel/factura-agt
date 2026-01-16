@@ -181,7 +181,19 @@ export interface Factura {
   softwareInfo: SoftwareInfo;
   documents: Document[];
   requestID?: string;
-  validationStatus?: 'V' | 'I'; // V=Válida, I=Inválida
+  validationStatus?: 'V' | 'I' | 'R' | 'E'; // V=Válida, I=Inválida, R=Rejeitada, E=Com Erros
+  validationDate?: string;
+  validationResult?: {
+    status: 'Validada' | 'Rejeitada' | 'Com Erros';
+    qrCode?: string;
+    hash?: string;
+    certificateNumber?: string;
+    errors?: Array<{
+      code: string;
+      message: string;
+      field?: string;
+    }>;
+  };
   validationMessages?: string[];
   createdAt?: string;
   updatedAt?: string;
