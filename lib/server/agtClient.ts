@@ -2,6 +2,7 @@
 // Note: Endpoints, auth and timeouts come from environment variables.
 
 import 'server-only'
+import { transformToAGTFormat } from './agtTransformer'
 
 export type AgtClientOptions = {
   baseUrl: string
@@ -71,7 +72,9 @@ export class AgtClient {
 
   // Services
   registarFactura<T>(payload: T) {
-    return this.post<T, { requestID: string } | { errorList: any[] }>(`/registarFactura`, payload)
+    // Transformar payload para formato AGT antes de enviar
+    const transformed = transformToAGTFormat(payload)
+    return this.post<typeof transformed, { requestID: string } | { errorList: any[] }>(`/registarFactura`, transformed)
   }
   obterEstado<T>(payload: T) {
     return this.post<T, any>(`/obterEstado`, payload)
@@ -94,10 +97,60 @@ export class AgtClient {
 }
 
 export function createAgtClient(): AgtClient | any {
-  // Se AGT_USE_MOCK=true ou se AGT_BASE_URL não está definido, usa Mock
-  const useMock = process.env.AGT_USE_MOCK === 'true' || !process.env.AGT_BASE_URL
+  // Verificar ambiente configurado
+  const environment = process.env.AGT_ENVIRONMENT || 'mock'
   
-  if (useMock) {
+  console.log(`🌍 AGT Environment: ${environment}`)
+  
+  // Se ambiente é mock, usa Mock Client
+  if (environment === 'mock') {
+    console.log('🎭 Usando AGT Mock Client (desenvolvimento)')
+    const { MockAgtClient } = require('./mockAgtClient')
+    return new MockAgtClient()
+  }
+  
+  // Determinar base URL baseado no ambiente
+  let baseUrl: string
+  let authValue: string | undefined
+  
+  if (environment === 'hml') {
+    baseUrl = process.env.AGT_HML_BASE_URL || 'https://sifphml.minfin.gov.ao/sigt/fe/v1'
+    console.log(`🧪 Usando AGT HML (Homologação): ${baseUrl}`)
+    
+    // Autenticação HML
+    const username = process.env.AGT_HML_USERNAME
+    const password = process.env.AGT_HML_PASSWORD
+    if (username && password) {
+      authValue = Buffer.from(`${username}:${password}`).toString('base64')
+      console.log(`🔐 Autenticação configurada para: ${username}`)
+    }
+  } else if (environment === 'prod') {
+    baseUrl = process.env.AGT_PROD_BASE_URL || 'https://sifp.minfin.gov.ao/sigt/fe/v1'
+    console.log(`🚀 Usando AGT Produção: ${baseUrl}`)
+    
+    // Autenticação Produção
+    const username = process.env.AGT_PROD_USERNAME
+    const password = process.env.AGT_PROD_PASSWORD
+    if (username && password) {
+      authValue = Buffer.from(`${username}:${password}`).toString('base64')
+      console.log(`🔐 Autenticação configurada para: ${username}`)
+    }
+  } else {
+    throw new Error(`Ambiente AGT inválido: ${environment}. Use: mock, hml ou prod`)
+  }
+  
+  // Criar client real com configurações
+  const authType = process.env.AGT_AUTH_TYPE || 'basic'
+  const timeout = parseInt(process.env.AGT_TIMEOUT_MS || '30000', 10)
+  const maxRetries = parseInt(process.env.AGT_MAX_RETRIES || '2', 10)
+  
+  return new AgtClient({
+    baseUrl,
+    auth: { type: authType as any, value: authValue },
+    timeoutMs: timeout,
+    maxRetries,
+  })
+}
     // Importa dinamicamente o Mock Client
     const { createMockAgtClient } = require('./mockAgtClient')
     console.log('🔧 [AGT] Usando Mock Client (desenvolvimento)')
