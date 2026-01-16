@@ -963,5 +963,182 @@
     "validationStatus": "V",
     "createdAt": "2026-01-11T18:48:00.741Z",
     "updatedAt": "2026-01-11T18:48:00.741Z"
+  },
+  {
+    "schemaVersion": "1.0",
+    "submissionGUID": "5a500410-4db2-4536-ba01-d9c6bca72837",
+    "taxRegistrationNumber": "999888777",
+    "submissionTimeStamp": "2026-01-12T11:42:49.556Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "FacturAGT",
+        "productVersion": "1.0.0",
+        "softwareValidationNumber": "AGT-2025-001"
+      },
+      "jwsSoftwareSignature": "placeholder"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "FT CI2000202503/3240000030",
+        "documentStatus": "N",
+        "documentType": "FT",
+        "documentDate": "2025-10-02",
+        "systemEntryDate": "2025-10-02T10:40:41Z",
+        "customerCountry": "AO",
+        "customerTaxID": "999999999",
+        "companyName": "Cliente Genérico",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "productCode": "GEN001",
+            "productDescription": "Cliente Genérico",
+            "quantity": 1,
+            "unitOfMeasure": "UN",
+            "unitPrice": 1000,
+            "unitPriceBase": 1000,
+            "debitAmount": 1000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxAmount": 140
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "netTotal": 1000,
+          "taxPayable": 140,
+          "grossTotal": 1140
+        }
+      }
+    ],
+    "id": "5a500410-4db2-4536-ba01-d9c6bca72837",
+    "requestID": "AGT-20260112-e419cfc5",
+    "validationStatus": "V",
+    "createdAt": "2026-01-12T11:42:50.396Z",
+    "updatedAt": "2026-01-12T11:42:50.396Z"
+  },
+  {
+    "schemaVersion": "1.0",
+    "submissionGUID": "9c3d42b2-04cf-4e95-8edf-57badb6434e5",
+    "taxRegistrationNumber": "999888777",
+    "submissionTimeStamp": "2026-01-12T11:42:49.556Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "FacturAGT",
+        "productVersion": "1.0.0",
+        "softwareValidationNumber": "AGT-2025-001"
+      },
+      "jwsSoftwareSignature": "placeholder"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "NC CJ2000202404/3250000023",
+        "documentStatus": "N",
+        "documentType": "FT",
+        "documentDate": "2025-10-02",
+        "systemEntryDate": "2025-10-02T10:48:36Z",
+        "customerCountry": "AO",
+        "customerTaxID": "999999999",
+        "companyName": "Cliente Genérico",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "productCode": "GEN001",
+            "productDescription": "Cliente Genérico",
+            "quantity": 2,
+            "unitOfMeasure": "UN",
+            "unitPrice": 1000,
+            "unitPriceBase": 1000,
+            "debitAmount": 2000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxAmount": 280
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "netTotal": 2000,
+          "taxPayable": 280,
+          "grossTotal": 2280
+        }
+      }
+    ],
+    "id": "9c3d42b2-04cf-4e95-8edf-57badb6434e5",
+    "requestID": "AGT-20260112-9067bf02",
+    "validationStatus": "V",
+    "createdAt": "2026-01-12T11:42:51.212Z",
+    "updatedAt": "2026-01-12T11:42:51.212Z"
+  },
+  {
+    "schemaVersion": "1.0",
+    "submissionGUID": "c3c8e850-8877-4e5a-ab3c-043744d87f35",
+    "taxRegistrationNumber": "999888777",
+    "submissionTimeStamp": "2026-01-12T11:42:49.556Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "FacturAGT",
+        "productVersion": "1.0.0",
+        "softwareValidationNumber": "AGT-2025-001"
+      },
+      "jwsSoftwareSignature": "placeholder"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "FT CI2000202503/3240000031",
+        "documentStatus": "N",
+        "documentType": "FT",
+        "documentDate": "2025-10-02",
+        "systemEntryDate": "2026-01-11T18:09:23Z",
+        "customerCountry": "AO",
+        "customerTaxID": "999999999",
+        "companyName": "Cliente Genérico",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "productCode": "GEN001",
+            "productDescription": "Cliente Genérico",
+            "quantity": 3,
+            "unitOfMeasure": "UN",
+            "unitPrice": 1000,
+            "unitPriceBase": 1000,
+            "debitAmount": 3000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxAmount": 420.00000000000006
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "netTotal": 3000,
+          "taxPayable": 420.00000000000006,
+          "grossTotal": 3420
+        }
+      }
+    ],
+    "id": "c3c8e850-8877-4e5a-ab3c-043744d87f35",
+    "requestID": "AGT-20260112-40ac1929",
+    "validationStatus": "V",
+    "createdAt": "2026-01-12T11:42:52.023Z",
+    "updatedAt": "2026-01-12T11:42:52.023Z"
   }
 ]

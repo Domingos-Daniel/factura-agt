@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, Loader2 } from 'lucide-react'
 
 import type { Factura } from '@/lib/types'
 import { getFacturaById } from '@/lib/storage'
@@ -16,16 +16,46 @@ export default function FacturaDetailPage() {
   const params = useParams<{ id: string }>()
   const router = useRouter()
   const [factura, setFactura] = useState<Factura | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [notFound, setNotFound] = useState(false)
 
   useEffect(() => {
-    if (!params?.id) return
-    const doc = getFacturaById(params.id)
-    if (!doc) {
-      router.replace('/facturas/lista')
-      return
+    async function loadFactura() {
+      if (!params?.id) {
+        setLoading(false)
+        return
+      }
+      
+      // Primeiro tenta buscar do localStorage
+      const localDoc = getFacturaById(params.id)
+      if (localDoc) {
+        setFactura(localDoc)
+        setLoading(false)
+        return
+      }
+      
+      // Se não encontrar, busca da API (que inclui o JSON)
+      try {
+        const response = await fetch(`/api/facturas/${params.id}`)
+        if (response.ok) {
+          const data = await response.json()
+          if (data.factura) {
+            setFactura(data.factura)
+            setLoading(false)
+            return
+          }
+        }
+      } catch (error) {
+        console.error('Erro ao buscar factura:', error)
+      }
+      
+      // Factura não encontrada em nenhum lugar
+      setNotFound(true)
+      setLoading(false)
     }
-    setFactura(doc)
-  }, [params?.id, router])
+    
+    loadFactura()
+  }, [params?.id])
 
   return (
     <MainLayout>
@@ -42,7 +72,14 @@ export default function FacturaDetailPage() {
           </div>
         </div>
 
-        {factura ? (
+        {loading ? (
+          <Card>
+            <CardContent className="flex items-center justify-center py-12">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+              <span className="ml-2">Carregando factura...</span>
+            </CardContent>
+          </Card>
+        ) : factura ? (
           <FacturaDetail factura={factura} />
         ) : (
           <Card>
