@@ -149,6 +149,35 @@ function generateOperationId(type: string, nif?: string): string {
   return `${type}-${nif || 'unknown'}-${timestamp}-${random}`;
 }
 
+function findExistingFacturaOperationIndex(
+  list: StoredFacturaOperation[],
+  request: any,
+  response: any,
+  explicitRequestID?: string,
+): number {
+  const requestID = explicitRequestID || response?.requestID;
+  const submissionGUID = request?.submissionGUID;
+  const nif = request?.taxRegistrationNumber;
+  const documentNo = request?.documents?.[0]?.documentNo;
+
+  // 1) Prefer requestID (unique in AGT flows)
+  if (requestID) {
+    const idx = list.findIndex((op) => op.requestID === requestID);
+    if (idx >= 0) return idx;
+  }
+  // 2) Then submissionGUID
+  if (submissionGUID) {
+    const idx = list.findIndex((op) => op.metadata?.submissionGUID === submissionGUID);
+    if (idx >= 0) return idx;
+  }
+  // 3) Finally (NIF + documentNo)
+  if (nif && documentNo) {
+    const idx = list.findIndex((op) => op.metadata?.nif === nif && op.metadata?.documentNo === documentNo);
+    if (idx >= 0) return idx;
+  }
+  return -1;
+}
+
 // =============================================================================
 // API PÚBLICA
 // =============================================================================
@@ -169,8 +198,12 @@ export const FacturaRepository = {
     const documentNo = request.documents?.[0]?.documentNo || 'unknown';
     const operationId = generateOperationId('FT', nif);
 
+    const idx = findExistingFacturaOperationIndex(data.facturas, request as any, response, requestID);
+    const now = new Date().toISOString();
+
     const operation: StoredFacturaOperation = {
-      id: operationId,
+      ...(idx >= 0 ? data.facturas[idx] : ({} as any)),
+      id: idx >= 0 ? data.facturas[idx].id : operationId,
       type: 'factura',
       serviceName,
       status: response?.returnCode === '0' ? 'registered' : 'error',
@@ -178,19 +211,21 @@ export const FacturaRepository = {
       request,
       response,
       errors: response?.errors || [],
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+      createdAt: idx >= 0 ? data.facturas[idx].createdAt : now,
+      updatedAt: now,
       metadata: {
         nif,
         documentNo,
-        submissionGUID: request.submissionGUID,
+        submissionGUID: (request as any)?.submissionGUID,
       },
     };
 
-    data.facturas.push(operation);
+    if (idx >= 0) data.facturas[idx] = operation;
+    else data.facturas.push(operation);
+
     saveData(data);
 
-    console.log(`✓ Factura salva no repositório: ${operationId}`);
+    console.log(`✓ Factura salva no repositório (upsert): ${operation.id}`);
     return operation;
   },
 

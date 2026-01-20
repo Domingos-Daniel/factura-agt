@@ -32,17 +32,138 @@ export function FacturaDetail({ factura }: FacturaDetailProps) {
   const requestID = factura.requestID
 
   const handleObterEstado = useCallback(async () => {
-    if (!document?.documentNo) {
+    if (!factura.taxRegistrationNumber) {
       toast({
         variant: 'destructive',
         title: 'Não é possível consultar',
-        description: 'Esta factura não possui número de documento.',
+        description: 'Esta factura não possui NIF do emissor.',
       })
       return
     }
 
     setIsFetchingStatus(true)
     try {
+      // Preferir obterEstado (requestID) — costuma ser muito mais rápido e é o serviço correto para estado.
+      if (requestID) {
+        // Se temos um id (persistido no backup JSON), usamos o endpoint que também grava em data/facturas.json
+        if (factura.id) {
+          const response = await fetch(`/api/facturas/agt/estado?id=${encodeURIComponent(factura.id)}`)
+          const result = await response.json()
+
+          if (!response.ok || !result?.success) {
+            toast({
+              variant: 'destructive',
+              title: 'Erro ao obter estado AGT',
+              description: result?.error ?? 'Não foi possível obter estado junto da AGT.',
+            })
+            return
+          }
+
+          const merged = result.factura as Factura
+          const mergedStatus = (merged?.validationStatus as any) ?? 'P'
+          const newStatus: 'P' | 'V' | 'I' = mergedStatus === 'V' ? 'V' : mergedStatus === 'I' ? 'I' : 'P'
+          const newMessages = merged?.validationMessages ?? []
+
+          setStatus(newStatus)
+          setMessages(newMessages)
+
+          updateFactura(factura.id, {
+            validationStatus: newStatus === 'P' ? undefined : newStatus,
+            validationMessages: newMessages,
+          })
+
+          toast({
+            title: result.source === 'agt' ? 'Estado AGT atualizado' : 'AGT indisponível',
+            description:
+              result.source === 'agt'
+                ? 'Estado gravado no backup JSON.'
+                : 'A mostrar dados do backup. Tente novamente mais tarde.',
+          })
+          return
+        }
+
+        // Fallback: sem id persistido, chama diretamente o endpoint AGT
+        const response = await fetch('/api/agt/obterEstado', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            taxRegistrationNumber: factura.taxRegistrationNumber,
+            requestID,
+          }),
+        })
+
+        const result = await response.json()
+        if (!response.ok) {
+          toast({
+            variant: 'destructive',
+            title: 'Erro ao obter estado AGT',
+            description: result.error ?? 'Não foi possível obter estado junto da AGT.',
+          })
+          return
+        }
+
+        const resultCode = String(result?.resultCode ?? '')
+        const docNo = document?.documentNo
+        const docStatus = Array.isArray(result?.documentStatusList)
+          ? result.documentStatusList.find((d: any) => d?.documentNo && d.documentNo === docNo)
+          : null
+
+        const agtValidationStatus = String(docStatus?.validationStatus ?? '')
+        const newStatus: 'P' | 'V' | 'I' =
+          agtValidationStatus === 'V'
+            ? 'V'
+            : agtValidationStatus === 'I'
+              ? 'I'
+              : resultCode === '1'
+                ? 'V'
+                : resultCode === '0'
+                  ? 'P'
+                  : 'I'
+
+        const newMessages: string[] = [`ResultCode: ${resultCode}`]
+        if (docStatus?.documentNo) newMessages.push(`Documento: ${docStatus.documentNo}`)
+        if (docStatus?.validationStatus) newMessages.push(`ValidationStatus: ${docStatus.validationStatus}`)
+        if (Array.isArray(result?.requestErrorList) && result.requestErrorList.length > 0) {
+          result.requestErrorList.slice(0, 8).forEach((err: any) => {
+            const id = err?.idError ?? 'N/A'
+            const desc = err?.descriptionError ?? ''
+            newMessages.push(`[${id}] ${desc}`.trim())
+          })
+        }
+
+        setStatus(newStatus)
+        setMessages(newMessages)
+
+        if (factura.id) {
+          updateFactura(factura.id, {
+            validationStatus: newStatus === 'P' ? undefined : newStatus,
+            validationMessages: newMessages,
+          })
+        }
+
+        toast({
+          title: 'Estado AGT atualizado',
+          description:
+            newStatus === 'V'
+              ? 'Documento validado com sucesso.'
+              : newStatus === 'I'
+                ? 'Documento com erros/rejeitado. Verifique as mensagens.'
+                : 'Documento ainda em processamento.',
+        })
+
+        return
+      }
+
+      // Fallback: sem requestID, usar consultarFactura (pode demorar no HML)
+      if (!document?.documentNo) {
+        toast({
+          variant: 'destructive',
+          title: 'Não é possível consultar',
+          description: 'Esta factura não possui número de documento.',
+        })
+        return
+      }
+
       const response = await fetch('/api/agt/consultarFactura', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -53,22 +174,22 @@ export function FacturaDetail({ factura }: FacturaDetailProps) {
       })
 
       const result = await response.json()
-      if (!response.ok || !result.success) {
+      if (!response.ok) {
         toast({
           variant: 'destructive',
-          title: 'Erro na consulta AGT',
+          title: 'Consulta AGT lenta/indisponível',
           description: result.error ?? 'Não foi possível consultar o documento junto da AGT.',
         })
         return
       }
 
-      const agtStatus = result.data.processingStatus
+      const agtStatus = result?.processingStatus || result?.data?.processingStatus
       const newStatus: 'P' | 'V' | 'I' =
         agtStatus === 'Processado' ? 'V' : agtStatus === 'Rejeitado' ? 'I' : 'P'
       const newMessages = [
-        `ReturnCode: ${result.data.returnCode}`,
-        `ReturnMessage: ${result.data.returnMessage}`,
-        `Status: ${agtStatus}`,
+        `ReturnCode: ${result?.returnCode ?? result?.data?.returnCode ?? ''}`,
+        `ReturnMessage: ${result?.returnMessage ?? result?.data?.returnMessage ?? ''}`,
+        `Status: ${agtStatus ?? 'N/A'}`,
       ]
 
       setStatus(newStatus)
@@ -98,7 +219,7 @@ export function FacturaDetail({ factura }: FacturaDetailProps) {
     } finally {
       setIsFetchingStatus(false)
     }
-  }, [document?.documentNo, factura.taxRegistrationNumber, factura.id, toast])
+  }, [document?.documentNo, factura.taxRegistrationNumber, factura.id, requestID, toast])
 
   useEffect(() => {
     if (!autoRefresh || status !== 'P') return
@@ -135,7 +256,7 @@ export function FacturaDetail({ factura }: FacturaDetailProps) {
             <Badge variant={statusLabels[status].variant}>{statusLabels[status].label}</Badge>
             <div className="flex items-center gap-2">
               <Button variant="outline" size="sm" onClick={handleObterEstado} disabled={isFetchingStatus}>
-                {isFetchingStatus ? 'A consultar...' : 'Obter estado'}
+                {isFetchingStatus ? 'A consultar…' : 'Consultar estado AGT'}
               </Button>
               {status === 'P' && (
                 <Button

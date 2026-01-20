@@ -3,6 +3,9 @@ import { createAgtClient } from '@/lib/server/agtClient'
 import { makeDocumentSignature, makeSoftwareInfoSignature } from '@/lib/server/jws'
 import { registarFacturaRequest, zodToErrorList, normalizeSoftwareInfo } from '@/lib/schemas'
 import { ZodError } from 'zod'
+import type { Factura } from '@/lib/types'
+import { FacturaRepository } from '@/lib/server/facturaRepository'
+import { upsertFacturaJson } from '@/lib/server/facturasJson'
 
 export const dynamic = 'force-dynamic'
 
@@ -102,6 +105,29 @@ export async function POST(req: Request) {
     const client = createAgtClient()
     try {
       const res = await client.registarFactura(payload)
+
+      // Se a AGT devolveu requestID, persistir no backup (data/facturas.json)
+      const requestID = (res as any)?.requestID
+      if (requestID) {
+        try {
+          const facturaToSave: Factura = {
+            ...(payload as any),
+            id: (payload as any)?.submissionGUID,
+            requestID,
+          }
+          await upsertFacturaJson(facturaToSave)
+
+          // Upsert no repositório persistente (data/storage/facturas.json)
+          try {
+            FacturaRepository.saveFacturaOperation('api', payload as any, res as any, requestID)
+          } catch (repoErr) {
+            console.error('❌ Falha ao salvar operação no repositório:', repoErr)
+          }
+        } catch (e) {
+          // Não falhar o registo na AGT por erro de IO local
+          console.error('❌ Falha ao salvar backup em data/facturas.json:', e)
+        }
+      }
       return NextResponse.json(res, { status: 200 })
     } catch (e: any) {
       const msg: string = e?.message || ''

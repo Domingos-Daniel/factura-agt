@@ -33,13 +33,20 @@ export class AgtClient {
     return h
   }
 
-  private async post<TReq, TRes>(path: string, body: TReq): Promise<TRes> {
+  private async post<TReq, TRes>(
+    path: string,
+    body: TReq,
+    opts?: {
+      timeoutMs?: number
+    }
+  ): Promise<TRes> {
     let attempt = 0
     let lastError: any
     while (attempt <= this.maxRetries) {
       try {
+        const timeoutMs = opts?.timeoutMs ?? this.timeoutMs
         const controller = new AbortController()
-        const id = setTimeout(() => controller.abort(), this.timeoutMs)
+        const id = setTimeout(() => controller.abort(), timeoutMs)
         const res = await fetch(`${this.baseUrl}${path}`, {
           method: 'POST',
           headers: this.headers(),
@@ -80,6 +87,10 @@ export class AgtClient {
     const withRequired = addRequiredFields(payload)
     return this.post<typeof withRequired, any>(`/obterEstado`, withRequired)
   }
+  obterEstadoWithTimeout<T>(payload: T, timeoutMs: number) {
+    const withRequired = addRequiredFields(payload)
+    return this.post<typeof withRequired, any>(`/obterEstado`, withRequired, { timeoutMs })
+  }
   listarFacturas<T>(payload: T) {
     const withRequired = addRequiredFields(payload)
     return this.post<typeof withRequired, any>(`/listarFacturas`, withRequired)
@@ -88,13 +99,25 @@ export class AgtClient {
     const withRequired = addRequiredFields(payload)
     return this.post<typeof withRequired, any>(`/consultarFactura`, withRequired)
   }
+  consultarFacturaWithTimeout<T>(payload: T, timeoutMs: number) {
+    const withRequired = addRequiredFields(payload)
+    return this.post<typeof withRequired, any>(`/consultarFactura`, withRequired, { timeoutMs })
+  }
   solicitarSerie<T>(payload: T) {
     const withRequired = addRequiredFields(payload)
     return this.post<typeof withRequired, any>(`/solicitarSerie`, withRequired)
   }
-  listarSeries<T>(payload: T) {
+  solicitarSerieWithTimeout<T>(payload: T, timeoutMs: number) {
     const withRequired = addRequiredFields(payload)
-    return this.post<typeof withRequired, any>(`/listarSeries`, withRequired)
+    return this.post<typeof withRequired, any>(`/solicitarSerie`, withRequired, { timeoutMs })
+  }
+  listarSeries<T>(payload: T) {
+    // Payload já vem com todos os campos obrigatórios da route
+    return this.post<T, any>(`/listarSeries`, payload)
+  }
+  listarSeriesWithTimeout<T>(payload: T, timeoutMs: number) {
+    // Payload já vem com todos os campos obrigatórios da route
+    return this.post<T, any>(`/listarSeries`, payload, { timeoutMs })
   }
   validarDocumento<T>(payload: T) {
     const withRequired = addRequiredFields(payload)

@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
-import { solicitarSerie } from '@/lib/api'
 import { type SeriesFormData } from '@/lib/schemas/seriesSchema'
 import { MainLayout } from '@/components/layout/MainLayout'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -17,12 +16,24 @@ export default function NovaSeriesPage() {
   const { toast } = useToast()
 
   const handleSubmit = async (data: SeriesFormData) => {
-    const result = await solicitarSerie<typeof data, any>(data)
-    if (result.ok) {
-      toast({ title: 'Série criada com sucesso', description: `Série ${data.seriesCode} foi criada.` })
+    try {
+      const res = await fetch('/api/series/agt/solicitar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+        cache: 'no-store',
+      })
+      const json = await res.json().catch(() => ({}))
+      if (!res.ok) throw new Error(json?.error || `Erro ${res.status}`)
+
+      if (json?.persisted) {
+        toast({ title: 'Série criada com sucesso', description: `Série ${data.seriesCode} foi criada e salva no backup.` })
+      } else {
+        toast({ title: 'Pedido enviado', description: 'Resposta recebida, mas sem confirmação de persistência.' })
+      }
       router.push('/series/lista')
-    } else {
-      toast({ variant: 'destructive', title: 'Erro ao criar série', description: result.error })
+    } catch (e: any) {
+      toast({ variant: 'destructive', title: 'Erro ao criar série', description: e?.message || 'Falha' })
     }
   }
 

@@ -1,9 +1,9 @@
 [
   {
     "schemaVersion": "1.0",
-    "submissionGUID": "996c5729-d3cc-4151-a4a0-8a35930e9f3a",
+    "submissionGUID": "87ed7761-1b3a-4586-94b8-3a9f03c2bcf5",
     "taxRegistrationNumber": "999888777",
-    "submissionTimeStamp": "2026-01-11T15:59:22.904Z",
+    "submissionTimeStamp": "2026-01-17T08:00:17.183Z",
     "softwareInfo": {
       "softwareInfoDetail": {
         "productId": "FacturAGT",
@@ -20,10 +20,10 @@
         "documentType": "FT",
         "documentDate": "2025-01-11",
         "eacCode": "12110",
-        "systemEntryDate": "2026-01-11T15:59:22.901Z",
+        "systemEntryDate": "2025-01-11T10:00:00Z",
         "customerCountry": "AO",
         "customerTaxID": "123456789",
-        "companyName": "Cliente Teste",
+        "companyName": "Empresa ABC Lda",
         "lines": [
           {
             "lineNumber": 1,
@@ -54,12 +54,11 @@
         }
       }
     ],
-    "id": "996c5729-d3cc-4151-a4a0-8a35930e9f3a",
-    "requestID": "AGT-20260111-c4b64106",
-    "validationStatus": "E",
+    "id": "87ed7761-1b3a-4586-94b8-3a9f03c2bcf5",
+    "requestID": "202600000187056",
     "createdAt": "2026-01-11T15:59:23.743Z",
-    "updatedAt": "2026-01-11T15:59:23.743Z",
-    "validationDate": "2026-01-16T15:37:20.559Z",
+    "updatedAt": "2026-01-20T18:53:41.664Z",
+    "validationDate": "2026-01-20T18:53:41.661Z",
     "validationResult": {
       "status": "Com Erros",
       "errors": [
@@ -69,6 +68,15 @@
           "field": "documentTotals.grossTotal"
         }
       ]
+    },
+    "validationMessages": [
+      "ResultCode: 2",
+      "[E08] A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+    ],
+    "agtEstadoLastSyncAt": "2026-01-20T18:53:41.661Z",
+    "agtObterEstado": {
+      "resultCode": "2",
+      "documentStatusListCount": 1
     }
   },
   {
@@ -672,9 +680,18 @@
     ],
     "id": "293764be-1212-4ff6-8f26-1ef03f2306da",
     "requestID": "AGT-20260111-513614bc",
-    "validationStatus": "V",
     "createdAt": "2026-01-11T16:40:24.172Z",
-    "updatedAt": "2026-01-11T16:40:24.172Z"
+    "updatedAt": "2026-01-20T18:53:44.106Z",
+    "validationDate": "2026-01-20T18:53:44.105Z",
+    "validationMessages": [
+      "ResultCode: 2",
+      "[E08] A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+    ],
+    "agtEstadoLastSyncAt": "2026-01-20T18:53:44.105Z",
+    "agtObterEstado": {
+      "resultCode": "2",
+      "documentStatusListCount": 1
+    }
   },
   {
     "schemaVersion": "1.0",
@@ -794,9 +811,18 @@
     ],
     "id": "353caab8-f2ae-472a-925a-919da84c41e0",
     "requestID": "AGT-20260111-670fdc83",
-    "validationStatus": "V",
     "createdAt": "2026-01-11T16:43:24.897Z",
-    "updatedAt": "2026-01-11T16:43:24.897Z"
+    "updatedAt": "2026-01-17T08:58:41.353Z",
+    "validationDate": "2026-01-17T08:58:41.344Z",
+    "validationMessages": [
+      "ResultCode: 2",
+      "[E08] A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+    ],
+    "agtEstadoLastSyncAt": "2026-01-17T08:58:41.344Z",
+    "agtObterEstado": {
+      "resultCode": "2",
+      "documentStatusListCount": 1
+    }
   },
   {
     "schemaVersion": "1.0",
@@ -853,9 +879,18 @@
     ],
     "id": "cadca2b8-6999-4096-8361-b2a8051ea1d3",
     "requestID": "AGT-20260111-17bd5d42",
-    "validationStatus": "V",
     "createdAt": "2026-01-11T18:47:58.992Z",
-    "updatedAt": "2026-01-11T18:47:58.992Z"
+    "updatedAt": "2026-01-20T18:53:46.854Z",
+    "validationDate": "2026-01-20T18:53:46.852Z",
+    "validationMessages": [
+      "ResultCode: 2",
+      "[E08] A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+    ],
+    "agtEstadoLastSyncAt": "2026-01-20T18:53:46.852Z",
+    "agtObterEstado": {
+      "resultCode": "2",
+      "documentStatusListCount": 1
+    }
   },
   {
     "schemaVersion": "1.0",
@@ -971,9 +1006,18 @@
     ],
     "id": "86bd4335-3d90-4862-9d88-b8ad92664bb9",
     "requestID": "AGT-20260111-c7522bac",
-    "validationStatus": "V",
     "createdAt": "2026-01-11T18:48:00.741Z",
-    "updatedAt": "2026-01-11T18:48:00.741Z"
+    "updatedAt": "2026-01-20T18:53:47.293Z",
+    "validationDate": "2026-01-20T18:53:47.291Z",
+    "validationMessages": [
+      "ResultCode: 2",
+      "[E08] A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+    ],
+    "agtEstadoLastSyncAt": "2026-01-20T18:53:47.291Z",
+    "agtObterEstado": {
+      "resultCode": "2",
+      "documentStatusListCount": 1
+    }
   },
   {
     "schemaVersion": "1.0",
@@ -1639,5 +1683,141 @@
     "validationStatus": "V",
     "createdAt": "2026-01-16T17:44:13.354Z",
     "updatedAt": "2026-01-16T17:44:13.354Z"
+  },
+  {
+    "schemaVersion": "1.0",
+    "submissionGUID": "87ed7761-1b3a-4586-94b8-3a9f03c2bcf5",
+    "taxRegistrationNumber": "999888777",
+    "submissionTimeStamp": "2026-01-17T08:00:17.183Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "FacturAGT",
+        "productVersion": "1.0.0",
+        "softwareValidationNumber": "AGT-2025-001"
+      },
+      "jwsSoftwareSignature": "placeholder"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "FT 2025/00001",
+        "documentStatus": "N",
+        "documentType": "FT",
+        "documentDate": "2025-01-11",
+        "eacCode": "12110",
+        "systemEntryDate": "2025-01-11T10:00:00Z",
+        "customerCountry": "AO",
+        "customerTaxID": "123456789",
+        "companyName": "Empresa ABC Lda",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "productCode": "PROD001",
+            "productDescription": "Produto Teste",
+            "quantity": 10,
+            "unitOfMeasure": "UN",
+            "unitPrice": 5000,
+            "unitPriceBase": 5000,
+            "debitAmount": 50000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxAmount": 7000,
+                "taxContribution": 7000
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "netTotal": 50000,
+          "taxPayable": 7000,
+          "grossTotal": 57000
+        }
+      }
+    ],
+    "id": "87ed7761-1b3a-4586-94b8-3a9f03c2bcf5",
+    "requestID": "202600000187056",
+    "validationStatus": "V",
+    "createdAt": "2026-01-17T08:00:17.951Z",
+    "updatedAt": "2026-01-17T08:00:17.951Z"
+  },
+  {
+    "schemaVersion": "1.0",
+    "submissionGUID": "33f8cf6f-3837-4e6f-8356-21628d10b70e",
+    "taxRegistrationNumber": "999888777",
+    "submissionTimeStamp": "2026-01-17T08:00:17.183Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "FacturAGT",
+        "productVersion": "1.0.0",
+        "softwareValidationNumber": "AGT-2025-001"
+      },
+      "jwsSoftwareSignature": "placeholder"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "FT 2025/00002",
+        "documentStatus": "N",
+        "documentType": "FT",
+        "documentDate": "2025-01-11",
+        "eacCode": "12110",
+        "systemEntryDate": "2025-01-11T10:30:00Z",
+        "customerCountry": "AO",
+        "customerTaxID": "987654321",
+        "companyName": "Empresa XYZ Inc",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "productCode": "PROD002",
+            "productDescription": "Serviço Consultoria",
+            "quantity": 5,
+            "unitOfMeasure": "HOR",
+            "unitPrice": 15000,
+            "unitPriceBase": 15000,
+            "debitAmount": 75000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxAmount": 10500,
+                "taxContribution": 10500
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "netTotal": 75000,
+          "taxPayable": 10500,
+          "grossTotal": 85500
+        }
+      }
+    ],
+    "id": "33f8cf6f-3837-4e6f-8356-21628d10b70e",
+    "requestID": "202600000187057",
+    "validationStatus": "V",
+    "createdAt": "2026-01-17T08:00:18.519Z",
+    "updatedAt": "2026-01-17T08:00:18.519Z"
+  }
+] ],
+        "documentTotals": {
+          "netTotal": 75000,
+          "taxPayable": 10500,
+          "grossTotal": 85500
+        }
+      }
+    ],
+    "id": "33f8cf6f-3837-4e6f-8356-21628d10b70e",
+    "requestID": "202600000187057",
+    "validationStatus": "V",
+    "createdAt": "2026-01-17T08:00:18.519Z",
+    "updatedAt": "2026-01-17T08:00:18.519Z"
   }
 ]

@@ -77,8 +77,8 @@ export function makeSolicitarSerieSignature(payload: {
 }
 
 // Assinatura para listarSeries
-export function makeListarSeriesSignature(taxRegistrationNumber: string, documentNo: string, privateKeyPem: string): string {
-  return signJwsRS256({ taxRegistrationNumber, documentNo }, privateKeyPem)
+export function makeListarSeriesSignature(taxRegistrationNumber: string, privateKeyPem: string): string {
+  return signJwsRS256({ taxRegistrationNumber }, privateKeyPem)
 }
 
 // Assinatura para validarDocumento

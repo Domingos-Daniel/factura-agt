@@ -23,6 +23,9 @@ interface ProcessResult {
   documents: number
   results: Array<{
     success: boolean
+    documentNo?: string
+    requestID?: string
+    facturaId?: string
     documentCount?: number
     error?: string
     response?: unknown
@@ -244,6 +247,16 @@ export default function ImportarFacturasPage() {
                               <p className="text-xs text-muted-foreground">
                                 🆔 Factura ID: <span className="font-mono text-[10px]">{res.facturaId}</span>
                               </p>
+                            )}
+
+                            {res.facturaId && (
+                              <div className="pt-2">
+                                <Link href={`/facturas/${res.facturaId}`}>
+                                  <Button size="sm" variant="outline">
+                                    Ver detalhes (F{idx + 1})
+                                  </Button>
+                                </Link>
+                              </div>
                             )}
                           </>
                         ) : (

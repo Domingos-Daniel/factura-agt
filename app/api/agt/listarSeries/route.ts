@@ -1,10 +1,18 @@
 import { NextResponse } from 'next/server'
 import { createAgtClient } from '@/lib/server/agtClient'
-import { makeListarSeriesSignature } from '@/lib/server/jws'
+import { makeListarSeriesSignature, makeSoftwareInfoSignature } from '@/lib/server/jws'
 import { listarSeriesRequest, zodToErrorList, normalizeSoftwareInfo } from '@/lib/schemas'
 import { ZodError } from 'zod'
 
 export const dynamic = 'force-dynamic'
+
+function generateUUID(): string {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0
+    const v = c === 'x' ? r : (r & 0x3 | 0x8)
+    return v.toString(16)
+  })
+}
 
 export async function POST(req: Request) {
   try {
@@ -18,19 +26,37 @@ export async function POST(req: Request) {
       }
       return NextResponse.json({ error: 'Payload inválido' }, { status: 400 })
     }
+    
+    // Preparar payload AGT com campos obrigatórios
+    const taxRegistrationNumber = payload.taxRegistrationNumber || process.env.AGT_HML_NIF_TEST || ''
     const privKey = process.env.AGT_PRIVATE_KEY
-    if (privKey && payload?.taxRegistrationNumber && payload?.documentNo) {
-      try {
-        payload.jwsSignature = makeListarSeriesSignature(
-          payload.taxRegistrationNumber,
-          payload.documentNo,
-          privKey
-        )
-      } catch {}
+    
+    const SOFTWARE_INFO = {
+      productId: process.env.AGT_SOFTWARE_PRODUCT_ID || 'ADDON SAFT B1 E-INVOICE',
+      productVersion: process.env.AGT_SOFTWARE_VERSION || 'v1.0',
+      softwareValidationNumber: process.env.AGT_SOFTWARE_VALIDATION_NUMBER || 'FE/81/AGT/2025'
     }
+    
+    const agtPayload: any = {
+      schemaVersion: '1.2',
+      submissionUUID: payload.submissionUUID || generateUUID(),
+      taxRegistrationNumber,
+      submissionTimeStamp: payload.submissionTimeStamp || new Date().toISOString(),
+      softwareInfo: {
+        softwareInfoDetail: SOFTWARE_INFO,
+        jwsSoftwareSignature: privKey ? makeSoftwareInfoSignature(SOFTWARE_INFO, privKey) : ''
+      },
+      jwsSignature: privKey ? makeListarSeriesSignature(taxRegistrationNumber, privKey) : ''
+    }
+    
+    console.log('[AGT Series] Enviando payload:', JSON.stringify({
+      schemaVersion: agtPayload.schemaVersion,
+      taxRegistrationNumber: agtPayload.taxRegistrationNumber
+    }, null, 2))
     const client = createAgtClient()
     try {
-      const res = await client.listarSeries(payload)
+      const res = await client.listarSeries(agtPayload)
+      console.log('[AGT Series] Response completa:', JSON.stringify(res, null, 2))
       return NextResponse.json(res, { status: 200 })
     } catch (e: any) {
       const msg: string = e?.message || ''

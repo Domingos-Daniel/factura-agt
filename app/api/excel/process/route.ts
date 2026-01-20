@@ -12,6 +12,7 @@ import { createAgtClient } from '@/lib/server/agtClient'
 import { Factura } from '@/lib/types'
 import { readFileSync, writeFileSync, existsSync } from 'fs'
 import { join } from 'path'
+import { FacturaRepository } from '@/lib/server/facturaRepository'
 
 // Gerar UUID
 function generateUUID(): string {
@@ -101,11 +102,19 @@ export async function POST(request: NextRequest) {
             ...individualAgtDoc,
             id: individualAgtDoc.submissionGUID,
             requestID: requestID,
-            validationStatus: 'V',
+            // Estado real vem de obterEstado; após registo o documento pode ficar pendente.
+            validationStatus: 'P',
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
           } as unknown as Factura
           savedFacturas.push(facturaToSave)
+
+          // Upsert no repositório persistente (data/storage/facturas.json)
+          try {
+            FacturaRepository.saveFacturaOperation('direct', individualAgtDoc as any, response as any, requestID)
+          } catch (repoErr) {
+            console.error('Erro ao salvar operação no repositório:', repoErr)
+          }
           
           results.push({
             success: true,

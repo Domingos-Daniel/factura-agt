@@ -181,7 +181,7 @@ export interface Factura {
   softwareInfo: SoftwareInfo;
   documents: Document[];
   requestID?: string;
-  validationStatus?: 'V' | 'I' | 'R' | 'E'; // V=Válida, I=Inválida, R=Rejeitada, E=Com Erros
+  validationStatus?: 'P' | 'V' | 'I' | 'R' | 'E'; // P=Pendente, V=Válida, I=Inválida, R=Rejeitada, E=Com Erros
   validationDate?: string;
   validationResult?: {
     status: 'Validada' | 'Rejeitada' | 'Com Erros';
