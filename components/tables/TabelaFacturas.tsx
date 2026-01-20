@@ -28,14 +28,32 @@ type FilterValue = 'all' | 'FT' | 'FR' | 'FA' | 'NC' | 'ND' | 'AR' | 'RC' | 'RG'
 
 type TabelaFacturasProps = {
   data: Factura[]
+  documentTypeFilter?: string
+  onDocumentTypeFilterChange?: (value: string) => void
+  statusFilter?: 'all' | 'P' | 'V' | 'I'
+  onStatusFilterChange?: (value: 'all' | 'P' | 'V' | 'I') => void
+  pageSize?: number
+  onPageSizeChange?: (value: number) => void
+  currentPage?: number
+  onPageChange?: (value: number) => void
 }
 
-export function TabelaFacturas({ data }: TabelaFacturasProps) {
+export function TabelaFacturas({ 
+  data,
+  documentTypeFilter = 'all',
+  onDocumentTypeFilterChange,
+  statusFilter: externalStatusFilter = 'all',
+  onStatusFilterChange: externalOnStatusFilterChange,
+  pageSize: externalPageSize = 50,
+  onPageSizeChange,
+  currentPage: externalCurrentPage = 1,
+  onPageChange
+}: TabelaFacturasProps) {
   const [searchTerm, setSearchTerm] = useState('')
-  const [documentType, setDocumentType] = useState<FilterValue>('all')
-  const [statusFilter, setStatusFilter] = useState<'all' | 'P' | 'V' | 'I'>('all')
-  const [page, setPage] = useState(1)
-  const pageSize = 8
+  const [documentType, setDocumentType] = useState<FilterValue>(documentTypeFilter as FilterValue)
+  const [statusFilter, setStatusFilter] = useState<'all' | 'P' | 'V' | 'I'>(externalStatusFilter)
+  const [page, setPage] = useState(externalCurrentPage)
+  const pageSize = externalPageSize
 
   const filteredFacturas = useMemo(() => {
     return data.filter((factura) => {
@@ -57,20 +75,24 @@ export function TabelaFacturas({ data }: TabelaFacturasProps) {
     })
   }, [data, searchTerm, documentType, statusFilter])
 
-  const totalPages = Math.max(1, Math.ceil(filteredFacturas.length / pageSize))
+  const totalPages = pageSize === -1 ? 1 : Math.max(1, Math.ceil(filteredFacturas.length / pageSize))
 
   const paginatedFacturas = useMemo(() => {
+    if (pageSize === -1) return filteredFacturas
     const startIndex = (page - 1) * pageSize
     return filteredFacturas.slice(startIndex, startIndex + pageSize)
   }, [filteredFacturas, page, pageSize])
 
   useEffect(() => {
     setPage(1)
+    onPageChange?.(1)
   }, [searchTerm, documentType, statusFilter])
 
   useEffect(() => {
     if (page > totalPages) {
-      setPage(totalPages)
+      const newPage = Math.max(1, totalPages)
+      setPage(newPage)
+      onPageChange?.(newPage)
     }
   }, [page, totalPages])
 
@@ -82,9 +104,31 @@ export function TabelaFacturas({ data }: TabelaFacturasProps) {
             <CardTitle>Facturas Emitidas</CardTitle>
             <CardDescription>
               {filteredFacturas.length} documento{filteredFacturas.length !== 1 ? 's' : ''} encontrado{filteredFacturas.length !== 1 ? 's' : ''}
+              {pageSize !== -1 && ` (${totalPages} página${totalPages !== 1 ? 's' : ''})`}
             </CardDescription>
           </div>
           <div className="flex flex-col gap-2 md:flex-row md:items-center">
+            <div className="w-36">
+              <Select 
+                value={String(pageSize)} 
+                onValueChange={(value) => {
+                  const newSize = Number(value)
+                  onPageSizeChange?.(newSize)
+                  setPage(1)
+                  onPageChange?.(1)
+                }}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Itens" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="10">10 por pág</SelectItem>
+                  <SelectItem value="50">50 por pág</SelectItem>
+                  <SelectItem value="100">100 por pág</SelectItem>
+                  <SelectItem value="-1">Todas</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
             <div className="relative w-full md:w-64">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
@@ -94,7 +138,10 @@ export function TabelaFacturas({ data }: TabelaFacturasProps) {
                 onChange={(event) => setSearchTerm(event.target.value)}
               />
             </div>
-            <Select value={documentType} onValueChange={(value) => setDocumentType(value as FilterValue)}>
+            <Select value={documentType} onValueChange={(value) => {
+              setDocumentType(value as FilterValue)
+              onDocumentTypeFilterChange?.(value)
+            }}>
               <SelectTrigger className="md:w-48">
                 <SelectValue placeholder="Tipo" />
               </SelectTrigger>
@@ -108,7 +155,11 @@ export function TabelaFacturas({ data }: TabelaFacturasProps) {
                 <SelectItem value="RC">Recibo</SelectItem>
               </SelectContent>
             </Select>
-            <Select value={statusFilter} onValueChange={(value) => setStatusFilter(value as 'all' | 'P' | 'V' | 'I')}>
+            <Select value={statusFilter} onValueChange={(value) => {
+              const newValue = value as 'all' | 'P' | 'V' | 'I'
+              setStatusFilter(newValue)
+              externalOnStatusFilterChange?.(newValue)
+            }}>
               <SelectTrigger className="md:w-40">
                 <SelectValue placeholder="Estado" />
               </SelectTrigger>
@@ -186,7 +237,7 @@ export function TabelaFacturas({ data }: TabelaFacturasProps) {
           </Table>
         )}
 
-        {filteredFacturas.length > 0 && (
+        {filteredFacturas.length > 0 && pageSize !== -1 && (
           <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-sm text-muted-foreground">
               A mostrar {(page - 1) * pageSize + 1} – {Math.min(page * pageSize, filteredFacturas.length)} de {filteredFacturas.length} facturas
@@ -195,7 +246,11 @@ export function TabelaFacturas({ data }: TabelaFacturasProps) {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => setPage((prev) => Math.max(1, prev - 1))}
+                onClick={() => {
+                  const newPage = Math.max(1, page - 1)
+                  setPage(newPage)
+                  onPageChange?.(newPage)
+                }}
                 disabled={page === 1}
               >
                 Anterior
@@ -206,7 +261,11 @@ export function TabelaFacturas({ data }: TabelaFacturasProps) {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => setPage((prev) => Math.min(totalPages, prev + 1))}
+                onClick={() => {
+                  const newPage = Math.min(totalPages, page + 1)
+                  setPage(newPage)
+                  onPageChange?.(newPage)
+                }}
                 disabled={page === totalPages}
               >
                 Seguinte

@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "lastUpdated": "2026-01-20T18:53:47.291Z",
+    "lastUpdated": "2026-01-20T21:10:20.929Z",
     "version": "1.0",
     "totalFacturas": 3,
     "totalSeries": 1,
-    "totalOperations": 33
+    "totalOperations": 72
   },
   "facturas": [
     {
@@ -996,6 +996,1215 @@
       "errors": [],
       "createdAt": "2026-01-20T18:53:47.290Z",
       "updatedAt": "2026-01-20T18:53:47.290Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768936250086-1ndde2",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-217b20b1"
+      },
+      "response": {
+        "requestID": "AGT-20260111-217b20b1",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T19:10:50.086Z",
+      "updatedAt": "2026-01-20T19:10:50.087Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768936250228-16k0nn",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-9e301275"
+      },
+      "response": {
+        "requestID": "AGT-20260111-9e301275",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T19:10:50.229Z",
+      "updatedAt": "2026-01-20T19:10:50.229Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768936250312-skwgj5",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-d3a08ce6"
+      },
+      "response": {
+        "requestID": "AGT-20260111-d3a08ce6",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T19:10:50.312Z",
+      "updatedAt": "2026-01-20T19:10:50.312Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768936250395-q4f4qg",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-89872ac3"
+      },
+      "response": {
+        "requestID": "AGT-20260111-89872ac3",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T19:10:50.396Z",
+      "updatedAt": "2026-01-20T19:10:50.396Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768936250448-ucrjus",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-64215b3a"
+      },
+      "response": {
+        "requestID": "AGT-20260111-64215b3a",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T19:10:50.448Z",
+      "updatedAt": "2026-01-20T19:10:50.448Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768936250526-yudxoy",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "202600000187056"
+      },
+      "response": {
+        "requestID": "202600000187056",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T19:10:50.526Z",
+      "updatedAt": "2026-01-20T19:10:50.526Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768936252061-n6rii3",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-97fcef00"
+      },
+      "response": {
+        "requestID": "AGT-20260111-97fcef00",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T19:10:52.061Z",
+      "updatedAt": "2026-01-20T19:10:52.061Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768936252114-sfnjtn",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-50d9d5e4"
+      },
+      "response": {
+        "requestID": "AGT-20260111-50d9d5e4",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T19:10:52.114Z",
+      "updatedAt": "2026-01-20T19:10:52.114Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768936252167-q1047n",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-513614bc"
+      },
+      "response": {
+        "requestID": "AGT-20260111-513614bc",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T19:10:52.168Z",
+      "updatedAt": "2026-01-20T19:10:52.168Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768936253002-42ambw",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-361b67ad"
+      },
+      "response": {
+        "requestID": "AGT-20260111-361b67ad",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T19:10:53.003Z",
+      "updatedAt": "2026-01-20T19:10:53.003Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768937325647-y947jp",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-50d9d5e4"
+      },
+      "response": {
+        "requestID": "AGT-20260111-50d9d5e4",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T19:28:45.648Z",
+      "updatedAt": "2026-01-20T19:28:45.648Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768937325674-qu4pas",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-89872ac3"
+      },
+      "response": {
+        "requestID": "AGT-20260111-89872ac3",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T19:28:45.674Z",
+      "updatedAt": "2026-01-20T19:28:45.674Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768937325692-iz8sxu",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "202600000187056"
+      },
+      "response": {
+        "requestID": "202600000187056",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T19:28:45.692Z",
+      "updatedAt": "2026-01-20T19:28:45.692Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768937325712-fwx0i8",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-64215b3a"
+      },
+      "response": {
+        "requestID": "AGT-20260111-64215b3a",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T19:28:45.712Z",
+      "updatedAt": "2026-01-20T19:28:45.712Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768937325735-tcbup3",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-d3a08ce6"
+      },
+      "response": {
+        "requestID": "AGT-20260111-d3a08ce6",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T19:28:45.735Z",
+      "updatedAt": "2026-01-20T19:28:45.735Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768937325757-lsmr5y",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-513614bc"
+      },
+      "response": {
+        "requestID": "AGT-20260111-513614bc",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T19:28:45.757Z",
+      "updatedAt": "2026-01-20T19:28:45.757Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768937325780-tkabtf",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-361b67ad"
+      },
+      "response": {
+        "requestID": "AGT-20260111-361b67ad",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T19:28:45.780Z",
+      "updatedAt": "2026-01-20T19:28:45.780Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768937327747-6hgqlj",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-217b20b1"
+      },
+      "response": {
+        "requestID": "AGT-20260111-217b20b1",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T19:28:47.747Z",
+      "updatedAt": "2026-01-20T19:28:47.747Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768937327764-zi0y9v",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-9e301275"
+      },
+      "response": {
+        "requestID": "AGT-20260111-9e301275",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T19:28:47.764Z",
+      "updatedAt": "2026-01-20T19:28:47.764Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768937327823-vp39ek",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-97fcef00"
+      },
+      "response": {
+        "requestID": "AGT-20260111-97fcef00",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T19:28:47.823Z",
+      "updatedAt": "2026-01-20T19:28:47.823Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768939975526-jo7xrl",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-d3a08ce6"
+      },
+      "response": {
+        "requestID": "AGT-20260111-d3a08ce6",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T20:12:55.526Z",
+      "updatedAt": "2026-01-20T20:12:55.526Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768939975554-6xkjmc",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-64215b3a"
+      },
+      "response": {
+        "requestID": "AGT-20260111-64215b3a",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T20:12:55.554Z",
+      "updatedAt": "2026-01-20T20:12:55.554Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768939975580-2b2wrw",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-89872ac3"
+      },
+      "response": {
+        "requestID": "AGT-20260111-89872ac3",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T20:12:55.580Z",
+      "updatedAt": "2026-01-20T20:12:55.580Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768939975604-1xjivx",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-97fcef00"
+      },
+      "response": {
+        "requestID": "AGT-20260111-97fcef00",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T20:12:55.604Z",
+      "updatedAt": "2026-01-20T20:12:55.604Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768939975623-ydjiqe",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-217b20b1"
+      },
+      "response": {
+        "requestID": "AGT-20260111-217b20b1",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T20:12:55.623Z",
+      "updatedAt": "2026-01-20T20:12:55.623Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768939975642-2j8ajd",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-50d9d5e4"
+      },
+      "response": {
+        "requestID": "AGT-20260111-50d9d5e4",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T20:12:55.642Z",
+      "updatedAt": "2026-01-20T20:12:55.642Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768939975659-h45fki",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-361b67ad"
+      },
+      "response": {
+        "requestID": "AGT-20260111-361b67ad",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T20:12:55.659Z",
+      "updatedAt": "2026-01-20T20:12:55.659Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768939977647-02mdwh",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-9e301275"
+      },
+      "response": {
+        "requestID": "AGT-20260111-9e301275",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T20:12:57.647Z",
+      "updatedAt": "2026-01-20T20:12:57.647Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768939977746-yjdzv2",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-513614bc"
+      },
+      "response": {
+        "requestID": "AGT-20260111-513614bc",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T20:12:57.746Z",
+      "updatedAt": "2026-01-20T20:12:57.746Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768940354103-jwepjo",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-513614bc"
+      },
+      "response": {
+        "requestID": "AGT-20260111-513614bc",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T20:19:14.103Z",
+      "updatedAt": "2026-01-20T20:19:14.103Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768940354165-tuqqcu",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-9e301275"
+      },
+      "response": {
+        "requestID": "AGT-20260111-9e301275",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T20:19:14.165Z",
+      "updatedAt": "2026-01-20T20:19:14.165Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768942195375-p8vube",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-9e301275"
+      },
+      "response": {
+        "requestID": "AGT-20260111-9e301275",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T20:49:55.375Z",
+      "updatedAt": "2026-01-20T20:49:55.375Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768942195434-naad6v",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-513614bc"
+      },
+      "response": {
+        "requestID": "AGT-20260111-513614bc",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T20:49:55.434Z",
+      "updatedAt": "2026-01-20T20:49:55.434Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768942497282-8snqdd",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-513614bc"
+      },
+      "response": {
+        "requestID": "AGT-20260111-513614bc",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T20:54:57.282Z",
+      "updatedAt": "2026-01-20T20:54:57.282Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768942497376-85u74j",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-9e301275"
+      },
+      "response": {
+        "requestID": "AGT-20260111-9e301275",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T20:54:57.376Z",
+      "updatedAt": "2026-01-20T20:54:57.376Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768943191074-hnfzu7",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-9e301275"
+      },
+      "response": {
+        "requestID": "AGT-20260111-9e301275",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T21:06:31.074Z",
+      "updatedAt": "2026-01-20T21:06:31.074Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768943191130-503ahv",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-513614bc"
+      },
+      "response": {
+        "requestID": "AGT-20260111-513614bc",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T21:06:31.130Z",
+      "updatedAt": "2026-01-20T21:06:31.130Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768943419670-gjsehu",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-9e301275"
+      },
+      "response": {
+        "requestID": "AGT-20260111-9e301275",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T21:10:19.670Z",
+      "updatedAt": "2026-01-20T21:10:19.670Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768943420929-ujxp26",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "AGT-20260111-513614bc"
+      },
+      "response": {
+        "requestID": "AGT-20260111-513614bc",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T21:10:20.929Z",
+      "updatedAt": "2026-01-20T21:10:20.929Z",
       "metadata": {
         "nif": "999888777",
         "documentNo": "obterEstado"

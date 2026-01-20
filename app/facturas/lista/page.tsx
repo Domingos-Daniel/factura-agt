@@ -47,6 +47,12 @@ export default function ListaFacturasPage() {
   const [loadingMessage, setLoadingMessage] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [cacheAge, setCacheAge] = useState<number | null>(null)
+  
+  // Filtros e paginação
+  const [documentTypeFilter, setDocumentTypeFilter] = useState<string>('all')
+  const [statusFilter, setStatusFilter] = useState<'all' | 'P' | 'V' | 'I'>('all')
+  const [pageSize, setPageSize] = useState<number>(50)
+  const [currentPage, setCurrentPage] = useState<number>(1)
 
   const refreshFromJsonBackup = useCallback(async () => {
     try {
@@ -88,7 +94,6 @@ export default function ListaFacturasPage() {
         setLoadingProgress(0)
         setLoadingMessage('Conectando à AGT...')
         
-        // Simular progresso durante o carregamento longo (~120s)
         const progressInterval = setInterval(() => {
           setLoadingProgress(prev => {
             if (prev >= 95) return prev
@@ -97,25 +102,19 @@ export default function ListaFacturasPage() {
           })
         }, 2000)
         
-        // Actualizar mensagens de progresso
         setTimeout(() => setLoadingMessage('Autenticando...'), 3000)
         setTimeout(() => setLoadingMessage('Buscando facturas da AGT...'), 6000)
-        setTimeout(() => setLoadingMessage('Isso pode levar até 2-3 minutos (com retries)...'), 15000)
-        setTimeout(() => setLoadingMessage('Tentando conectar...'), 45000)
-        setTimeout(() => setLoadingMessage('Aguardando resposta da AGT...'), 90000)
-        setTimeout(() => setLoadingMessage('Quase lá...'), 150000)
+        setTimeout(() => setLoadingMessage('Aguardando resposta...'), 15000)
         
         try {
-          const response = await fetch(`/api/facturas/agt?refresh=true&days=7`)
+          const response = await fetch(`/api/facturas/agt/listar?refresh=true&timeoutMs=180000`)
           clearInterval(progressInterval)
           setLoadingProgress(100)
           
           if (response.ok) {
             const data = await response.json()
             if (data.success) {
-              // Verificar se há erro da AGT mesmo com success=true
               if (data.error && data.facturas?.length === 0) {
-                // AGT indisponível, mostrar aviso em vez de erro crítico
                 const isAgtUnavailable = data.error.includes('503') || data.error.includes('indisponível')
                 if (isAgtUnavailable) {
                   setError('Servidor AGT HML temporariamente indisponível (503). Os dados locais serão exibidos.')
@@ -126,7 +125,6 @@ export default function ListaFacturasPage() {
               setFacturas(data.facturas || [])
               setDataSource(data.source)
               setCacheAge(data.cacheAge || null)
-              // Garantir que estados vindos de obterEstado (backup JSON) prevalecem.
               void refreshFromJsonBackup()
               setLoadingMessage(data.facturas?.length > 0 ? 'Concluído!' : 'AGT não retornou dados')
             } else {
@@ -140,12 +138,11 @@ export default function ListaFacturasPage() {
           throw err
         }
       } else {
-        // Carregamento inicial - primeiro tenta cache, depois local
         setLoadingMessage('Carregando...')
         
-        // 1. Tentar carregar do cache AGT
+        // 1. Tentar carregar da nova rota AGT com backup
         try {
-          const response = await fetch('/api/facturas/agt')
+          const response = await fetch('/api/facturas/agt/listar')
           if (response.ok) {
             const data = await response.json()
             if (data.success && data.facturas?.length > 0) {
@@ -158,10 +155,10 @@ export default function ListaFacturasPage() {
             }
           }
         } catch (e) {
-          console.warn('⚠️ Falha ao carregar cache AGT:', e)
+          console.warn('⚠️ Falha ao carregar da AGT:', e)
         }
         
-        // 2. Fallback: carregar dados locais (localStorage + JSON)
+        // 2. Fallback: carregar dados locais (localStorage + JSON backup)
         const localFacturas = getFacturas()
         let jsonFacturas: Factura[] = []
         
@@ -175,7 +172,6 @@ export default function ListaFacturasPage() {
           console.warn('⚠️ Falha ao carregar JSON local:', e)
         }
         
-        // Combinar dados locais + JSON com merge de estado (evita inconsistências entre detalhes e listagem)
         const jsonIndex = new Map<string, Factura>()
         jsonFacturas.forEach((f: any) => {
           buildFacturaKeys(f).forEach((k) => jsonIndex.set(k, f))
@@ -405,7 +401,17 @@ export default function ListaFacturasPage() {
             </CardContent>
           </Card>
         ) : (
-          <TabelaFacturas data={facturas} />
+          <TabelaFacturas 
+            data={facturas}
+            documentTypeFilter={documentTypeFilter}
+            statusFilter={statusFilter}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onDocumentTypeFilterChange={setDocumentTypeFilter}
+            onStatusFilterChange={setStatusFilter}
+            onPageSizeChange={setPageSize}
+            onPageChange={setCurrentPage}
+          />
         )}
       </div>
     </MainLayout>

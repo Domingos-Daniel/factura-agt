@@ -56,3 +56,35 @@ export async function upsertFacturaJson(nextFactura: Factura): Promise<void> {
 
   await writeAll(existing)
 }
+
+export async function getAllFacturasJson(): Promise<Factura[]> {
+  return await readAll()
+}
+
+export async function replaceAllFacturasJson(facturas: Factura[]): Promise<void> {
+  await writeAll(facturas)
+}
+
+export async function updateFacturaEstadoJson(
+  id: string,
+  estado: {
+    validationStatus?: 'P' | 'V' | 'I'
+    validationDate?: string
+    validationMessages?: string[]
+    agtEstadoLastSyncAt?: string
+    requestID?: string
+  }
+): Promise<void> {
+  const existing = await readAll()
+  const idx = existing.findIndex((f: any) => f?.id === id)
+  
+  if (idx < 0) return
+  
+  existing[idx] = {
+    ...existing[idx],
+    ...estado,
+    updatedAt: new Date().toISOString()
+  } as any
+  
+  await writeAll(existing)
+}

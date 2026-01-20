@@ -42,11 +42,20 @@ export class AgtClient {
   ): Promise<TRes> {
     let attempt = 0
     let lastError: any
-    while (attempt <= this.maxRetries) {
+    const maxRetries = path === '/listarFacturas' ? 0 : this.maxRetries // Sem retry para listar (muito lento)
+    
+    while (attempt <= maxRetries) {
       try {
         const timeoutMs = opts?.timeoutMs ?? this.timeoutMs
+        console.log(`🌐 [AgtClient] POST ${path} - Tentativa ${attempt + 1}/${maxRetries + 1}, timeout: ${timeoutMs}ms`)
+        
         const controller = new AbortController()
-        const id = setTimeout(() => controller.abort(), timeoutMs)
+        const id = setTimeout(() => {
+          console.log(`⏰ [AgtClient] Timeout após ${timeoutMs}ms - abortando request`)
+          controller.abort()
+        }, timeoutMs)
+        
+        const startTime = Date.now()
         const res = await fetch(`${this.baseUrl}${path}`, {
           method: 'POST',
           headers: this.headers(),
@@ -55,6 +64,10 @@ export class AgtClient {
           cache: 'no-store',
         })
         clearTimeout(id)
+        
+        const duration = ((Date.now() - startTime) / 1000).toFixed(2)
+        console.log(`✅ [AgtClient] Resposta em ${duration}s - Status: ${res.status}`)
+        
         if (res.status === 429) {
           // E98 – demasiadas solicitações repetidas
           const retryAfter = Number(res.headers.get('retry-after') ?? '2')
@@ -69,6 +82,13 @@ export class AgtClient {
         return (await res.json()) as TRes
       } catch (err: any) {
         lastError = err
+        console.error(`❌ [AgtClient] Erro na tentativa ${attempt + 1}: ${err?.message}`)
+        
+        // Se foi abort (timeout), não fazer retry para listar
+        if (err?.name === 'AbortError' || path === '/listarFacturas') {
+          throw err
+        }
+        
         // E97 – prematura: dar um pequeno backoff e tentar de novo
         await new Promise((r) => setTimeout(r, (attempt + 1) * 1000))
         attempt++
@@ -92,8 +112,12 @@ export class AgtClient {
     return this.post<typeof withRequired, any>(`/obterEstado`, withRequired, { timeoutMs })
   }
   listarFacturas<T>(payload: T) {
-    const withRequired = addRequiredFields(payload)
-    return this.post<typeof withRequired, any>(`/listarFacturas`, withRequired)
+    // Não adicionar required fields, payload já vem completo da route
+    return this.post<T, any>(`/listarFacturas`, payload)
+  }
+  listarFacturasWithTimeout<T>(payload: T, timeoutMs: number) {
+    // Não adicionar required fields, payload já vem completo da route
+    return this.post<T, any>(`/listarFacturas`, payload, { timeoutMs })
   }
   consultarFactura<T>(payload: T) {
     const withRequired = addRequiredFields(payload)
