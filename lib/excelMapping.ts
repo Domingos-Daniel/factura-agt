@@ -102,14 +102,20 @@ export interface AGTLine {
 /**
  * Converte linha Excel para formato AGT
  * Suporta tanto formato AGT direto quanto SAP legado
+ * 
+ * REGRAS AGT OBRIGATÓRIAS:
+ * - referenceInfo: NÃO incluir para FT/FS/FR, só para NC
+ * - taxes.taxContribution: opcional mas recomendado
  */
 export function mapExcelRowToAGTLine(
   row: ExcelRow,
   lineNumber: number,
-  ivaPercentage: number = 14
+  ivaPercentage: number = 14,
+  documentType: string = 'FT'
 ): AGTLine {
   // Detectar se é formato AGT (tem campo LINE com JSON) ou SAP legado
   const isAGTFormat = row['LINE'] !== undefined
+  const isNotaCredito = documentType === 'NC'
   
   if (isAGTFormat && row['LINE']) {
     // Parse JSON do campo LINE
@@ -118,7 +124,7 @@ export function mapExcelRowToAGTLine(
       if (Array.isArray(lines) && lines.length > 0) {
         // Retornar a primeira linha (ou a linha correspondente ao lineNumber)
         const line = lines[lineNumber - 1] || lines[0]
-        return {
+        const result: AGTLine = {
           lineNumber: line.lineNumber || lineNumber,
           productCode: line.productCode || 'GEN001',
           productDescription: line.productDescription || 'Produto/Serviço',
@@ -130,6 +136,11 @@ export function mapExcelRowToAGTLine(
           taxes: line.taxes || [],
           settlementAmount: line.settlementAmount || 0,
         }
+        // referenceInfo só para NC
+        if (isNotaCredito && line.referenceInfo?.reference) {
+          (result as any).referenceInfo = line.referenceInfo
+        }
+        return result
       }
     } catch (e) {
       // Se falhar o parse, continua com lógica SAP
@@ -164,11 +175,17 @@ export function mapExcelRowToAGTLine(
       },
     ],
     settlementAmount: 0,
+    // NÃO incluir referenceInfo para FT/FS/FR
   }
 }
 
 /**
  * Converte documento Excel completo para formato AGT
+ * 
+ * REGRAS AGT OBRIGATÓRIAS:
+ * 1. eacCode: mínimo 5 caracteres (ex: '47410' = comércio computadores)
+ * 2. currency: objeto com currencyCode, currencyAmount e exchangeRate
+ * 3. referenceInfo: só para NC (Nota de Crédito)
  */
 export interface AGTDocument {
   schemaVersion: string
@@ -189,7 +206,7 @@ export interface AGTDocument {
     documentStatus: string
     documentType: string
     documentDate: string
-    eacCode?: string
+    eacCode: string  // OBRIGATÓRIO - mínimo 5 caracteres
     systemEntryDate: string
     customerCountry: string
     customerTaxID: string
@@ -199,6 +216,11 @@ export interface AGTDocument {
       netTotal: number
       taxPayable: number
       grossTotal: number
+      currency: {  // OBRIGATÓRIO - deve ser objeto
+        currencyCode: string
+        currencyAmount: number
+        exchangeRate: number
+      }
     }
   }>
 }
@@ -238,7 +260,7 @@ function cleanName(name?: string): string {
 
 /**
  * Converte grupo de linhas (factura) para documento AGT
- * Suporta tanto formato AGT completo quanto SAP legado
+ * Suporta: AGT completo, SAP legado, modelo-2 e modelo-3
  */
 export function groupExcelRowsToAGTDocuments(
   excelRows: ExcelRow[],
@@ -249,20 +271,28 @@ export function groupExcelRowsToAGTDocuments(
   // Detectar formato pelos campos presentes
   const firstRow = excelRows[0] || {}
   
-  // Formato AGT: tem 'Nº Docum' ou 'LINE' ou 'DOCUMENT_TOTALS'
-  const isAGTFormat = firstRow['Nº Docum'] !== undefined || 
-                      firstRow['LINE'] !== undefined ||
+  // Formato modelo-3: tem campos expandidos (TAX TYPE, LINE_NO, etc)
+  const isModelo3 = firstRow['TAX TYPE'] !== undefined || 
+                    firstRow['LINE_NO'] !== undefined ||
+                    firstRow['T PAYABLE'] !== undefined ||
+                    firstRow['WITH T AM'] !== undefined
+  
+  // Formato AGT: tem 'Nº Docum' ou 'LINE' ou 'DOCUMENT_TOTALS' (JSON strings)
+  const isAGTFormat = firstRow['LINE'] !== undefined ||
                       firstRow['DOCUMENT_TOTALS'] !== undefined
   
   // Formato modelo-2: tem 'Nº Documento' (com espaço) e 'Qnt Fact'
   const isModelo2 = firstRow['Nº Documento'] !== undefined && 
                     firstRow['Qnt Fact'] !== undefined
   
-  if (isModelo2) {
+  if (isModelo3) {
+    // Processar formato modelo-3 (campos expandidos por linha)
+    return processModelo3Format(excelRows, companyNIF, companyName, seriesCode)
+  } else if (isModelo2) {
     // Processar formato modelo-2 (SAP simplificado)
     return processModelo2Format(excelRows, companyNIF, companyName, seriesCode)
   } else if (isAGTFormat) {
-    // Processar formato AGT completo
+    // Processar formato AGT completo (JSON strings)
     return processAGTFormat(excelRows, companyNIF, companyName, seriesCode)
   } else {
     // Processar formato SAP legado
@@ -292,27 +322,39 @@ function processAGTFormat(
         documentStatus: row['Status'] || 'N',
         documentType: row['Tipo Doc'] || 'FT',
         documentDate: row['Data Doc'] || new Date().toISOString().split('T')[0],
-        eacCode: row['Cod A'] || '12110',
+        eacCode: row['Cod A'] && String(row['Cod A']).length >= 5 ? String(row['Cod A']) : '47410',
         systemEntryDate: row['Dat E S'] || new Date().toISOString(),
         customerCountry: row['País cl'] || 'AO',
         customerTaxID: row['Nº Cliente'] || '999999999',
         companyName: row['Nome E'] || 'Cliente Genérico',
-        lines: lines.map((line: any, idx: number) => ({
-          lineNumber: line.lineNumber || idx + 1,
-          productCode: line.productCode || 'GEN001',
-          productDescription: line.productDescription || 'Produto',
-          quantity: line.quantity || 1,
-          unitOfMeasure: line.unitOfMeasure || 'UN',
-          unitPrice: line.unitPrice || 0,
-          unitPriceBase: line.unitPriceBase || line.unitPrice || 0,
-          debitAmount: line.debitAmount || 0,
-          taxes: line.taxes || [],
-          settlementAmount: line.settlementAmount || 0,
-        })),
-        documentTotals: documentTotals || {
-          netTotal: 0,
-          taxPayable: 0,
-          grossTotal: 0,
+        lines: lines.map((line: any, idx: number) => {
+          const result: any = {
+            lineNumber: line.lineNumber || idx + 1,
+            productCode: line.productCode || 'GEN001',
+            productDescription: line.productDescription || 'Produto',
+            quantity: line.quantity || 1,
+            unitOfMeasure: line.unitOfMeasure || 'UN',
+            unitPrice: line.unitPrice || 0,
+            unitPriceBase: line.unitPriceBase || line.unitPrice || 0,
+            debitAmount: line.debitAmount || 0,
+            taxes: line.taxes || [],
+            settlementAmount: line.settlementAmount || 0,
+          }
+          // NÃO incluir referenceInfo a menos que seja NC
+          if ((row['Tipo Doc'] || 'FT') === 'NC' && line.referenceInfo?.reference) {
+            result.referenceInfo = line.referenceInfo
+          }
+          return result
+        }),
+        documentTotals: {
+          netTotal: documentTotals?.netTotal || 0,
+          taxPayable: documentTotals?.taxPayable || 0,
+          grossTotal: documentTotals?.grossTotal || 0,
+          currency: {
+            currencyCode: 'AOA',
+            currencyAmount: documentTotals?.grossTotal || 0,
+            exchangeRate: 1.0
+          }
         },
       })
     } catch (e) {
@@ -321,7 +363,7 @@ function processAGTFormat(
   })
 
   return [{
-    schemaVersion: '1.0',
+    schemaVersion: '1.2',
     submissionGUID: generateUUID(),
     taxRegistrationNumber: companyNIF,
     submissionTimeStamp: new Date().toISOString(),
@@ -433,6 +475,7 @@ function processModelo2Format(
       documentStatus: firstRow['Status'] || 'N',
       documentType,
       documentDate,
+      eacCode: firstRow['Cod A'] && String(firstRow['Cod A']).length >= 5 ? String(firstRow['Cod A']) : '47410',
       systemEntryDate,
       customerCountry: clientCountry,
       customerTaxID: clientNIF,
@@ -442,12 +485,166 @@ function processModelo2Format(
         netTotal,
         taxPayable,
         grossTotal,
+        currency: {
+          currencyCode: 'AOA',
+          currencyAmount: grossTotal,
+          exchangeRate: 1.0
+        }
       },
     })
   })
 
   return [{
-    schemaVersion: '1.0',
+    schemaVersion: '1.2',
+    submissionGUID: generateUUID(),
+    taxRegistrationNumber: companyNIF,
+    submissionTimeStamp: new Date().toISOString(),
+    softwareInfo: {
+      softwareInfoDetail: {
+        productId: 'FacturAGT',
+        productVersion: '1.0.0',
+        softwareValidationNumber: 'AGT-2025-001',
+      },
+      jwsSoftwareSignature: 'placeholder',
+    },
+    numberOfEntries: agtDocuments.length,
+    documents: agtDocuments,
+  }]
+}
+
+/**
+ * Processa formato modelo-3 (campos expandidos por linha de produto)
+ * Cada linha Excel representa um item/produto da factura
+ * Agrupa por 'Nº Docum' para criar documentos completos
+ */
+function processModelo3Format(
+  excelRows: ExcelRow[],
+  companyNIF: string,
+  companyName: string,
+  seriesCode: string
+): AGTDocument[] {
+  // Agrupar por 'Nº Docum' (número do documento)
+  const groupedByDoc = new Map<string, ExcelRow[]>()
+  
+  excelRows.forEach(row => {
+    const docNo = row['Nº Docum'] || row['A Fatura'] || 'UNKNOWN'
+    if (!groupedByDoc.has(docNo)) {
+      groupedByDoc.set(docNo, [])
+    }
+    groupedByDoc.get(docNo)!.push(row)
+  })
+
+  console.log(`📋 Modelo-3: Agrupados ${groupedByDoc.size} documentos de ${excelRows.length} linhas`)
+
+  const agtDocuments: any[] = []
+
+  groupedByDoc.forEach((docRows, docNo) => {
+    const firstRow = docRows[0]
+    
+    // Extrair campos de cabeçalho do documento (primeira linha)
+    const documentNo = firstRow['Nº Docum'] || docNo
+    const documentType = firstRow['Tipo Doc'] || 'FT'
+    const documentDate = parseDateModelo2(firstRow['Data Doc'] as string)
+    const clientName = cleanName(firstRow['Nome E'] as string)
+    const clientNIF = firstRow['Nº Cliente'] || '999999999'
+    const clientCountry = firstRow['País cl'] || 'AO'
+    const eacCode = firstRow['Cod A'] && String(firstRow['Cod A']).length >= 5 
+      ? String(firstRow['Cod A']) 
+      : '47410'
+    
+    // Parse timestamp formato yyyymmddhhmmss
+    let systemEntryDate = new Date().toISOString()
+    const datES = firstRow['Dat E S']
+    if (datES && typeof datES === 'string' && datES.length === 14) {
+      const year = datES.substring(0, 4)
+      const month = datES.substring(4, 6)
+      const day = datES.substring(6, 8)
+      const hour = datES.substring(8, 10)
+      const minute = datES.substring(10, 12)
+      const second = datES.substring(12, 14)
+      systemEntryDate = `${year}-${month}-${day}T${hour}:${minute}:${second}Z`
+    }
+
+    // Criar linhas do documento (cada linha Excel = uma linha do documento)
+    const lines = docRows.map((row, idx) => {
+      // Campos da linha
+      const lineNo = Number(row['LINE_NO']) || (idx + 1)
+      const debitAmount = Number(row['DE_AMOUNT']) || Number(row['GR TOTAL']) || 0
+      const creditAmount = Number(row['CR_AMOUNT']) || 0
+      
+      // Calcular valores
+      const quantity = 1 // Modelo-3 normalmente tem quantidade implícita
+      const unitPrice = debitAmount
+      
+      // Campos de imposto
+      const taxType = (row['TAX TYPE'] as string) || 'IVA'
+      const taxPercentage = Number(row['T PERC']) || 14
+      const taxAmount = Number(row['T AMOUNT']) || (debitAmount * taxPercentage / 100)
+      const taxCode = (row['TAX COD'] as string) || 'NOR'
+      const taxCountryRegion = (row['T COUN_R'] as string) || 'AO'
+      
+      return {
+        lineNumber: lineNo,
+        productCode: row['ID Produto'] || row['Identf'] || `PROD${String(lineNo).padStart(3, '0')}`,
+        productDescription: cleanName(row['V Produto'] as string) || `Produto linha ${lineNo}`,
+        quantity,
+        unitOfMeasure: 'UN',
+        unitPrice,
+        unitPriceBase: unitPrice,
+        debitAmount,
+        taxes: [{
+          taxType: taxType as 'IVA' | 'IS' | 'IEC' | 'NS',
+          taxCountryRegion,
+          taxCode,
+          taxPercentage,
+          taxAmount,
+          taxContribution: taxAmount,
+        }],
+        settlementAmount: creditAmount,
+      }
+    })
+
+    // Calcular totais (usar valores agregados se disponíveis, senão calcular)
+    const netTotal = Number(firstRow['N_TOTAL']) || 
+                     lines.reduce((sum, line) => sum + line.debitAmount, 0)
+    const taxPayable = Number(firstRow['T PAYABLE']) || 
+                       lines.reduce((sum, line) => 
+                         sum + line.taxes.reduce((t, tax) => t + tax.taxAmount, 0), 0)
+    const grossTotal = Number(firstRow['GR TOTAL']) || (netTotal + taxPayable)
+
+    // Moeda
+    const currencyCode = (firstRow['CUR COD'] as string) || 'AOA'
+    const currencyAmount = Number(firstRow['C_AMOUNT']) || grossTotal
+    const exchangeRate = Number(firstRow['EX_RATE']) || 1.0
+
+    agtDocuments.push({
+      documentNo,
+      documentStatus: firstRow['Status'] || 'N',
+      documentType,
+      documentDate,
+      eacCode,
+      systemEntryDate,
+      customerCountry: clientCountry,
+      customerTaxID: clientNIF,
+      companyName: clientName,
+      lines,
+      documentTotals: {
+        netTotal,
+        taxPayable,
+        grossTotal,
+        currency: {
+          currencyCode,
+          currencyAmount,
+          exchangeRate
+        }
+      },
+    })
+  })
+
+  console.log(`✅ Modelo-3: Processados ${agtDocuments.length} documentos com total de ${excelRows.length} linhas`)
+
+  return [{
+    schemaVersion: '1.2',
     submissionGUID: generateUUID(),
     taxRegistrationNumber: companyNIF,
     submissionTimeStamp: new Date().toISOString(),
@@ -513,7 +710,7 @@ function processSAPFormat(
       documentStatus: 'N', // Normal
       documentType: mapDocumentType(firstRow.FKART),
       documentDate: mapDate(firstRow.FKDAT),
-      eacCode: '12110', // Padrão para comércio geral
+      eacCode: '47410', // Padrão para comércio (mínimo 5 caracteres obrigatório)
       systemEntryDate: new Date().toISOString(),
       customerCountry: 'AO',
       customerTaxID: firstRow.STCD1 || '999999999',
@@ -523,6 +720,11 @@ function processSAPFormat(
         netTotal,
         taxPayable,
         grossTotal,
+        currency: {
+          currencyCode: 'AOA',
+          currencyAmount: grossTotal,
+          exchangeRate: 1.0
+        }
       },
     })
 
@@ -531,13 +733,13 @@ function processSAPFormat(
 
   // Criar documento AGT completo
   const document: AGTDocument = {
-    schemaVersion: '1.0',
+    schemaVersion: '1.2',
     submissionGUID: generateUUID(),
     taxRegistrationNumber: companyNIF,
     submissionTimeStamp: new Date().toISOString(),
     softwareInfo: {
       softwareInfoDetail: {
-        productId: 'FacfturAGT',
+        productId: 'FacturAGT',
         productVersion: '1.0.0',
         softwareValidationNumber: 'AGT-2025-001',
       },

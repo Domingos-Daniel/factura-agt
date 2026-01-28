@@ -1,16 +1,20 @@
 /**
  * Excel Parser - Converte ficheiros Excel SAP para formato AGT
- * Suporta formatos: VBRK/VBRP (Facturas SAP)
+ * Suporta formatos:
+ *  - VBRK/VBRP (Facturas SAP legado)
+ *  - Modelo-2: Headers em B2, dados a partir de linha 4
+ *  - Modelo-3: Headers em B2, dados a partir de linha 4 (mesmo formato modelo-2)
  */
 
 import * as XLSX from 'xlsx'
 import { z } from 'zod'
 
-// Schema para validação de linha Excel (formato AGT + SAP legado + modelo-2)
+// Schema para validação de linha Excel (formato AGT + SAP legado + modelo-2 + modelo-3)
 export const ExcelRowSchema = z.object({
-  // Cabeçalho Documento AGT
+  // Cabeçalho Documento AGT (Modelo-2 e Modelo-3)
   'V Schema': z.string().optional(), // Versão do schema
-  'Identif': z.string().optional(), // GUID de submissão
+  'Identif': z.string().optional(), // GUID de submissão (variante ortográfica)
+  'Identf': z.string().optional(), // GUID de submissão (modelo-3)
   'TS Subm': z.string().or(z.number()).optional(), // Timestamp submissão
   'Nº Fiscal': z.string().optional(), // NIF da empresa emissora
   'A Softwa)': z.string().optional(), // Assinatura software
@@ -32,7 +36,36 @@ export const ExcelRowSchema = z.object({
   'País cl': z.string().optional(), // País do cliente
   'Nome E': z.string().optional(), // Nome da empresa/cliente (pode ter espaços extras)
   
-  // Secções complexas (JSON strings)
+  // Campos de TAX (Modelo-3 - estrutura expandida)
+  'TAX TYPE': z.string().optional(), // Tipo de imposto (IVA, IS, IEC, NS)
+  'T COUN_R': z.string().optional(), // Tax Country Region
+  'TAX COD': z.string().optional(), // Código do imposto
+  'TAX BAS': z.string().or(z.number()).optional(), // Base tributável
+  'T PERC': z.string().or(z.number()).optional(), // Percentagem de imposto
+  'T AMOUNT': z.string().or(z.number()).optional(), // Valor do imposto
+  'T CONTR': z.string().or(z.number()).optional(), // Contribuição do imposto
+  'T EX COD': z.string().optional(), // Tax Exemption Code
+  
+  // Campos de LINE (Modelo-3 - estrutura expandida)
+  'LINE_NO': z.string().or(z.number()).optional(), // Número da linha
+  'ORIG_ON': z.string().optional(), // Original line reference
+  'CR_AMOUNT': z.string().or(z.number()).optional(), // Credit Amount
+  'DE_AMOUNT': z.string().or(z.number()).optional(), // Debit Amount
+  
+  // Campos de TOTALS (Modelo-3 - estrutura expandida)
+  'GR TOTAL': z.string().or(z.number()).optional(), // Gross Total
+  'T PAYABLE': z.string().or(z.number()).optional(), // Tax Payable / Total a pagar
+  'N_TOTAL': z.string().or(z.number()).optional(), // Net Total
+  'CUR COD': z.string().optional(), // Currency Code
+  'C_AMOUNT': z.string().or(z.number()).optional(), // Currency Amount
+  'EX_RATE': z.string().or(z.number()).optional(), // Exchange Rate
+  
+  // Campos de WITHHOLDING TAX (Modelo-3 - estrutura expandida)
+  'WITH T AM': z.string().or(z.number()).optional(), // Withholding Tax Amount
+  'WIT DESC': z.string().optional(), // Withholding Tax Description
+  'WIT T TYPE': z.string().optional(), // Withholding Tax Type
+  
+  // Secções complexas (JSON strings) - Modelos 2 e 3
   'LINE': z.string().optional(), // Linhas do documento (JSON array)
   'PAYMENT_RECEIPT': z.string().optional(), // Recibos de pagamento (JSON)
   'DOCUMENT_TOTALS': z.string().optional(), // Totais do documento (JSON)
@@ -90,16 +123,16 @@ export function parseExcelFile(file: File): Promise<ParsedExcelData> {
         
         let jsonData: any[] = []
         
-        // Verificar se é formato modelo-2 (coluna A vazia, headers em B2)
-        const isModelo2 = rawData.length >= 2 && 
+        // Verificar se é formato modelo-2/modelo-3 (coluna A vazia, headers em B2)
+        const isModelo2Or3 = rawData.length >= 2 && 
                          rawData[1] && 
                          rawData[1][0] === '' && // Coluna A vazia
                          rawData[1][1] && // Coluna B tem conteúdo
                          typeof rawData[1][1] === 'string' &&
                          (rawData[1][1].includes('Schema') || rawData[1][1].includes('Identf'))
         
-        if (isModelo2) {
-          console.log('📋 Detectado formato modelo-2 (começa em B2)')
+        if (isModelo2Or3) {
+          console.log('📋 Detectado formato modelo-2/modelo-3 (headers em B2, dados a partir de linha 4)')
           
           // Ler com range específico: começa em B2
           // Row 2 = headers (índice 1), dados a partir de row 4 (índice 3)
@@ -121,7 +154,7 @@ export function parseExcelFile(file: File): Promise<ParsedExcelData> {
             })
             .filter(obj => Object.keys(obj).length > 0) // Remover objetos vazios
           
-          console.log(`📊 Modelo-2: ${jsonData.length} linhas de dados processadas`)
+          console.log(`📊 Modelo-2/3: ${jsonData.length} linhas de dados processadas`)
         } else {
           // Formato padrão (AGT ou SAP legado) - começa em A1
           jsonData = XLSX.utils.sheet_to_json(worksheet)

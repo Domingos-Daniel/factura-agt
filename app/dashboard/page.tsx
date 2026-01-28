@@ -5,17 +5,17 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
 export const dynamic = 'force-dynamic'
-import { FileText, FileStack, TrendingUp, Plus } from 'lucide-react'
+import { FileText, FileStack, TrendingUp, Plus, AlertCircle, RefreshCw, Database } from 'lucide-react'
 
-import { isAuthenticated, getFacturas, getSeries } from '@/lib/storage'
+import { isAuthenticated, getSeries } from '@/lib/storage'
 import { MainLayout } from '@/components/layout/MainLayout'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { formatCurrency } from '@/lib/utils'
 import { MetricCard } from '@/components/MetricCard'
 import { ChartFacturasMes, type ChartFacturasMesData } from '@/components/charts/ChartFacturasMes'
-import { seedMockData } from '@/lib/mockData'
-import { IntegrationStatusBoard } from '@/components/integrations/IntegrationStatusBoard'
+import { EnvironmentStatusCard } from '@/components/integrations/EnvironmentStatusCard'
+import { Badge } from '@/components/ui/badge'
 
 export default function DashboardPage() {
   const router = useRouter()
@@ -26,63 +26,54 @@ export default function DashboardPage() {
     totalRevenue: 0,
   })
   const [chartData, setChartData] = useState<ChartFacturasMesData[]>([])
+  const [dataSource, setDataSource] = useState<'agt' | 'backup' | 'loading'>('loading')
+  const [isRefreshing, setIsRefreshing] = useState(false)
   
-  useEffect(() => {
+  const loadData = async () => {
     if (!isAuthenticated()) {
       router.push('/login')
       return
     }
     
-    seedMockData()
-
-    // Carregar métricas
-    const facturas = getFacturas()
-    const series = getSeries()
+    setIsRefreshing(true)
+    setDataSource('loading')
     
-    const now = new Date()
-    const thisMonth = now.getMonth()
-    const thisYear = now.getFullYear()
-    
-    const facturasThisMonth = facturas.filter((f) => {
-      const date = new Date(f.submissionTimeStamp)
-      return date.getMonth() === thisMonth && date.getFullYear() === thisYear
-    })
-    
-    const totalRevenue = facturas.reduce((acc, f) => {
-      return acc + f.documents.reduce((sum, d) => sum + d.documentTotals.grossTotal, 0)
-    }, 0)
-    
-    setMetrics({
-      totalFacturas: facturas.length,
-      totalSeries: series.length,
-      facturasThisMonth: facturasThisMonth.length,
-      totalRevenue,
-    })
-    
-    // Preparar dados do gráfico (últimos 6 meses)
-    const months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
-    const data: ChartFacturasMesData[] = Array.from({ length: 6 }, (_, i) => {
-      const offset = thisMonth - 5 + i
-      const monthIndex = (offset + 12) % 12
-      const yearForMonth = thisYear + Math.floor(offset / 12)
-
-      const monthlyDocs = facturas.filter((f) => {
-        const date = new Date(f.submissionTimeStamp)
-        return date.getMonth() === monthIndex && date.getFullYear() === yearForMonth
+    try {
+      // Buscar stats da API (AGT ou backup JSON)
+      const response = await fetch('/api/dashboard/stats', {
+        cache: 'no-store',
+        headers: { 'Content-Type': 'application/json' }
       })
-      const count = monthlyDocs.length
-      const revenue = monthlyDocs.reduce((acc, factura) => {
-        return acc + factura.documents.reduce((sum, doc) => sum + doc.documentTotals.grossTotal, 0)
-      }, 0)
       
-      return {
-        month: months[monthIndex],
-        count,
-        revenue,
+      if (response.ok) {
+        const data = await response.json()
+        
+        // Buscar séries localmente
+        const series = getSeries()
+        
+        setMetrics({
+          totalFacturas: data.totalFacturas || 0,
+          totalSeries: series.length,
+          facturasThisMonth: data.facturasThisMonth || 0,
+          totalRevenue: data.totalRevenue || 0,
+        })
+        
+        setChartData(data.chartData || [])
+        setDataSource(data.source || 'backup')
+      } else {
+        console.error('Erro ao buscar stats:', response.statusText)
+        setDataSource('backup')
       }
-    })
+    } catch (error) {
+      console.error('Erro ao buscar stats:', error)
+      setDataSource('backup')
+    }
     
-    setChartData(data)
+    setIsRefreshing(false)
+  }
+  
+  useEffect(() => {
+    loadData()
   }, [router])
   
   return (
@@ -127,10 +118,43 @@ export default function DashboardPage() {
           />
         </div>
         
-  <IntegrationStatusBoard />
+        {/* Indicador de fonte dos dados */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            {dataSource === 'loading' ? (
+              <Badge variant="outline" className="gap-1">
+                <RefreshCw className="h-3 w-3 animate-spin" />
+                A carregar...
+              </Badge>
+            ) : dataSource === 'agt' ? (
+              <Badge className="bg-green-600 text-white gap-1">
+                <FileText className="h-3 w-3" />
+                Dados da AGT
+              </Badge>
+            ) : (
+              <Badge variant="outline" className="gap-1 border-yellow-500 text-yellow-600">
+                <Database className="h-3 w-3" />
+                Backup
+              </Badge>
+            )}
+          </div>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={loadData}
+            disabled={isRefreshing}
+            className="gap-1"
+          >
+            <RefreshCw className={`h-3 w-3 ${isRefreshing ? 'animate-spin' : ''}`} />
+            Atualizar
+          </Button>
+        </div>
+        
+        {/* Card de ambiente */}
+        <EnvironmentStatusCard />
 
-  {/* Gráfico */}
-  <ChartFacturasMes data={chartData} />
+        {/* Gráfico */}
+        <ChartFacturasMes data={chartData} />
         
         {/* Ações Rápidas */}
         <Card className="overflow-hidden border-border/50 bg-gradient-to-br from-card to-card/80 shadow-sm">

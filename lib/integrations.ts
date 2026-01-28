@@ -141,7 +141,7 @@ export function getIntegrationDefinitions(): IntegrationDefinition[] {
     },
     {
       id: 'agt-efatura',
-      name: 'AGT e-Fatura Sandbox',
+      name: 'e-Fatura Sandbox',
       provider: 'AGT',
       description: 'Integração simulada com o endpoint oficial de submissão e consulta do ambiente de homologação.',
       type: 'rest',

@@ -1,9 +1,9 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
-import { ArrowLeft, Loader2 } from 'lucide-react'
+import { ArrowLeft, Loader2, RefreshCw, Cloud, Database, CheckCircle, AlertCircle } from 'lucide-react'
 
 import type { Factura } from '@/lib/types'
 import { getFacturaById } from '@/lib/storage'
@@ -13,235 +13,215 @@ import { FacturaDetail } from '@/components/FacturaDetail'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { useToast } from '@/components/ui/use-toast'
+import { Progress } from '@/components/ui/progress'
 
-type AgtConsultResponse =
-  | {
-      success: true
-      source: 'agt' | 'backup' | 'agt-empty'
-      factura: Factura
-      agt?: any
-      warning?: string
-      error?: string
-    }
-  | {
-      success: false
-      error: string
-    }
+type DataSource = 'local' | 'backup' | 'agt' | 'agt-empty' | null
 
 export default function FacturaDetailPage() {
   const params = useParams<{ id: string }>()
   const router = useRouter()
   const [factura, setFactura] = useState<Factura | null>(null)
   const [loading, setLoading] = useState(true)
-  const [source, setSource] = useState<'local' | 'json' | 'agt' | 'backup' | 'agt-empty' | null>(null)
+  const [source, setSource] = useState<DataSource>(null)
   const [isSyncing, setIsSyncing] = useState(false)
+  const [isSyncingEstado, setIsSyncingEstado] = useState(false)
+  const [syncProgress, setSyncProgress] = useState(0)
   const [syncMessage, setSyncMessage] = useState<string | null>(null)
   const [syncError, setSyncError] = useState<string | null>(null)
-  const [abortController, setAbortController] = useState<AbortController | null>(null)
   const { toast } = useToast()
 
-  useEffect(() => {
-    async function loadFactura() {
-      if (!params?.id) {
-        setLoading(false)
-        return
+  // Carregar factura do backup ou AGT
+  const loadFactura = useCallback(async (forceAgt = false) => {
+    if (!params?.id) {
+      setLoading(false)
+      return
+    }
+    
+    try {
+      if (forceAgt) {
+        setIsSyncing(true)
+        setSyncProgress(10)
+        setSyncMessage('Conectando à AGT...')
       }
       
-      // Primeiro tenta buscar do localStorage
-      const localDoc = getFacturaById(params.id)
-      if (localDoc) {
-        setFactura(localDoc)
-        setSource('local')
-        setLoading(false)
-        return
+      // 1. Primeiro tenta buscar do localStorage (dados locais)
+      if (!forceAgt) {
+        const localDoc = getFacturaById(params.id)
+        if (localDoc) {
+          setFactura(localDoc)
+          setSource('local')
+          setLoading(false)
+          return
+        }
       }
       
-      // Se não encontrar, busca da API (que inclui o JSON)
-      try {
+      // 2. Buscar do backup via API
+      if (!forceAgt) {
+        setSyncMessage('Carregando do backup...')
         const response = await fetch(`/api/facturas/${params.id}`)
         if (response.ok) {
           const data = await response.json()
-          if (data.factura) {
+          if (data.success && data.factura) {
             setFactura(data.factura)
-            setSource(data.source === 'json' ? 'json' : null)
+            setSource('backup')
             setLoading(false)
             return
           }
         }
-      } catch (error) {
-        console.error('Erro ao buscar factura:', error)
       }
       
-      // Factura não encontrada em nenhum lugar
-      setLoading(false)
-    }
-    
-    loadFactura()
-  }, [params?.id])
-
-  useEffect(() => {
-    return () => {
-      abortController?.abort()
-    }
-  }, [abortController])
-
-  async function pollForSyncCompletion(id: string, startedAt: number) {
-    const maxWaitMs = 3 * 60 * 1000
-    const intervalMs = 8000
-
-    while (Date.now() - startedAt < maxWaitMs) {
-      await new Promise((r) => setTimeout(r, intervalMs))
-      try {
-        const response = await fetch(`/api/facturas/${encodeURIComponent(id)}`, { method: 'GET' })
-        if (!response.ok) continue
-        const data = await response.json()
-        if (data?.factura) {
-          const maybeLastSync = data.factura?.agtLastSyncAt
-          if (maybeLastSync) {
-            setFactura(data.factura)
-            setSource('agt')
+      // 3. Se forceAgt ou não encontrou no backup, consultar AGT
+      if (forceAgt) {
+        setSyncProgress(30)
+        setSyncMessage('Consultando AGT...')
+        
+        const consultResponse = await fetch(
+          `/api/facturas/agt/consultar?id=${encodeURIComponent(params.id)}&timeoutMs=60000`
+        )
+        
+        setSyncProgress(60)
+        
+        if (consultResponse.ok) {
+          const consultData = await consultResponse.json()
+          if (consultData.success && consultData.factura) {
+            setFactura(consultData.factura)
+            setSource(consultData.source || 'agt')
+            
+            // Também obter estado
+            setSyncProgress(80)
+            setSyncMessage('Obtendo estado do documento...')
+            
+            try {
+              const estadoResponse = await fetch(
+                `/api/facturas/agt/estado?id=${encodeURIComponent(params.id)}&timeoutMs=30000`
+              )
+              if (estadoResponse.ok) {
+                const estadoData = await estadoResponse.json()
+                if (estadoData.success && estadoData.factura) {
+                  setFactura(estadoData.factura)
+                }
+              }
+            } catch (e) {
+              console.warn('Erro ao obter estado:', e)
+            }
+            
+            setSyncProgress(100)
+            setSyncMessage('Sincronização concluída!')
+            
             toast({
-              title: 'Sync concluído',
-              description: 'Dados atualizados a partir da AGT e gravados no backup.',
+              title: 'Dados sincronizados',
+              description: `Fonte: ${consultData.source === 'agt' ? 'AGT' : 'Backup'}`,
             })
-            return
+          } else if (consultData.warning) {
+            setSyncError(consultData.warning)
           }
         }
-      } catch {
-        // ignore transient polling failures
       }
+      
+      setLoading(false)
+    } catch (error) {
+      console.error('Erro ao carregar factura:', error)
+      setSyncError(error instanceof Error ? error.message : 'Erro desconhecido')
+      setLoading(false)
+    } finally {
+      setIsSyncing(false)
+      setTimeout(() => {
+        setSyncMessage(null)
+        setSyncProgress(0)
+      }, 2000)
     }
-  }
+  }, [params?.id, toast])
 
-  async function handleSyncFromAgt(opts?: { async?: boolean; silent?: boolean }) {
-    if (!params?.id || isSyncing) return
-
-    const controller = new AbortController()
-    setAbortController(controller)
-    setIsSyncing(true)
+  // Obter estado da AGT
+  const handleObterEstado = useCallback(async () => {
+    if (!params?.id || isSyncingEstado) return
+    
+    setIsSyncingEstado(true)
     setSyncError(null)
-    setSyncMessage('A contactar a AGT…')
-
-    const milestone1 = window.setTimeout(() => setSyncMessage('A validar documento e a aguardar resposta…'), 6000)
-    const milestone2 = window.setTimeout(() => setSyncMessage('A consolidar dados e atualizar o backup…'), 14000)
-
+    
     try {
-      const useAsync = opts?.async ?? true
-      const url = `/api/facturas/agt/consultar?id=${encodeURIComponent(params.id)}${useAsync ? '&async=1' : ''}`
-      const response = await fetch(url,
-        {
-          method: 'GET',
-          signal: controller.signal,
-        }
+      const response = await fetch(
+        `/api/facturas/agt/estado?id=${encodeURIComponent(params.id)}&timeoutMs=30000`
       )
-
-      const result = (await response.json()) as AgtConsultResponse
-
-      if (!response.ok || !result.success) {
-        const message = (result as any)?.error ?? 'Falha ao consultar a AGT.'
-        setSyncError(message)
-        if (!opts?.silent) {
+      
+      if (response.ok) {
+        const data = await response.json()
+        if (data.success && data.factura) {
+          setFactura(data.factura)
+          setSource(data.source || 'agt')
+          
           toast({
-            variant: 'destructive',
-            title: 'Consulta AGT falhou',
-            description: message,
+            title: 'Estado atualizado',
+            description: data.source === 'agt' 
+              ? 'Estado obtido da AGT e salvo no backup.' 
+              : 'AGT indisponível, usando backup.',
+          })
+        } else if (data.warning) {
+          toast({
+            title: 'Aviso',
+            description: data.warning,
+            variant: 'destructive'
           })
         }
-        return
-      }
-
-      setFactura(result.factura)
-      setSource(result.source)
-
-      if (useAsync) {
-        setSyncMessage('Sync iniciado em background. Vou atualizar quando terminar…')
-        void pollForSyncCompletion(params.id, Date.now())
-      }
-
-      if (result.warning) {
-        if (!opts?.silent) {
-          toast({
-            title: 'Consulta concluída (com aviso)',
-            description: result.warning,
-          })
-        }
-      } else if (result.source === 'agt') {
-        if (!opts?.silent) {
-          toast({
-            title: 'Dados atualizados da AGT',
-            description: 'Os detalhes do documento foram sincronizados e guardados no backup.',
-          })
-        }
-      } else {
-        if (!opts?.silent) {
-          toast({
-            title: 'AGT indisponível',
-            description: 'A mostrar dados do backup. Tente novamente mais tarde.',
-          })
-        }
-      }
-
-      if (result.error) {
-        setSyncError(result.error)
       }
     } catch (error) {
-      if ((error as any)?.name === 'AbortError') {
-        setSyncError('Operação cancelada pelo utilizador.')
-        return
-      }
-      const message = error instanceof Error ? error.message : 'Falha ao consultar a AGT.'
-      setSyncError(message)
+      console.error('Erro ao obter estado:', error)
       toast({
-        variant: 'destructive',
-        title: 'Erro de conexão',
-        description: message,
+        title: 'Erro',
+        description: 'Falha ao obter estado da AGT.',
+        variant: 'destructive'
       })
     } finally {
-      window.clearTimeout(milestone1)
-      window.clearTimeout(milestone2)
-      setIsSyncing(false)
-      // Se for async, deixamos a mensagem enquanto o polling acontece
-      if (!(opts?.async ?? true)) setSyncMessage(null)
-      setAbortController(null)
+      setIsSyncingEstado(false)
     }
-  }
+  }, [params?.id, isSyncingEstado, toast])
 
-  function handleCancelSync() {
-    abortController?.abort()
-  }
+  // Sincronizar com AGT
+  const handleSyncFromAgt = useCallback(() => {
+    loadFactura(true)
+  }, [loadFactura])
+
+  useEffect(() => {
+    loadFactura(false)
+  }, [loadFactura])
 
   const sourceBadge = (() => {
     if (!source) return null
-    const variants: Record<string, 'default' | 'secondary' | 'destructive'> = {
-      agt: 'default',
-      backup: 'secondary',
-      'agt-empty': 'secondary',
-      json: 'secondary',
-      local: 'secondary',
+    const config: Record<string, { variant: 'default' | 'secondary' | 'outline'; icon: any; label: string }> = {
+      agt: { variant: 'default', icon: Cloud, label: 'AGT' },
+      backup: { variant: 'secondary', icon: Database, label: 'Backup' },
+      'agt-empty': { variant: 'outline', icon: AlertCircle, label: 'AGT (vazio)' },
+      local: { variant: 'secondary', icon: Database, label: 'Local' },
     }
-    const labels: Record<string, string> = {
-      agt: 'AGT',
-      backup: 'Backup',
-      'agt-empty': 'AGT (sem documento)',
-      json: 'JSON',
-      local: 'Local',
-    }
+    const cfg = config[source] || { variant: 'secondary', icon: Database, label: source }
+    const Icon = cfg.icon
+    
+    return (
+      <Badge variant={cfg.variant} className="flex items-center gap-1">
+        <Icon className="h-3 w-3" />
+        {cfg.label}
+      </Badge>
+    )
+  })()
 
-    return <Badge variant={variants[source]}>{labels[source] ?? source}</Badge>
+  const validationBadge = (() => {
+    const status = (factura as any)?.validationStatus
+    if (!status) return null
+    
+    const config: Record<string, { variant: 'default' | 'secondary' | 'destructive' | 'outline'; label: string }> = {
+      V: { variant: 'default', label: 'Válida' },
+      P: { variant: 'secondary', label: 'Pendente' },
+      I: { variant: 'destructive', label: 'Inválida' },
+      R: { variant: 'destructive', label: 'Rejeitada' },
+      E: { variant: 'destructive', label: 'Erro' },
+    }
+    const cfg = config[status] || { variant: 'outline', label: status }
+    
+    return <Badge variant={cfg.variant}>{cfg.label}</Badge>
   })()
 
   const lastSyncAt = (factura as any)?.agtLastSyncAt as string | undefined
-
-  useEffect(() => {
-    if (!factura?.id) return
-    // Auto-sync: se ainda não houver sync AGT, tenta iniciar em background.
-    if ((factura as any)?.agtLastSyncAt) return
-    const t = window.setTimeout(() => {
-      void handleSyncFromAgt({ async: true, silent: true })
-    }, 800)
-    return () => window.clearTimeout(t)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [factura?.id])
+  const lastEstadoSyncAt = (factura as any)?.agtEstadoLastSyncAt as string | undefined
 
   return (
     <MainLayout>
@@ -267,40 +247,94 @@ export default function FacturaDetailPage() {
           </Card>
         ) : factura ? (
           <div className="space-y-6">
+            {/* Card de Sincronização */}
             <Card>
               <CardHeader className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
                 <div className="space-y-1">
                   <CardTitle className="flex items-center gap-2">
-                    Fonte dos dados {sourceBadge}
+                    Fonte dos dados {sourceBadge} {validationBadge}
                   </CardTitle>
-                  <CardDescription>
-                    {lastSyncAt ? `Última sincronização AGT: ${new Date(lastSyncAt).toLocaleString()}` : 'Sem sincronização AGT ainda.'}
+                  <CardDescription className="space-y-1">
+                    {lastSyncAt && (
+                      <div className="flex items-center gap-1 text-xs">
+                        <Cloud className="h-3 w-3" />
+                        Última sync consulta: {new Date(lastSyncAt).toLocaleString()}
+                      </div>
+                    )}
+                    {lastEstadoSyncAt && (
+                      <div className="flex items-center gap-1 text-xs">
+                        <CheckCircle className="h-3 w-3" />
+                        Última sync estado: {new Date(lastEstadoSyncAt).toLocaleString()}
+                      </div>
+                    )}
+                    {!lastSyncAt && !lastEstadoSyncAt && (
+                      <span>Sem sincronização AGT ainda.</span>
+                    )}
                   </CardDescription>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Button onClick={handleSyncFromAgt} disabled={isSyncing}>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <Button 
+                    onClick={handleSyncFromAgt} 
+                    disabled={isSyncing}
+                    variant="default"
+                  >
                     {isSyncing ? (
                       <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" /> A carregar da AGT…
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sincronizando...
                       </>
                     ) : (
-                      'Carregar dados da AGT'
+                      <>
+                        <RefreshCw className="mr-2 h-4 w-4" /> Consultar AGT
+                      </>
                     )}
                   </Button>
-                  {isSyncing && (
-                    <Button variant="outline" onClick={handleCancelSync}>
-                      Cancelar
-                    </Button>
-                  )}
+                  <Button 
+                    onClick={handleObterEstado} 
+                    disabled={isSyncingEstado}
+                    variant="outline"
+                  >
+                    {isSyncingEstado ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Obtendo...
+                      </>
+                    ) : (
+                      <>
+                        <CheckCircle className="mr-2 h-4 w-4" /> Obter Estado
+                      </>
+                    )}
+                  </Button>
                 </div>
               </CardHeader>
-              {(syncMessage || syncError) && (
+              {(syncMessage || syncError || syncProgress > 0) && (
                 <CardContent className="space-y-2">
+                  {syncProgress > 0 && syncProgress < 100 && (
+                    <Progress value={syncProgress} className="h-2" />
+                  )}
                   {syncMessage && <p className="text-sm text-muted-foreground">{syncMessage}</p>}
-                  {syncError && <p className="text-sm text-destructive">{syncError}</p>}
+                  {syncError && (
+                    <p className="text-sm text-destructive flex items-center gap-1">
+                      <AlertCircle className="h-4 w-4" /> {syncError}
+                    </p>
+                  )}
                 </CardContent>
               )}
             </Card>
+
+            {/* Mensagens de validação */}
+            {(factura as any)?.validationMessages?.length > 0 && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-sm">Mensagens de Validação AGT</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ul className="list-disc list-inside space-y-1 text-sm">
+                    {((factura as any).validationMessages as string[]).map((msg, i) => (
+                      <li key={i} className="text-muted-foreground">{msg}</li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            )}
 
             <FacturaDetail factura={factura} />
           </div>

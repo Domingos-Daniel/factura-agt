@@ -25,8 +25,8 @@ export function Header() {
     setUserName(displayName)
     setCompanyName(displayName)
     
-    setSystemName(config.systemName || 'Sistema AGT')
-    setSystemSubtitle(config.systemSubtitle || 'Faturação Eletrónica')
+    setSystemName('SafeFacturas')
+    setSystemSubtitle('Sistema de Faturação Eletrónica')
   }, [])
 
   const handleLogout = () => {

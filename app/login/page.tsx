@@ -68,72 +68,87 @@ function LoginFormContent() {
   }
   
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 dark:from-gray-900 dark:to-gray-800 p-4">
-      <Card className="w-full max-w-md shadow-2xl">
-        <CardHeader className="space-y-4 text-center">
-          <div className="mx-auto w-16 h-16 bg-gradient-agt rounded-full flex items-center justify-center">
-            <FileText className="w-8 h-8 text-white" />
-          </div>
-          <CardTitle className="text-2xl font-bold">Sistema de Faturação AGT</CardTitle>
-          <CardDescription>
-            Administração Geral Tributária de Angola
-            <br />
-            <span className="text-xs">Faça login para continuar</span>
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="nif">NIF</Label>
-              <Input
-                id="nif"
-                placeholder="123456789"
-                {...register('nif')}
-                disabled={isLoading}
-              />
-              {errors.nif && (
-                <p className="text-sm text-destructive">{errors.nif.message}</p>
-              )}
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-blue-100 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-4">
+      <div className="w-full max-w-md">
+        <Card className="shadow-2xl border-0 backdrop-blur-sm bg-white/95 dark:bg-gray-800/95">
+          <CardHeader className="space-y-4 text-center pb-8">
+            <div className="mx-auto w-20 h-20 bg-gradient-to-br from-blue-600 via-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg transform hover:scale-105 transition-transform duration-200">
+              <FileText className="w-10 h-10 text-white" />
             </div>
-            
             <div className="space-y-2">
-              <Label htmlFor="password">Senha</Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="••••••••"
-                {...register('password')}
-                disabled={isLoading}
-              />
-              {errors.password && (
-                <p className="text-sm text-destructive">{errors.password.message}</p>
-              )}
+              <CardTitle className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                SafeFacturas
+              </CardTitle>
+              <CardDescription className="text-base">
+                Sistema de Faturação Eletrónica
+              </CardDescription>
+              
             </div>
-            
-            <Button
-              type="submit"
-              variant="gradient"
-              className="w-full"
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  A entrar...
-                </>
-              ) : (
-                'Entrar'
-              )}
-            </Button>
-          </form>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="nif" className="text-sm font-medium">NIF da Empresa</Label>
+                <Input
+                  id="nif"
+                  placeholder="123456789"
+                  {...register('nif')}
+                  disabled={isLoading}
+                  className="h-11"
+                />
+                {errors.nif && (
+                  <p className="text-sm text-destructive flex items-center gap-1">
+                    <span className="text-xs">⚠</span> {errors.nif.message}
+                  </p>
+                )}
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="password" className="text-sm font-medium">Senha</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="••••••••"
+                  {...register('password')}
+                  disabled={isLoading}
+                  className="h-11"
+                />
+                {errors.password && (
+                  <p className="text-sm text-destructive flex items-center gap-1">
+                    <span className="text-xs">⚠</span> {errors.password.message}
+                  </p>
+                )}
+              </div>
+              
+              <Button
+                type="submit"
+                variant="gradient"
+                className="w-full h-11 text-base font-medium shadow-lg hover:shadow-xl transition-all duration-200"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    A autenticar...
+                  </>
+                ) : (
+                  'Entrar no Sistema'
+                )}
+              </Button>
+            </form>
+          </CardContent>
           
-          <div className="mt-6 p-4 bg-muted rounded-lg">
-            <p className="text-xs text-muted-foreground mb-2 font-semibold">Credenciais de Teste:</p>
-            <p className="text-xs text-muted-foreground">NIF: <strong>123456789</strong></p>
-            <p className="text-xs text-muted-foreground">Senha: <strong>admin123</strong></p>
+          {/* Footer com nome da aplicação */}
+          <div className="px-6 py-4 bg-muted/30 border-t text-center">
+            <p className="text-xs text-muted-foreground">
+              <span className="font-semibold">SafeFacturas</span> © {new Date().getFullYear()}
+            </p>
+            <p className="text-xs text-muted-foreground mt-1">
+              Desenvolvido por SafeQ Angola
+            </p>
           </div>
-        </CardContent>
-      </Card>
+        </Card>
+      </div>
     </div>
   )
 }

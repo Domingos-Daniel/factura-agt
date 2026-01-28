@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { readFileSync, existsSync } from 'fs'
-import { join } from 'path'
+import { getFacturaJsonById, getAllFacturasJson } from '@/lib/server/facturasJson'
+
+export const dynamic = 'force-dynamic'
 
 export async function GET(
   request: NextRequest,
@@ -11,37 +12,48 @@ export async function GET(
     
     if (!id) {
       return NextResponse.json(
-        { error: 'ID não fornecido' },
+        { success: false, error: 'ID não fornecido' },
         { status: 400 }
       )
     }
 
-    // Tentar ler do arquivo JSON
-    const jsonPath = join(process.cwd(), 'data', 'facturas.json')
+    // 1. Buscar por ID exato no backup (facturas.json)
+    let factura = await getFacturaJsonById(id)
     
-    if (existsSync(jsonPath)) {
-      const content = readFileSync(jsonPath, 'utf-8')
-      const facturas = JSON.parse(content)
-      
-      const factura = facturas.find((f: any) => f.id === id)
-      
-      if (factura) {
-        return NextResponse.json({ 
-          factura,
-          source: 'json'
-        })
-      }
+    if (factura) {
+      return NextResponse.json({ 
+        success: true,
+        factura,
+        source: 'backup'
+      })
     }
 
-    // Factura não encontrada
+    // 2. Tentar buscar por submissionGUID, id ou requestID
+    const allFacturas = await getAllFacturasJson()
+    
+    const byGuid = allFacturas.find((f: any) => 
+      f.submissionGUID === id || 
+      f.id === id ||
+      f.requestID === id
+    )
+    
+    if (byGuid) {
+      return NextResponse.json({ 
+        success: true,
+        factura: byGuid,
+        source: 'backup'
+      })
+    }
+
+    // 3. Factura não encontrada
     return NextResponse.json(
-      { error: 'Factura não encontrada' },
+      { success: false, error: 'Factura não encontrada' },
       { status: 404 }
     )
   } catch (error) {
     console.error('Erro ao buscar factura:', error)
     return NextResponse.json(
-      { error: 'Erro interno do servidor' },
+      { success: false, error: 'Erro interno do servidor' },
       { status: 500 }
     )
   }

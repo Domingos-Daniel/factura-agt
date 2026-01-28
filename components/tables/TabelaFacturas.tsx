@@ -196,7 +196,8 @@ export function TabelaFacturas({
               {paginatedFacturas.map((factura) => {
                 const documento = factura.documents[0]
                 const validationStatus = factura.validationStatus ?? 'P'
-                const isImported = !!factura.requestID // Tem requestID = importado via Excel
+                const agtSynced = !!(factura as any).agtLastSyncAt || !!(factura as any).agtEstadoLastSyncAt
+                const lastSync = (factura as any).agtLastSyncAt || (factura as any).agtEstadoLastSyncAt
                 return (
                   <TableRow key={factura.id ?? factura.submissionGUID}>
                     <TableCell className="font-medium">{documento?.documentNo}</TableCell>
@@ -213,13 +214,17 @@ export function TabelaFacturas({
                       </span>
                     </TableCell>
                     <TableCell>
-                      {isImported ? (
+                      {agtSynced ? (
+                        <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-200" title={lastSync ? `Sincronizado: ${new Date(lastSync).toLocaleString('pt-AO')}` : undefined}>
+                          ☁️ AGT
+                        </span>
+                      ) : factura.requestID ? (
                         <span className="inline-flex items-center rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-200">
                           📊 Excel
                         </span>
                       ) : (
                         <span className="inline-flex items-center rounded-full bg-gray-100 px-2 py-1 text-xs font-medium text-gray-800 dark:bg-gray-800 dark:text-gray-200">
-                          ✍️ Manual
+                          💾 Local
                         </span>
                       )}
                     </TableCell>

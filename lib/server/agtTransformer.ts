@@ -54,7 +54,13 @@ function createSoftwareInfo(): { softwareInfoDetail: typeof SOFTWARE_INFO; jwsSo
 
 /**
  * Transforma o payload para o formato esperado pela AGT HML
- * Adiciona todos os campos obrigatórios
+ * Adiciona todos os campos obrigatórios e aplica regras de validação
+ * 
+ * REGRAS OBRIGATÓRIAS DESCOBERTAS:
+ * 1. eacCode: obrigatório, mínimo 5 caracteres
+ * 2. referenceInfo: NÃO incluir para FT/FS/FR, só obrigatório para NC
+ * 3. currency: deve ser objeto com currencyCode, currencyAmount e exchangeRate
+ * 4. creditAmount: não incluir se for 0
  */
 export function transformToAGTFormat(payload: any): any {
   const taxRegistrationNumber = payload.taxRegistrationNumber || process.env.AGT_NIF_TEST || ''
@@ -68,15 +74,7 @@ export function transformToAGTFormat(payload: any): any {
     softwareInfo: payload.softwareInfo || createSoftwareInfo(),
     numberOfEntries: payload.numberOfEntries || documents.length,  // OBRIGATÓRIO
     // jwsSignature para documentos: assina os campos necessários
-    documents: documents.map((doc: any) => ({
-      ...doc,
-      jwsDocumentSignature: doc.jwsDocumentSignature || generateJWS({
-        taxRegistrationNumber,
-        documentNo: doc.documentNo,
-        documentType: doc.documentType,
-        documentDate: doc.documentDate
-      })
-    }))
+    documents: documents.map((doc: any) => transformDocument(doc, taxRegistrationNumber))
   }
   
   // Remover submissionGUID se existia
@@ -85,6 +83,117 @@ export function transformToAGTFormat(payload: any): any {
   }
   
   return transformed
+}
+
+/**
+ * Transforma um documento individual para formato AGT
+ */
+function transformDocument(doc: any, taxRegistrationNumber: string): any {
+  const documentType = doc.documentType || 'FT'
+  const isNotaCredito = documentType === 'NC'
+  const grossTotal = doc.documentTotals?.grossTotal || 0
+  
+  // Transformar linhas
+  const lines = (doc.lines || []).map((line: any, idx: number) => {
+    const transformedLine: any = {
+      lineNumber: line.lineNumber || line.lineNo || idx + 1,
+      productCode: line.productCode || 'GEN001',
+      productDescription: line.productDescription || 'Produto/Serviço',
+      quantity: line.quantity || 1,
+      unitOfMeasure: line.unitOfMeasure || 'UN',
+      unitPrice: line.unitPrice || 0,
+      unitPriceBase: line.unitPriceBase || line.unitPrice || 0,
+      debitAmount: line.debitAmount || 0,
+      taxes: (line.taxes || []).map((tax: any) => ({
+        taxType: tax.taxType || 'IVA',
+        taxCountryRegion: tax.taxCountryRegion || 'AO',
+        taxCode: tax.taxCode || 'NOR',
+        taxPercentage: tax.taxPercentage || 14,
+        taxAmount: tax.taxAmount || 0,
+        ...(tax.taxContribution != null ? { taxContribution: tax.taxContribution } : {})
+      })),
+      settlementAmount: line.settlementAmount || 0,
+    }
+    
+    // creditAmount: só incluir se > 0
+    if (line.creditAmount && line.creditAmount > 0) {
+      transformedLine.creditAmount = line.creditAmount
+    }
+    
+    // referenceInfo: só incluir para NC (Nota de Crédito)
+    if (isNotaCredito && line.referenceInfo && line.referenceInfo.reference) {
+      transformedLine.referenceInfo = {
+        reference: line.referenceInfo.reference,
+        ...(line.referenceInfo.reason ? { reason: line.referenceInfo.reason } : {})
+      }
+    }
+    // NÃO incluir referenceInfo vazio ou null
+    
+    return transformedLine
+  })
+  
+  // Transformar documentTotals com currency correto
+  const documentTotals: any = {
+    netTotal: doc.documentTotals?.netTotal || 0,
+    taxPayable: doc.documentTotals?.taxPayable || 0,
+    grossTotal: grossTotal,
+  }
+  
+  // currency: deve ser objeto com exchangeRate
+  if (doc.documentTotals?.currency) {
+    if (typeof doc.documentTotals.currency === 'string') {
+      // Converter string para objeto
+      documentTotals.currency = {
+        currencyCode: doc.documentTotals.currency,
+        currencyAmount: grossTotal,
+        exchangeRate: 1.0
+      }
+    } else if (typeof doc.documentTotals.currency === 'object') {
+      // Garantir que tem todos os campos obrigatórios
+      documentTotals.currency = {
+        currencyCode: doc.documentTotals.currency.currencyCode || 'AOA',
+        currencyAmount: doc.documentTotals.currency.currencyAmount || grossTotal,
+        exchangeRate: doc.documentTotals.currency.exchangeRate ?? 1.0
+      }
+    }
+  } else {
+    // Adicionar currency padrão
+    documentTotals.currency = {
+      currencyCode: 'AOA',
+      currencyAmount: grossTotal,
+      exchangeRate: 1.0
+    }
+  }
+  
+  // Construir documento transformado
+  const transformedDoc: any = {
+    documentNo: doc.documentNo,
+    documentStatus: doc.documentStatus || 'N',
+    documentType: documentType,
+    documentDate: doc.documentDate,
+    systemEntryDate: doc.systemEntryDate || new Date().toISOString(),
+    // eacCode: obrigatório, mínimo 5 caracteres
+    eacCode: (doc.eacCode && doc.eacCode.length >= 5) ? doc.eacCode : '47410',
+    customerCountry: doc.customerCountry || 'AO',
+    customerTaxID: doc.customerTaxID || '999999999',
+    companyName: doc.companyName || 'Cliente',
+    lines,
+    documentTotals,
+    jwsDocumentSignature: doc.jwsDocumentSignature || generateJWS({
+      taxRegistrationNumber,
+      documentNo: doc.documentNo,
+      documentType: documentType,
+      documentDate: doc.documentDate,
+      grossTotal: grossTotal
+    })
+  }
+  
+  // Adicionar companyAddress se existir
+  if (doc.companyAddress) {
+    transformedDoc.companyAddress = doc.companyAddress
+  }
+  
+  return transformedDoc
 }
 
 /**

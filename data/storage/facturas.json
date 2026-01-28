@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "lastUpdated": "2026-01-20T21:10:20.929Z",
+    "lastUpdated": "2026-01-21T10:58:29.232Z",
     "version": "1.0",
-    "totalFacturas": 3,
+    "totalFacturas": 9,
     "totalSeries": 1,
-    "totalOperations": 72
+    "totalOperations": 97
   },
   "facturas": [
     {
@@ -107,6 +107,495 @@
         "nif": "123456789",
         "documentNo": "FT2025-003",
         "submissionGUID": "cccccccc"
+      }
+    },
+    {
+      "id": "FT-999888777-1768948966720-vg0p82",
+      "type": "factura",
+      "serviceName": "direct",
+      "status": "error",
+      "requestID": "202600000353439",
+      "request": {
+        "schemaVersion": "1.2",
+        "submissionGUID": "5ba2ce70-98fc-4958-801b-891be5a1645a",
+        "taxRegistrationNumber": "999888777",
+        "submissionTimeStamp": "2026-01-20T23:02:05.365Z",
+        "softwareInfo": {
+          "softwareInfoDetail": {
+            "productId": "FacturAGT",
+            "productVersion": "1.0.0",
+            "softwareValidationNumber": "AGT-2025-001"
+          },
+          "jwsSoftwareSignature": "placeholder"
+        },
+        "numberOfEntries": 1,
+        "documents": [
+          {
+            "documentNo": "FT 2025/00001",
+            "documentStatus": "N",
+            "documentType": "FT",
+            "documentDate": "2025-01-20",
+            "eacCode": "47410",
+            "systemEntryDate": "2026-01-20T23:02:05.360Z",
+            "customerCountry": "AO",
+            "customerTaxID": "123456789",
+            "companyName": "Empresa A Lda",
+            "lines": [
+              {
+                "lineNumber": 1,
+                "productCode": "PROD001",
+                "productDescription": "Cliente Genérico",
+                "quantity": 1,
+                "unitOfMeasure": "UN",
+                "unitPrice": 100000,
+                "unitPriceBase": 100000,
+                "debitAmount": 100000,
+                "taxes": [
+                  {
+                    "taxType": "IVA",
+                    "taxCountryRegion": "AO",
+                    "taxCode": "ISE",
+                    "taxPercentage": 14,
+                    "taxAmount": 14000,
+                    "taxContribution": 14000
+                  }
+                ],
+                "settlementAmount": 0
+              }
+            ],
+            "documentTotals": {
+              "netTotal": 100000,
+              "taxPayable": 114000,
+              "grossTotal": 114000,
+              "currency": {
+                "currencyCode": "AOA",
+                "currencyAmount": 114000,
+                "exchangeRate": 1
+              }
+            }
+          }
+        ]
+      },
+      "response": {
+        "requestID": "202600000353439",
+        "errorList": [
+          ""
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T22:42:46.720Z",
+      "updatedAt": "2026-01-20T23:02:06.509Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "FT 2025/00001",
+        "submissionGUID": "5ba2ce70-98fc-4958-801b-891be5a1645a"
+      }
+    },
+    {
+      "id": "FT-999888777-1768950127294-9k7q9q",
+      "type": "factura",
+      "serviceName": "direct",
+      "status": "error",
+      "requestID": "202600000353440",
+      "request": {
+        "schemaVersion": "1.2",
+        "submissionGUID": "45fdea45-aad4-4ef0-8019-247a355be294",
+        "taxRegistrationNumber": "999888777",
+        "submissionTimeStamp": "2026-01-20T23:02:05.365Z",
+        "softwareInfo": {
+          "softwareInfoDetail": {
+            "productId": "FacturAGT",
+            "productVersion": "1.0.0",
+            "softwareValidationNumber": "AGT-2025-001"
+          },
+          "jwsSoftwareSignature": "placeholder"
+        },
+        "numberOfEntries": 1,
+        "documents": [
+          {
+            "documentNo": "FT 2025/00002",
+            "documentStatus": "N",
+            "documentType": "FT",
+            "documentDate": "2025-01-20",
+            "eacCode": "47410",
+            "systemEntryDate": "2026-01-20T23:02:05.362Z",
+            "customerCountry": "AO",
+            "customerTaxID": "987654321",
+            "companyName": "Empresa B Lda",
+            "lines": [
+              {
+                "lineNumber": 1,
+                "productCode": "PROD001",
+                "productDescription": "Cliente Genérico",
+                "quantity": 1,
+                "unitOfMeasure": "UN",
+                "unitPrice": 200000,
+                "unitPriceBase": 200000,
+                "debitAmount": 200000,
+                "taxes": [
+                  {
+                    "taxType": "IVA",
+                    "taxCountryRegion": "AO",
+                    "taxCode": "ISE",
+                    "taxPercentage": 14,
+                    "taxAmount": 28000,
+                    "taxContribution": 28000
+                  }
+                ],
+                "settlementAmount": 0
+              }
+            ],
+            "documentTotals": {
+              "netTotal": 200000,
+              "taxPayable": 228000,
+              "grossTotal": 228000,
+              "currency": {
+                "currencyCode": "AOA",
+                "currencyAmount": 228000,
+                "exchangeRate": 1
+              }
+            }
+          }
+        ]
+      },
+      "response": {
+        "requestID": "202600000353440",
+        "errorList": [
+          ""
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T23:02:07.294Z",
+      "updatedAt": "2026-01-20T23:02:07.294Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "FT 2025/00002",
+        "submissionGUID": "45fdea45-aad4-4ef0-8019-247a355be294"
+      }
+    },
+    {
+      "id": "FT-999888777-1768950127914-70jqoe",
+      "type": "factura",
+      "serviceName": "direct",
+      "status": "error",
+      "requestID": "202600000353441",
+      "request": {
+        "schemaVersion": "1.2",
+        "submissionGUID": "8c929b91-af8d-445c-a7c5-f2b7a56ba97d",
+        "taxRegistrationNumber": "999888777",
+        "submissionTimeStamp": "2026-01-20T23:02:05.365Z",
+        "softwareInfo": {
+          "softwareInfoDetail": {
+            "productId": "FacturAGT",
+            "productVersion": "1.0.0",
+            "softwareValidationNumber": "AGT-2025-001"
+          },
+          "jwsSoftwareSignature": "placeholder"
+        },
+        "numberOfEntries": 1,
+        "documents": [
+          {
+            "documentNo": "FT 2025/00003",
+            "documentStatus": "N",
+            "documentType": "FT",
+            "documentDate": "2025-01-20",
+            "eacCode": "47410",
+            "systemEntryDate": "2026-01-20T23:02:05.363Z",
+            "customerCountry": "AO",
+            "customerTaxID": "555555555",
+            "companyName": "Empresa C Lda",
+            "lines": [
+              {
+                "lineNumber": 1,
+                "productCode": "PROD001",
+                "productDescription": "Cliente Genérico",
+                "quantity": 1,
+                "unitOfMeasure": "UN",
+                "unitPrice": 150000,
+                "unitPriceBase": 150000,
+                "debitAmount": 150000,
+                "taxes": [
+                  {
+                    "taxType": "IVA",
+                    "taxCountryRegion": "AO",
+                    "taxCode": "ISE",
+                    "taxPercentage": 14,
+                    "taxAmount": 21000,
+                    "taxContribution": 21000
+                  }
+                ],
+                "settlementAmount": 0
+              }
+            ],
+            "documentTotals": {
+              "netTotal": 150000,
+              "taxPayable": 171000,
+              "grossTotal": 171000,
+              "currency": {
+                "currencyCode": "AOA",
+                "currencyAmount": 171000,
+                "exchangeRate": 1
+              }
+            }
+          }
+        ]
+      },
+      "response": {
+        "requestID": "202600000353441",
+        "errorList": [
+          ""
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T23:02:07.914Z",
+      "updatedAt": "2026-01-20T23:02:07.914Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "FT 2025/00003",
+        "submissionGUID": "8c929b91-af8d-445c-a7c5-f2b7a56ba97d"
+      }
+    },
+    {
+      "id": "FT-999888777-1768982904367-so856a",
+      "type": "factura",
+      "serviceName": "direct",
+      "status": "error",
+      "requestID": "202600000377765",
+      "request": {
+        "schemaVersion": "1.2",
+        "submissionGUID": "7729e0ff-4ed1-48fd-bda4-e3016b4ca3f4",
+        "taxRegistrationNumber": "999888777",
+        "submissionTimeStamp": "2026-01-21T10:57:22.823Z",
+        "softwareInfo": {
+          "softwareInfoDetail": {
+            "productId": "FacturAGT",
+            "productVersion": "1.0.0",
+            "softwareValidationNumber": "AGT-2025-001"
+          },
+          "jwsSoftwareSignature": "placeholder"
+        },
+        "numberOfEntries": 1,
+        "documents": [
+          {
+            "documentNo": "FT CI2000202503/3240000030",
+            "documentStatus": "N",
+            "documentType": "FT",
+            "documentDate": "2025-10-02",
+            "eacCode": "47410",
+            "systemEntryDate": "2025-10-02T10:40:41Z",
+            "customerCountry": "AO",
+            "customerTaxID": "999999999",
+            "companyName": "Cimenfort",
+            "lines": [
+              {
+                "lineNumber": 1,
+                "productCode": "GEN001",
+                "productDescription": "Cliente Genérico",
+                "quantity": 1,
+                "unitOfMeasure": "UN",
+                "unitPrice": 1000,
+                "unitPriceBase": 1000,
+                "debitAmount": 1000,
+                "taxes": [
+                  {
+                    "taxType": "IVA",
+                    "taxCountryRegion": "AO",
+                    "taxCode": "NOR",
+                    "taxPercentage": 14,
+                    "taxAmount": 140
+                  }
+                ],
+                "settlementAmount": 0
+              }
+            ],
+            "documentTotals": {
+              "netTotal": 1000,
+              "taxPayable": 140,
+              "grossTotal": 1140,
+              "currency": {
+                "currencyCode": "AOA",
+                "currencyAmount": 1140,
+                "exchangeRate": 1
+              }
+            }
+          }
+        ]
+      },
+      "response": {
+        "requestID": "202600000377765",
+        "errorList": [
+          ""
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-21T08:08:24.368Z",
+      "updatedAt": "2026-01-21T10:57:24.455Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "FT CI2000202503/3240000030",
+        "submissionGUID": "7729e0ff-4ed1-48fd-bda4-e3016b4ca3f4"
+      }
+    },
+    {
+      "id": "FT-999888777-1768982905070-tuv51w",
+      "type": "factura",
+      "serviceName": "direct",
+      "status": "error",
+      "requestID": "202600000377768",
+      "request": {
+        "schemaVersion": "1.2",
+        "submissionGUID": "a559c11c-af1e-42d3-b2ad-c046c5ef3c4f",
+        "taxRegistrationNumber": "999888777",
+        "submissionTimeStamp": "2026-01-21T10:57:22.823Z",
+        "softwareInfo": {
+          "softwareInfoDetail": {
+            "productId": "FacturAGT",
+            "productVersion": "1.0.0",
+            "softwareValidationNumber": "AGT-2025-001"
+          },
+          "jwsSoftwareSignature": "placeholder"
+        },
+        "numberOfEntries": 1,
+        "documents": [
+          {
+            "documentNo": "NC CJ2000202404/3250000023",
+            "documentStatus": "N",
+            "documentType": "FT",
+            "documentDate": "2025-10-02",
+            "eacCode": "47410",
+            "systemEntryDate": "2025-10-02T10:48:36Z",
+            "customerCountry": "AO",
+            "customerTaxID": "999999999",
+            "companyName": "Cimenfort",
+            "lines": [
+              {
+                "lineNumber": 1,
+                "productCode": "GEN001",
+                "productDescription": "Cliente Genérico",
+                "quantity": 2,
+                "unitOfMeasure": "UN",
+                "unitPrice": 1000,
+                "unitPriceBase": 1000,
+                "debitAmount": 2000,
+                "taxes": [
+                  {
+                    "taxType": "IVA",
+                    "taxCountryRegion": "AO",
+                    "taxCode": "NOR",
+                    "taxPercentage": 14,
+                    "taxAmount": 280
+                  }
+                ],
+                "settlementAmount": 0
+              }
+            ],
+            "documentTotals": {
+              "netTotal": 2000,
+              "taxPayable": 280,
+              "grossTotal": 2280,
+              "currency": {
+                "currencyCode": "AOA",
+                "currencyAmount": 2280,
+                "exchangeRate": 1
+              }
+            }
+          }
+        ]
+      },
+      "response": {
+        "requestID": "202600000377768",
+        "errorList": [
+          ""
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-21T08:08:25.070Z",
+      "updatedAt": "2026-01-21T10:57:25.431Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "NC CJ2000202404/3250000023",
+        "submissionGUID": "a559c11c-af1e-42d3-b2ad-c046c5ef3c4f"
+      }
+    },
+    {
+      "id": "FT-999888777-1768982905592-1rh6gz",
+      "type": "factura",
+      "serviceName": "direct",
+      "status": "error",
+      "requestID": "202600000377770",
+      "request": {
+        "schemaVersion": "1.2",
+        "submissionGUID": "2cb2994e-a8f2-4f67-9198-8d0c6bbd0e67",
+        "taxRegistrationNumber": "999888777",
+        "submissionTimeStamp": "2026-01-21T10:57:22.823Z",
+        "softwareInfo": {
+          "softwareInfoDetail": {
+            "productId": "FacturAGT",
+            "productVersion": "1.0.0",
+            "softwareValidationNumber": "AGT-2025-001"
+          },
+          "jwsSoftwareSignature": "placeholder"
+        },
+        "numberOfEntries": 1,
+        "documents": [
+          {
+            "documentNo": "FT CI2000202503/3240000031",
+            "documentStatus": "N",
+            "documentType": "FT",
+            "documentDate": "2025-10-02",
+            "eacCode": "47410",
+            "systemEntryDate": "2026-01-11T18:09:23Z",
+            "customerCountry": "AO",
+            "customerTaxID": "999999999",
+            "companyName": "Cimenfort",
+            "lines": [
+              {
+                "lineNumber": 1,
+                "productCode": "GEN001",
+                "productDescription": "Cliente Genérico",
+                "quantity": 3,
+                "unitOfMeasure": "UN",
+                "unitPrice": 1000,
+                "unitPriceBase": 1000,
+                "debitAmount": 3000,
+                "taxes": [
+                  {
+                    "taxType": "IVA",
+                    "taxCountryRegion": "AO",
+                    "taxCode": "NOR",
+                    "taxPercentage": 14,
+                    "taxAmount": 420.00000000000006
+                  }
+                ],
+                "settlementAmount": 0
+              }
+            ],
+            "documentTotals": {
+              "netTotal": 3000,
+              "taxPayable": 420.00000000000006,
+              "grossTotal": 3420,
+              "currency": {
+                "currencyCode": "AOA",
+                "currencyAmount": 3420,
+                "exchangeRate": 1
+              }
+            }
+          }
+        ]
+      },
+      "response": {
+        "requestID": "202600000377770",
+        "errorList": [
+          ""
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-21T08:08:25.592Z",
+      "updatedAt": "2026-01-21T10:57:26.112Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "FT CI2000202503/3240000031",
+        "submissionGUID": "2cb2994e-a8f2-4f67-9198-8d0c6bbd0e67"
       }
     }
   ],
@@ -2205,6 +2694,611 @@
       "errors": [],
       "createdAt": "2026-01-20T21:10:20.929Z",
       "updatedAt": "2026-01-20T21:10:20.929Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "con-5000413178-1768944550724-1i93pd",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000413178",
+        "documentNo": "FT FT7826S1740N/3"
+      },
+      "response": {
+        "documentNo": "",
+        "documentStatus": "",
+        "document": "",
+        "documentStatusList": [
+          ""
+        ],
+        "errorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T21:29:10.724Z",
+      "updatedAt": "2026-01-20T21:29:10.724Z",
+      "metadata": {
+        "nif": "5000413178",
+        "documentNo": "consultarFactura"
+      }
+    },
+    {
+      "id": "con-5000413178-1768945626497-5114ez",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000413178",
+        "documentNo": "FT FT7826S1740N/3"
+      },
+      "response": {
+        "documentNo": "",
+        "documentStatus": "",
+        "document": "",
+        "documentStatusList": [
+          ""
+        ],
+        "errorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T21:47:06.497Z",
+      "updatedAt": "2026-01-20T21:47:06.497Z",
+      "metadata": {
+        "nif": "5000413178",
+        "documentNo": "consultarFactura"
+      }
+    },
+    {
+      "id": "con-5000413178-1768946006563-ov4ngk",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000413178",
+        "documentNo": "FT FT7826S1740N/3"
+      },
+      "response": {
+        "documentNo": "",
+        "documentStatus": "",
+        "document": "",
+        "documentStatusList": [
+          ""
+        ],
+        "errorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T21:53:26.563Z",
+      "updatedAt": "2026-01-20T21:53:26.563Z",
+      "metadata": {
+        "nif": "5000413178",
+        "documentNo": "consultarFactura"
+      }
+    },
+    {
+      "id": "con-5000413178-1768946165890-3y2ngi",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000413178",
+        "documentNo": "FT FT7826S1740N/3"
+      },
+      "response": {
+        "documentNo": "",
+        "documentStatus": "",
+        "document": "",
+        "documentStatusList": [
+          ""
+        ],
+        "errorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T21:56:05.890Z",
+      "updatedAt": "2026-01-20T21:56:05.890Z",
+      "metadata": {
+        "nif": "5000413178",
+        "documentNo": "consultarFactura"
+      }
+    },
+    {
+      "id": "con-999888777-1768949055119-iwaxe1",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "documentNo": "FT 2025/00001"
+      },
+      "response": {
+        "documentNo": "",
+        "documentStatus": "",
+        "document": "",
+        "documentStatusList": [
+          ""
+        ],
+        "errorList": [
+          {
+            "idError": "E28",
+            "descriptionError": "Número fiscal do emissor especificado no parâmetro taxRegistrationNumber (999888777) não aderiu à facturação electrónica no sistema da AGT."
+          },
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T22:44:15.119Z",
+      "updatedAt": "2026-01-20T22:44:15.119Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "consultarFactura"
+      }
+    },
+    {
+      "id": "obt-999888777-1768949056281-9dryl7",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "202600000353396"
+      },
+      "response": {
+        "requestID": "202600000353396",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T22:44:16.281Z",
+      "updatedAt": "2026-01-20T22:44:16.281Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "con-999888777-1768949061235-i5q2x8",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "documentNo": "FT 2025/00001"
+      },
+      "response": {
+        "documentNo": "",
+        "documentStatus": "",
+        "document": "",
+        "documentStatusList": [
+          ""
+        ],
+        "errorList": [
+          {
+            "idError": "E28",
+            "descriptionError": "Número fiscal do emissor especificado no parâmetro taxRegistrationNumber (999888777) não aderiu à facturação electrónica no sistema da AGT."
+          },
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T22:44:21.235Z",
+      "updatedAt": "2026-01-20T22:44:21.235Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "consultarFactura"
+      }
+    },
+    {
+      "id": "obt-999888777-1768949061772-xxvwld",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "202600000353396"
+      },
+      "response": {
+        "requestID": "202600000353396",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T22:44:21.772Z",
+      "updatedAt": "2026-01-20T22:44:21.772Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768949544015-v0ohru",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "202600000353396"
+      },
+      "response": {
+        "requestID": "202600000353396",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T22:52:24.015Z",
+      "updatedAt": "2026-01-20T22:52:24.015Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "con-999888777-1768949549950-r871d5",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "documentNo": "FT 2025/00001"
+      },
+      "response": {
+        "documentNo": "",
+        "documentStatus": "",
+        "document": "",
+        "documentStatusList": [
+          ""
+        ],
+        "errorList": [
+          {
+            "idError": "E28",
+            "descriptionError": "Número fiscal do emissor especificado no parâmetro taxRegistrationNumber (999888777) não aderiu à facturação electrónica no sistema da AGT."
+          },
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T22:52:29.950Z",
+      "updatedAt": "2026-01-20T22:52:29.950Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "consultarFactura"
+      }
+    },
+    {
+      "id": "obt-999888777-1768949550841-q6qhw3",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "202600000353396"
+      },
+      "response": {
+        "requestID": "202600000353396",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T22:52:30.841Z",
+      "updatedAt": "2026-01-20T22:52:30.841Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768949758643-02g18f",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "202600000353396"
+      },
+      "response": {
+        "requestID": "202600000353396",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-20T22:55:58.643Z",
+      "updatedAt": "2026-01-20T22:55:58.643Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768982930365-4tb440",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "202600000366837"
+      },
+      "response": {
+        "requestID": "202600000366837",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-21T08:08:50.365Z",
+      "updatedAt": "2026-01-21T08:08:50.365Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768982930426-f7hgpq",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "202600000366838"
+      },
+      "response": {
+        "requestID": "202600000366838",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-21T08:08:50.426Z",
+      "updatedAt": "2026-01-21T08:08:50.426Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1768982930454-uuk8nn",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "202600000366836"
+      },
+      "response": {
+        "requestID": "202600000366836",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-21T08:08:50.454Z",
+      "updatedAt": "2026-01-21T08:08:50.454Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "con-5000413178-1768983255239-18tdx9",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000413178",
+        "documentNo": "FT FT7826S1832N/1"
+      },
+      "response": {
+        "documentNo": "",
+        "documentStatus": "",
+        "document": "",
+        "documentStatusList": [
+          ""
+        ],
+        "errorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-21T08:14:15.239Z",
+      "updatedAt": "2026-01-21T08:14:15.239Z",
+      "metadata": {
+        "nif": "5000413178",
+        "documentNo": "consultarFactura"
+      }
+    },
+    {
+      "id": "con-5000413178-1768992915139-1mf2ue",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000413178",
+        "documentNo": "FT FT7826S1832N/1"
+      },
+      "response": {
+        "documentNo": "",
+        "documentStatus": "",
+        "document": "",
+        "documentStatusList": [
+          ""
+        ],
+        "errorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-21T10:55:15.139Z",
+      "updatedAt": "2026-01-21T10:55:15.139Z",
+      "metadata": {
+        "nif": "5000413178",
+        "documentNo": "consultarFactura"
+      }
+    },
+    {
+      "id": "con-999888777-1768993106661-ytt4z3",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "documentNo": "NC CJ2000202404/3250000023"
+      },
+      "response": {
+        "documentNo": "",
+        "documentStatus": "",
+        "document": "",
+        "documentStatusList": [
+          ""
+        ],
+        "errorList": [
+          {
+            "idError": "E28",
+            "descriptionError": "Número fiscal do emissor especificado no parâmetro taxRegistrationNumber (999888777) não aderiu à facturação electrónica no sistema da AGT."
+          },
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-21T10:58:26.662Z",
+      "updatedAt": "2026-01-21T10:58:26.662Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "consultarFactura"
+      }
+    },
+    {
+      "id": "obt-999888777-1768993109230-mmr3tz",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "202600000377768"
+      },
+      "response": {
+        "requestID": "202600000377768",
+        "resultCode": "2",
+        "taxRegistrationNumber": "999888777",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "E08",
+            "descriptionError": "A assinatura do produtor de software “jwsSoftwareSignature” não está de acordo com a informação transmitida."
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-01-21T10:58:29.230Z",
+      "updatedAt": "2026-01-21T10:58:29.230Z",
       "metadata": {
         "nif": "999888777",
         "documentNo": "obterEstado"

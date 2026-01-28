@@ -15,9 +15,26 @@ Excel (SAP) → Parser → Validação Zod → Preview → Processamento → API
 
 ---
 
-## 📁 Arquivo Excel Esperado
+## 📁 Formatos de Arquivo Suportados
 
-### Formato: VBRK/VBRP (SAP Standard)
+O sistema suporta **três formatos** de Excel:
+
+1. **Formato SAP Legado** (VBRK/VBRP) - Headers em A1, dados em A2+
+2. **Modelo-2** - Headers em B2, dados em linha 4+ (coluna A vazia)
+3. **Modelo-3** - Mesmo formato do Modelo-2 (totalmente compatível)
+
+> 💡 **Nota**: O sistema detecta automaticamente o formato do arquivo!
+
+### 📋 Arquivos de Exemplo
+
+Templates disponíveis em [`public/templates/`](public/templates/):
+- `modelo-2.xlsx` - Formato AGT com headers em B2
+- `modelo-3.xlsx` - Formato AGT com headers em B2 (compatível com modelo-2)
+- `modelo-planilha.xlsx` - Formato SAP legado
+
+---
+
+## 📁 Formato SAP Legado (VBRK/VBRP)
 
 O ficheiro deve ter as seguintes colunas (em qualquer ordem):
 

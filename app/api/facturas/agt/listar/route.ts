@@ -81,7 +81,7 @@ export async function GET(req: NextRequest) {
     
     const endDate = new Date()
     const startDate = new Date(endDate)
-    startDate.setMonth(startDate.getMonth() - 1) // Último mês completo
+    startDate.setDate(startDate.getDate() - 7) // Últimos 7 dias (mesmo período do script v5)
     
     const queryStartDate = startDate.toISOString().split('T')[0]
     const queryEndDate = endDate.toISOString().split('T')[0]
@@ -135,14 +135,20 @@ export async function GET(req: NextRequest) {
     })
     
     // Extrair lista da resposta (formato v5)
+    // resultEntryList é um ARRAY onde cada item tem { documentEntryResult: {...} }
     const resultEntryList = res?.statusResult?.resultEntryList
-    const entries = resultEntryList?.documentEntryResult
     
-    const list = Array.isArray(entries) 
-      ? entries 
-      : entries ? [entries] : []
+    // Pode ser array ou objeto único
+    const rawList = Array.isArray(resultEntryList) 
+      ? resultEntryList 
+      : resultEntryList ? [resultEntryList] : []
     
-    console.log(`📊 Facturas encontradas: ${list.length}`)
+    console.log(`📊 Entradas na resposta: ${rawList.length}`)
+    
+    // Cada entrada pode ter { documentEntryResult: ... } ou ser direto
+    const list = rawList.map((entry: any) => entry?.documentEntryResult || entry)
+    
+    console.log(`📋 Facturas para mapear: ${list.length}`)
     
     const mapped = list
       .map((entry: any) => mapAgtFacturaEntry(entry))
