@@ -24,7 +24,30 @@ async function postJson<TReq, TRes>(url: string, body: TReq): Promise<ApiResult<
   }
 }
 
-// AGT endpoints
+// Unified provider endpoint - uses active provider (AGT or AppyPay)
+export function emitirFactura<TReq, TRes>(body: TReq) {
+  return postJson<TReq, TRes>('/api/facturas/emit', body)
+}
+
+// Provider status
+export async function getProviderStatus() {
+  try {
+    const res = await fetch('/api/providers', { cache: 'no-store' })
+    if (res.ok) {
+      return await res.json()
+    }
+    return null
+  } catch {
+    return null
+  }
+}
+
+// Poll pending AppyPay invoices
+export function pollPendingInvoices() {
+  return postJson<Record<string, never>, unknown>('/api/providers/poll', {})
+}
+
+// AGT endpoints (legacy - still used for AGT-specific operations)
 export function registarFactura<TReq, TRes>(body: TReq) {
   return postJson<TReq, TRes>('/api/agt/registarFactura', body)
 }

@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import Link from 'next/link'
-import { Plus, RefreshCw, Cloud, Database, AlertCircle } from 'lucide-react'
+import { Plus, RefreshCw, Cloud, Database, AlertCircle, Zap } from 'lucide-react'
 
 export const dynamic = 'force-dynamic'
 
@@ -15,8 +15,9 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Progress } from '@/components/ui/progress'
+import { Badge } from '@/components/ui/badge'
 
-type DataSource = 'cache' | 'cache-stale' | 'agt' | 'cache-fallback' | 'empty' | 'local' | 'loading' | 'no-cache'
+type DataSource = 'cache' | 'cache-stale' | 'agt' | 'appypay' | 'cache-fallback' | 'empty' | 'local' | 'loading' | 'no-cache'
 
 function buildFacturaKeys(f: any): string[] {
   const keys: string[] = []
@@ -43,6 +44,7 @@ export default function ListaFacturasPage() {
   const [isRefreshing, setIsRefreshing] = useState(false)
   const [isSyncingEstados, setIsSyncingEstados] = useState(false)
   const [dataSource, setDataSource] = useState<DataSource>('loading')
+  const [provider, setProvider] = useState<'agt' | 'appypay' | null>(null)
   const [loadingProgress, setLoadingProgress] = useState(0)
   const [loadingMessage, setLoadingMessage] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -89,6 +91,57 @@ export default function ListaFacturasPage() {
     try {
       setError(null)
       
+      // Primeiro, detectar o provider activo
+      let activeProvider: 'agt' | 'appypay' = 'agt'
+      try {
+        const providerRes = await fetch('/api/providers')
+        if (providerRes.ok) {
+          const providerData = await providerRes.json()
+          activeProvider = providerData.config?.activeProvider || 'agt'
+          setProvider(activeProvider)
+        }
+      } catch {
+        // ignore
+      }
+      
+      // Se AppyPay, sempre buscar da API (não há backup local significativo)
+      if (activeProvider === 'appypay') {
+        setIsRefreshing(true)
+        setLoadingProgress(0)
+        setLoadingMessage('Conectando à AppyPay...')
+        
+        const progressInterval = setInterval(() => {
+          setLoadingProgress(prev => Math.min(prev + 5, 95))
+        }, 500)
+        
+        try {
+          const response = await fetch('/api/facturas/list?refresh=true')
+          clearInterval(progressInterval)
+          setLoadingProgress(100)
+          
+          if (response.ok) {
+            const data = await response.json()
+            console.log(`📦 AppyPay: ${data.facturas?.length || 0} facturas`)
+            setFacturas(data.facturas || [])
+            setDataSource('appypay')
+            setProvider('appypay')
+            setCacheAge(null)
+            setLoadingMessage('Concluído!')
+          } else {
+            throw new Error(`HTTP ${response.status}`)
+          }
+        } catch (err: any) {
+          clearInterval(progressInterval)
+          setError(err.message || 'Erro ao carregar de AppyPay')
+          setFacturas([])
+        } finally {
+          setIsRefreshing(false)
+          setIsLoading(false)
+        }
+        return
+      }
+      
+      // Provider AGT - lógica original
       if (forceRefresh) {
         setIsRefreshing(true)
         setLoadingProgress(0)
@@ -107,23 +160,25 @@ export default function ListaFacturasPage() {
         setTimeout(() => setLoadingMessage('Aguardando resposta...'), 15000)
         
         try {
-          const response = await fetch(`/api/facturas/agt/listar?refresh=true&timeoutMs=180000`)
+          const response = await fetch('/api/facturas/agt/listar?refresh=true&timeoutMs=180000')
           clearInterval(progressInterval)
           setLoadingProgress(100)
           
           if (response.ok) {
             const data = await response.json()
-            if (data.success) {
-              if (data.error && data.facturas?.length === 0) {
-                const isAgtUnavailable = data.error.includes('503') || data.error.includes('indisponível')
+            const success = data.success !== false
+            if (success) {
+              if (data.error && (data.facturas?.length === 0 || data.facturas === undefined)) {
+                const isAgtUnavailable = data.error?.includes?.('503') || data.error?.includes?.('indisponível')
                 if (isAgtUnavailable) {
-                  setError('Servidor AGT HML temporariamente indisponível (503). Os dados locais serão exibidos.')
+                  setError('Servidor AGT temporariamente indisponível (503). Os dados locais serão exibidos.')
                 } else {
                   setError(data.error)
                 }
               }
               setFacturas(data.facturas || [])
-              setDataSource(data.source)
+              setDataSource(data.source || 'agt')
+              setProvider('agt')
               setCacheAge(data.cacheAge || null)
               void refreshFromJsonBackup()
               setLoadingMessage(data.facturas?.length > 0 ? 'Concluído!' : 'AGT não retornou dados')
@@ -149,6 +204,7 @@ export default function ListaFacturasPage() {
               console.log(`📦 Carregadas ${data.facturas.length} facturas (${data.source})`)
               setFacturas(data.facturas)
               setDataSource(data.source)
+              setProvider('agt')
               setCacheAge(data.cacheAge || null)
               void refreshFromJsonBackup()
               return
@@ -276,6 +332,13 @@ export default function ListaFacturasPage() {
 
   const getSourceBadge = () => {
     switch (dataSource) {
+      case 'appypay':
+        return (
+          <span className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-full bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200">
+            <Zap className="h-3 w-3" />
+            AppyPay
+          </span>
+        )
       case 'agt':
         return (
           <span className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
@@ -288,21 +351,21 @@ export default function ListaFacturasPage() {
         return (
           <span className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
             <Database className="h-3 w-3" />
-            Cache AGT {cacheAge ? `(${Math.floor(cacheAge / 60)}m)` : ''}
+            Cache {provider === 'appypay' ? 'AppyPay' : 'AGT'} {cacheAge ? `(${Math.floor(cacheAge / 60)}m)` : ''}
           </span>
         )
       case 'cache-fallback':
         return (
           <span className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
             <AlertCircle className="h-3 w-3" />
-            Cache (AGT offline)
+            Cache ({provider === 'appypay' ? 'AppyPay' : 'AGT'} offline)
           </span>
         )
       case 'empty':
         return (
           <span className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-full bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">
             <AlertCircle className="h-3 w-3" />
-            AGT Indisponível
+            {provider === 'appypay' ? 'AppyPay' : 'AGT'} Indisponível
           </span>
         )
       case 'local':
@@ -324,6 +387,11 @@ export default function ListaFacturasPage() {
           <div>
             <div className="flex items-center gap-3">
               <h2 className="text-3xl font-bold tracking-tight">Facturas</h2>
+              {provider && (
+                <Badge variant={provider === 'appypay' ? 'default' : 'secondary'}>
+                  {provider === 'appypay' ? 'AppyPay' : 'AGT'}
+                </Badge>
+              )}
               {getSourceBadge()}
             </div>
             <p className="text-muted-foreground">
@@ -339,16 +407,18 @@ export default function ListaFacturasPage() {
               disabled={isRefreshing}
             >
               <RefreshCw className={`mr-2 h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
-              {isRefreshing ? 'Carregando...' : 'Actualizar AGT'}
+              {isRefreshing ? 'Carregando...' : `Actualizar ${provider === 'appypay' ? 'AppyPay' : 'AGT'}`}
             </Button>
-            <Button
-              variant="outline"
-              onClick={syncEstados}
-              disabled={isSyncingEstados || isRefreshing || isLoading}
-            >
-              <RefreshCw className={`mr-2 h-4 w-4 ${isSyncingEstados ? 'animate-spin' : ''}`} />
-              {isSyncingEstados ? 'Sync estados...' : 'Sync estados'}
-            </Button>
+            {provider !== 'appypay' && (
+              <Button
+                variant="outline"
+                onClick={syncEstados}
+                disabled={isSyncingEstados || isRefreshing || isLoading}
+              >
+                <RefreshCw className={`mr-2 h-4 w-4 ${isSyncingEstados ? 'animate-spin' : ''}`} />
+                {isSyncingEstados ? 'Sync estados...' : 'Sync estados'}
+              </Button>
+            )}
             <Link href="/facturas/nova">
               <Button variant="gradient">
                 <Plus className="mr-2 h-4 w-4" />

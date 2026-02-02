@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -11,9 +11,10 @@ import { MainLayout } from '@/components/layout/MainLayout'
 import { ExcelUploader } from '@/components/upload/ExcelUploader'
 import { ExcelPreview } from '@/components/upload/ExcelPreview'
 import { ParsedExcelData, ExcelRow } from '@/lib/excelParser'
-import { CheckCircle, AlertCircle, Loader } from 'lucide-react'
+import { CheckCircle, AlertCircle, Loader, Zap, Cloud } from 'lucide-react'
 import { addFactura } from '@/lib/storage'
 import { Factura } from '@/lib/types'
+import { Badge } from '@/components/ui/badge'
 
 type Step = 'upload' | 'preview' | 'processing' | 'result'
 
@@ -21,6 +22,7 @@ interface ProcessResult {
   success: boolean
   processed: number
   documents: number
+  provider?: 'agt' | 'appypay'
   results: Array<{
     success: boolean
     documentNo?: string
@@ -29,6 +31,8 @@ interface ProcessResult {
     documentCount?: number
     error?: string
     response?: unknown
+    provider?: 'agt' | 'appypay'
+    isAsync?: boolean
   }>
 }
 
@@ -37,11 +41,24 @@ export default function ImportarFacturasPage() {
   const [parsedData, setParsedData] = useState<ParsedExcelData | null>(null)
   const [isProcessing, setIsProcessing] = useState(false)
   const [result, setResult] = useState<ProcessResult | null>(null)
+  const [activeProvider, setActiveProvider] = useState<'agt' | 'appypay'>('agt')
 
   // Configuração da empresa
   const [companyNIF, setCompanyNIF] = useState('999888777')
   const [companyName, setCompanyName] = useState('Empresa Angola Lda')
   const [seriesCode, setSeriesCode] = useState('FT25')
+  
+  // Detectar provider activo
+  useEffect(() => {
+    fetch('/api/providers')
+      .then(res => res.json())
+      .then(data => {
+        if (data.config?.activeProvider) {
+          setActiveProvider(data.config.activeProvider)
+        }
+      })
+      .catch(() => {})
+  }, [])
 
   const handleDataParsed = (data: ParsedExcelData) => {
     setParsedData(data)
@@ -127,9 +144,15 @@ export default function ImportarFacturasPage() {
       <div className="space-y-6">
         {/* Header */}
         <div>
-          <h1 className="text-3xl font-bold">Importar Facturas de Excel</h1>
+          <div className="flex items-center gap-3 mb-2">
+            <h1 className="text-3xl font-bold">Importar Facturas de Excel</h1>
+            <Badge variant={activeProvider === 'appypay' ? 'default' : 'secondary'} className="flex items-center gap-1">
+              {activeProvider === 'appypay' ? <Zap className="h-3 w-3" /> : <Cloud className="h-3 w-3" />}
+              {activeProvider === 'appypay' ? 'AppyPay' : 'AGT'}
+            </Badge>
+          </div>
           <p className="text-muted-foreground mt-2">
-            Carregue um ficheiro Excel com dados de facturas e processe-os para AGT
+            Carregue um ficheiro Excel com dados de facturas e processe-os para {activeProvider === 'appypay' ? 'AppyPay' : 'AGT'}
           </p>
           <div className="flex gap-3 mt-3">
             <a 
@@ -165,8 +188,8 @@ export default function ImportarFacturasPage() {
                 {step === 'upload' &&
                   'Arraste o ficheiro Excel ou clique para selecionar'}
                 {step === 'preview' &&
-                  'Revise os dados antes de processar. Os dados serão convertidos para formato AGT.'}
-                {step === 'processing' && 'A converter dados e a enviar para AGT...'}
+                  `Revise os dados antes de processar. Os dados serão convertidos para formato ${activeProvider === 'appypay' ? 'AppyPay' : 'AGT'}.`}
+                {step === 'processing' && `A converter dados e a enviar para ${activeProvider === 'appypay' ? 'AppyPay' : 'AGT'}...`}
                 {step === 'result' &&
                   (result?.success
                     ? '✓ Facturas processadas com sucesso!'
@@ -199,7 +222,7 @@ export default function ImportarFacturasPage() {
                     <Loader className="w-12 h-12 text-primary" />
                   </div>
                   <p className="text-lg font-semibold">A processar {parsedData?.summary.validRows} linha(s)...</p>
-                  <p className="text-sm text-muted-foreground">Por favor, aguarde enquanto os dados são enviados para AGT</p>
+                  <p className="text-sm text-muted-foreground">Por favor, aguarde enquanto os dados são enviados para {activeProvider === 'appypay' ? 'AppyPay' : 'AGT'}</p>
                 </div>
               )}
 
@@ -210,7 +233,7 @@ export default function ImportarFacturasPage() {
                     <Alert className="bg-green-50 dark:bg-green-950 border-green-200 dark:border-green-900">
                       <CheckCircle className="h-4 w-4 text-green-600" />
                       <AlertDescription className="text-green-800 dark:text-green-200">
-                        ✓ {result.results.length} factura(s) processada(s) com sucesso de {result.processed} linha(s) Excel!
+                        ✓ {result.results.length} factura(s) processada(s) com sucesso de {result.processed} linha(s) Excel via {result.provider === 'appypay' ? 'AppyPay' : 'AGT'}!
                       </AlertDescription>
                     </Alert>
                   ) : (
@@ -229,9 +252,22 @@ export default function ImportarFacturasPage() {
                         {res.success ? (
                           <>
                             <div className="flex items-center justify-between">
-                              <p className="text-green-700 dark:text-green-300 font-medium">
-                                ✓ Factura {idx + 1}/{result.results.length}
-                              </p>
+                              <div className="flex items-center gap-2">
+                                <p className="text-green-700 dark:text-green-300 font-medium">
+                                  ✓ Factura {idx + 1}/{result.results.length}
+                                </p>
+                                {res.provider === 'appypay' && (
+                                  <Badge variant="secondary" className="text-xs">
+                                    <Zap className="h-2 w-2 mr-1" />
+                                    AppyPay
+                                  </Badge>
+                                )}
+                                {res.isAsync && (
+                                  <Badge variant="outline" className="text-xs">
+                                    Async
+                                  </Badge>
+                                )}
+                              </div>
                               {res.documentNo && (
                                 <span className="text-xs bg-blue-100 dark:bg-blue-900 px-2 py-1 rounded font-medium">
                                   {res.documentNo}

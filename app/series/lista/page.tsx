@@ -8,6 +8,7 @@ import { MainLayout } from '@/components/layout/MainLayout'
 import { TabelaSeries } from '@/components/tables/TabelaSeries'
 import { Button } from '@/components/ui/button'
 import { useToast } from '@/components/ui/use-toast'
+import { Badge } from '@/components/ui/badge'
 
 export default function ListaSeriesPage() {
   const [series, setSeries] = useState<Serie[]>([])
@@ -16,7 +17,8 @@ export default function ListaSeriesPage() {
   const [pageSize, setPageSize] = useState<number>(50)
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [loading, setLoading] = useState(false)
-  const [source, setSource] = useState<'agt' | 'backup' | null>(null)
+  const [source, setSource] = useState<'agt' | 'appypay' | 'backup' | null>(null)
+  const [provider, setProvider] = useState<'agt' | 'appypay' | null>(null)
   const { toast } = useToast()
 
   const loadSeries = useCallback(async (opts?: { refresh?: boolean }) => {
@@ -28,7 +30,8 @@ export default function ListaSeriesPage() {
       const json = await res.json().catch(() => ({}))
       if (!res.ok) throw new Error(json?.error || `Erro ${res.status}`)
       setSeries(Array.isArray(json?.series) ? json.series : [])
-      setSource(json?.source === 'agt' ? 'agt' : 'backup')
+      setSource(json?.source || 'backup')
+      setProvider(json?.provider || 'agt')
       if (json?.warning) {
         toast({ title: 'Aviso', description: String(json.warning) })
       }
@@ -66,18 +69,25 @@ export default function ListaSeriesPage() {
     <MainLayout>
       <div className="space-y-6">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight">Séries de Numeração</h2>
+          <div className="flex items-center gap-3 mb-1">
+            <h2 className="text-3xl font-bold tracking-tight">Séries de Numeração</h2>
+            {provider && (
+              <Badge variant={provider === 'appypay' ? 'default' : 'secondary'}>
+                {provider === 'appypay' ? 'AppyPay' : 'AGT'}
+              </Badge>
+            )}
+          </div>
           <p className="text-muted-foreground">
             Gerencie as séries de numeração dos seus documentos
           </p>
           <p className="text-xs text-muted-foreground mt-1">
-            Fonte: {source === 'agt' ? 'AGT' : source === 'backup' ? 'Backup' : '...'}
+            Fonte: {source === 'appypay' ? 'AppyPay API' : source === 'agt' ? 'AGT API' : source === 'backup' ? 'Backup local' : '...'}
           </p>
         </div>
 
         <div className="flex gap-2">
           <Button onClick={() => loadSeries({ refresh: true })} disabled={loading} variant="secondary">
-            {loading ? 'A carregar...' : 'Atualizar da AGT'}
+            {loading ? 'A carregar...' : `Atualizar de ${provider === 'appypay' ? 'AppyPay' : 'AGT'}`}
           </Button>
         </div>
 

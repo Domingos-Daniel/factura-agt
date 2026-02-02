@@ -291,7 +291,7 @@ export async function obterEstadoAPI(
   requestID: string
 ): Promise<{
   success: boolean;
-  data?: { status: 'P' | 'V' | 'I'; messages: string[] }; // P=Pendente, V=Válida, I=Inválida
+  data?: { status: 'P' | 'V' | 'I' | 'R' | 'E'; messages: string[] }; // P=Pendente, V=Válida, I=Inválida, R=Rejeitada, E=Com Erros
   error?: string;
 }> {
   await delay(600);

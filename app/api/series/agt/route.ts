@@ -2,9 +2,15 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createAgtClient } from '@/lib/server/agtClient'
 import { getAllSeriesJson, replaceAllSeriesJson } from '@/lib/server/seriesJson'
 import { signJwsRS256, makeListarSeriesSignature } from '@/lib/server/jws'
+import { ProviderManager } from '@/lib/providers'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 120
+
+// Determinar provider activo
+function getActiveProvider(): 'agt' | 'appypay' {
+  return (process.env.FISCAL_PROVIDER as 'agt' | 'appypay') || 'agt'
+}
 
 function getDefaultNif(): string {
   return (
@@ -49,22 +55,81 @@ function mapAgtSeriesInfoToSerie(info: any): any {
   }
 }
 
+// Mapear série AppyPay para formato interno
+function mapAppyPaySeriesToSerie(info: any): any {
+  const seriesCode = String(info?.seriesCode ?? '').trim()
+  const seriesYear = Number(info?.seriesYear ?? new Date().getFullYear())
+  const documentType = String(info?.documentType ?? 'FT')
+  const status = info?.seriesStatus === 'A' ? 'A' : 'F'
+
+  return {
+    id: info?.id || `${seriesCode}-${seriesYear}-${documentType}`,
+    seriesCode,
+    seriesYear,
+    documentType,
+    firstDocumentNumber: parseInt(info?.firstDocumentCreated) || 1,
+    lastDocumentNumber: parseInt(info?.lastDocumentCreated) || undefined,
+    currentSequence: parseInt(info?.lastDocumentCreated) || 1,
+    status,
+    invoicingMethod: info?.invoicingMethod || 'SOFTWARE',
+    requestDate: info?.seriesCreationDate || new Date().toISOString(),
+    approvalDate: undefined,
+    closureDate: undefined,
+    provider: 'appypay',
+  }
+}
+
 export async function GET(req: NextRequest) {
   const url = new URL(req.url)
   const refresh = url.searchParams.get('refresh') === 'true' || url.searchParams.get('refresh') === '1'
   const timeoutMs = Number(url.searchParams.get('timeoutMs') || '45000')
 
   const nif = getDefaultNif()
+  const activeProvider = getActiveProvider()
 
   // 1) Se não pediu refresh, devolve backup se existir
   if (!refresh) {
     const backup = await getAllSeriesJson()
     if (backup.length > 0) {
-      return NextResponse.json({ series: backup, source: 'backup' }, { status: 200 })
+      return NextResponse.json({ series: backup, source: 'backup', provider: activeProvider }, { status: 200 })
     }
   }
 
-  // 2) Tenta AGT
+  // 2) Verificar provider activo
+  if (activeProvider === 'appypay') {
+    // Buscar séries da AppyPay
+    try {
+      const providerManager = new ProviderManager()
+      const series = await providerManager.getSeries()
+      
+      const mapped = series.map(mapAppyPaySeriesToSerie)
+      
+      // Salvar no backup
+      await replaceAllSeriesJson(mapped)
+      
+      return NextResponse.json({ 
+        series: mapped, 
+        source: 'appypay',
+        provider: 'appypay'
+      }, { status: 200 })
+    } catch (e: any) {
+      console.error('[AppyPay Series] Erro:', e)
+      // Fallback para backup
+      const backup = await getAllSeriesJson()
+      if (backup.length > 0) {
+        return NextResponse.json(
+          { series: backup, source: 'backup', provider: 'appypay', warning: e?.message || 'Falha ao consultar AppyPay' },
+          { status: 200 }
+        )
+      }
+      return NextResponse.json(
+        { error: e?.message || 'Falha ao consultar AppyPay e sem backup disponível', provider: 'appypay' },
+        { status: 502 }
+      )
+    }
+  }
+
+  // 3) Provider AGT (comportamento original)
   try {
     const client = createAgtClient()
     

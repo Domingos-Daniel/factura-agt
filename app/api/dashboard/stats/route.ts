@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getAllFacturasJson } from '@/lib/server/facturasJson'
-import { getAGTClient } from '@/lib/server/agtClient'
+import { createAgtClient } from '@/lib/server/agtClient'
 
 export const runtime = 'nodejs'
 export const revalidate = 0
@@ -30,7 +30,7 @@ export async function GET() {
 
   // Tentar buscar da AGT primeiro
   try {
-    const client = getAGTClient()
+    const client = createAgtClient()
     const agtResponse = await client.listarFacturas({
       queryStartDate: '2020-01-01',
       queryEndDate: now.toISOString().substring(0, 10),

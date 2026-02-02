@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
-import { Search } from 'lucide-react'
+import { Search, Cloud, Building2, Database, FileSpreadsheet, Loader2 } from 'lucide-react'
 
 import type { Factura } from '@/lib/types'
 import { formatCurrency, formatDate } from '@/lib/utils'
@@ -11,17 +11,22 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Badge } from '@/components/ui/badge'
 
-const statusLabels: Record<'P' | 'V' | 'I', string> = {
+const statusLabels: Record<'P' | 'V' | 'I' | 'R' | 'E', string> = {
   P: 'Pendente',
   V: 'Válida',
   I: 'Inválida',
+  R: 'Rejeitada',
+  E: 'Com Erros',
 }
 
-const statusColors: Record<'P' | 'V' | 'I', string> = {
+const statusColors: Record<'P' | 'V' | 'I' | 'R' | 'E', string> = {
   P: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
   V: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
   I: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200',
+  R: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200',
+  E: 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200',
 }
 
 type FilterValue = 'all' | 'FT' | 'FR' | 'FA' | 'NC' | 'ND' | 'AR' | 'RC' | 'RG'
@@ -214,19 +219,54 @@ export function TabelaFacturas({
                       </span>
                     </TableCell>
                     <TableCell>
-                      {agtSynced ? (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-200" title={lastSync ? `Sincronizado: ${new Date(lastSync).toLocaleString('pt-AO')}` : undefined}>
-                          ☁️ AGT
-                        </span>
-                      ) : factura.requestID ? (
-                        <span className="inline-flex items-center rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-                          📊 Excel
-                        </span>
-                      ) : (
-                        <span className="inline-flex items-center rounded-full bg-gray-100 px-2 py-1 text-xs font-medium text-gray-800 dark:bg-gray-800 dark:text-gray-200">
-                          💾 Local
-                        </span>
-                      )}
+                      {(() => {
+                        // Detectar provedor e status
+                        const provider = (factura as any).provider || 
+                          ((factura as any).appyPayDocumentId ? 'appypay' : null)
+                        const appyPayStatus = (factura as any).appyPayStatus
+                        
+                        if (provider === 'appypay') {
+                          if (appyPayStatus === 'processing') {
+                            return (
+                              <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950 dark:text-blue-300 dark:border-blue-800">
+                                <Loader2 className="h-3 w-3 mr-1 animate-spin" />
+                                AppyPay
+                              </Badge>
+                            )
+                          }
+                          return (
+                            <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950 dark:text-blue-300 dark:border-blue-800">
+                              <Cloud className="h-3 w-3 mr-1" />
+                              AppyPay
+                            </Badge>
+                          )
+                        }
+                        
+                        if (agtSynced) {
+                          return (
+                            <Badge variant="outline" className="bg-orange-50 text-orange-700 border-orange-200 dark:bg-orange-950 dark:text-orange-300 dark:border-orange-800" title={lastSync ? `Sincronizado: ${new Date(lastSync).toLocaleString('pt-AO')}` : undefined}>
+                              <Building2 className="h-3 w-3 mr-1" />
+                              AGT
+                            </Badge>
+                          )
+                        }
+                        
+                        if (factura.requestID) {
+                          return (
+                            <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200 dark:bg-green-950 dark:text-green-300 dark:border-green-800">
+                              <FileSpreadsheet className="h-3 w-3 mr-1" />
+                              Excel
+                            </Badge>
+                          )
+                        }
+                        
+                        return (
+                          <Badge variant="outline" className="bg-gray-50 text-gray-700 border-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600">
+                            <Database className="h-3 w-3 mr-1" />
+                            Local
+                          </Badge>
+                        )
+                      })()}
                     </TableCell>
                     <TableCell className="text-right">
                       <Link href={`/facturas/${factura.id ?? factura.submissionGUID}`}>

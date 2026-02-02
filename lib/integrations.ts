@@ -1,7 +1,7 @@
-export type IntegrationType = 'odata' | 'rest' | 'queue' | 'portal' | 'status'
+export type IntegrationType = 'odata' | 'rest' | 'queue' | 'portal' | 'status' | 'oauth2'
 export type IntegrationStatus = 'connected' | 'warning' | 'error'
 export type IntegrationEnvironment = 'sandbox' | 'quality' | 'production'
-export type IntegrationSystem = 'sap' | 'agt' | 'external'
+export type IntegrationSystem = 'sap' | 'agt' | 'appypay' | 'external'
 
 export interface IntegrationDefinition {
   id: string
@@ -102,6 +102,16 @@ export function getIntegrationDefinitions(): IntegrationDefinition[] {
     `${agtPortalUrl.replace(/\/$/, '')}/api/status`
   )
 
+  // AppyPay config
+  const appyPayBaseUrl = resolveEnv(
+    'APPYPAY_BASE_URL',
+    'https://gwy-api-tst.appypay.co.ao/v1.0'
+  )
+  const appyPayAuthUrl = resolveEnv(
+    'APPYPAY_AUTH_URL',
+    'https://auth.appypay.co.ao/oauth2/token'
+  )
+
   return [
     {
       id: 'sap-odata',
@@ -174,6 +184,43 @@ export function getIntegrationDefinitions(): IntegrationDefinition[] {
       slaMs: 1200,
       warnLatencyMs: 1500,
       timeoutMs: 7000,
+    },
+    // AppyPay integrations
+    {
+      id: 'appypay-api',
+      name: 'AppyPay Gateway API',
+      provider: 'AppyPay',
+      description: 'API REST para emissão de documentos fiscais com processamento assíncrono. Provedor alternativo à AGT.',
+      type: 'rest',
+      endpoint: appyPayBaseUrl,
+      healthCheckUrl: `${appyPayBaseUrl.replace(/\/$/, '')}/health`,
+      method: 'GET',
+      environment: 'sandbox',
+      system: 'appypay',
+      documentationUrl: 'https://docs.appypay.co.ao',
+      criticality: 'core',
+      region: 'Angola-DC',
+      slaMs: 500,
+      warnLatencyMs: 800,
+      timeoutMs: 30000,
+    },
+    {
+      id: 'appypay-auth',
+      name: 'AppyPay OAuth2 Server',
+      provider: 'AppyPay',
+      description: 'Servidor OAuth2 para autenticação client_credentials com tokens JWT.',
+      type: 'oauth2',
+      endpoint: appyPayAuthUrl,
+      healthCheckUrl: appyPayAuthUrl,
+      method: 'HEAD',
+      environment: 'sandbox',
+      system: 'appypay',
+      documentationUrl: 'https://docs.appypay.co.ao/auth',
+      criticality: 'core',
+      region: 'Angola-DC',
+      slaMs: 300,
+      warnLatencyMs: 500,
+      timeoutMs: 5000,
     },
   ]
 }

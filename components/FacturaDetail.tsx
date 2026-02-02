@@ -11,10 +11,12 @@ import { useToast } from '@/components/ui/use-toast'
 import { PDFExporter } from '@/components/PDFExporter'
 import { QRGenerator } from '@/components/QRGenerator'
 
-const statusLabels: Record<'P' | 'V' | 'I', { label: string; variant: 'default' | 'secondary' | 'destructive' }> = {
+const statusLabels: Record<'P' | 'V' | 'I' | 'R' | 'E', { label: string; variant: 'default' | 'secondary' | 'destructive' }> = {
   P: { label: 'Pendente', variant: 'secondary' },
   V: { label: 'Válida', variant: 'default' },
   I: { label: 'Inválida', variant: 'destructive' },
+  R: { label: 'Rejeitada', variant: 'destructive' },
+  E: { label: 'Com Erros', variant: 'destructive' },
 }
 
 type FacturaDetailProps = {
@@ -24,7 +26,7 @@ type FacturaDetailProps = {
 export function FacturaDetail({ factura }: FacturaDetailProps) {
   const document = factura.documents[0]
   const initialStatus = factura.validationStatus ?? 'P'
-  const [status, setStatus] = useState<'P' | 'V' | 'I'>(initialStatus)
+  const [status, setStatus] = useState<'P' | 'V' | 'I' | 'R' | 'E'>(initialStatus)
   const [messages, setMessages] = useState<string[]>(factura.validationMessages ?? [])
   const [isFetchingStatus, setIsFetchingStatus] = useState(false)
   const [autoRefresh, setAutoRefresh] = useState(false)

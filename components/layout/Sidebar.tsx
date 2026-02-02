@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { FileStack, FileSpreadsheet, FileText, LayoutDashboard, Settings, Upload } from 'lucide-react'
+import { FileStack, FileSpreadsheet, FileText, LayoutDashboard, Settings, Upload, Cloud } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -134,6 +134,17 @@ export function Sidebar() {
             <div className="h-px flex-1 bg-gradient-to-l from-border/50 to-transparent" />
           </div>
           <div className="space-y-1">
+            <Link href="/configuracoes/provedores">
+              <Button
+                variant="ghost"
+                className={getActiveClasses('/configuracoes/provedores', 'bg-purple-500/10 hover:text-purple-600 dark:hover:text-purple-400')}
+              >
+                <div className={getIconClasses('/configuracoes/provedores', 'bg-purple-500/20')}>
+                  <Cloud className="h-4 w-4" />
+                </div>
+                Provedores Fiscais
+              </Button>
+            </Link>
             <Link href="/configuracoes">
               <Button
                 variant="ghost"

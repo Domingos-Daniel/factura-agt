@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
 export const dynamic = 'force-dynamic'
-import { FileText, FileStack, TrendingUp, Plus, AlertCircle, RefreshCw, Database } from 'lucide-react'
+import { FileText, FileStack, TrendingUp, Plus, AlertCircle, RefreshCw, Database, Cloud, Building2 } from 'lucide-react'
 
 import { isAuthenticated, getSeries } from '@/lib/storage'
 import { MainLayout } from '@/components/layout/MainLayout'
@@ -16,6 +16,8 @@ import { MetricCard } from '@/components/MetricCard'
 import { ChartFacturasMes, type ChartFacturasMesData } from '@/components/charts/ChartFacturasMes'
 import { EnvironmentStatusCard } from '@/components/integrations/EnvironmentStatusCard'
 import { Badge } from '@/components/ui/badge'
+import { ProviderStatusCard } from '@/components/providers'
+import type { ProviderConfig, ProviderHealth } from '@/lib/providers/types'
 
 export default function DashboardPage() {
   const router = useRouter()
@@ -26,8 +28,23 @@ export default function DashboardPage() {
     totalRevenue: 0,
   })
   const [chartData, setChartData] = useState<ChartFacturasMesData[]>([])
-  const [dataSource, setDataSource] = useState<'agt' | 'backup' | 'loading'>('loading')
+  const [dataSource, setDataSource] = useState<'agt' | 'appypay' | 'backup' | 'loading'>('loading')
   const [isRefreshing, setIsRefreshing] = useState(false)
+  const [providerConfig, setProviderConfig] = useState<ProviderConfig | null>(null)
+  const [providerHealth, setProviderHealth] = useState<ProviderHealth | null>(null)
+  
+  const loadProviderStatus = async () => {
+    try {
+      const response = await fetch('/api/providers')
+      if (response.ok) {
+        const data = await response.json()
+        setProviderConfig(data.config)
+        setProviderHealth(data.health)
+      }
+    } catch (error) {
+      console.error('Erro ao carregar status do provedor:', error)
+    }
+  }
   
   const loadData = async () => {
     if (!isAuthenticated()) {
@@ -74,6 +91,7 @@ export default function DashboardPage() {
   
   useEffect(() => {
     loadData()
+    loadProviderStatus()
   }, [router])
   
   return (
@@ -127,9 +145,14 @@ export default function DashboardPage() {
                 A carregar...
               </Badge>
             ) : dataSource === 'agt' ? (
-              <Badge className="bg-green-600 text-white gap-1">
-                <FileText className="h-3 w-3" />
+              <Badge className="bg-orange-600 text-white gap-1">
+                <Building2 className="h-3 w-3" />
                 Dados da AGT
+              </Badge>
+            ) : dataSource === 'appypay' ? (
+              <Badge className="bg-blue-600 text-white gap-1">
+                <Cloud className="h-3 w-3" />
+                Dados da AppyPay
               </Badge>
             ) : (
               <Badge variant="outline" className="gap-1 border-yellow-500 text-yellow-600">
@@ -149,6 +172,16 @@ export default function DashboardPage() {
             Atualizar
           </Button>
         </div>
+        
+        {/* Status do Provedor Fiscal */}
+        {providerHealth && (
+          <ProviderStatusCard
+            provider={providerHealth.provider}
+            health={providerHealth}
+            isActive={true}
+            onTest={loadProviderStatus}
+          />
+        )}
         
         {/* Card de ambiente */}
         <EnvironmentStatusCard />

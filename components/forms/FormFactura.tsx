@@ -19,8 +19,12 @@ import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
+import { Alert, AlertDescription } from '@/components/ui/alert'
 import { QRGenerator } from '@/components/QRGenerator'
 import { FormLinhaFactura } from './FormLinhaFactura'
+import { ProviderIndicator } from '@/components/providers'
+import { Cloud, Clock, Info } from 'lucide-react'
+import type { FiscalProviderName, ProviderHealth } from '@/lib/providers/types'
 
 const documentTypeOptions = [
   { value: 'FT', label: 'FT - Factura' },
@@ -113,6 +117,28 @@ export const FormFactura = forwardRef<FormFacturaHandle, FormFacturaProps>(funct
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [emitterNIF, setEmitterNIF] = useState<string>('')
   const [config, setConfig] = useState<AppConfig | null>(null)
+  const [activeProvider, setActiveProvider] = useState<FiscalProviderName>('appypay')
+  const [providerHealth, setProviderHealth] = useState<ProviderHealth | null>(null)
+
+  // Carregar estado do provedor
+  useEffect(() => {
+    const loadProviderState = async () => {
+      try {
+        const response = await fetch('/api/providers')
+        const data = await response.json()
+        if (data.success) {
+          setActiveProvider(data.config.activeProvider)
+          const active = data.providers.find((p: any) => p.isActive)
+          if (active) {
+            setProviderHealth(active)
+          }
+        }
+      } catch (e) {
+        console.warn('Erro ao carregar provedor:', e)
+      }
+    }
+    loadProviderState()
+  }, [])
 
   useEffect(() => {
     const auth = getAuth()
@@ -394,6 +420,32 @@ export const FormFactura = forwardRef<FormFacturaHandle, FormFacturaProps>(funct
   return (
     <FormProvider {...methods}>
       <form onSubmit={submitHandler} className="space-y-6">
+        {/* Indicador de Provedor Ativo */}
+        <Alert className="border-blue-200 bg-blue-50 dark:border-blue-800 dark:bg-blue-950">
+          <Info className="h-4 w-4 text-blue-600" />
+          <AlertDescription className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <span className="text-sm">Provedor:</span>
+              <ProviderIndicator 
+                provider={activeProvider} 
+                status={providerHealth?.status}
+                showLabel 
+              />
+              {activeProvider === 'appypay' && (
+                <span className="text-xs text-muted-foreground flex items-center gap-1">
+                  <Clock className="h-3 w-3" />
+                  Processamento assíncrono (~1-30min)
+                </span>
+              )}
+            </div>
+            {providerHealth?.message && (
+              <span className="text-xs text-muted-foreground hidden md:block">
+                {providerHealth.message}
+              </span>
+            )}
+          </AlertDescription>
+        </Alert>
+
         <Card>
           <CardHeader>
             <CardTitle>Dados da Factura</CardTitle>
@@ -575,9 +627,9 @@ export const FormFactura = forwardRef<FormFacturaHandle, FormFacturaProps>(funct
 
             {/* debug panel removed */}
 
-            <div className="flex justify-end">
+            <div className="flex justify-end gap-2">
               <Button type="submit" variant="gradient" disabled={isSubmitting || availableSeries.length === 0}>
-                {isSubmitting ? 'A processar...' : 'Enviar para AGT'}
+                {isSubmitting ? 'A processar...' : activeProvider === 'appypay' ? 'Emitir via AppyPay' : 'Enviar para AGT'}
               </Button>
             </div>
           </CardContent>
