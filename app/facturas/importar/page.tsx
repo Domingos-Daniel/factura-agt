@@ -36,6 +36,31 @@ interface ProcessResult {
   }>
 }
 
+interface UserProfile {
+  user: {
+    id: string
+    email: string
+    name: string
+    role: string
+    nif?: string
+  }
+  company: {
+    nif?: string
+    name?: string
+    email?: string
+    address?: string
+  }
+  provider: {
+    activeProvider: 'agt' | 'appypay'
+  }
+  series?: {
+    code: string
+    year: number
+    documentType: string
+    status: string
+  }
+}
+
 export default function ImportarFacturasPage() {
   const [step, setStep] = useState<Step>('upload')
   const [parsedData, setParsedData] = useState<ParsedExcelData | null>(null)
@@ -43,21 +68,40 @@ export default function ImportarFacturasPage() {
   const [result, setResult] = useState<ProcessResult | null>(null)
   const [activeProvider, setActiveProvider] = useState<'agt' | 'appypay'>('agt')
 
-  // Configuração da empresa
+  // Dados do utilizador
+  const [profile, setProfile] = useState<UserProfile | null>(null)
+  const [isLoadingProfile, setIsLoadingProfile] = useState(true)
+
+  // Configuração da empresa (carregada do perfil)
   const [companyNIF, setCompanyNIF] = useState('999888777')
   const [companyName, setCompanyName] = useState('Empresa Angola Lda')
   const [seriesCode, setSeriesCode] = useState('FT25')
   
-  // Detectar provider activo
+  // Carregar perfil do utilizador
   useEffect(() => {
-    fetch('/api/providers')
-      .then(res => res.json())
-      .then(data => {
-        if (data.config?.activeProvider) {
-          setActiveProvider(data.config.activeProvider)
+    const loadProfile = async () => {
+      try {
+        const res = await fetch('/api/auth/profile')
+        const data = await res.json()
+        
+        if (data.success && data.profile) {
+          setProfile(data.profile)
+          setActiveProvider(data.profile.provider.activeProvider)
+          setCompanyNIF(data.profile.company.nif || '999888777')
+          setCompanyName(data.profile.company.name || 'Empresa Angola Lda')
+          
+          if (data.profile.series?.code) {
+            setSeriesCode(data.profile.series.code)
+          }
         }
-      })
-      .catch(() => {})
+      } catch (err) {
+        console.error('Erro ao carregar perfil:', err)
+      } finally {
+        setIsLoadingProfile(false)
+      }
+    }
+    
+    loadProfile()
   }, [])
 
   const handleDataParsed = (data: ParsedExcelData) => {
@@ -154,6 +198,24 @@ export default function ImportarFacturasPage() {
           <p className="text-muted-foreground mt-2">
             Carregue um ficheiro Excel com dados de facturas e processe-os para {activeProvider === 'appypay' ? 'AppyPay' : 'AGT'}
           </p>
+          {profile && (
+            <div className="flex gap-6 mt-3 text-sm">
+              <div>
+                <span className="text-muted-foreground">📦 Empresa:</span>
+                <span className="ml-2 font-medium">{profile.company.name}</span>
+              </div>
+              <div>
+                <span className="text-muted-foreground">🆔 NIF:</span>
+                <span className="ml-2 font-medium font-mono">{profile.company.nif}</span>
+              </div>
+              {profile.series && (
+                <div>
+                  <span className="text-muted-foreground">📋 Série:</span>
+                  <span className="ml-2 font-medium font-mono">{profile.series.code}</span>
+                </div>
+              )}
+            </div>
+          )}
           <div className="flex gap-3 mt-3">
             <a 
               href="/templates/modelo-planilha-exemplo.xlsx" 
@@ -332,57 +394,76 @@ export default function ImportarFacturasPage() {
           <div>
             <Card className="sticky top-6">
               <CardHeader>
-                <CardTitle className="text-lg">Configuração</CardTitle>
-                <CardDescription>Dados da empresa</CardDescription>
+                <CardTitle className="text-lg">Configuração da Empresa</CardTitle>
+                <CardDescription>Dados carregados da BD</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                {/* NIF */}
-                <div className="space-y-2">
-                  <Label htmlFor="companyNIF" className="text-sm">
-                    NIF da Empresa
-                  </Label>
-                  <Input
-                    id="companyNIF"
-                    value={companyNIF}
-                    onChange={(e) => setCompanyNIF(e.target.value)}
-                    placeholder="ex: 999888777"
-                    disabled={step !== 'upload'}
-                  />
-                </div>
+                {isLoadingProfile ? (
+                  <div className="text-center py-8 text-muted-foreground">
+                    <Loader className="w-6 h-6 mx-auto mb-2 animate-spin" />
+                    A carregar dados...
+                  </div>
+                ) : profile ? (
+                  <>
+                    {/* NIF */}
+                    <div className="space-y-2">
+                      <Label className="text-sm text-muted-foreground">NIF da Empresa</Label>
+                      <div className="bg-muted p-3 rounded-lg font-mono font-medium">
+                        {profile.company.nif || 'N/A'}
+                      </div>
+                    </div>
 
-                {/* Nome */}
-                <div className="space-y-2">
-                  <Label htmlFor="companyName" className="text-sm">
-                    Nome da Empresa
-                  </Label>
-                  <Input
-                    id="companyName"
-                    value={companyName}
-                    onChange={(e) => setCompanyName(e.target.value)}
-                    placeholder="ex: Empresa Angola Lda"
-                    disabled={step !== 'upload'}
-                  />
-                </div>
+                    {/* Nome */}
+                    <div className="space-y-2">
+                      <Label className="text-sm text-muted-foreground">Nome da Empresa</Label>
+                      <div className="bg-muted p-3 rounded-lg font-medium">
+                        {profile.company.name || 'N/A'}
+                      </div>
+                    </div>
 
-                {/* Série */}
-                <div className="space-y-2">
-                  <Label htmlFor="seriesCode" className="text-sm">
-                    Código da Série
-                  </Label>
-                  <Input
-                    id="seriesCode"
-                    value={seriesCode}
-                    onChange={(e) => setSeriesCode(e.target.value)}
-                    placeholder="ex: FT25 ou FT2025"
-                    disabled={step !== 'upload'}
-                  />
-                </div>
+                    {/* Série */}
+                    <div className="space-y-2">
+                      <Label className="text-sm text-muted-foreground">Código da Série</Label>
+                      <div className="bg-muted p-3 rounded-lg font-mono font-medium">
+                        {seriesCode || 'N/A'}
+                      </div>
+                      {profile.series && (
+                        <p className="text-xs text-muted-foreground">
+                          Tipo: {profile.series.documentType} | Ano: {profile.series.year}
+                        </p>
+                      )}
+                    </div>
 
+                    {/* Email */}
+                    {profile.company.email && (
+                      <div className="space-y-2">
+                        <Label className="text-sm text-muted-foreground">Email da Empresa</Label>
+                        <div className="bg-muted p-3 rounded-lg text-sm break-all">
+                          {profile.company.email}
+                        </div>
+                      </div>
+                    )}
 
+                    {/* Endereço */}
+                    {profile.company.address && (
+                      <div className="space-y-2">
+                        <Label className="text-sm text-muted-foreground">Endereço</Label>
+                        <div className="bg-muted p-3 rounded-lg text-sm">
+                          {profile.company.address}
+                        </div>
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <div className="text-center py-8 text-red-600 dark:text-red-400">
+                    <AlertCircle className="w-6 h-6 mx-auto mb-2" />
+                    Erro ao carregar perfil
+                  </div>
+                )}
 
                 {/* Status */}
                 {step !== 'upload' && (
-                  <div className="bg-blue-50 dark:bg-blue-950 p-3 rounded-lg text-xs">
+                  <div className="bg-blue-50 dark:bg-blue-950 p-3 rounded-lg text-xs mt-4">
                     <p className="font-semibold mb-2">Status do Processamento</p>
                     <div className="space-y-1 text-blue-900 dark:text-blue-100">
                       <p>

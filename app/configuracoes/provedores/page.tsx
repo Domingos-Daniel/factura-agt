@@ -11,7 +11,6 @@ import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { useToast } from '@/components/ui/use-toast'
-import { isAuthenticated } from '@/lib/storage'
 import { ProviderSelector } from '@/components/providers'
 import { Cloud, Building2, AlertTriangle, CheckCircle, Info } from 'lucide-react'
 
@@ -22,9 +21,6 @@ export default function ProvedoresPage() {
   
   useEffect(() => {
     setIsClient(true)
-    if (!isAuthenticated()) {
-      router.push('/login')
-    }
   }, [router])
   
   if (!isClient) {

@@ -65,17 +65,18 @@ export async function GET(
     
     // Obter totais do request original se não estiverem na resposta da API
     const documentTotals = storedOp?.request?.documents?.[0]?.documentTotals;
+    const rawResp = status.rawResponse as any || {};
     
     // Mesclar linhas originais com resposta da API
     const enrichedRawResponse = {
-      ...status.rawResponse,
-      lines: originalLines || status.rawResponse?.lines,
+      ...rawResp,
+      lines: originalLines || rawResp.lines,
       originalRequest,
       // Adicionar totais ao nível superior para facilitar acesso
-      netTotal: documentTotals?.netTotal || status.rawResponse?.netTotal,
-      taxPayable: documentTotals?.taxPayable || status.rawResponse?.taxPayable,
-      grossTotal: documentTotals?.grossTotal || status.rawResponse?.grossTotal,
-      currency: documentTotals?.currency || status.rawResponse?.currency,
+      netTotal: documentTotals?.netTotal || rawResp.netTotal,
+      taxPayable: documentTotals?.taxPayable || rawResp.taxPayable,
+      grossTotal: documentTotals?.grossTotal || rawResp.grossTotal,
+      currency: documentTotals?.currency || rawResp.currency,
     };
     
     return NextResponse.json({

@@ -47,14 +47,24 @@ export function mapDocumentType(sapType?: string): string {
 /**
  * Converte data SAP (YYYYMMDD) para ISO8601
  */
-export function mapDate(sapDate?: string): string {
-  if (!sapDate || sapDate.length !== 8) {
+export function mapDate(sapDate?: string | number): string {
+  if (!sapDate) {
     return new Date().toISOString().split('T')[0]
   }
   
-  const year = sapDate.substring(0, 4)
-  const month = sapDate.substring(4, 6)
-  const day = sapDate.substring(6, 8)
+  // Se for número (formato serial do Excel), converter usando parseDateModelo2
+  if (typeof sapDate === 'number') {
+    return parseDateModelo2(sapDate)
+  }
+  
+  const dateStr = String(sapDate)
+  if (dateStr.length !== 8) {
+    return new Date().toISOString().split('T')[0]
+  }
+  
+  const year = dateStr.substring(0, 4)
+  const month = dateStr.substring(4, 6)
+  const day = dateStr.substring(6, 8)
   
   return `${year}-${month}-${day}`
 }
@@ -226,10 +236,34 @@ export interface AGTDocument {
 }
 
 /**
+ * Converte número serial do Excel para data ISO8601
+ * O Excel armazena datas como números seriais desde 1/1/1900
+ */
+function excelSerialToDate(serial: number): string {
+  // Excel data serial: dias desde 1/1/1900 (com bug do 1900 leap year)
+  const baseDate = new Date(1899, 11, 30) // 30/12/1899
+  const days = Math.floor(serial)
+  const date = new Date(baseDate.getTime() + days * 24 * 60 * 60 * 1000)
+  
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  
+  return `${year}-${month}-${day}`
+}
+
+/**
  * Converte data dd.mm.yyyy para yyyy-mm-dd
  */
-export function parseDateModelo2(dateStr?: string): string {
-  if (!dateStr) return new Date().toISOString().split('T')[0]
+export function parseDateModelo2(dateInput?: string | number): string {
+  if (!dateInput) return new Date().toISOString().split('T')[0]
+  
+  // Se for número (formato serial do Excel)
+  if (typeof dateInput === 'number') {
+    return excelSerialToDate(dateInput)
+  }
+  
+  const dateStr = String(dateInput)
   
   // Se já está em formato yyyy-mm-dd ou yyyy-mm-ddThh:mm:ss
   if (dateStr.match(/^\d{4}-\d{2}-\d{2}/)) {
@@ -321,11 +355,15 @@ function processAGTFormat(
         documentNo: row['Nº Docum'] || `${row['Tipo Doc']} ${seriesCode}/00000`,
         documentStatus: row['Status'] || 'N',
         documentType: row['Tipo Doc'] || 'FT',
-        documentDate: row['Data Doc'] || new Date().toISOString().split('T')[0],
+        documentDate: row['Data Doc'] 
+          ? (typeof row['Data Doc'] === 'number' ? parseDateModelo2(row['Data Doc']) : row['Data Doc'] as string)
+          : new Date().toISOString().split('T')[0],
         eacCode: row['Cod A'] && String(row['Cod A']).length >= 5 ? String(row['Cod A']) : '47410',
-        systemEntryDate: row['Dat E S'] || new Date().toISOString(),
+        systemEntryDate: row['Dat E S'] 
+          ? (typeof row['Dat E S'] === 'number' ? parseDateModelo2(row['Dat E S']) : row['Dat E S'] as string)
+          : new Date().toISOString(),
         customerCountry: row['País cl'] || 'AO',
-        customerTaxID: row['Nº Cliente'] || '999999999',
+        customerTaxID: row['Nº Cliente'] || row['Nº cliente'] || '999999999',
         companyName: row['Nome E'] || 'Cliente Genérico',
         lines: lines.map((line: any, idx: number) => {
           const result: any = {
@@ -389,24 +427,29 @@ function processModelo2Format(
   companyName: string,
   seriesCode: string
 ): AGTDocument[] {
-  // Agrupar por 'Nº Documento'
+  // Agrupar por 'Nº Documento' + 'Tipo Doc' (número do documento + tipo)
+  // Isso garante que FT e NC com mesmo número sejam documentos separados
   const groupedByDoc = new Map<string, ExcelRow[]>()
   
   excelRows.forEach(row => {
     const docNo = row['Nº Documento'] || row['A Fatura'] || 'UNKNOWN'
-    if (!groupedByDoc.has(docNo)) {
-      groupedByDoc.set(docNo, [])
+    const docType = row['Tipo Doc'] || 'FT'
+    // Criar chave única: número + tipo
+    const uniqueKey = `${docNo}|${docType}`
+    
+    if (!groupedByDoc.has(uniqueKey)) {
+      groupedByDoc.set(uniqueKey, [])
     }
-    groupedByDoc.get(docNo)!.push(row)
+    groupedByDoc.get(uniqueKey)!.push(row)
   })
 
   const agtDocuments: any[] = []
 
-  groupedByDoc.forEach((docRows, docNo) => {
+  groupedByDoc.forEach((docRows, uniqueKey) => {
     const firstRow = docRows[0]
     
     // Extrair campos do modelo-2
-    const documentNo = firstRow['Nº Documento'] || firstRow['A Fatura'] || docNo
+    const documentNo = firstRow['Nº Documento'] || firstRow['A Fatura'] || uniqueKey.split('|')[0]
     
     // Tipo documento: tentar obter do campo, senão extrair do número do documento
     let documentType = firstRow['Tipo Doc'] || 'FT'
@@ -418,9 +461,9 @@ function processModelo2Format(
       }
     }
     
-    const documentDate = parseDateModelo2(firstRow['Data Doc'] as string)
+    const documentDate = parseDateModelo2(firstRow['Data Doc'])
     const clientName = cleanName(firstRow['Nome E'] as string)
-    const clientNIF = firstRow['Nº Fiscal'] || firstRow['Nº Cliente'] || '999999999'
+    const clientNIF = firstRow['Nº Fiscal'] || firstRow['Nº Cliente'] || firstRow['Nº cliente'] || '999999999'
     const clientCountry = firstRow['País cl'] || 'AO'
     
     // Parse timestamp formato yyyymmddhhmmss
@@ -523,30 +566,35 @@ function processModelo3Format(
   companyName: string,
   seriesCode: string
 ): AGTDocument[] {
-  // Agrupar por 'Nº Docum' (número do documento)
+  // Agrupar por 'Nº Docum' + 'Tipo Doc' (número do documento + tipo)
+  // Isso garante que FT e NC com mesmo número sejam documentos separados
   const groupedByDoc = new Map<string, ExcelRow[]>()
   
   excelRows.forEach(row => {
     const docNo = row['Nº Docum'] || row['A Fatura'] || 'UNKNOWN'
-    if (!groupedByDoc.has(docNo)) {
-      groupedByDoc.set(docNo, [])
+    const docType = row['Tipo Doc'] || 'FT'
+    // Criar chave única: número + tipo
+    const uniqueKey = `${docNo}|${docType}`
+    
+    if (!groupedByDoc.has(uniqueKey)) {
+      groupedByDoc.set(uniqueKey, [])
     }
-    groupedByDoc.get(docNo)!.push(row)
+    groupedByDoc.get(uniqueKey)!.push(row)
   })
 
   console.log(`📋 Modelo-3: Agrupados ${groupedByDoc.size} documentos de ${excelRows.length} linhas`)
 
   const agtDocuments: any[] = []
 
-  groupedByDoc.forEach((docRows, docNo) => {
+  groupedByDoc.forEach((docRows, uniqueKey) => {
     const firstRow = docRows[0]
     
     // Extrair campos de cabeçalho do documento (primeira linha)
-    const documentNo = firstRow['Nº Docum'] || docNo
+    const documentNo = firstRow['Nº Docum'] || uniqueKey.split('|')[0]
     const documentType = firstRow['Tipo Doc'] || 'FT'
-    const documentDate = parseDateModelo2(firstRow['Data Doc'] as string)
+    const documentDate = parseDateModelo2(firstRow['Data Doc'])
     const clientName = cleanName(firstRow['Nome E'] as string)
-    const clientNIF = firstRow['Nº Cliente'] || '999999999'
+    const clientNIF = firstRow['Nº Cliente'] || firstRow['Nº cliente'] || '999999999'
     const clientCountry = firstRow['País cl'] || 'AO'
     const eacCode = firstRow['Cod A'] && String(firstRow['Cod A']).length >= 5 
       ? String(firstRow['Cod A']) 

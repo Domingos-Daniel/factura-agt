@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "lastUpdated": "2026-02-02T20:52:32.690Z",
+    "lastUpdated": "2026-02-03T12:31:37.293Z",
     "version": "1.0",
-    "totalFacturas": 10,
+    "totalFacturas": 12,
     "totalSeries": 1,
-    "totalOperations": 98
+    "totalOperations": 100
   },
   "facturas": [
     {
@@ -760,6 +760,292 @@
         "nif": "5000413178",
         "documentNo": "FT FT001/00001",
         "submissionGUID": "2d5bf5f7-3d17-4614-9a01-5407f55e3bea"
+      }
+    },
+    {
+      "id": "FT-999888777-1770115797165-t7l5jc",
+      "type": "factura",
+      "serviceName": "direct",
+      "status": "error",
+      "requestID": "bb1a6155-aa90-4e2a-9203-8e8cdb3ebc95",
+      "request": {
+        "schemaVersion": "1.2",
+        "submissionGUID": "bb1a6155-aa90-4e2a-9203-8e8cdb3ebc95",
+        "taxRegistrationNumber": "999888777",
+        "submissionTimeStamp": "2026-02-03T10:49:20.315Z",
+        "softwareInfo": {
+          "softwareInfoDetail": {
+            "productId": "FacturAGT",
+            "productVersion": "1.0.0",
+            "softwareValidationNumber": "AGT-2025-001"
+          },
+          "jwsSoftwareSignature": "placeholder"
+        },
+        "numberOfEntries": 1,
+        "documents": [
+          {
+            "documentNo": "FT FT001/00001",
+            "documentStatus": "N",
+            "documentType": "FT",
+            "documentDate": "2026-02-02",
+            "eacCode": "47410",
+            "systemEntryDate": "2026-02-02T20:34:09.653Z",
+            "customerCountry": "AO",
+            "customerTaxID": "123456789",
+            "companyName": "Empresa Cliente Exemplo Lda",
+            "lines": [
+              {
+                "lineNumber": 1,
+                "productCode": "COMP-001",
+                "productDescription": "Computador Desktop Dell OptiPlex 7000",
+                "quantity": 2,
+                "unitOfMeasure": "UN",
+                "unitPrice": 250000,
+                "unitPriceBase": 250000,
+                "debitAmount": 500000,
+                "taxes": [
+                  {
+                    "taxType": "IVA",
+                    "taxCountryRegion": "AO",
+                    "taxCode": "NOR",
+                    "taxPercentage": 14,
+                    "taxAmount": 70000,
+                    "taxContribution": 70000
+                  }
+                ],
+                "settlementAmount": 0
+              },
+              {
+                "lineNumber": 2,
+                "productCode": "MON-002",
+                "productDescription": "Monitor LED 27 polegadas Full HD",
+                "quantity": 2,
+                "unitOfMeasure": "UN",
+                "unitPrice": 85000,
+                "unitPriceBase": 85000,
+                "debitAmount": 170000,
+                "taxes": [
+                  {
+                    "taxType": "IVA",
+                    "taxCountryRegion": "AO",
+                    "taxCode": "NOR",
+                    "taxPercentage": 14,
+                    "taxAmount": 23800,
+                    "taxContribution": 23800
+                  }
+                ],
+                "settlementAmount": 0
+              },
+              {
+                "lineNumber": 3,
+                "productCode": "TEC-003",
+                "productDescription": "Teclado e Mouse Wireless Logitech",
+                "quantity": 2,
+                "unitOfMeasure": "UN",
+                "unitPrice": 25000,
+                "unitPriceBase": 25000,
+                "debitAmount": 50000,
+                "taxes": [
+                  {
+                    "taxType": "IVA",
+                    "taxCountryRegion": "AO",
+                    "taxCode": "NOR",
+                    "taxPercentage": 14,
+                    "taxAmount": 7000,
+                    "taxContribution": 7000
+                  }
+                ],
+                "settlementAmount": 0
+              },
+              {
+                "lineNumber": 4,
+                "productCode": "SERV-004",
+                "productDescription": "Instalação e Configuração de Equipamento",
+                "quantity": 1,
+                "unitOfMeasure": "UN",
+                "unitPrice": 30000,
+                "unitPriceBase": 30000,
+                "debitAmount": 30000,
+                "taxes": [
+                  {
+                    "taxType": "IVA",
+                    "taxCountryRegion": "AO",
+                    "taxCode": "NOR",
+                    "taxPercentage": 14,
+                    "taxAmount": 4200,
+                    "taxContribution": 4200
+                  }
+                ],
+                "settlementAmount": 0
+              }
+            ],
+            "documentTotals": {
+              "netTotal": 750000,
+              "taxPayable": 105000,
+              "grossTotal": 855000,
+              "currency": {
+                "currencyCode": "AOA",
+                "currencyAmount": 855000,
+                "exchangeRate": 1
+              }
+            }
+          }
+        ]
+      },
+      "response": {
+        "success": true,
+        "documentId": "2932b98f-4e25-4c10-9049-0fc58fe15af5",
+        "processingStatus": "processing",
+        "provider": "appypay",
+        "createdAt": "2026-02-03T10:49:57.156Z",
+        "rawResponse": {
+          "id": "2932b98f-4e25-4c10-9049-0fc58fe15af5",
+          "code": 100,
+          "responseStatus": {
+            "successful": false,
+            "status": "Pending",
+            "code": null,
+            "message": null,
+            "source": "FiscalDoc",
+            "sourceDetails": {
+              "attempt": 1,
+              "type": "FT",
+              "code": "",
+              "message": "The request has been accepted for processing."
+            },
+            "reference": null
+          }
+        }
+      },
+      "errors": [],
+      "createdAt": "2026-02-03T10:49:57.165Z",
+      "updatedAt": "2026-02-03T10:49:57.165Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "FT FT001/00001",
+        "submissionGUID": "bb1a6155-aa90-4e2a-9203-8e8cdb3ebc95"
+      }
+    },
+    {
+      "id": "FT-5000000000-1770121897292-k9w99o",
+      "type": "factura",
+      "serviceName": "direct",
+      "status": "error",
+      "requestID": "49e5d086-87eb-4c61-b606-310c03366050",
+      "request": {
+        "schemaVersion": "1.2",
+        "submissionGUID": "49e5d086-87eb-4c61-b606-310c03366050",
+        "taxRegistrationNumber": "5000000000",
+        "submissionTimeStamp": "2026-02-03T12:31:22.398Z",
+        "softwareInfo": {
+          "softwareInfoDetail": {
+            "productId": "FacturAGT",
+            "productVersion": "1.0.0",
+            "softwareValidationNumber": "AGT-2025-001"
+          },
+          "jwsSoftwareSignature": "placeholder"
+        },
+        "numberOfEntries": 1,
+        "documents": [
+          {
+            "documentNo": "FT ZFC2000H22026/9105044921",
+            "documentStatus": "C",
+            "documentType": "FT",
+            "documentDate": "2026-01-26",
+            "eacCode": "47410",
+            "systemEntryDate": "2026-02-03T12:31:22.396Z",
+            "customerCountry": "AO",
+            "customerTaxID": "000370717HA033",
+            "companyName": "Cimenfort",
+            "lines": [
+              {
+                "lineNumber": 1,
+                "productCode": "PROD001",
+                "productDescription": "1.0",
+                "quantity": 1,
+                "unitOfMeasure": "UN",
+                "unitPrice": 22800,
+                "unitPriceBase": 22800,
+                "debitAmount": 22800,
+                "taxes": [
+                  {
+                    "taxType": "IVA",
+                    "taxCountryRegion": "AO",
+                    "taxCode": "NOR",
+                    "taxPercentage": 14,
+                    "taxAmount": 3192,
+                    "taxContribution": 3192
+                  }
+                ],
+                "settlementAmount": 0
+              },
+              {
+                "lineNumber": 2,
+                "productCode": "PROD002",
+                "productDescription": "1.0",
+                "quantity": 1,
+                "unitOfMeasure": "UN",
+                "unitPrice": 114,
+                "unitPriceBase": 114,
+                "debitAmount": 114,
+                "taxes": [
+                  {
+                    "taxType": "IVA",
+                    "taxCountryRegion": "AO",
+                    "taxCode": "NOR",
+                    "taxPercentage": 14,
+                    "taxAmount": 15.96,
+                    "taxContribution": 15.96
+                  }
+                ],
+                "settlementAmount": 0
+              }
+            ],
+            "documentTotals": {
+              "netTotal": 20000,
+              "taxPayable": 2800,
+              "grossTotal": 22800,
+              "currency": {
+                "currencyCode": "AOA",
+                "currencyAmount": 22800,
+                "exchangeRate": 1
+              }
+            }
+          }
+        ]
+      },
+      "response": {
+        "success": true,
+        "documentId": "3dfd91d4-0686-426f-91ad-3d6ba32815e5",
+        "processingStatus": "processing",
+        "provider": "appypay",
+        "createdAt": "2026-02-03T12:31:37.285Z",
+        "rawResponse": {
+          "id": "3dfd91d4-0686-426f-91ad-3d6ba32815e5",
+          "code": 100,
+          "responseStatus": {
+            "successful": false,
+            "status": "Pending",
+            "code": null,
+            "message": null,
+            "source": "FiscalDoc",
+            "sourceDetails": {
+              "attempt": 1,
+              "type": "FT",
+              "code": "",
+              "message": "The request has been accepted for processing."
+            },
+            "reference": null
+          }
+        }
+      },
+      "errors": [],
+      "createdAt": "2026-02-03T12:31:37.292Z",
+      "updatedAt": "2026-02-03T12:31:37.292Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "FT ZFC2000H22026/9105044921",
+        "submissionGUID": "49e5d086-87eb-4c61-b606-310c03366050"
       }
     }
   ],

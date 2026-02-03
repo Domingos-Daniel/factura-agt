@@ -7,7 +7,7 @@ import Link from 'next/link'
 export const dynamic = 'force-dynamic'
 import { FileText, FileStack, TrendingUp, Plus, AlertCircle, RefreshCw, Database, Cloud, Building2 } from 'lucide-react'
 
-import { isAuthenticated, getSeries } from '@/lib/storage'
+import { getSeries } from '@/lib/storage'
 import { MainLayout } from '@/components/layout/MainLayout'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -47,11 +47,6 @@ export default function DashboardPage() {
   }
   
   const loadData = async () => {
-    if (!isAuthenticated()) {
-      router.push('/login')
-      return
-    }
-    
     setIsRefreshing(true)
     setDataSource('loading')
     

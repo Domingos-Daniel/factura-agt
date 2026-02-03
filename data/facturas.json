@@ -43891,5 +43891,223 @@
     "provider": "appypay",
     "createdAt": "2026-02-02T20:52:32.688Z",
     "updatedAt": "2026-02-02T20:52:32.688Z"
+  },
+  {
+    "schemaVersion": "1.2",
+    "submissionGUID": "bb1a6155-aa90-4e2a-9203-8e8cdb3ebc95",
+    "taxRegistrationNumber": "999888777",
+    "submissionTimeStamp": "2026-02-03T10:49:20.315Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "FacturAGT",
+        "productVersion": "1.0.0",
+        "softwareValidationNumber": "AGT-2025-001"
+      },
+      "jwsSoftwareSignature": "placeholder"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "FT FT001/00001",
+        "documentStatus": "N",
+        "documentType": "FT",
+        "documentDate": "2026-02-02",
+        "eacCode": "47410",
+        "systemEntryDate": "2026-02-02T20:34:09.653Z",
+        "customerCountry": "AO",
+        "customerTaxID": "123456789",
+        "companyName": "Empresa Cliente Exemplo Lda",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "productCode": "COMP-001",
+            "productDescription": "Computador Desktop Dell OptiPlex 7000",
+            "quantity": 2,
+            "unitOfMeasure": "UN",
+            "unitPrice": 250000,
+            "unitPriceBase": 250000,
+            "debitAmount": 500000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxAmount": 70000,
+                "taxContribution": 70000
+              }
+            ],
+            "settlementAmount": 0
+          },
+          {
+            "lineNumber": 2,
+            "productCode": "MON-002",
+            "productDescription": "Monitor LED 27 polegadas Full HD",
+            "quantity": 2,
+            "unitOfMeasure": "UN",
+            "unitPrice": 85000,
+            "unitPriceBase": 85000,
+            "debitAmount": 170000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxAmount": 23800,
+                "taxContribution": 23800
+              }
+            ],
+            "settlementAmount": 0
+          },
+          {
+            "lineNumber": 3,
+            "productCode": "TEC-003",
+            "productDescription": "Teclado e Mouse Wireless Logitech",
+            "quantity": 2,
+            "unitOfMeasure": "UN",
+            "unitPrice": 25000,
+            "unitPriceBase": 25000,
+            "debitAmount": 50000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxAmount": 7000,
+                "taxContribution": 7000
+              }
+            ],
+            "settlementAmount": 0
+          },
+          {
+            "lineNumber": 4,
+            "productCode": "SERV-004",
+            "productDescription": "Instalação e Configuração de Equipamento",
+            "quantity": 1,
+            "unitOfMeasure": "UN",
+            "unitPrice": 30000,
+            "unitPriceBase": 30000,
+            "debitAmount": 30000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxAmount": 4200,
+                "taxContribution": 4200
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "netTotal": 750000,
+          "taxPayable": 105000,
+          "grossTotal": 855000,
+          "currency": {
+            "currencyCode": "AOA",
+            "currencyAmount": 855000,
+            "exchangeRate": 1
+          }
+        }
+      }
+    ],
+    "id": "bb1a6155-aa90-4e2a-9203-8e8cdb3ebc95",
+    "requestID": "REQ-1770115797156",
+    "validationStatus": "V",
+    "provider": "appypay",
+    "createdAt": "2026-02-03T10:49:57.156Z",
+    "updatedAt": "2026-02-03T10:49:57.156Z"
+  },
+  {
+    "schemaVersion": "1.2",
+    "submissionGUID": "49e5d086-87eb-4c61-b606-310c03366050",
+    "taxRegistrationNumber": "5000000000",
+    "submissionTimeStamp": "2026-02-03T12:31:22.398Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "FacturAGT",
+        "productVersion": "1.0.0",
+        "softwareValidationNumber": "AGT-2025-001"
+      },
+      "jwsSoftwareSignature": "placeholder"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "FT ZFC2000H22026/9105044921",
+        "documentStatus": "C",
+        "documentType": "FT",
+        "documentDate": "2026-01-26",
+        "eacCode": "47410",
+        "systemEntryDate": "2026-02-03T12:31:22.396Z",
+        "customerCountry": "AO",
+        "customerTaxID": "000370717HA033",
+        "companyName": "Cimenfort",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "productCode": "PROD001",
+            "productDescription": "1.0",
+            "quantity": 1,
+            "unitOfMeasure": "UN",
+            "unitPrice": 22800,
+            "unitPriceBase": 22800,
+            "debitAmount": 22800,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxAmount": 3192,
+                "taxContribution": 3192
+              }
+            ],
+            "settlementAmount": 0
+          },
+          {
+            "lineNumber": 2,
+            "productCode": "PROD002",
+            "productDescription": "1.0",
+            "quantity": 1,
+            "unitOfMeasure": "UN",
+            "unitPrice": 114,
+            "unitPriceBase": 114,
+            "debitAmount": 114,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxAmount": 15.96,
+                "taxContribution": 15.96
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "netTotal": 20000,
+          "taxPayable": 2800,
+          "grossTotal": 22800,
+          "currency": {
+            "currencyCode": "AOA",
+            "currencyAmount": 22800,
+            "exchangeRate": 1
+          }
+        }
+      }
+    ],
+    "id": "49e5d086-87eb-4c61-b606-310c03366050",
+    "requestID": "REQ-1770121897286",
+    "validationStatus": "V",
+    "provider": "appypay",
+    "createdAt": "2026-02-03T12:31:37.286Z",
+    "updatedAt": "2026-02-03T12:31:37.286Z"
   }
 ]

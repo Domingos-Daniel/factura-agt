@@ -15,24 +15,30 @@ export const ExcelRowSchema = z.object({
   'V Schema': z.string().optional(), // Versão do schema
   'Identif': z.string().optional(), // GUID de submissão (variante ortográfica)
   'Identf': z.string().optional(), // GUID de submissão (modelo-3)
+  'Identificador': z.string().optional(), // GUID de submissão (variação)
   'TS Subm': z.string().or(z.number()).optional(), // Timestamp submissão
   'Nº Fiscal': z.string().optional(), // NIF da empresa emissora
   'A Softwa)': z.string().optional(), // Assinatura software
+  'A Softwa': z.string().optional(), // Assinatura software (variação)
   'ID Produto': z.string().optional(), // ID do produto software
+  'ID produto': z.string().optional(), // ID do produto software (variação)
   'V Produto': z.string().optional(), // Versão do produto
+  'Nº Valida': z.string().optional(), // Número de validação
   'Qnt Fact': z.string().or(z.number()).optional(), // Quantidade de facturas
   
   // Documento
   'Nº Docum': z.string().optional(), // Número do documento (ex: FT 2025/00001)
   'Nº Documento': z.string().optional(), // Variante (modelo-2)
-  'Nº Cliente': z.string().optional(), // NIF do cliente
+  'Nº Cliente': z.string().optional(), // NIF do cliente (variante maiúscula)
+  'Nº cliente': z.string().optional(), // NIF do cliente (variante minúscula)
   'Status': z.string().optional(), // Status do documento (N=Normal, A=Anulado)
   'Raz Canc': z.string().optional(), // Razão de cancelamento
   'A Fatura': z.string().optional(), // Hash/Assinatura da factura
-  'Data Doc': z.string().optional(), // Data do documento (pode ser dd.mm.yyyy)
+  'Data Doc': z.union([z.string(), z.number()]).optional(), // Data do documento (pode ser dd.mm.yyyy ou número serial do Excel)
   'Tipo Doc': z.string().optional(), // Tipo documento (FT, FS, NC, etc)
   'Cod A': z.string().optional(), // Código EAC
-  'Dat E S': z.string().optional(), // Data entrada no sistema (pode ser yyyymmddhhmmss)
+  'Cod Activ': z.string().optional(), // Código de Actividade (variação)
+  'Dat E S': z.union([z.string(), z.number()]).optional(), // Data entrada no sistema (pode ser yyyymmddhhmmss ou número serial)
   'País cl': z.string().optional(), // País do cliente
   'Nome E': z.string().optional(), // Nome da empresa/cliente (pode ter espaços extras)
   
@@ -40,7 +46,9 @@ export const ExcelRowSchema = z.object({
   'TAX TYPE': z.string().optional(), // Tipo de imposto (IVA, IS, IEC, NS)
   'T COUN_R': z.string().optional(), // Tax Country Region
   'TAX COD': z.string().optional(), // Código do imposto
+  'TAX CODE': z.string().optional(), // Tax Code (variação)
   'TAX BAS': z.string().or(z.number()).optional(), // Base tributável
+  'TAX BASE': z.string().or(z.number()).optional(), // Base tributável (variação)
   'T PERC': z.string().or(z.number()).optional(), // Percentagem de imposto
   'T AMOUNT': z.string().or(z.number()).optional(), // Valor do imposto
   'T CONTR': z.string().or(z.number()).optional(), // Contribuição do imposto
@@ -48,9 +56,22 @@ export const ExcelRowSchema = z.object({
   
   // Campos de LINE (Modelo-3 - estrutura expandida)
   'LINE_NO': z.string().or(z.number()).optional(), // Número da linha
+  'LINE NO': z.string().or(z.number()).optional(), // Número da linha (variação)
+  'LINE NUM': z.string().or(z.number()).optional(), // Número da linha (variação 2)
   'ORIG_ON': z.string().optional(), // Original line reference
   'CR_AMOUNT': z.string().or(z.number()).optional(), // Credit Amount
   'DE_AMOUNT': z.string().or(z.number()).optional(), // Debit Amount
+  'L_CR_AM': z.string().or(z.number()).optional(), // Line Credit Amount (variação)
+  'L_DEB_AM': z.string().or(z.number()).optional(), // Line Debit Amount (variação)
+  'PRODU_COD': z.string().optional(), // Product Code
+  'PR_DESC': z.string().optional(), // Product Description
+  'QUANTITY': z.string().or(z.number()).optional(), // Quantity
+  'UN_MEA': z.string().optional(), // Unit of Measure
+  'UNIT_PRI': z.string().or(z.number()).optional(), // Unit Price
+  'UN_PR_B': z.string().or(z.number()).optional(), // Unit Price Base
+  'REASON': z.string().optional(), // Reason
+  'REFERENCE': z.string().optional(), // Reference
+  'SETT_AM': z.string().or(z.number()).optional(), // Settlement Amount
   
   // Campos de TOTALS (Modelo-3 - estrutura expandida)
   'GR TOTAL': z.string().or(z.number()).optional(), // Gross Total
@@ -74,7 +95,7 @@ export const ExcelRowSchema = z.object({
   // Campos SAP legados (para compatibilidade com exemplo_facturas_sap.csv)
   VBELN: z.string().optional(), // Nº documento SAP
   FKART: z.string().optional(), // Tipo documento (F1=FT, F2=FS, RE=NC)
-  FKDAT: z.string().optional(), // Data emissão (YYYYMMDD)
+  FKDAT: z.union([z.string(), z.number()]).optional(), // Data emissão (YYYYMMDD ou número serial)
   KUNAG: z.string().optional(), // Código cliente SAP
   STCD1: z.string().optional(), // NIF Cliente
   NAME1: z.string().optional(), // Nome Cliente

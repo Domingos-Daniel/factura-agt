@@ -2,7 +2,6 @@
 
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { isAuthenticated } from '@/lib/storage'
 
 export const dynamic = 'force-dynamic'
 
@@ -10,11 +9,20 @@ export default function HomePage() {
   const router = useRouter()
   
   useEffect(() => {
-    if (isAuthenticated()) {
-      router.push('/dashboard')
-    } else {
-      router.push('/login')
+    const checkAuth = async () => {
+      try {
+        const response = await fetch('/api/auth/me')
+        if (response.ok) {
+          router.push('/dashboard')
+        } else {
+          router.push('/login')
+        }
+      } catch (error) {
+        router.push('/login')
+      }
     }
+    
+    checkAuth()
   }, [router])
   
   return (

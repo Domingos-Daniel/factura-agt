@@ -172,92 +172,75 @@ export function ExcelPreview({
       <div className="border rounded-lg">
         <div className="p-4 border-b bg-muted/50">
           <p className="font-semibold text-sm">Preview dos Dados (primeiras {displayRows.length} linhas)</p>
+          <p className="text-xs text-muted-foreground mt-1">Todos os campos encontrados no ficheiro</p>
         </div>
 
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-8">#</TableHead>
-                <TableHead>Documento</TableHead>
-                <TableHead>Tipo</TableHead>
-                <TableHead>Data</TableHead>
-                <TableHead>Cliente (NIF)</TableHead>
-                <TableHead>Nome Cliente</TableHead>
-                <TableHead className="text-right">Valor</TableHead>
+                <TableHead className="w-8 sticky left-0 bg-background z-10">#</TableHead>
+                {/* Extrair todos os campos únicos das linhas */}
+                {Object.keys(displayRows[0] || {}).map((fieldName) => (
+                  <TableHead key={fieldName} className="min-w-[150px]">
+                    <div className="flex flex-col">
+                      <span className="font-semibold">{fieldName}</span>
+                    </div>
+                  </TableHead>
+                ))}
               </TableRow>
             </TableHeader>
             <TableBody>
               {displayRows.map((row, idx) => {
-                // Detectar formato (AGT, modelo-2 ou SAP)
-                const isAGT = row['Nº Docum'] !== undefined
-                const isModelo2 = row['Nº Documento'] !== undefined
-                const isSAP = row.VBELN !== undefined
-                
-                let docNum: string | undefined
-                let docType: string | undefined
-                let docDate: string | undefined
-                let clientNIF: string | undefined
-                let clientName: string | undefined
-                
-                if (isModelo2) {
-                  // Formato modelo-2
-                  docNum = row['Nº Documento'] as string
-                  docType = row['Tipo Doc'] as string
-                  // Extrair tipo do número do documento se vazio
-                  if (!docType || docType.trim() === '') {
-                    const match = docNum?.match(/^([A-Z]{2})\s/)
-                    if (match) docType = match[1]
-                  }
-                  docDate = row['Data Doc'] as string
-                  clientNIF = row['Nº Fiscal'] as string || row['Nº Cliente'] as string
-                  clientName = row['Nome E'] as string
-                } else if (isAGT) {
-                  // Formato AGT
-                  docNum = row['Nº Docum'] as string
-                  docType = row['Tipo Doc'] as string
-                  docDate = row['Data Doc'] as string
-                  clientNIF = row['Nº Cliente'] as string
-                  clientName = row['Nome E'] as string
-                } else {
-                  // Formato SAP legado
-                  docNum = row.VBELN as string
-                  docType = row.FKART as string
-                  docDate = row.FKDAT as string
-                  clientNIF = row.STCD1 as string
-                  clientName = row.NAME1 as string
-                }
-                
-                // Extrair valor total
-                let totalValue = 0
-                if ((isAGT || isModelo2) && row['DOCUMENT_TOTALS']) {
-                  try {
-                    const totals = JSON.parse(row['DOCUMENT_TOTALS'] as string)
-                    totalValue = totals.grossTotal || totals.netTotal || 0
-                  } catch {}
-                } else if (row.NETWR) {
-                  totalValue = typeof row.NETWR === 'number' ? row.NETWR : parseFloat(row.NETWR as string)
-                }
-                
                 return (
                   <TableRow key={idx} className="text-sm">
-                    <TableCell className="text-muted-foreground">{idx + 1}</TableCell>
-                    <TableCell className="font-mono">{docNum || '-'}</TableCell>
-                    <TableCell>
-                      <span className="inline-block bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100 px-2 py-1 rounded text-xs font-semibold">
-                        {docType || 'FT'}
-                      </span>
+                    <TableCell className="text-muted-foreground font-semibold sticky left-0 bg-background z-10">
+                      {idx + 1}
                     </TableCell>
-                    <TableCell>{docDate ? (isAGT || isModelo2 ? docDate : formatDate(docDate as string)) : '-'}</TableCell>
-                    <TableCell className="font-mono">{clientNIF || '-'}</TableCell>
-                    <TableCell>
-                      <div className="max-w-xs line-clamp-1">
-                        {clientName || '-'}
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-right font-semibold">
-                      {totalValue > 0 ? totalValue.toLocaleString('pt-AO') : '-'}
-                    </TableCell>
+                    {/* Mostrar todos os campos */}
+                    {Object.keys(displayRows[0] || {}).map((fieldName) => {
+                      const value = row[fieldName as keyof ExcelRow]
+                      
+                      // Formatação especial para valores
+                      let displayValue = '-'
+                      
+                      if (value !== undefined && value !== null && value !== '') {
+                        // Se for número
+                        if (typeof value === 'number') {
+                          // Se for número serial de data (entre 1 e 100000), mostrar como está
+                          if (value > 1 && value < 100000) {
+                            displayValue = value.toString()
+                          } else {
+                            displayValue = value.toLocaleString('pt-AO')
+                          }
+                        } 
+                        // Se for string longa (JSON), truncar
+                        else if (typeof value === 'string' && value.length > 100) {
+                          displayValue = value.substring(0, 97) + '...'
+                        }
+                        // Outros valores
+                        else {
+                          displayValue = String(value)
+                        }
+                      }
+                      
+                      // Destacar campos importantes
+                      const isImportant = [
+                        'Nº Docum', 'Nº Documento', 'Tipo Doc', 'Data Doc',
+                        'Nº Cliente', 'Nº cliente', 'Nome E', 'GR TOTAL', 'T PAYABLE'
+                      ].includes(fieldName)
+                      
+                      return (
+                        <TableCell 
+                          key={fieldName}
+                          className={`${isImportant ? 'font-semibold' : ''}`}
+                        >
+                          <div className="max-w-xs truncate" title={String(value || '')}>
+                            {displayValue}
+                          </div>
+                        </TableCell>
+                      )
+                    })}
                   </TableRow>
                 )
               })}

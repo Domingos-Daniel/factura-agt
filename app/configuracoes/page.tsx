@@ -19,7 +19,6 @@ import {
   updateAppConfig,
   getAuth,
   saveAuth,
-  isAuthenticated,
   saveFacturas,
   saveSeries,
 } from '@/lib/storage'
@@ -68,81 +67,151 @@ export default function ConfiguracoesPage() {
   })
 
   useEffect(() => {
-    if (!isAuthenticated()) {
-      router.push('/login')
-      return
+    const checkAuth = async () => {
+      try {
+        const authResponse = await fetch('/api/auth/me')
+        if (!authResponse.ok) {
+          router.push('/login')
+          return
+        }
+
+        // Load settings from database
+        const settingsResponse = await fetch('/api/config/settings')
+        if (settingsResponse.ok) {
+          const result = await settingsResponse.json()
+          if (result.success && result.data) {
+            const { provider, appypay, agt } = result.data
+
+            // Update config from DB settings
+            const dbConfig: AppConfig = {
+              ...DEFAULT_APP_CONFIG,
+              companyName: provider?.companyName || DEFAULT_APP_CONFIG.companyName,
+              companyNIF: provider?.nif || DEFAULT_APP_CONFIG.companyNIF,
+              companyEmail: provider?.email || DEFAULT_APP_CONFIG.companyEmail,
+              companyAddress: provider?.address || DEFAULT_APP_CONFIG.companyAddress,
+              defaultCurrency: (provider?.defaultCurrency as any) || DEFAULT_APP_CONFIG.defaultCurrency,
+              defaultPaymentMechanism: (provider?.defaultPaymentMechanism as any) || DEFAULT_APP_CONFIG.defaultPaymentMechanism,
+            }
+
+            setConfig(dbConfig)
+            setProfile({
+              companyName: dbConfig.companyName,
+              companyNIF: dbConfig.companyNIF,
+              companyEmail: dbConfig.companyEmail,
+              companyAddress: dbConfig.companyAddress,
+            })
+            setPreferences({
+              defaultCurrency: dbConfig.defaultCurrency,
+              defaultPaymentMechanism: dbConfig.defaultPaymentMechanism,
+              defaultCountry: dbConfig.defaultCountry,
+              aiAssistantsEnabled: dbConfig.aiAssistantsEnabled,
+              autoSuggestTaxes: dbConfig.autoSuggestTaxes,
+            })
+          }
+        }
+      } catch (error) {
+        console.error('Erro ao carregar configurações:', error)
+      }
     }
 
-    const currentConfig = getAppConfig()
-    setConfig(currentConfig)
-    setPreferences({
-      defaultCurrency: currentConfig.defaultCurrency,
-      defaultPaymentMechanism: currentConfig.defaultPaymentMechanism,
-      defaultCountry: currentConfig.defaultCountry,
-      aiAssistantsEnabled: currentConfig.aiAssistantsEnabled,
-      autoSuggestTaxes: currentConfig.autoSuggestTaxes,
-    })
-    setSystemSettings({
-      systemName: currentConfig.systemName || 'Sistema AGT',
-      systemSubtitle: currentConfig.systemSubtitle || 'Faturação Eletrónica',
-    })
-
-    const auth = getAuth()
-    setProfile({
-      companyName: auth?.user?.company || currentConfig.companyName,
-      companyNIF: auth?.user?.nif || currentConfig.companyNIF,
-      companyEmail: auth?.user?.email || currentConfig.companyEmail,
-      companyAddress: currentConfig.companyAddress,
-    })
-
+    checkAuth()
     setIntegrations(getIntegrations())
   }, [router])
 
-  const handleProfileSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleProfileSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const nextConfig = updateAppConfig({
-      companyName: profile.companyName,
-      companyNIF: profile.companyNIF,
-      companyEmail: profile.companyEmail,
-      companyAddress: profile.companyAddress,
-    })
-    setConfig(nextConfig)
+    
+    try {
+      const response = await fetch('/api/config/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          provider: {
+            nif: profile.companyNIF,
+            companyName: profile.companyName,
+            email: profile.companyEmail,
+            address: profile.companyAddress,
+          }
+        }),
+      })
 
-    const auth = getAuth()
-    if (auth) {
-      const updatedAuth = {
-        ...auth,
-        user: {
-          ...auth.user,
-          name: profile.companyName,
-          company: profile.companyName,
-          nif: profile.companyNIF,
-          email: profile.companyEmail,
-        },
+      const result = await response.json()
+      
+      if (result.success) {
+        // Update local config for immediate UI feedback
+        const nextConfig = updateAppConfig({
+          companyName: profile.companyName,
+          companyNIF: profile.companyNIF,
+          companyEmail: profile.companyEmail,
+          companyAddress: profile.companyAddress,
+        })
+        setConfig(nextConfig)
+
+        toast({
+          title: 'Configurações guardadas',
+          description: 'Os dados do emitente foram atualizados na base de dados.',
+        })
+      } else {
+        toast({
+          variant: 'destructive',
+          title: 'Erro ao guardar',
+          description: result.error || 'Não foi possível guardar as configurações.',
+        })
       }
-      saveAuth(updatedAuth)
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        title: 'Erro',
+        description: 'Ocorreu um erro ao comunicar com o servidor.',
+      })
     }
-
-    toast({
-      title: 'Configurações guardadas',
-      description: 'Os dados do emitente foram atualizados com sucesso.',
-    })
   }
 
-  const handlePreferencesSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handlePreferencesSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const updated = updateAppConfig({
-      defaultCurrency: preferences.defaultCurrency,
-      defaultPaymentMechanism: preferences.defaultPaymentMechanism,
-      defaultCountry: preferences.defaultCountry,
-      aiAssistantsEnabled: preferences.aiAssistantsEnabled,
-      autoSuggestTaxes: preferences.autoSuggestTaxes,
-    })
-    setConfig(updated)
-    toast({
-      title: 'Preferências guardadas',
-      description: 'Os valores padrão para novas facturas foram atualizados.',
-    })
+    
+    try {
+      const response = await fetch('/api/config/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          provider: {
+            defaultCurrency: preferences.defaultCurrency,
+            defaultPaymentMechanism: preferences.defaultPaymentMechanism,
+          }
+        }),
+      })
+
+      const result = await response.json()
+      
+      if (result.success) {
+        const updated = updateAppConfig({
+          defaultCurrency: preferences.defaultCurrency,
+          defaultPaymentMechanism: preferences.defaultPaymentMechanism,
+          defaultCountry: preferences.defaultCountry,
+          aiAssistantsEnabled: preferences.aiAssistantsEnabled,
+          autoSuggestTaxes: preferences.autoSuggestTaxes,
+        })
+        setConfig(updated)
+        
+        toast({
+          title: 'Preferências guardadas',
+          description: 'Os valores padrão foram atualizados na base de dados.',
+        })
+      } else {
+        toast({
+          variant: 'destructive',
+          title: 'Erro ao guardar',
+          description: result.error || 'Não foi possível guardar as preferências.',
+        })
+      }
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        title: 'Erro',
+        description: 'Ocorreu um erro ao comunicar com o servidor.',
+      })
+    }
   }
 
   const handleSystemSettingsSubmit = (event: React.FormEvent<HTMLFormElement>) => {

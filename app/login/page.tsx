@@ -36,24 +36,29 @@ function LoginFormContent() {
       const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nif: data.nif, password: data.password }),
+        body: JSON.stringify({ 
+          email: data.nif, // Using nif field as email field
+          password: data.password 
+        }),
       })
       
       const result = await response.json()
       
       if (result.success && result.data) {
-        saveAuth(result.data)
+        // Auth is now handled via httpOnly cookies, no need to save locally
         toast({
           title: 'Autenticação bem-sucedida',
           description: `Bem-vindo, ${result.data.user.name}!`,
         })
         const redirectTo = searchParams.get('redirectTo') || '/dashboard'
-        router.push(redirectTo)
+        
+        // Usar window.location para garantir que o cookie seja lido pelo middleware
+        window.location.href = redirectTo
       } else {
         toast({
           variant: 'destructive',
           title: 'Erro de autenticação',
-          description: result.error || 'NIF ou senha incorretos',
+          description: result.error || 'Email ou senha incorretos',
         })
       }
     } catch (error) {
@@ -88,10 +93,10 @@ function LoginFormContent() {
           <CardContent className="space-y-6">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="nif" className="text-sm font-medium">NIF da Empresa</Label>
+                <Label htmlFor="nif" className="text-sm font-medium">Email ou NIF</Label>
                 <Input
                   id="nif"
-                  placeholder="123456789"
+                  placeholder="admin@facturagt.ao ou 123456789"
                   {...register('nif')}
                   disabled={isLoading}
                   className="h-11"
