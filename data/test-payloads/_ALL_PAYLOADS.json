@@ -1,0 +1,514 @@
+[
+  {
+    "schemaVersion": "1.0",
+    "submissionUUID": "6a8cc76d-6ae3-4f42-838a-b4eda9e75f06",
+    "taxRegistrationNumber": "123456789",
+    "submissionTimeStamp": "2026-02-03T15:19:43.957Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "SOFT-FACT-2025",
+        "productVersion": "1.0.0",
+        "softwareValidationNumber": "AGT-CERT-2025-001234"
+      },
+      "jwsSoftwareSignature": "eyJwcm9kdWN0SWQiOiJTT0ZULUZBQ1QtMjAyNSIsInByb2R1Y3RWZXJzaW9uIjoiMS4wLjAiLCJzb2Z0d2FyZVZhbGlkYXRpb25OdW1iZXIiOiJBR1QtQ0VSVC0yMDI1LTAwMTIzNCIsInRpbWVzdGFtcCI6IjIwMjYtMDItMDNUMTU6MTk6NDMuOTU3WiJ9X1NJR05FRF8xNzcwMTMxOTgzOTU3===================================="
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "AC A/000001",
+        "documentStatus": "N",
+        "jwsDocumentSignature": "eyJkb2N1bWVudE5vIjoiQUMgQS8wMDAwMDEiLCJkb2N1bWVudFN0YXR1cyI6Ik4iLCJqd3NEb2N1bWVudFNpZ25hdHVyZSI6IiIsImRvY3VtZW50RGF0ZSI6IjIwMjUtMDItMDMiLCJkb2N1bWVudFR5cGUiOiJBQyIsImVhY0NvZGUiOiI2MjAxMCIsInN5c3RlbUVudHJ5RGF0ZSI6IjIwMjUtMDItMDNUMDA6MDA6MDAuMDAwWiIsImN1c3Rv",
+        "documentDate": "2025-02-03",
+        "documentType": "AC",
+        "eacCode": "62010",
+        "systemEntryDate": "2025-02-03T00:00:00.000Z",
+        "customerCountry": "AO",
+        "customerTaxID": "987654321",
+        "companyName": "EMPRESA TECNOLOGIAS AVANÇADAS, LDA",
+        "lines": [
+          {
+            "lineNumber": "1",
+            "productCode": "SERV-001",
+            "productDescription": "Consultoria em Tecnologias de Informação - Desenvolvimento de Software",
+            "quantity": "40.00",
+            "unitOfMeasure": "Hora",
+            "unitPrice": "15000.00",
+            "unitPriceBase": "15000.00",
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxBase": "600000.00",
+                "taxPercentage": "14.00",
+                "taxAmount": "84000.00"
+              }
+            ],
+            "settlementAmount": "684000.00"
+          },
+          {
+            "lineNumber": "2",
+            "productCode": "LIC-SOFT-001",
+            "productDescription": "Licença Anual de Software de Gestão Empresarial",
+            "quantity": "1.00",
+            "unitOfMeasure": "Unidade",
+            "unitPrice": "250000.00",
+            "unitPriceBase": "250000.00",
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxBase": "250000.00",
+                "taxPercentage": "14.00",
+                "taxAmount": "35000.00"
+              }
+            ],
+            "settlementAmount": "285000.00"
+          },
+          {
+            "lineNumber": "3",
+            "productCode": "FORM-001",
+            "productDescription": "Formação em Gestão de Projectos - 5 dias",
+            "quantity": "5.00",
+            "unitOfMeasure": "Dia",
+            "unitPrice": "8000.00",
+            "unitPriceBase": "8000.00",
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxBase": "40000.00",
+                "taxPercentage": "14.00",
+                "taxAmount": "5600.00"
+              }
+            ],
+            "settlementAmount": "45600.00"
+          }
+        ],
+        "documentTotals": {
+          "taxPayable": "124600.00",
+          "netTotal": "890000.00",
+          "grossTotal": "1014600.00"
+        }
+      }
+    ]
+  },
+  {
+    "schemaVersion": "1.0",
+    "submissionUUID": "1246b259-eac7-4117-b5ae-67056ac52599",
+    "taxRegistrationNumber": "123456789",
+    "submissionTimeStamp": "2026-02-03T15:19:43.960Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "SOFT-FACT-2025",
+        "productVersion": "1.0.0",
+        "softwareValidationNumber": "AGT-CERT-2025-001234"
+      },
+      "jwsSoftwareSignature": "eyJwcm9kdWN0SWQiOiJTT0ZULUZBQ1QtMjAyNSIsInByb2R1Y3RWZXJzaW9uIjoiMS4wLjAiLCJzb2Z0d2FyZVZhbGlkYXRpb25OdW1iZXIiOiJBR1QtQ0VSVC0yMDI1LTAwMTIzNCIsInRpbWVzdGFtcCI6IjIwMjYtMDItMDNUMTU6MTk6NDMuOTYwWiJ9X1NJR05FRF8xNzcwMTMxOTgzOTYw===================================="
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "FR B/000042",
+        "documentStatus": "N",
+        "jwsDocumentSignature": "eyJkb2N1bWVudE5vIjoiRlIgQi8wMDAwNDIiLCJkb2N1bWVudFN0YXR1cyI6Ik4iLCJqd3NEb2N1bWVudFNpZ25hdHVyZSI6IiIsImRvY3VtZW50RGF0ZSI6IjIwMjUtMDItMDMiLCJkb2N1bWVudFR5cGUiOiJGUiIsImVhY0NvZGUiOiI0NzE5MCIsInN5c3RlbUVudHJ5RGF0ZSI6IjIwMjUtMDItMDNUMDA6MDA6MDAuMDAwWiIsImN1c3Rv",
+        "documentDate": "2025-02-03",
+        "documentType": "FR",
+        "eacCode": "47190",
+        "systemEntryDate": "2025-02-03T00:00:00.000Z",
+        "customerCountry": "AO",
+        "customerTaxID": "999999999",
+        "companyName": "CONSUMIDOR FINAL",
+        "lines": [
+          {
+            "lineNumber": "1",
+            "productCode": "PROD-NB-001",
+            "productDescription": "Notebook Dell Latitude 5520 - Intel i7, 16GB RAM, 512GB SSD",
+            "quantity": "2.00",
+            "unitOfMeasure": "Unidade",
+            "unitPrice": "185000.00",
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxBase": "370000.00",
+                "taxPercentage": "14.00",
+                "taxAmount": "51800.00"
+              }
+            ],
+            "settlementAmount": "421800.00"
+          },
+          {
+            "lineNumber": "2",
+            "productCode": "PROD-MS-001",
+            "productDescription": "Mouse Wireless Logitech MX Master 3",
+            "quantity": "2.00",
+            "unitOfMeasure": "Unidade",
+            "unitPrice": "4500.00",
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxBase": "9000.00",
+                "taxPercentage": "14.00",
+                "taxAmount": "1260.00"
+              }
+            ],
+            "settlementAmount": "10260.00"
+          },
+          {
+            "lineNumber": "3",
+            "productCode": "PROD-MCH-001",
+            "productDescription": "Mochila para Notebook até 15.6\" - Impermeável",
+            "quantity": "2.00",
+            "unitOfMeasure": "Unidade",
+            "unitPrice": "12000.00",
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxBase": "24000.00",
+                "taxPercentage": "14.00",
+                "taxAmount": "3360.00"
+              }
+            ],
+            "settlementAmount": "27360.00"
+          }
+        ],
+        "documentTotals": {
+          "taxPayable": "56420.00",
+          "netTotal": "403000.00",
+          "grossTotal": "459420.00"
+        }
+      }
+    ]
+  },
+  {
+    "schemaVersion": "1.0",
+    "submissionUUID": "e11327bf-abfb-4564-9217-353db2f2103f",
+    "taxRegistrationNumber": "123456789",
+    "submissionTimeStamp": "2026-02-03T15:19:43.962Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "SOFT-FACT-2025",
+        "productVersion": "1.0.0",
+        "softwareValidationNumber": "AGT-CERT-2025-001234"
+      },
+      "jwsSoftwareSignature": "eyJwcm9kdWN0SWQiOiJTT0ZULUZBQ1QtMjAyNSIsInByb2R1Y3RWZXJzaW9uIjoiMS4wLjAiLCJzb2Z0d2FyZVZhbGlkYXRpb25OdW1iZXIiOiJBR1QtQ0VSVC0yMDI1LTAwMTIzNCIsInRpbWVzdGFtcCI6IjIwMjYtMDItMDNUMTU6MTk6NDMuOTYyWiJ9X1NJR05FRF8xNzcwMTMxOTgzOTYy===================================="
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "FT A/000125",
+        "documentStatus": "N",
+        "jwsDocumentSignature": "eyJkb2N1bWVudE5vIjoiRlQgQS8wMDAxMjUiLCJkb2N1bWVudFN0YXR1cyI6Ik4iLCJqd3NEb2N1bWVudFNpZ25hdHVyZSI6IiIsImRvY3VtZW50RGF0ZSI6IjIwMjUtMDItMDMiLCJkb2N1bWVudFR5cGUiOiJGVCIsImVhY0NvZGUiOiI3MDIyMCIsInN5c3RlbUVudHJ5RGF0ZSI6IjIwMjUtMDItMDNUMDA6MDA6MDAuMDAwWiIsImN1c3Rv",
+        "documentDate": "2025-02-03",
+        "documentType": "FT",
+        "eacCode": "70220",
+        "systemEntryDate": "2025-02-03T00:00:00.000Z",
+        "customerCountry": "PT",
+        "customerTaxID": "501234567",
+        "companyName": "CONSULTORES INTERNACIONAIS PORTUGAL, SA",
+        "lines": [
+          {
+            "lineNumber": "1",
+            "productCode": "SERV-AUD-001",
+            "productDescription": "Auditoria Financeira e Revisão de Contas - Exercício 2024",
+            "quantity": "80.00",
+            "unitOfMeasure": "Hora",
+            "unitPrice": "25000.00",
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxBase": "2000000.00",
+                "taxPercentage": "14.00",
+                "taxAmount": "280000.00"
+              }
+            ],
+            "settlementAmount": "2280000.00"
+          },
+          {
+            "lineNumber": "2",
+            "productCode": "SERV-FISC-001",
+            "productDescription": "Consultoria Fiscal e Planeamento Tributário",
+            "quantity": "60.00",
+            "unitOfMeasure": "Hora",
+            "unitPrice": "22000.00",
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxBase": "1320000.00",
+                "taxPercentage": "14.00",
+                "taxAmount": "184800.00"
+              }
+            ],
+            "settlementAmount": "1504800.00"
+          },
+          {
+            "lineNumber": "3",
+            "productCode": "SERV-REL-001",
+            "productDescription": "Relatório Executivo de Auditoria e Recomendações",
+            "quantity": "1.00",
+            "unitOfMeasure": "Unidade",
+            "unitPrice": "150000.00",
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxBase": "150000.00",
+                "taxPercentage": "14.00",
+                "taxAmount": "21000.00"
+              }
+            ],
+            "settlementAmount": "171000.00"
+          }
+        ],
+        "documentTotals": {
+          "taxPayable": "485800.00",
+          "netTotal": "3470000.00",
+          "grossTotal": "3955800.00"
+        },
+        "withholdingTaxList": [
+          {
+            "withholdingTaxType": "IVA",
+            "withholdingTaxDescription": "Retenção de IVA na fonte - 6,5% sobre IVA (cliente não residente)",
+            "withholdingTaxAmount": "31577.00"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "schemaVersion": "1.0",
+    "submissionUUID": "146ac6fe-37cc-4f65-9647-9e3ec5995c9f",
+    "taxRegistrationNumber": "123456789",
+    "submissionTimeStamp": "2026-02-03T15:19:43.964Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "SOFT-FACT-2025",
+        "productVersion": "1.0.0",
+        "softwareValidationNumber": "AGT-CERT-2025-001234"
+      },
+      "jwsSoftwareSignature": "eyJwcm9kdWN0SWQiOiJTT0ZULUZBQ1QtMjAyNSIsInByb2R1Y3RWZXJzaW9uIjoiMS4wLjAiLCJzb2Z0d2FyZVZhbGlkYXRpb25OdW1iZXIiOiJBR1QtQ0VSVC0yMDI1LTAwMTIzNCIsInRpbWVzdGFtcCI6IjIwMjYtMDItMDNUMTU6MTk6NDMuOTY0WiJ9X1NJR05FRF8xNzcwMTMxOTgzOTY0===================================="
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "NC A/000015",
+        "documentStatus": "N",
+        "jwsDocumentSignature": "eyJkb2N1bWVudE5vIjoiTkMgQS8wMDAwMTUiLCJkb2N1bWVudFN0YXR1cyI6Ik4iLCJqd3NEb2N1bWVudFNpZ25hdHVyZSI6IiIsImRvY3VtZW50RGF0ZSI6IjIwMjUtMDItMDMiLCJkb2N1bWVudFR5cGUiOiJOQyIsImVhY0NvZGUiOiI0NzE5MCIsInN5c3RlbUVudHJ5RGF0ZSI6IjIwMjUtMDItMDNUMDA6MDA6MDAuMDAwWiIsImN1c3Rv",
+        "documentDate": "2025-02-03",
+        "documentType": "NC",
+        "eacCode": "47190",
+        "systemEntryDate": "2025-02-03T00:00:00.000Z",
+        "customerCountry": "AO",
+        "customerTaxID": "987654321",
+        "companyName": "EMPRESA TECNOLOGIAS AVANÇADAS, LDA",
+        "lines": [
+          {
+            "lineNumber": "1",
+            "productCode": "PROD-NB-001",
+            "productDescription": "Notebook Dell Latitude 5520 - Devolução por defeito de fábrica",
+            "quantity": "1.00",
+            "unitOfMeasure": "Unidade",
+            "unitPrice": "185000.00",
+            "referenceInfo": {
+              "reference": "FT A/000100",
+              "referenceItemLineNo": 1,
+              "reason": "Devolução de mercadoria"
+            },
+            "creditAmount": "185000.00",
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxBase": "185000.00",
+                "taxPercentage": "14.00",
+                "taxAmount": "25900.00"
+              }
+            ],
+            "settlementAmount": "-210900.00"
+          }
+        ],
+        "documentTotals": {
+          "taxPayable": "-25900.00",
+          "netTotal": "-185000.00",
+          "grossTotal": "210900.00"
+        }
+      }
+    ]
+  },
+  {
+    "schemaVersion": "1.0",
+    "submissionUUID": "feb8d55e-e34f-48b4-aa7a-3c5f228a33a1",
+    "taxRegistrationNumber": "123456789",
+    "submissionTimeStamp": "2026-02-03T15:19:43.966Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "SOFT-FACT-2025",
+        "productVersion": "1.0.0",
+        "softwareValidationNumber": "AGT-CERT-2025-001234"
+      },
+      "jwsSoftwareSignature": "eyJwcm9kdWN0SWQiOiJTT0ZULUZBQ1QtMjAyNSIsInByb2R1Y3RWZXJzaW9uIjoiMS4wLjAiLCJzb2Z0d2FyZVZhbGlkYXRpb25OdW1iZXIiOiJBR1QtQ0VSVC0yMDI1LTAwMTIzNCIsInRpbWVzdGFtcCI6IjIwMjYtMDItMDNUMTU6MTk6NDMuOTY2WiJ9X1NJR05FRF8xNzcwMTMxOTgzOTY2===================================="
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "ND A/000008",
+        "documentStatus": "N",
+        "jwsDocumentSignature": "eyJkb2N1bWVudE5vIjoiTkQgQS8wMDAwMDgiLCJkb2N1bWVudFN0YXR1cyI6Ik4iLCJqd3NEb2N1bWVudFNpZ25hdHVyZSI6IiIsImRvY3VtZW50RGF0ZSI6IjIwMjUtMDItMDMiLCJkb2N1bWVudFR5cGUiOiJORCIsImVhY0NvZGUiOiI3MDIyMCIsInN5c3RlbUVudHJ5RGF0ZSI6IjIwMjUtMDItMDNUMDA6MDA6MDAuMDAwWiIsImN1c3Rv",
+        "documentDate": "2025-02-03",
+        "documentType": "ND",
+        "eacCode": "70220",
+        "systemEntryDate": "2025-02-03T00:00:00.000Z",
+        "customerCountry": "AO",
+        "customerTaxID": "456789123",
+        "companyName": "CONSTRUÇÕES E OBRAS GERAIS, LDA",
+        "lines": [
+          {
+            "lineNumber": "1",
+            "productCode": "JUROS-MORA",
+            "productDescription": "Juros de mora por atraso de pagamento - 50 dias após vencimento",
+            "quantity": "1.00",
+            "unitOfMeasure": "Unidade",
+            "unitPrice": "45000.00",
+            "referenceInfo": {
+              "reference": "FT A/000095",
+              "reason": "Juros de mora"
+            },
+            "debitAmount": "45000.00",
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "ISE",
+                "taxBase": "45000.00",
+                "taxPercentage": "0.00",
+                "taxAmount": "0.00",
+                "taxExemptionCode": "M10"
+              }
+            ],
+            "settlementAmount": "45000.00"
+          },
+          {
+            "lineNumber": "2",
+            "productCode": "DESP-COB",
+            "productDescription": "Despesas administrativas de cobrança",
+            "quantity": "1.00",
+            "unitOfMeasure": "Unidade",
+            "unitPrice": "8000.00",
+            "referenceInfo": {
+              "reference": "FT A/000095",
+              "reason": "Despesas extras"
+            },
+            "debitAmount": "8000.00",
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "ISE",
+                "taxBase": "8000.00",
+                "taxPercentage": "0.00",
+                "taxAmount": "0.00",
+                "taxExemptionCode": "M10"
+              }
+            ],
+            "settlementAmount": "8000.00"
+          }
+        ],
+        "documentTotals": {
+          "taxPayable": "0.00",
+          "netTotal": "53000.00",
+          "grossTotal": "53000.00"
+        }
+      }
+    ]
+  },
+  {
+    "schemaVersion": "1.0",
+    "submissionUUID": "b00f3bf5-7968-4580-9a3e-fff2af3cc87c",
+    "taxRegistrationNumber": "123456789",
+    "submissionTimeStamp": "2026-02-03T15:19:43.969Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "SOFT-FACT-2025",
+        "productVersion": "1.0.0",
+        "softwareValidationNumber": "AGT-CERT-2025-001234"
+      },
+      "jwsSoftwareSignature": "eyJwcm9kdWN0SWQiOiJTT0ZULUZBQ1QtMjAyNSIsInByb2R1Y3RWZXJzaW9uIjoiMS4wLjAiLCJzb2Z0d2FyZVZhbGlkYXRpb25OdW1iZXIiOiJBR1QtQ0VSVC0yMDI1LTAwMTIzNCIsInRpbWVzdGFtcCI6IjIwMjYtMDItMDNUMTU6MTk6NDMuOTY5WiJ9X1NJR05FRF8xNzcwMTMxOTgzOTY5===================================="
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "RC C/000256",
+        "documentStatus": "N",
+        "jwsDocumentSignature": "eyJkb2N1bWVudE5vIjoiUkMgQy8wMDAyNTYiLCJkb2N1bWVudFN0YXR1cyI6Ik4iLCJqd3NEb2N1bWVudFNpZ25hdHVyZSI6IiIsImRvY3VtZW50RGF0ZSI6IjIwMjUtMDItMDMiLCJkb2N1bWVudFR5cGUiOiJSQyIsImVhY0NvZGUiOiI0NzE5MCIsInN5c3RlbUVudHJ5RGF0ZSI6IjIwMjUtMDItMDNUMDA6MDA6MDAuMDAwWiIsImN1c3Rv",
+        "documentDate": "2025-02-03",
+        "documentType": "RC",
+        "eacCode": "47190",
+        "systemEntryDate": "2025-02-03T00:00:00.000Z",
+        "customerCountry": "AO",
+        "customerTaxID": "999999999",
+        "companyName": "CONSUMIDOR FINAL",
+        "lines": [
+          {
+            "lineNumber": "1",
+            "productCode": "PGTO-CASH",
+            "productDescription": "Pagamento em numerário referente à Factura FT A/000080",
+            "quantity": "1.00",
+            "unitOfMeasure": "Unidade",
+            "unitPrice": "250000.00",
+            "taxes": [],
+            "settlementAmount": "250000.00"
+          },
+          {
+            "lineNumber": "2",
+            "productCode": "PGTO-CASH",
+            "productDescription": "Pagamento em numerário referente à Factura FT A/000081",
+            "quantity": "1.00",
+            "unitOfMeasure": "Unidade",
+            "unitPrice": "180000.00",
+            "taxes": [],
+            "settlementAmount": "180000.00"
+          }
+        ],
+        "paymentReceipt": {
+          "sourceDocuments": [
+            {
+              "lineNo": "1",
+              "sourceDocumentID": {
+                "originatingON": "FT A/000080",
+                "documentDate": "2025-01-20"
+              },
+              "creditAmount": "250000.00"
+            },
+            {
+              "lineNo": "2",
+              "sourceDocumentID": {
+                "originatingON": "FT A/000081",
+                "documentDate": "2025-01-22"
+              },
+              "creditAmount": "180000.00"
+            }
+          ]
+        },
+        "documentTotals": {
+          "taxPayable": "0.00",
+          "netTotal": "0.00",
+          "grossTotal": "430000.00"
+        }
+      }
+    ]
+  }
+]

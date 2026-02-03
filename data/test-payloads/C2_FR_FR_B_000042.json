@@ -1,0 +1,96 @@
+{
+  "schemaVersion": "1.0",
+  "submissionUUID": "c499d45e-4937-4e58-a091-c4b68be1ae1c",
+  "taxRegistrationNumber": "5000413178",
+  "submissionTimeStamp": "2026-02-03T16:25:15.135Z",
+  "softwareInfo": {
+    "softwareInfoDetail": {
+      "productId": "SOFT-FACT-2025",
+      "productVersion": "1.0.0",
+      "softwareValidationNumber": "AGT-CERT-2025-001234"
+    },
+    "jwsSoftwareSignature": "eyJwcm9kdWN0SWQiOiJTT0ZULUZBQ1QtMjAyNSIsInByb2R1Y3RWZXJzaW9uIjoiMS4wLjAiLCJzb2Z0d2FyZVZhbGlkYXRpb25OdW1iZXIiOiJBR1QtQ0VSVC0yMDI1LTAwMTIzNCIsInRpbWVzdGFtcCI6IjIwMjYtMDItMDNUMTY6MjU6MTUuMTM1WiJ9X1NJR05FRF8xNzcwMTM1OTE1MTM1===================================="
+  },
+  "numberOfEntries": 1,
+  "documents": [
+    {
+      "documentNo": "FR B/000042",
+      "documentStatus": "N",
+      "jwsDocumentSignature": "eyJkb2N1bWVudE5vIjoiRlIgQi8wMDAwNDIiLCJkb2N1bWVudFN0YXR1cyI6Ik4iLCJqd3NEb2N1bWVudFNpZ25hdHVyZSI6IiIsImRvY3VtZW50RGF0ZSI6IjIwMjUtMDItMDMiLCJkb2N1bWVudFR5cGUiOiJGUiIsImVhY0NvZGUiOiI0NzE5MCIsInN5c3RlbUVudHJ5RGF0ZSI6IjIwMjUtMDItMDNUMDA6MDA6MDAuMDAwWiIsImN1c3Rv",
+      "documentDate": "2025-02-03",
+      "documentType": "FR",
+      "eacCode": "47190",
+      "systemEntryDate": "2025-02-03T00:00:00.000Z",
+      "customerCountry": "AO",
+      "customerTaxID": "999999999",
+      "companyName": "CONSUMIDOR FINAL",
+      "lines": [
+        {
+          "lineNumber": "1",
+          "productCode": "PROD-NB-001",
+          "productDescription": "Notebook Dell Latitude 5520 - Intel i7, 16GB RAM, 512GB SSD",
+          "quantity": "2.00",
+          "unitOfMeasure": "Unidade",
+          "unitPrice": "185000.00",
+          "unitPriceBase": "185000.00",
+          "creditAmount": "370000.00",
+          "taxes": [
+            {
+              "taxType": "IVA",
+              "taxCountryRegion": "AO",
+              "taxCode": "NOR",
+              "taxPercentage": "14.00",
+              "taxContribution": "51800.00"
+            }
+          ],
+          "settlementAmount": "421800.00"
+        },
+        {
+          "lineNumber": "2",
+          "productCode": "PROD-MS-001",
+          "productDescription": "Mouse Wireless Logitech MX Master 3",
+          "quantity": "2.00",
+          "unitOfMeasure": "Unidade",
+          "unitPrice": "4500.00",
+          "unitPriceBase": "4500.00",
+          "creditAmount": "9000.00",
+          "taxes": [
+            {
+              "taxType": "IVA",
+              "taxCountryRegion": "AO",
+              "taxCode": "NOR",
+              "taxPercentage": "14.00",
+              "taxContribution": "1260.00"
+            }
+          ],
+          "settlementAmount": "10260.00"
+        },
+        {
+          "lineNumber": "3",
+          "productCode": "PROD-MCH-001",
+          "productDescription": "Mochila para Notebook até 15.6\" - Impermeável",
+          "quantity": "2.00",
+          "unitOfMeasure": "Unidade",
+          "unitPrice": "12000.00",
+          "unitPriceBase": "12000.00",
+          "creditAmount": "24000.00",
+          "taxes": [
+            {
+              "taxType": "IVA",
+              "taxCountryRegion": "AO",
+              "taxCode": "NOR",
+              "taxPercentage": "14.00",
+              "taxContribution": "3360.00"
+            }
+          ],
+          "settlementAmount": "27360.00"
+        }
+      ],
+      "documentTotals": {
+        "taxPayable": "56420.00",
+        "netTotal": "403000.00",
+        "grossTotal": "459420.00"
+      }
+    }
+  ]
+}

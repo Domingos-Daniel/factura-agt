@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0",
+  "submissionUUID": "ccf04e68-bb53-4010-b038-c35e7b83c229",
+  "taxRegistrationNumber": "5000413178",
+  "submissionTimeStamp": "2026-02-03T16:25:15.142Z",
+  "softwareInfo": {
+    "softwareInfoDetail": {
+      "productId": "SOFT-FACT-2025",
+      "productVersion": "1.0.0",
+      "softwareValidationNumber": "AGT-CERT-2025-001234"
+    },
+    "jwsSoftwareSignature": "eyJwcm9kdWN0SWQiOiJTT0ZULUZBQ1QtMjAyNSIsInByb2R1Y3RWZXJzaW9uIjoiMS4wLjAiLCJzb2Z0d2FyZVZhbGlkYXRpb25OdW1iZXIiOiJBR1QtQ0VSVC0yMDI1LTAwMTIzNCIsInRpbWVzdGFtcCI6IjIwMjYtMDItMDNUMTY6MjU6MTUuMTQyWiJ9X1NJR05FRF8xNzcwMTM1OTE1MTQy===================================="
+  },
+  "numberOfEntries": 1,
+  "documents": [
+    {
+      "documentNo": "NC A/000015",
+      "documentStatus": "N",
+      "jwsDocumentSignature": "eyJkb2N1bWVudE5vIjoiTkMgQS8wMDAwMTUiLCJkb2N1bWVudFN0YXR1cyI6Ik4iLCJqd3NEb2N1bWVudFNpZ25hdHVyZSI6IiIsImRvY3VtZW50RGF0ZSI6IjIwMjUtMDItMDMiLCJkb2N1bWVudFR5cGUiOiJOQyIsImVhY0NvZGUiOiI0NzE5MCIsInN5c3RlbUVudHJ5RGF0ZSI6IjIwMjUtMDItMDNUMDA6MDA6MDAuMDAwWiIsImN1c3Rv",
+      "documentDate": "2025-02-03",
+      "documentType": "NC",
+      "eacCode": "47190",
+      "systemEntryDate": "2025-02-03T00:00:00.000Z",
+      "customerCountry": "AO",
+      "customerTaxID": "999999999",
+      "companyName": "CONSUMIDOR FINAL",
+      "lines": [
+        {
+          "lineNumber": "1",
+          "productCode": "PROD-NB-001",
+          "productDescription": "Notebook Dell Latitude 5520 - Devolução por defeito de fábrica",
+          "quantity": "1.00",
+          "unitOfMeasure": "Unidade",
+          "unitPrice": "185000.00",
+          "unitPriceBase": "185000.00",
+          "referenceInfo": {
+            "reference": "FT A/000100",
+            "referenceItemLineNo": 1,
+            "reason": "Devolução de mercadoria"
+          },
+          "debitAmount": "185000.00",
+          "taxes": [
+            {
+              "taxType": "IVA",
+              "taxCountryRegion": "AO",
+              "taxCode": "NOR",
+              "taxPercentage": "14.00",
+              "taxContribution": "25900.00"
+            }
+          ],
+          "settlementAmount": "210900.00"
+        }
+      ],
+      "documentTotals": {
+        "taxPayable": "25900.00",
+        "netTotal": "185000.00",
+        "grossTotal": "210900.00"
+      }
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "1.0",
+  "submissionUUID": "b613d8b7-bd02-4543-bb45-5330f639ffff",
+  "taxRegistrationNumber": "5000413178",
+  "submissionTimeStamp": "2026-02-03T16:25:15.159Z",
+  "softwareInfo": {
+    "softwareInfoDetail": {
+      "productId": "SOFT-FACT-2025",
+      "productVersion": "1.0.0",
+      "softwareValidationNumber": "AGT-CERT-2025-001234"
+    },
+    "jwsSoftwareSignature": "eyJwcm9kdWN0SWQiOiJTT0ZULUZBQ1QtMjAyNSIsInByb2R1Y3RWZXJzaW9uIjoiMS4wLjAiLCJzb2Z0d2FyZVZhbGlkYXRpb25OdW1iZXIiOiJBR1QtQ0VSVC0yMDI1LTAwMTIzNCIsInRpbWVzdGFtcCI6IjIwMjYtMDItMDNUMTY6MjU6MTUuMTU5WiJ9X1NJR05FRF8xNzcwMTM1OTE1MTU5===================================="
+  },
+  "numberOfEntries": 1,
+  "documents": [
+    {
+      "documentNo": "RC C/000256",
+      "documentStatus": "N",
+      "jwsDocumentSignature": "eyJkb2N1bWVudE5vIjoiUkMgQy8wMDAyNTYiLCJkb2N1bWVudFN0YXR1cyI6Ik4iLCJqd3NEb2N1bWVudFNpZ25hdHVyZSI6IiIsImRvY3VtZW50RGF0ZSI6IjIwMjUtMDItMDMiLCJkb2N1bWVudFR5cGUiOiJSQyIsImVhY0NvZGUiOiI0NzE5MCIsInN5c3RlbUVudHJ5RGF0ZSI6IjIwMjUtMDItMDNUMDA6MDA6MDAuMDAwWiIsImN1c3Rv",
+      "documentDate": "2025-02-03",
+      "documentType": "RC",
+      "eacCode": "47190",
+      "systemEntryDate": "2025-02-03T00:00:00.000Z",
+      "customerCountry": "AO",
+      "customerTaxID": "999999999",
+      "companyName": "CONSUMIDOR FINAL",
+      "paymentReceipt": {
+        "sourceDocuments": [
+          {
+            "lineNo": "1",
+            "sourceDocumentID": {
+              "originatingON": "FT A/000080",
+              "documentDate": "2025-01-20"
+            },
+            "creditAmount": "250000.00"
+          },
+          {
+            "lineNo": "2",
+            "sourceDocumentID": {
+              "originatingON": "FT A/000081",
+              "documentDate": "2025-01-22"
+            },
+            "creditAmount": "180000.00"
+          }
+        ]
+      },
+      "documentTotals": {
+        "taxPayable": "0.00",
+        "netTotal": "430000.00",
+        "grossTotal": "430000.00"
+      }
+    }
+  ]
+}

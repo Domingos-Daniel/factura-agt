@@ -1,0 +1,103 @@
+{
+  "schemaVersion": "1.0",
+  "submissionUUID": "9340bce4-94a6-4c41-8175-a4887bfb5139",
+  "taxRegistrationNumber": "5000413178",
+  "submissionTimeStamp": "2026-02-03T16:25:15.139Z",
+  "softwareInfo": {
+    "softwareInfoDetail": {
+      "productId": "SOFT-FACT-2025",
+      "productVersion": "1.0.0",
+      "softwareValidationNumber": "AGT-CERT-2025-001234"
+    },
+    "jwsSoftwareSignature": "eyJwcm9kdWN0SWQiOiJTT0ZULUZBQ1QtMjAyNSIsInByb2R1Y3RWZXJzaW9uIjoiMS4wLjAiLCJzb2Z0d2FyZVZhbGlkYXRpb25OdW1iZXIiOiJBR1QtQ0VSVC0yMDI1LTAwMTIzNCIsInRpbWVzdGFtcCI6IjIwMjYtMDItMDNUMTY6MjU6MTUuMTM5WiJ9X1NJR05FRF8xNzcwMTM1OTE1MTM5===================================="
+  },
+  "numberOfEntries": 1,
+  "documents": [
+    {
+      "documentNo": "FT A/000125",
+      "documentStatus": "N",
+      "jwsDocumentSignature": "eyJkb2N1bWVudE5vIjoiRlQgQS8wMDAxMjUiLCJkb2N1bWVudFN0YXR1cyI6Ik4iLCJqd3NEb2N1bWVudFNpZ25hdHVyZSI6IiIsImRvY3VtZW50RGF0ZSI6IjIwMjUtMDItMDMiLCJkb2N1bWVudFR5cGUiOiJGVCIsImVhY0NvZGUiOiI3MDIyMCIsInN5c3RlbUVudHJ5RGF0ZSI6IjIwMjUtMDItMDNUMDA6MDA6MDAuMDAwWiIsImN1c3Rv",
+      "documentDate": "2025-02-03",
+      "documentType": "FT",
+      "eacCode": "70220",
+      "systemEntryDate": "2025-02-03T00:00:00.000Z",
+      "customerCountry": "AO",
+      "customerTaxID": "999999999",
+      "companyName": "EMPRESA CLIENTE EXEMPLO, LDA",
+      "lines": [
+        {
+          "lineNumber": "1",
+          "productCode": "SERV-AUD-001",
+          "productDescription": "Auditoria Financeira e Revisão de Contas - Exercício 2024",
+          "quantity": "80.00",
+          "unitOfMeasure": "Hora",
+          "unitPrice": "25000.00",
+          "unitPriceBase": "25000.00",
+          "creditAmount": "2000000.00",
+          "taxes": [
+            {
+              "taxType": "IVA",
+              "taxCountryRegion": "AO",
+              "taxCode": "NOR",
+              "taxPercentage": "14.00",
+              "taxContribution": "280000.00"
+            }
+          ],
+          "settlementAmount": "2280000.00"
+        },
+        {
+          "lineNumber": "2",
+          "productCode": "SERV-FISC-001",
+          "productDescription": "Consultoria Fiscal e Planeamento Tributário",
+          "quantity": "60.00",
+          "unitOfMeasure": "Hora",
+          "unitPrice": "22000.00",
+          "unitPriceBase": "22000.00",
+          "creditAmount": "1320000.00",
+          "taxes": [
+            {
+              "taxType": "IVA",
+              "taxCountryRegion": "AO",
+              "taxCode": "NOR",
+              "taxPercentage": "14.00",
+              "taxContribution": "184800.00"
+            }
+          ],
+          "settlementAmount": "1504800.00"
+        },
+        {
+          "lineNumber": "3",
+          "productCode": "SERV-REL-001",
+          "productDescription": "Relatório Executivo de Auditoria e Recomendações",
+          "quantity": "1.00",
+          "unitOfMeasure": "Unidade",
+          "unitPrice": "150000.00",
+          "unitPriceBase": "150000.00",
+          "creditAmount": "150000.00",
+          "taxes": [
+            {
+              "taxType": "IVA",
+              "taxCountryRegion": "AO",
+              "taxCode": "NOR",
+              "taxPercentage": "14.00",
+              "taxContribution": "21000.00"
+            }
+          ],
+          "settlementAmount": "171000.00"
+        }
+      ],
+      "documentTotals": {
+        "taxPayable": "485800.00",
+        "netTotal": "3470000.00",
+        "grossTotal": "3955800.00"
+      },
+      "withholdingTaxList": [
+        {
+          "withholdingTaxType": "IVA",
+          "withholdingTaxDescription": "Retenção de IVA na fonte - 6,5% sobre IVA",
+          "withholdingTaxAmount": "31577.00"
+        }
+      ]
+    }
+  ]
+}

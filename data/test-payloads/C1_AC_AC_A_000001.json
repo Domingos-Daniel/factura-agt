@@ -1,0 +1,96 @@
+{
+  "schemaVersion": "1.0",
+  "submissionUUID": "2073b819-9284-499d-872f-32ab98164042",
+  "taxRegistrationNumber": "5000413178",
+  "submissionTimeStamp": "2026-02-03T16:25:15.131Z",
+  "softwareInfo": {
+    "softwareInfoDetail": {
+      "productId": "SOFT-FACT-2025",
+      "productVersion": "1.0.0",
+      "softwareValidationNumber": "AGT-CERT-2025-001234"
+    },
+    "jwsSoftwareSignature": "eyJwcm9kdWN0SWQiOiJTT0ZULUZBQ1QtMjAyNSIsInByb2R1Y3RWZXJzaW9uIjoiMS4wLjAiLCJzb2Z0d2FyZVZhbGlkYXRpb25OdW1iZXIiOiJBR1QtQ0VSVC0yMDI1LTAwMTIzNCIsInRpbWVzdGFtcCI6IjIwMjYtMDItMDNUMTY6MjU6MTUuMTMxWiJ9X1NJR05FRF8xNzcwMTM1OTE1MTMx===================================="
+  },
+  "numberOfEntries": 1,
+  "documents": [
+    {
+      "documentNo": "AC A/000001",
+      "documentStatus": "N",
+      "jwsDocumentSignature": "eyJkb2N1bWVudE5vIjoiQUMgQS8wMDAwMDEiLCJkb2N1bWVudFN0YXR1cyI6Ik4iLCJqd3NEb2N1bWVudFNpZ25hdHVyZSI6IiIsImRvY3VtZW50RGF0ZSI6IjIwMjUtMDItMDMiLCJkb2N1bWVudFR5cGUiOiJBQyIsImVhY0NvZGUiOiI2MjAxMCIsInN5c3RlbUVudHJ5RGF0ZSI6IjIwMjUtMDItMDNUMDA6MDA6MDAuMDAwWiIsImN1c3Rv",
+      "documentDate": "2025-02-03",
+      "documentType": "AC",
+      "eacCode": "62010",
+      "systemEntryDate": "2025-02-03T00:00:00.000Z",
+      "customerCountry": "AO",
+      "customerTaxID": "999999999",
+      "companyName": "CONSUMIDOR FINAL",
+      "lines": [
+        {
+          "lineNumber": "1",
+          "productCode": "SERV-001",
+          "productDescription": "Consultoria em Tecnologias de Informação - Desenvolvimento de Software",
+          "quantity": "40.00",
+          "unitOfMeasure": "Hora",
+          "unitPrice": "15000.00",
+          "unitPriceBase": "15000.00",
+          "creditAmount": "600000.00",
+          "taxes": [
+            {
+              "taxType": "IVA",
+              "taxCountryRegion": "AO",
+              "taxCode": "NOR",
+              "taxPercentage": "14.00",
+              "taxContribution": "84000.00"
+            }
+          ],
+          "settlementAmount": "684000.00"
+        },
+        {
+          "lineNumber": "2",
+          "productCode": "LIC-SOFT-001",
+          "productDescription": "Licença Anual de Software de Gestão Empresarial",
+          "quantity": "1.00",
+          "unitOfMeasure": "Unidade",
+          "unitPrice": "250000.00",
+          "unitPriceBase": "250000.00",
+          "creditAmount": "250000.00",
+          "taxes": [
+            {
+              "taxType": "IVA",
+              "taxCountryRegion": "AO",
+              "taxCode": "NOR",
+              "taxPercentage": "14.00",
+              "taxContribution": "35000.00"
+            }
+          ],
+          "settlementAmount": "285000.00"
+        },
+        {
+          "lineNumber": "3",
+          "productCode": "FORM-001",
+          "productDescription": "Formação em Gestão de Projectos - 5 dias",
+          "quantity": "5.00",
+          "unitOfMeasure": "Dia",
+          "unitPrice": "8000.00",
+          "unitPriceBase": "8000.00",
+          "creditAmount": "40000.00",
+          "taxes": [
+            {
+              "taxType": "IVA",
+              "taxCountryRegion": "AO",
+              "taxCode": "NOR",
+              "taxPercentage": "14.00",
+              "taxContribution": "5600.00"
+            }
+          ],
+          "settlementAmount": "45600.00"
+        }
+      ],
+      "documentTotals": {
+        "taxPayable": "124600.00",
+        "netTotal": "890000.00",
+        "grossTotal": "1014600.00"
+      }
+    }
+  ]
+}

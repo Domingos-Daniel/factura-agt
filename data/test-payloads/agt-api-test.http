@@ -1,0 +1,144 @@
+/**
+ * EXEMPLOS DE CHAMADAS HTTP PARA API AGT
+ * 
+ * Arquivo para uso com extensões REST Client (VS Code)
+ * ou para referência na implementação de cliente HTTP
+ */
+
+###############################################################################
+# CONFIGURAÇÃO DO AMBIENTE
+###############################################################################
+
+# HOMOLOGAÇÃO (HML)
+@baseUrl = https://sifphml.minfin.gov.ao/sigt/fe/v1
+@authToken = Bearer YOUR_TOKEN_HERE
+
+# PRODUÇÃO (PRD)
+# @baseUrl = https://sifp.minfin.gov.ao/sigt/fe/v1
+
+###############################################################################
+# C1 - AVISO DE COBRANÇA
+###############################################################################
+
+### Registar Aviso de Cobrança
+POST {{baseUrl}}/registarFactura
+Content-Type: application/json
+Authorization: {{authToken}}
+
+< ./data/test-payloads/C1_AC_AC_A_000001.json
+
+###############################################################################
+# C2 - FACTURA/RECIBO
+###############################################################################
+
+### Registar Factura/Recibo
+POST {{baseUrl}}/registarFactura
+Content-Type: application/json
+Authorization: {{authToken}}
+
+< ./data/test-payloads/C2_FR_FR_B_000042.json
+
+###############################################################################
+# C3 - FACTURA
+###############################################################################
+
+### Registar Factura
+POST {{baseUrl}}/registarFactura
+Content-Type: application/json
+Authorization: {{authToken}}
+
+< ./data/test-payloads/C3_FT_FT_A_000125.json
+
+###############################################################################
+# C4 - NOTA DE CRÉDITO
+###############################################################################
+
+### Registar Nota de Crédito
+POST {{baseUrl}}/registarFactura
+Content-Type: application/json
+Authorization: {{authToken}}
+
+< ./data/test-payloads/C4_NC_NC_A_000015.json
+
+###############################################################################
+# C5 - NOTA DE DÉBITO
+###############################################################################
+
+### Registar Nota de Débito
+POST {{baseUrl}}/registarFactura
+Content-Type: application/json
+Authorization: {{authToken}}
+
+< ./data/test-payloads/C5_ND_ND_A_000008.json
+
+###############################################################################
+# C6 - RECIBO EM NUMERÁRIO
+###############################################################################
+
+### Registar Recibo
+POST {{baseUrl}}/registarFactura
+Content-Type: application/json
+Authorization: {{authToken}}
+
+< ./data/test-payloads/C6_RC_RC_C_000256.json
+
+###############################################################################
+# CONSULTAR ESTADO DE VALIDAÇÃO
+###############################################################################
+
+### Obter Estado de Validação (após submissão)
+GET {{baseUrl}}/obterEstado?requestID=YOUR_REQUEST_ID_HERE
+Authorization: {{authToken}}
+
+###############################################################################
+# CONSULTAR FACTURA
+###############################################################################
+
+### Consultar Factura por número
+GET {{baseUrl}}/consultarFactura?documentNo=FT%20A/000125&taxRegistrationNumber=123456789
+Authorization: {{authToken}}
+
+###############################################################################
+# LISTAR FACTURAS
+###############################################################################
+
+### Listar Facturas (últimos 30 dias)
+GET {{baseUrl}}/listarFacturas?taxRegistrationNumber=123456789&startDate=2025-01-01&endDate=2025-02-03
+Authorization: {{authToken}}
+
+###############################################################################
+# SOLICITAR SÉRIE
+###############################################################################
+
+### Solicitar nova série de numeração
+POST {{baseUrl}}/solicitarSerie
+Content-Type: application/json
+Authorization: {{authToken}}
+
+{
+  "taxRegistrationNumber": "123456789",
+  "documentType": "FT",
+  "series": "D",
+  "startNumber": 1,
+  "endNumber": 10000,
+  "requestDate": "2025-02-03"
+}
+
+###############################################################################
+# LISTAR SÉRIES
+###############################################################################
+
+### Listar Séries autorizadas
+GET {{baseUrl}}/listarSeries?taxRegistrationNumber=123456789
+Authorization: {{authToken}}
+
+###############################################################################
+# VALIDAR DOCUMENTO (pré-envio)
+###############################################################################
+
+### Validar estrutura do documento antes de submeter
+POST {{baseUrl}}/validarDocumento
+Content-Type: application/json
+Authorization: {{authToken}}
+
+< ./data/test-payloads/C3_FT_FT_A_000125.json
