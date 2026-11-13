@@ -1,0 +1,79 @@
+{
+  "schemaVersion": "2.0",
+  "submissionUUID": "ed0220ba-f79b-4570-b366-c0c3ae739947",
+  "taxRegistrationNumber": "5000660086",
+  "submissionTimeStamp": "2026-03-02T09:15:35Z",
+  "softwareInfo": {
+    "softwareInfoDetail": {
+      "productId": "SafeFacturas",
+      "productVersion": "1.0.1",
+      "softwareValidationNumber": "FE/BB/AGT/2026",
+      "signatureVersion": 1
+    },
+    "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+  },
+  "numberOfEntries": 1,
+  "documents": [
+    {
+      "documentNo": "RP 2026A/000074",
+      "documentStatus": "N",
+      "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiUlAgMjAyNkEvMDAwMDc0IiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6IlJQIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJKT1PDiSBNQU5VRUwgRE9TIFNBTlRPUyIsImRvY3VtZW50VG90YWxzIjp7InRheFBheWFibGUiOjE0NzYsIm5ldFRvdGFsIjo0OTIwMDAsImdyb3NzVG90YWwiOjQ5MzQ3Nn19.8cExQZF6ugrnHh4UjXdvrq2Svsbg9W2ZRc0WwsLuKsIioB9hPc90dWBCdRmAXLMrVNKY34mOBLQNCrW_-8ydROP4WpqExzcuJhltC31jgqygfEffuVGYnqHCRLZWZFmqwrHPlxA0wCcs62Onw95CjmWrbzvmh0romTNMkclfGkcZHy8_VqeduvquEN0YZwtd2rq7Qem5bF2S-HIFf-2VeTTrITq6EqQrmveVqe5UDuTYybzGrcDK19-eb3WUOAuCmf3qChBmywU2rJmtJz8Qs7n2Ce9HjMO2UUtOYUBHbBWG4ZYZI3B4k0ThOJVtK9RPPkE4sLGC2a8JnxZ_SncASA",
+      "documentDate": "2026-03-02",
+      "documentType": "RP",
+      "eacCode": "65120",
+      "systemEntryDate": "2026-03-02T09:15:30Z",
+      "customerCountry": "AO",
+      "customerTaxID": "003043657LA038",
+      "companyName": "JOSÉ MANUEL DOS SANTOS",
+      "lines": [
+        {
+          "lineNumber": 1,
+          "operationType": "SIF",
+          "productCode": "APOL-AUTO-2026-7781",
+          "productDescription": "Prémio de seguro automóvel - apólice AUTO-2026-7781",
+          "quantity": 1,
+          "unitOfMeasure": "Apólice",
+          "unitPriceBase": 480000,
+          "unitPrice": 480000,
+          "creditAmount": 480000,
+          "taxes": [
+            {
+              "taxType": "IS",
+              "taxCountryRegion": "AO",
+              "taxCode": "22.1.5",
+              "taxPercentage": 0.3,
+              "taxContribution": 1440
+            }
+          ],
+          "settlementAmount": 0
+        },
+        {
+          "lineNumber": 2,
+          "operationType": "SIF",
+          "productCode": "ENC-APOL-001",
+          "productDescription": "Custo da apólice e taxas administrativas",
+          "quantity": 1,
+          "unitOfMeasure": "Serviço",
+          "unitPriceBase": 12000,
+          "unitPrice": 12000,
+          "creditAmount": 12000,
+          "taxes": [
+            {
+              "taxType": "IS",
+              "taxCountryRegion": "AO",
+              "taxCode": "22.1.5",
+              "taxPercentage": 0.3,
+              "taxContribution": 36
+            }
+          ],
+          "settlementAmount": 0
+        }
+      ],
+      "documentTotals": {
+        "taxPayable": 1476,
+        "netTotal": 492000,
+        "grossTotal": 493476
+      }
+    }
+  ]
+}

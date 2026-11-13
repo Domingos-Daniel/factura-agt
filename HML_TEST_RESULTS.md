@@ -4,7 +4,7 @@
 
 - **Ambiente**: HML (Homologação)
 - **Base URL**: https://sifphml.minfin.gov.ao/sigt/fe/v1
-- **Credenciais**: ws.hml.addonsaftb1 / mfn+3534+2025
+- **Credenciais**: ws.hml.addonsaftb1 / ***REDACTED***
 - **NIF de Teste**: 5000413178
 - **Autenticação**: HTTP Basic Auth
 
@@ -140,7 +140,7 @@ AGT_ENVIRONMENT=hml
 # HML Configuration
 AGT_HML_BASE_URL=https://sifphml.minfin.gov.ao/sigt/fe/v1
 AGT_HML_USERNAME=ws.hml.addonsaftb1
-AGT_HML_PASSWORD=mfn+3534+2025
+AGT_HML_PASSWORD=***REDACTED***
 AGT_HML_NIF_TEST=5000413178
 
 # Authentication

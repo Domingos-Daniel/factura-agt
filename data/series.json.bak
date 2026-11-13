@@ -1,0 +1,72 @@
+[
+  {
+    "id": "FT8626S5524N-2026-FT",
+    "seriesCode": "FT8626S5524N",
+    "seriesYear": 2026,
+    "documentType": "FT",
+    "firstDocumentNumber": 1,
+    "currentSequence": 1,
+    "status": "A",
+    "invoicingMethod": "SOFTWARE",
+    "requestDate": "2026-03-19T06:14:42.105445",
+    "agtLastSyncAt": "2026-03-19T10:57:01.643Z",
+    "createdAt": "2026-03-19T10:57:01.643Z",
+    "updatedAt": "2026-03-19T10:57:01.643Z"
+  },
+  {
+    "id": "FT8626S5521N-2026-FT",
+    "seriesCode": "FT8626S5521N",
+    "seriesYear": 2026,
+    "documentType": "FT",
+    "firstDocumentNumber": 1,
+    "currentSequence": 1,
+    "status": "A",
+    "invoicingMethod": "SOFTWARE",
+    "requestDate": "2026-03-19T04:49:30.940095",
+    "agtLastSyncAt": "2026-03-19T10:57:01.643Z",
+    "createdAt": "2026-03-19T10:57:01.643Z",
+    "updatedAt": "2026-03-19T10:57:01.643Z"
+  },
+  {
+    "id": "FT8626S5522N-2026-FT",
+    "seriesCode": "FT8626S5522N",
+    "seriesYear": 2026,
+    "documentType": "FT",
+    "firstDocumentNumber": 1,
+    "currentSequence": 1,
+    "status": "A",
+    "invoicingMethod": "SOFTWARE",
+    "requestDate": "2026-03-19T04:51:58.081275",
+    "agtLastSyncAt": "2026-03-19T10:57:01.643Z",
+    "createdAt": "2026-03-19T10:57:01.643Z",
+    "updatedAt": "2026-03-19T10:57:01.643Z"
+  },
+  {
+    "id": "FT8626S5523N-2026-FT",
+    "seriesCode": "FT8626S5523N",
+    "seriesYear": 2026,
+    "documentType": "FT",
+    "firstDocumentNumber": 1,
+    "currentSequence": 1,
+    "status": "A",
+    "invoicingMethod": "SOFTWARE",
+    "requestDate": "2026-03-19T06:06:07.563032",
+    "agtLastSyncAt": "2026-03-19T10:57:01.643Z",
+    "createdAt": "2026-03-19T10:57:01.643Z",
+    "updatedAt": "2026-03-19T10:57:01.643Z"
+  },
+  {
+    "id": "NC8626S4062N-2026-NC",
+    "seriesCode": "NC8626S4062N",
+    "seriesYear": 2026,
+    "documentType": "NC",
+    "firstDocumentNumber": 1,
+    "currentSequence": 1,
+    "status": "A",
+    "invoicingMethod": "SOFTWARE",
+    "requestDate": "2026-03-19T05:16:14.252451",
+    "agtLastSyncAt": "2026-03-19T10:57:01.643Z",
+    "createdAt": "2026-03-19T10:57:01.643Z",
+    "updatedAt": "2026-03-19T10:57:01.643Z"
+  }
+]

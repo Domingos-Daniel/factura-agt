@@ -43,31 +43,77 @@ export class AgtClient {
     let attempt = 0
     let lastError: any
     const maxRetries = path === '/listarFacturas' ? 0 : this.maxRetries // Sem retry para listar (muito lento)
-    
+
+    // stages of https.Agent to try: undefined (default), TLS1.2 only, then IPv4+TLS1.2
+    const agentStages: Array<{ family?: number; minVersion?: string } | undefined> = [undefined, { minVersion: 'TLSv1.2' }, { family: 4, minVersion: 'TLSv1.2' }]
+    let agentStage = 0
+
+    let triedPowershell = false
+
+    // on Windows the PowerShell fallback is known to work reliably; try it first
+    if (process.platform === 'win32') {
+      triedPowershell = true
+      try {
+        console.warn('🔁 [AgtClient] executing PowerShell fallback as first attempt (Windows)')
+        const { execFileSync } = require('child_process')
+        const authHeader = this.headers().authorization || ''
+        const localTimeout = opts?.timeoutMs ?? this.timeoutMs
+        const bodyBase64 = Buffer.from(JSON.stringify(body)).toString('base64')
+        const ps = `
+$body = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('${bodyBase64}'))
+$h=@{ 'Content-Type'='application/json' }
+${authHeader ? `$h.Authorization='${authHeader}'` : ''}
+try {
+  $r = Invoke-RestMethod -Uri '${this.baseUrl}${path}' -Method Post -Body $body -Headers $h -TimeoutSec ${localTimeout/1000}
+  $r | ConvertTo-Json -Compress
+} catch { Write-Error $_; exit 1 }
+`
+        const result = execFileSync('powershell', ['-NoProfile', '-Command', ps], { encoding: 'utf8' })
+        try {
+          return JSON.parse(result)
+        } catch (parseErr) {
+          console.error('❌ [AgtClient] PowerShell result not valid JSON:', result)
+          // return a wrapper object containing raw response so caller can handle
+          return { __agtRaw: result } as any
+        }
+      } catch (psErr) {
+        console.error('❌ [AgtClient] initial PowerShell fallback failed:', (psErr as any).message)
+        // fall through to normal retry logic
+      }
+    }
+
     while (attempt <= maxRetries) {
       try {
         const timeoutMs = opts?.timeoutMs ?? this.timeoutMs
-        console.log(`🌐 [AgtClient] POST ${path} - Tentativa ${attempt + 1}/${maxRetries + 1}, timeout: ${timeoutMs}ms`)
-        
+        const stage = agentStages[agentStage]
+        console.log(`🌐 [AgtClient] POST ${path} - Tentativa ${attempt + 1}/${maxRetries + 1}, timeout: ${timeoutMs}ms` +
+          (stage ? ` (agent: ${JSON.stringify(stage)})` : ''))
+
         const controller = new AbortController()
         const id = setTimeout(() => {
           console.log(`⏰ [AgtClient] Timeout após ${timeoutMs}ms - abortando request`)
           controller.abort()
         }, timeoutMs)
-        
-        const startTime = Date.now()
-        const res = await fetch(`${this.baseUrl}${path}`, {
+
+        let fetchOptions: any = {
           method: 'POST',
           headers: this.headers(),
           body: JSON.stringify(body),
           signal: controller.signal,
           cache: 'no-store',
-        })
+        }
+        if (stage) {
+          const https = require('https')
+          fetchOptions.agent = new https.Agent(stage)
+        }
+
+        const startTime = Date.now()
+        const res = await fetch(`${this.baseUrl}${path}`, fetchOptions)
         clearTimeout(id)
-        
+
         const duration = ((Date.now() - startTime) / 1000).toFixed(2)
         console.log(`✅ [AgtClient] Resposta em ${duration}s - Status: ${res.status}`)
-        
+
         if (res.status === 429) {
           // E98 – demasiadas solicitações repetidas
           const retryAfter = Number(res.headers.get('retry-after') ?? '2')
@@ -83,12 +129,60 @@ export class AgtClient {
       } catch (err: any) {
         lastError = err
         console.error(`❌ [AgtClient] Erro na tentativa ${attempt + 1}: ${err?.message}`)
-        
+
+        // rede/TLS falhou? subir de estágio para tentar outro agent
+        const msg: string = err?.message?.toLowerCase() || ''
+        const shouldEscalate =
+          msg.includes('network socket disconnected') ||
+          msg.includes('tls') ||
+          msg.includes('socket') ||
+          msg.includes('getaddrinfo')
+        if (shouldEscalate && agentStage < agentStages.length - 1) {
+          agentStage++
+          console.warn(`⚠️ [AgtClient] network/TLS error, escalating agent to stage ${agentStage}`)
+          // não incrementar attempt para que este ciclo repita com novo agent
+          continue
+        }
+
         // Se foi abort (timeout), não fazer retry para listar
         if (err?.name === 'AbortError' || path === '/listarFacturas') {
           throw err
         }
-        
+
+        // Before giving up completely, try PowerShell fallback once on Windows
+        if (process.platform === 'win32' && !triedPowershell) {
+          triedPowershell = true
+          try {
+            console.warn('🔁 [AgtClient] executing PowerShell fallback')
+            const { execFileSync } = require('child_process')
+            const authHeader = this.headers().authorization || ''
+            const localTimeout = opts?.timeoutMs ?? this.timeoutMs
+          // use a PowerShell here-string to avoid complex escaping issues
+          const bodyBase64 = Buffer.from(JSON.stringify(body)).toString('base64')
+          const ps = `
+$body = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('${bodyBase64}'))
+$h=@{ 'Content-Type'='application/json' }
+${authHeader ? `$h.Authorization='${authHeader}'` : ''}
+try {
+  $r = Invoke-RestMethod -Uri '${this.baseUrl}${path}' -Method Post -Body $body -Headers $h -TimeoutSec ${localTimeout/1000}
+  # Ensure proper JSON serialization with -Depth to avoid truncation
+  $r | ConvertTo-Json -Depth 10 -Compress
+} catch { Write-Error $_; exit 1 }
+`
+            const result = execFileSync('powershell', ['-NoProfile', '-Command', ps], { encoding: 'utf8' })
+            try {
+              return JSON.parse(result)
+            } catch(parseErr) {
+              console.error('❌ [AgtClient] PowerShell result not valid JSON:', result.slice(0, 500))
+              // return raw response container to stop retries
+              return { __agtRaw: result.slice(0, 500) } as any
+            }
+          } catch (psErr) {
+            console.error('❌ [AgtClient] PowerShell fallback failed:', (psErr as any).message)
+            // continue to normal retry/throw logic
+          }
+        }
+
         // E97 – prematura: dar um pequeno backoff e tentar de novo
         await new Promise((r) => setTimeout(r, (attempt + 1) * 1000))
         attempt++

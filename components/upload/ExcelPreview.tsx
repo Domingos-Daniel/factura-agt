@@ -12,12 +12,17 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { ParsedExcelData, ExcelRow } from '@/lib/excelParser'
+import { ParsedExcelData, ExcelRow, ParsedSeriesData, SeriesRow } from '@/lib/excelParser'
 import { formatDecimal } from '@/lib/excelMapping'
 
+// Type Guard
+function isSeriesData(data: ParsedExcelData | ParsedSeriesData): data is ParsedSeriesData {
+  return !('totalAmount' in data.summary)
+}
+
 interface ExcelPreviewProps {
-  data: ParsedExcelData
-  onConfirm: (rows: ExcelRow[]) => void
+  data: ParsedExcelData | ParsedSeriesData
+  onConfirm: (rows: ExcelRow[] | SeriesRow[]) => void
   onCancel: () => void
   isProcessing?: boolean
 }
@@ -31,12 +36,13 @@ export function ExcelPreview({
   const [showErrors, setShowErrors] = useState(data.errors.length > 0)
   const [showAll, setShowAll] = useState(false)
 
+  const isSeries = isSeriesData(data)
   const displayRows = showAll ? data.rows : data.rows.slice(0, 5)
   const hasMoreRows = data.rows.length > 5
 
   // Detectar se dados estão vazios (template vazio)
-  const hasEmptyData = data.rows.length > 0 && data.summary.totalAmount === 0 && 
-    data.rows.every(row => {
+  const hasEmptyData = !isSeries && data.rows.length > 0 && (data as ParsedExcelData).summary.totalAmount === 0 && 
+    (data.rows as ExcelRow[]).every(row => {
       // Verificar se todos os campos importantes estão vazios
       const isAGT = row['Nº Docum'] !== undefined
       const isModelo2 = row['Nº Documento'] !== undefined
@@ -49,6 +55,57 @@ export function ExcelPreview({
         return !row.VBELN || !row.STCD1 || !row.NAME1
       }
     })
+
+  if (isSeries) {
+    return (
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-medium">Pré-visualização de Séries ({data.summary.validRows})</h3>
+           <div className="flex gap-2">
+            <Button variant="outline" onClick={onCancel} disabled={isProcessing}>
+              Cancelar
+            </Button>
+            <Button onClick={() => onConfirm(data.rows)} disabled={isProcessing || data.rows.length === 0}>
+              {isProcessing ? 'A Processar...' : 'Confirmar Importação'}
+            </Button>
+          </div>
+        </div>
+
+        <div className="border rounded-md">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Série</TableHead>
+                <TableHead>Ano</TableHead>
+                <TableHead>Tipo</TableHead>
+                <TableHead>Nº Início</TableHead>
+                <TableHead>Status</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {(displayRows as SeriesRow[]).map((row, i) => (
+                <TableRow key={i}>
+                  <TableCell>{row['Code'] || row['Cod Serie'] || row['Série'] || row['Serie']}</TableCell>
+                  <TableCell>{row['Year'] || row['Ano']}</TableCell>
+                  <TableCell>{row['Doc Type'] || row['Tipo Doc'] || row['Tipo']}</TableCell>
+                  <TableCell>{row['Start Number'] || row['Inicio']}</TableCell>
+                  <TableCell>{row['Status']}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+        {hasMoreRows && (
+          <p className="text-sm text-center text-muted-foreground mt-2">
+            ... e mais {data.rows.length - 5} linhas.
+          </p>
+        )}
+      </div>
+    )
+  }
+  
+  // Renderização normal para Facturas (código existente adaptado se necessário, mas o resto do componente continua o mesmo se eu só injetar o return acima)
+
 
   return (
     <div className="space-y-6">
@@ -199,7 +256,7 @@ export function ExcelPreview({
                     </TableCell>
                     {/* Mostrar todos os campos */}
                     {Object.keys(displayRows[0] || {}).map((fieldName) => {
-                      const value = row[fieldName as keyof ExcelRow]
+                      const value = (row as ExcelRow)[fieldName as keyof ExcelRow]
                       
                       // Formatação especial para valores
                       let displayValue = '-'

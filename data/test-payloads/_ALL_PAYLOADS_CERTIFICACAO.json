@@ -1,0 +1,1343 @@
+[
+  {
+    "schemaVersion": "2.0",
+    "submissionUUID": "e33e7948-2932-4df2-b4a0-44e8ef1f49b0",
+    "taxRegistrationNumber": "5000660086",
+    "submissionTimeStamp": "2026-03-02T09:15:35Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "SafeFacturas",
+        "productVersion": "1.0.1",
+        "softwareValidationNumber": "FE/BB/AGT/2026",
+        "signatureVersion": 1
+      },
+      "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "AC 2026A/000201",
+        "documentStatus": "N",
+        "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiQUMgMjAyNkEvMDAwMjAxIiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6IkFDIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJDT05TVFJVVE9SQSBOT1ZBIExVQU5EQSwgTERBIiwiZG9jdW1lbnRUb3RhbHMiOnsidGF4UGF5YWJsZSI6MjczMDAsIm5ldFRvdGFsIjoxOTUwMDAsImdyb3NzVG90YWwiOjIyMjMwMH19.wCxIh9spQYOTxWcRuyPAWoNG11QpH6vvfbhWSjnL4GEwcD5gEYh61XpZu8Ex73-QLE4iuYIfhxjwMXYp62GJg48mg1teWEikioyb5-AfQWokZhYPoVvdNHg8ZIn_Ewlm0ML0uSVjALLDv8cM7NR0HvJZwd47cZlQqLcGenBamwfkj_WiKKqJeoimDPx1ias9GpEb7_M20AQGko7psUxNss_0MCAQhA2Jw2jH3zQfshXNQH2Yva0bCiaaUBOx2or_Ygrbi0NLphQ0DteYLlHCy2rASUJFZmmDQLyxpXlfWm3rD9xyRzdXTTCXrgCLp0lPPeUp_PLJbHO6W7Hp9uqaUw",
+        "documentDate": "2026-03-02",
+        "documentType": "AC",
+        "eacCode": "70220",
+        "systemEntryDate": "2026-03-02T09:15:30Z",
+        "customerCountry": "AO",
+        "customerTaxID": "003043657LA038",
+        "companyName": "CONSTRUTORA NOVA LUANDA, LDA",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "operationType": "SG",
+            "productCode": "SERV-MAN-001",
+            "productDescription": "Manutenção preventiva de equipamentos industriais - contrato mensal",
+            "quantity": 2,
+            "unitOfMeasure": "Serviço",
+            "unitPriceBase": 75000,
+            "unitPrice": 75000,
+            "creditAmount": 150000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxContribution": 21000
+              }
+            ],
+            "settlementAmount": 0
+          },
+          {
+            "lineNumber": 2,
+            "operationType": "TB",
+            "productCode": "PROD-PEC-014",
+            "productDescription": "Peças de substituição - kit de vedantes e rolamentos",
+            "quantity": 1,
+            "unitOfMeasure": "Kit",
+            "unitPriceBase": 45000,
+            "unitPrice": 45000,
+            "creditAmount": 45000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxContribution": 6300
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "taxPayable": 27300,
+          "netTotal": 195000,
+          "grossTotal": 222300
+        }
+      }
+    ]
+  },
+  {
+    "schemaVersion": "2.0",
+    "submissionUUID": "43f897ce-c670-413d-a054-469c5effd617",
+    "taxRegistrationNumber": "5000660086",
+    "submissionTimeStamp": "2026-03-02T09:15:35Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "SafeFacturas",
+        "productVersion": "1.0.1",
+        "softwareValidationNumber": "FE/BB/AGT/2026",
+        "signatureVersion": 1
+      },
+      "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "AF 2026A/000012",
+        "documentStatus": "N",
+        "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiQUYgMjAyNkEvMDAwMDEyIiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6IkFGIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJFTVBSRVNBIEFEUVVJUkVOVEUgLSBBVVRPRkFDVFVSQcOHw4NPLCBMREEiLCJkb2N1bWVudFRvdGFscyI6eyJ0YXhQYXlhYmxlIjo2NzIwMCwibmV0VG90YWwiOjQ4MDAwMCwiZ3Jvc3NUb3RhbCI6NTQ3MjAwfX0.SotIrW-3qB3YNfx-hrrWGvoq3rq8VGmHs-n2Y_kuUp1KB9pdrgOR_CimBUTE1ebT40JIu1cCng_fOB5Pj0tPjYOThoxZJCBusYnwkxI91YkrWA9ZaDVt_owuMv8UhtF-tPxelQroI9bhMbR6eYPyrrym-AjljfkaDsonqlbhqxJpNgnghyuW0vw034XwZj73qdEVTVRQnFqZI4P5rLqnTKOvN0Fs1K9iICQsTKOvV4AQtYzKU9HnXu-OLsPysrqyWeOkaSmRlfKB4NAKtqJI1maRXhL9HiW77-IaXtyDeTnYU-HUaiGrqwOFwLVKbGWnMaMorEBcz80N0KRpN5MhFQ",
+        "documentDate": "2026-03-02",
+        "documentType": "AF",
+        "eacCode": "70220",
+        "systemEntryDate": "2026-03-02T09:15:30Z",
+        "customerCountry": "AO",
+        "customerTaxID": "003043657LA038",
+        "companyName": "EMPRESA ADQUIRENTE - AUTOFACTURAÇÃO, LDA",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "operationType": "SG",
+            "productCode": "SERV-CONS-220",
+            "productDescription": "Prestação de serviços de consultoria - autofacturação pelo adquirente",
+            "quantity": 1,
+            "unitOfMeasure": "Serviço",
+            "unitPriceBase": 480000,
+            "unitPrice": 480000,
+            "creditAmount": 480000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxContribution": 67200
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "taxPayable": 67200,
+          "netTotal": 480000,
+          "grossTotal": 547200
+        },
+        "withholdingTaxList": [
+          {
+            "withholdingTaxType": "IVA",
+            "withholdingTaxDescription": "Retenção de IVA na fonte - 6,5% do imposto (art. 26.º do CIVA)",
+            "withholdingTaxAmount": 4368
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "schemaVersion": "2.0",
+    "submissionUUID": "14d64901-ab9f-4989-bcfc-2b3e2ba34f8e",
+    "taxRegistrationNumber": "5000660086",
+    "submissionTimeStamp": "2026-03-02T09:15:35Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "SafeFacturas",
+        "productVersion": "1.0.1",
+        "softwareValidationNumber": "FE/BB/AGT/2026",
+        "signatureVersion": 1
+      },
+      "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "AR 2026A/000045",
+        "documentStatus": "N",
+        "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiQVIgMjAyNkEvMDAwMDQ1IiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6IkFSIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJDT05TVFJVVE9SQSBOT1ZBIExVQU5EQSwgTERBIiwiZG9jdW1lbnRUb3RhbHMiOnsidGF4UGF5YWJsZSI6NDQxMDAsIm5ldFRvdGFsIjozMTUwMDAsImdyb3NzVG90YWwiOjM1OTEwMH19.RpM3fCvOnJmYT74gWDs_5TTHtXHUtXtF48T4rq5tynQVFGZcR6ZGxy7TjzJdZk7Vv1gMOY9gQ5ZOyrK0ir_1l68foQJbwBcdQvTYFqEHGeeVdYiVKVVQRMR74JT_c-w_3aYYahmDYKbgIkohJw0y92rLLi7SpH2XGNiwI_RpgZGNnX5h__PISXT6umVW8wLzCeR5cA1bsBG013KLXXPh-oxefS7a8GhHeoUY1aN_Uw5juoWDUSgHNB_lpbBTlGMsOUtcAI-OdXE7pRdPnz964GDEXmQIcUngbSxflixD9pNnGXgLoUuFF2IZjpvtcpN5NwBZVqU-TE3yAP1500nA-A",
+        "documentDate": "2026-03-02",
+        "documentType": "AR",
+        "eacCode": "70220",
+        "systemEntryDate": "2026-03-02T09:15:30Z",
+        "customerCountry": "AO",
+        "customerTaxID": "003043657LA038",
+        "companyName": "CONSTRUTORA NOVA LUANDA, LDA",
+        "paymentReceipt": {
+          "sourceDocuments": [
+            {
+              "lineNo": 1,
+              "sourceDocumentID": {
+                "originatingON": "AC 2026A/000180",
+                "documentDate": "2026-02-10"
+              },
+              "creditAmount": 195000
+            },
+            {
+              "lineNo": 2,
+              "sourceDocumentID": {
+                "originatingON": "AC 2026A/000181",
+                "documentDate": "2026-02-18"
+              },
+              "creditAmount": 120000
+            }
+          ]
+        },
+        "documentTotals": {
+          "taxPayable": 44100,
+          "netTotal": 315000,
+          "grossTotal": 359100
+        }
+      }
+    ]
+  },
+  {
+    "schemaVersion": "2.0",
+    "submissionUUID": "62e058b7-366e-4659-9cfe-fedf6f8d0a03",
+    "taxRegistrationNumber": "5000660086",
+    "submissionTimeStamp": "2026-03-02T09:15:35Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "SafeFacturas",
+        "productVersion": "1.0.1",
+        "softwareValidationNumber": "FE/BB/AGT/2026",
+        "signatureVersion": 1
+      },
+      "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "CS 2026A/000007",
+        "documentStatus": "N",
+        "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiQ1MgMjAyNkEvMDAwMDA3IiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6IkNTIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJTRUdVUkFET1JBIENPLVNFR1VSQURPUkEgQU5HT0xBLCBTLkEuIiwiZG9jdW1lbnRUb3RhbHMiOnsidGF4UGF5YWJsZSI6NzEwMCwibmV0VG90YWwiOjEyMjUwMDAsImdyb3NzVG90YWwiOjEyMzIxMDB9fQ.Sw5F3YW2Lo-so5OrbVsYefLCf7T7z6oE3Ia7I4JUaLEK9Q0fBWidGWOPefayrmcX52ybk9_9mixONKX5eNy36D2OKHxGWu6X_pVuXQJRif59CZiNAPP6fyXlwRG5jjPu8HmLH6im3XXZQd1eycxii4s09f71a7Z6KI8g4r2JdTrK5GUrhDEoXbwT4V5wTTRYj7MA1x1AqvKnZt4RsL-iRdGHvOdZikAtfUFJrB_5H1E5dmzJWJMn4MJQd-NN_u3hDdT1RdOBcDrnVUHEPKWK4SMO2fTS-edU-mhLC9WHO5RHqENDdx0-xTRJREXqNF1jz5TY7FMDtwjHwCYQE0SGig",
+        "documentDate": "2026-03-02",
+        "documentType": "CS",
+        "eacCode": "65120",
+        "systemEntryDate": "2026-03-02T09:15:30Z",
+        "customerCountry": "AO",
+        "customerTaxID": "003043657LA038",
+        "companyName": "SEGURADORA CO-SEGURADORA ANGOLA, S.A.",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "operationType": "SIF",
+            "productCode": "APOL-INC-2026-0042",
+            "productDescription": "Prémio de seguro multirriscos - apólice INC-2026-0042 - quota-parte 40%",
+            "quantity": 1,
+            "unitOfMeasure": "Apólice",
+            "unitPriceBase": 1200000,
+            "unitPrice": 1200000,
+            "creditAmount": 1200000,
+            "taxes": [
+              {
+                "taxType": "IS",
+                "taxCountryRegion": "AO",
+                "taxCode": "22.1.5",
+                "taxPercentage": 0.3,
+                "taxContribution": 3600
+              }
+            ],
+            "settlementAmount": 0
+          },
+          {
+            "lineNumber": 2,
+            "operationType": "SG",
+            "productCode": "ENC-GEST-001",
+            "productDescription": "Encargos de gestão de co-seguro",
+            "quantity": 1,
+            "unitOfMeasure": "Serviço",
+            "unitPriceBase": 25000,
+            "unitPrice": 25000,
+            "creditAmount": 25000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxContribution": 3500
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "taxPayable": 7100,
+          "netTotal": 1225000,
+          "grossTotal": 1232100
+        }
+      }
+    ]
+  },
+  {
+    "schemaVersion": "2.0",
+    "submissionUUID": "3af76470-96e7-452f-80c7-09eb9296ec37",
+    "taxRegistrationNumber": "5000660086",
+    "submissionTimeStamp": "2026-03-02T09:15:35Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "SafeFacturas",
+        "productVersion": "1.0.1",
+        "softwareValidationNumber": "FE/BB/AGT/2026",
+        "signatureVersion": 1
+      },
+      "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "FA 2026A/000033",
+        "documentStatus": "N",
+        "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiRkEgMjAyNkEvMDAwMDMzIiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6IkZBIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJJTkRVU1RSSUFMIEtJTEFNQkEsIFMuQS4iLCJkb2N1bWVudFRvdGFscyI6eyJ0YXhQYXlhYmxlIjoxMjYwMDAsIm5ldFRvdGFsIjo5MDAwMDAsImdyb3NzVG90YWwiOjEwMjYwMDB9fQ.3OBSfkWsZYKsPlPpUuCgTK5tmKRhECZ_v6DjSiZDuZEG6Trp2itbxp7obWv41FF2qVGS04K1lA-8L5aoV8QbfOSqB9gpghBqcCdQAH7pPKj5PmGZjhjGQp2BpfMpf06zUSJWM0HFwpVcrhPakB7iA5rUX0BKS0C5vrllFS6M0qSvHHpK_yr0a1PqazAlR-taHwXhj5PDis8gfg90w2ICkokUpksxz8iiNS0q02v0L1n7j89CJJqYCx_eCY7C0OBP7TJn6GVSs2-AOFlj5-pyR5K0CAGiZ8hCdXIt7r0rNKE5OCi1Q0pWXcD7qkJ7C4TipD2T4ONy3bEJfSrEauQBDA",
+        "documentDate": "2026-03-02",
+        "documentType": "FA",
+        "eacCode": "46630",
+        "systemEntryDate": "2026-03-02T09:15:30Z",
+        "customerCountry": "AO",
+        "customerTaxID": "003043657LA038",
+        "companyName": "INDUSTRIAL KILAMBA, S.A.",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "operationType": "SG",
+            "productCode": "ADIANT-ENC-118",
+            "productDescription": "Adiantamento de 30% sobre a encomenda ENC-2026-118 - fornecimento de equipamentos",
+            "quantity": 1,
+            "unitOfMeasure": "Serviço",
+            "unitPriceBase": 900000,
+            "unitPrice": 900000,
+            "creditAmount": 900000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxContribution": 126000
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "taxPayable": 126000,
+          "netTotal": 900000,
+          "grossTotal": 1026000
+        }
+      }
+    ]
+  },
+  {
+    "schemaVersion": "2.0",
+    "submissionUUID": "b985f8fa-0f55-49d9-8f79-c1c41ddf3f3c",
+    "taxRegistrationNumber": "5000660086",
+    "submissionTimeStamp": "2026-03-02T09:15:35Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "SafeFacturas",
+        "productVersion": "1.0.1",
+        "softwareValidationNumber": "FE/BB/AGT/2026",
+        "signatureVersion": 1
+      },
+      "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "FG 2026A/000128",
+        "documentStatus": "N",
+        "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiRkcgMjAyNkEvMDAwMTI4IiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6IkZHIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJDT05TVU1JRE9SIEZJTkFMIiwiZG9jdW1lbnRUb3RhbHMiOnsidGF4UGF5YWJsZSI6ODQ3MDAsIm5ldFRvdGFsIjo2NDUwMDAsImdyb3NzVG90YWwiOjcyOTcwMH19.YnxzQhli96RnpWRj6m6NAtgUtiS4alXuGHQCYapi0awQluzh2Iqq46pmQArzvL0KO4OKT6WZZxf2_0JHwffVn3hCPCk9-xsAH3tC7C0mS2Kr3Pxvvt8C9byZviXNzGTGcNbR70iU6JB7XrMSlfUK60i5epXZFh5HEbgYV4a0MywBm1KKAu-vN-svX8OEO_-V70Fr61aPbgNmvrMneeGlo-vZ9qxcLXeCMztQcvg3nHbHFsnAln3jEzHo_VRHyWWXbcwCR2ul0NIKt_2W_ef-QtY1k6GJIXzD54fAWJcePVpqXq1aswfoipxUg0yh2d3dHwFMcK4vYQF4naUG0HYxOw",
+        "documentDate": "2026-03-02",
+        "documentType": "FG",
+        "eacCode": "47190",
+        "systemEntryDate": "2026-03-02T09:15:30Z",
+        "customerCountry": "AO",
+        "customerTaxID": "003043657LA038",
+        "companyName": "CONSUMIDOR FINAL",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "operationType": "TB",
+            "operationDate": "2026-02-28",
+            "productCode": "VEN-DIA-0228",
+            "productDescription": "Vendas a dinheiro consolidadas - 28/02/2026",
+            "quantity": 1,
+            "unitOfMeasure": "Serviço",
+            "unitPriceBase": 320000,
+            "unitPrice": 320000,
+            "creditAmount": 320000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxContribution": 44800
+              }
+            ],
+            "settlementAmount": 0
+          },
+          {
+            "lineNumber": 2,
+            "operationType": "TB",
+            "operationDate": "2026-03-01",
+            "productCode": "VEN-DIA-0301",
+            "productDescription": "Vendas a dinheiro consolidadas - 01/03/2026",
+            "quantity": 1,
+            "unitOfMeasure": "Serviço",
+            "unitPriceBase": 285000,
+            "unitPrice": 285000,
+            "creditAmount": 285000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxContribution": 39900
+              }
+            ],
+            "settlementAmount": 0
+          },
+          {
+            "lineNumber": 3,
+            "operationType": "TB",
+            "operationDate": "2026-03-01",
+            "productCode": "VEN-ALIM-0301",
+            "productDescription": "Vendas de bens alimentares isentos - 01/03/2026",
+            "quantity": 1,
+            "unitOfMeasure": "Serviço",
+            "unitPriceBase": 40000,
+            "unitPrice": 40000,
+            "creditAmount": 40000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "ISE",
+                "taxPercentage": 0,
+                "taxContribution": 0,
+                "taxExemptionCode": "M10"
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "taxPayable": 84700,
+          "netTotal": 645000,
+          "grossTotal": 729700
+        }
+      }
+    ]
+  },
+  {
+    "schemaVersion": "2.0",
+    "submissionUUID": "a2f9257d-54c0-47cb-8eaa-71991445c2a2",
+    "taxRegistrationNumber": "5000660086",
+    "submissionTimeStamp": "2026-03-02T09:15:35Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "SafeFacturas",
+        "productVersion": "1.0.1",
+        "softwareValidationNumber": "FE/BB/AGT/2026",
+        "signatureVersion": 1
+      },
+      "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "FR 2026B/000042",
+        "documentStatus": "N",
+        "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiRlIgMjAyNkIvMDAwMDQyIiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6IkZSIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJESVNUUklCVUlET1JBIENFTlRSQUwgRE8gSFVBTUJPLCBMREEiLCJkb2N1bWVudFRvdGFscyI6eyJ0YXhQYXlhYmxlIjo0ODcyMCwibmV0VG90YWwiOjM0ODAwMCwiZ3Jvc3NUb3RhbCI6Mzk2NzIwfX0.UKXRsNN8k0sEt7WzCL5k_9Zk1YRNmoIh29q5Fb7HoQdqi4q0rAjbxw5hXpLrPwCxi4PiHy4CCxf9xV0pJym79GPqif3bSpvzJ7u6OFhkKICKKMfCGHFERkyGhllJXSvAPVohJnETmKvJpOJvv1PgJknpFSnJs2sGkzT3atJ4SywK43YCjvKjNogi1LQQzI2bQj87qGNjV7ouIt1PtS9_zbVV7Yvfx6z5x6Bv9yCkAFIWeMg5ZH29B68LqjOxiYFF0U4WTCqeA9UOs_xQsNQWqlH91zCz63RBiTdRoOVq7qXYflFqLnRRU7obg_tA46LNhyazao7YsifThutDJefoSw",
+        "documentDate": "2026-03-02",
+        "documentType": "FR",
+        "eacCode": "47190",
+        "systemEntryDate": "2026-03-02T09:15:30Z",
+        "customerCountry": "AO",
+        "customerTaxID": "003043657LA038",
+        "companyName": "DISTRIBUIDORA CENTRAL DO HUAMBO, LDA",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "operationType": "TB",
+            "productCode": "PROD-MON-001",
+            "productDescription": "Monitor LED 27\" Full HD",
+            "quantity": 4,
+            "unitOfMeasure": "Unidade",
+            "unitPriceBase": 42000,
+            "unitPrice": 42000,
+            "creditAmount": 168000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxContribution": 23520
+              }
+            ],
+            "settlementAmount": 0
+          },
+          {
+            "lineNumber": 2,
+            "operationType": "TB",
+            "productCode": "PROD-IMP-002",
+            "productDescription": "Impressora multifunções laser monocromática",
+            "quantity": 1,
+            "unitOfMeasure": "Unidade",
+            "unitPriceBase": 180000,
+            "unitPrice": 180000,
+            "creditAmount": 180000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxContribution": 25200
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "taxPayable": 48720,
+          "netTotal": 348000,
+          "grossTotal": 396720
+        }
+      }
+    ]
+  },
+  {
+    "schemaVersion": "2.0",
+    "submissionUUID": "03c7cfba-94e9-4510-b789-50aa7008762c",
+    "taxRegistrationNumber": "5000660086",
+    "submissionTimeStamp": "2026-03-02T09:15:35Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "SafeFacturas",
+        "productVersion": "1.0.1",
+        "softwareValidationNumber": "FE/BB/AGT/2026",
+        "signatureVersion": 1
+      },
+      "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "FT 2026A/000125",
+        "documentStatus": "N",
+        "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiRlQgMjAyNkEvMDAwMTI1IiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6IkZUIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJDTElFTlRFIENPUlBPUkFUSVZPIExVQU5EQSwgUy5BLiIsImRvY3VtZW50VG90YWxzIjp7InRheFBheWFibGUiOjE4OTAwMCwibmV0VG90YWwiOjEzNTAwMDAsImdyb3NzVG90YWwiOjE1MzkwMDAsImN1cnJlbmN5Ijp7ImN1cnJlbmN5Q29kZSI6IkVVUiIsImN1cnJlbmN5QW1vdW50IjoxNzEwLCJleGNoYW5nZVJhdGUiOjkwMH19fQ.GoGRSWDY_cNdDQbHWkkt_jJGe92MnWZfVhZ_wQSMLLG5uxrx1V9UdH61cN1_F4IVr7mTYy3mMZszOkjIh7E4jGJiLyTkJgClrtHf0kj9M0OEMeCYluiWcUxI2Ahjvz10qWjKojGvLqGo9FxIsOiSt6GtgLjdI8SrG9c5ECgyUVjdvClHbAlYXJUGtTU2qjNfMUy9KreR-D0Jj6yyPygY6cmd8k6LeBgWx2TWtpsnJkRONnTR79UMMazfPYT4fqMghHZP9lIlj_pFY2tx2dNmY9zBJuoyATMugo2Mlya9dF7Fs7KARpxCtJbdpXQS3K-2wDeVCN1M75pFoKNC_jfixw",
+        "documentDate": "2026-03-02",
+        "documentType": "FT",
+        "eacCode": "70220",
+        "systemEntryDate": "2026-03-02T09:15:30Z",
+        "customerCountry": "AO",
+        "customerTaxID": "003043657LA038",
+        "companyName": "CLIENTE CORPORATIVO LUANDA, S.A.",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "operationType": "SG",
+            "productCode": "SERV-AUD-001",
+            "productDescription": "Auditoria financeira e revisão de contas - exercício 2025",
+            "quantity": 40,
+            "unitOfMeasure": "Hora",
+            "unitPriceBase": 25000,
+            "unitPrice": 25000,
+            "creditAmount": 1000000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxContribution": 140000
+              }
+            ],
+            "settlementAmount": 0
+          },
+          {
+            "lineNumber": 2,
+            "operationType": "SG",
+            "productCode": "SERV-REL-001",
+            "productDescription": "Relatório executivo de auditoria e recomendações",
+            "quantity": 1,
+            "unitOfMeasure": "Unidade",
+            "unitPriceBase": 350000,
+            "unitPrice": 350000,
+            "creditAmount": 350000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxContribution": 49000
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "taxPayable": 189000,
+          "netTotal": 1350000,
+          "grossTotal": 1539000,
+          "currency": {
+            "currencyCode": "EUR",
+            "currencyAmount": 1710,
+            "exchangeRate": 900
+          }
+        },
+        "withholdingTaxList": [
+          {
+            "withholdingTaxType": "IVA",
+            "withholdingTaxDescription": "Retenção de IVA na fonte - 6,5% do imposto (art. 26.º do CIVA)",
+            "withholdingTaxAmount": 12285
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "schemaVersion": "2.0",
+    "submissionUUID": "9d59a7cb-fb21-4207-97f0-4a473caf470f",
+    "taxRegistrationNumber": "5000660086",
+    "submissionTimeStamp": "2026-03-02T09:15:35Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "SafeFacturas",
+        "productVersion": "1.0.1",
+        "softwareValidationNumber": "FE/BB/AGT/2026",
+        "signatureVersion": 1
+      },
+      "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "GF 2026A/000501",
+        "documentStatus": "N",
+        "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiR0YgMjAyNkEvMDAwNTAxIiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6IkdGIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJDT05TVU1JRE9SIEZJTkFMIiwiZG9jdW1lbnRUb3RhbHMiOnsidGF4UGF5YWJsZSI6MTA1MDAsIm5ldFRvdGFsIjo3NTAwMCwiZ3Jvc3NUb3RhbCI6ODU1MDB9fQ.Gm_KQaHtRajXVjK-ujHX-STEDeO6qNBvxXcZSXiNibNgHS8Z41L3YTye5IhyeTUcmALgBgVpGCgJmlpR32OoZkkFIOf-RIFGXZKUqnkHvNbiPb6iBXeTaJ3RbdV-PPWIw3oJDXgEFCFxvtno2T8bfZrsq1rfZv9JIqPY6MdQ0X9CNIhbekiytBUgRCq5-zNy_-E09UkLvnVsihfF31-G7AvJBQ9Y0uzYVBtavTJ85KERAnR6Ez4mwZ8vmWdrlZVgSan60BeMF-3I3SF9e93PU09K20EDUYVw_VG_C-elUOfp7g0uzSmmM3KQ54PBgtaJwtWdlSFhyruKzYa54UL1RQ",
+        "documentDate": "2026-03-02",
+        "documentType": "GF",
+        "eacCode": "47190",
+        "systemEntryDate": "2026-03-02T09:15:30Z",
+        "customerCountry": "AO",
+        "customerTaxID": "003043657LA038",
+        "companyName": "CONSUMIDOR FINAL",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "operationType": "TB",
+            "operationDate": "2026-03-02",
+            "productCode": "GEN-001",
+            "productDescription": "Venda de mercadoria diversa - documento genérico",
+            "quantity": 1,
+            "unitOfMeasure": "Serviço",
+            "unitPriceBase": 75000,
+            "unitPrice": 75000,
+            "creditAmount": 75000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxContribution": 10500
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "taxPayable": 10500,
+          "netTotal": 75000,
+          "grossTotal": 85500
+        }
+      }
+    ]
+  },
+  {
+    "schemaVersion": "2.0",
+    "submissionUUID": "4bfac05f-75c6-4c5a-85d1-2a6394b60f88",
+    "taxRegistrationNumber": "5000660086",
+    "submissionTimeStamp": "2026-03-02T09:15:35Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "SafeFacturas",
+        "productVersion": "1.0.1",
+        "softwareValidationNumber": "FE/BB/AGT/2026",
+        "signatureVersion": 1
+      },
+      "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "LD 2026A/000003",
+        "documentStatus": "N",
+        "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiTEQgMjAyNkEvMDAwMDAzIiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6IkxEIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJTRUdVUkFET1JBIEzDjURFUiBERSBBTkdPTEEsIFMuQS4iLCJkb2N1bWVudFRvdGFscyI6eyJ0YXhQYXlhYmxlIjozMDAwMCwibmV0VG90YWwiOjMxNTAwMDAsImdyb3NzVG90YWwiOjMxODAwMDB9fQ.5PUnTyQ3s_CPsSKUIXlnbvTWRYK7OSW9snJ2loUHwYInVzRwJgsYkedpwRuy_ogWO1awEBYrgCvekHkZD51AzUD33VXwcYSD6-vVEQEfP1EEY-sVI0KkaSUf-U1pECiJ10g-LBOar02sxFTUUMvzl3LtD5BMzK5ffc_SRBp53LGml9NAhn8vewpIANemw1YGzl2tYFuoFaxzxnnMh4uEd4FQl6JKR9-m1hou9NXlT_ZwSZ_7KZeRGPatioP3AyNQ9jwYXicx-NL2PVbHVJtISLXQ9RPVY_vLgZQRJdA6XXY9g1JMjA4feepykQL16k4Okn1HYiV2J5RGvfUiqmTBkQ",
+        "documentDate": "2026-03-02",
+        "documentType": "LD",
+        "eacCode": "65120",
+        "systemEntryDate": "2026-03-02T09:15:30Z",
+        "customerCountry": "AO",
+        "customerTaxID": "003043657LA038",
+        "companyName": "SEGURADORA LÍDER DE ANGOLA, S.A.",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "operationType": "SIF",
+            "productCode": "APOL-INC-2026-0042-LID",
+            "productDescription": "Prémio de seguro multirriscos - apólice INC-2026-0042 - quota-parte líder 100%",
+            "quantity": 1,
+            "unitOfMeasure": "Apólice",
+            "unitPriceBase": 3000000,
+            "unitPrice": 3000000,
+            "creditAmount": 3000000,
+            "taxes": [
+              {
+                "taxType": "IS",
+                "taxCountryRegion": "AO",
+                "taxCode": "22.1.5",
+                "taxPercentage": 0.3,
+                "taxContribution": 9000
+              }
+            ],
+            "settlementAmount": 0
+          },
+          {
+            "lineNumber": 2,
+            "operationType": "SIF",
+            "productCode": "COM-MED-001",
+            "productDescription": "Comissão de mediação de seguros",
+            "quantity": 1,
+            "unitOfMeasure": "Serviço",
+            "unitPriceBase": 150000,
+            "unitPrice": 150000,
+            "creditAmount": 150000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxContribution": 21000
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "taxPayable": 30000,
+          "netTotal": 3150000,
+          "grossTotal": 3180000
+        }
+      }
+    ]
+  },
+  {
+    "schemaVersion": "2.0",
+    "submissionUUID": "8fb80b21-a95f-47c9-a5c7-e997e54306b8",
+    "taxRegistrationNumber": "5000660086",
+    "submissionTimeStamp": "2026-03-02T09:15:35Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "SafeFacturas",
+        "productVersion": "1.0.1",
+        "softwareValidationNumber": "FE/BB/AGT/2026",
+        "signatureVersion": 1
+      },
+      "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "NC 2026A/000015",
+        "documentStatus": "N",
+        "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiTkMgMjAyNkEvMDAwMDE1IiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6Ik5DIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJESVNUUklCVUlET1JBIENFTlRSQUwgRE8gSFVBTUJPLCBMREEiLCJkb2N1bWVudFRvdGFscyI6eyJ0YXhQYXlhYmxlIjoyNTkwMCwibmV0VG90YWwiOjE4NTAwMCwiZ3Jvc3NUb3RhbCI6MjEwOTAwfX0.u5QWkGxgjhHHeyZKM58W49eL2SWtJ-6vg75c0cxEtrPyCcJVZQ17MJ0qOVzOTm8JOJ9vDUVvgA8NdkcPZRled02RxSBX-HdU7oV061nYNO8a-xUVTSOcYm5Q7heH6HYxKAwrQZNcVWCYrHby481uJyTfnObhNF0Hka8cr5siLIoMlT2x1BEBZlNomFw6IPDQe175TkPNPgrTOBz4DRxJYJ5_9WDpBeRFRIe8Y4I7I6Yp8xVjNwKKZ3LUrIRJ5m3snlfDwP5or5t5gVpjJdlsqxxzdZPcrM-9_yAR1IT0Q40tWn5GrROHxUSGub_7aj7YDfMjFNNkX2QBgU62RA72Wg",
+        "documentDate": "2026-03-02",
+        "documentType": "NC",
+        "eacCode": "47190",
+        "systemEntryDate": "2026-03-02T09:15:30Z",
+        "customerCountry": "AO",
+        "customerTaxID": "003043657LA038",
+        "companyName": "DISTRIBUIDORA CENTRAL DO HUAMBO, LDA",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "operationType": "TB",
+            "productCode": "PROD-NB-001",
+            "productDescription": "Notebook Dell Latitude 5520 - devolução por defeito de fabrico",
+            "quantity": 1,
+            "unitOfMeasure": "Unidade",
+            "unitPriceBase": 185000,
+            "unitPrice": 185000,
+            "referenceInfo": {
+              "reference": "FT 2026A/000100",
+              "referenceItemLineNo": 1,
+              "reason": "Devolução de mercadoria por defeito"
+            },
+            "debitAmount": 185000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxContribution": 25900
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "taxPayable": 25900,
+          "netTotal": 185000,
+          "grossTotal": 210900
+        }
+      }
+    ]
+  },
+  {
+    "schemaVersion": "2.0",
+    "submissionUUID": "4f5614b8-53c2-4171-9df3-052a4b7f0794",
+    "taxRegistrationNumber": "5000660086",
+    "submissionTimeStamp": "2026-03-02T09:15:35Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "SafeFacturas",
+        "productVersion": "1.0.1",
+        "softwareValidationNumber": "FE/BB/AGT/2026",
+        "signatureVersion": 1
+      },
+      "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "ND 2026A/000008",
+        "documentStatus": "N",
+        "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiTkQgMjAyNkEvMDAwMDA4IiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6Ik5EIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJDT05TVFJVVE9SQSBOT1ZBIExVQU5EQSwgTERBIiwiZG9jdW1lbnRUb3RhbHMiOnsidGF4UGF5YWJsZSI6MCwibmV0VG90YWwiOjUzMDAwLCJncm9zc1RvdGFsIjo1MzAwMH19.iOgILQYN0AUSGLwMssT0rdB0xBoWTXkvHcHSIuLqkweTceyP0y6peH4XRkPobTFQn5n1aE6GwkOrRv1zFWbR7t2MBjpNd8Ubs_S6JZRckYqiPQsAjx4TN3GkCdC8iClF2fMogOIbjm25NS3_JHcm0QvGbr20HIFyy7By9TSwZ9FQqvoG11bWrTyZ1cqHtdGmB31D5Cp6kv1nK9sOXFIN-tEqO1xr3XJRWt28WAtPU4uf7EkX-sZ5AhvmExgUwAa1itK7H7X7ynCKqeFxMPou39sn5a08xzFOOLIGzp8btQWBG_3X1gPnAcvJSlFxJ8m3p5U1TDmXzzdYr1U3LyO_6w",
+        "documentDate": "2026-03-02",
+        "documentType": "ND",
+        "eacCode": "70220",
+        "systemEntryDate": "2026-03-02T09:15:30Z",
+        "customerCountry": "AO",
+        "customerTaxID": "003043657LA038",
+        "companyName": "CONSTRUTORA NOVA LUANDA, LDA",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "operationType": "SG",
+            "productCode": "JUROS-MORA",
+            "productDescription": "Juros de mora por atraso de pagamento - 50 dias após vencimento",
+            "quantity": 1,
+            "unitOfMeasure": "Serviço",
+            "unitPriceBase": 45000,
+            "unitPrice": 45000,
+            "referenceInfo": {
+              "reference": "FT 2026A/000095",
+              "referenceItemLineNo": 1,
+              "reason": "Juros de mora"
+            },
+            "creditAmount": 45000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "ISE",
+                "taxPercentage": 0,
+                "taxContribution": 0,
+                "taxExemptionCode": "M10"
+              }
+            ],
+            "settlementAmount": 0
+          },
+          {
+            "lineNumber": 2,
+            "operationType": "RD",
+            "productCode": "DESP-COB",
+            "productDescription": "Despesas administrativas de cobrança",
+            "quantity": 1,
+            "unitOfMeasure": "Serviço",
+            "unitPriceBase": 8000,
+            "unitPrice": 8000,
+            "referenceInfo": {
+              "reference": "FT 2026A/000095",
+              "referenceItemLineNo": 2,
+              "reason": "Despesas de cobrança"
+            },
+            "creditAmount": 8000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "ISE",
+                "taxPercentage": 0,
+                "taxContribution": 0,
+                "taxExemptionCode": "M10"
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "taxPayable": 0,
+          "netTotal": 53000,
+          "grossTotal": 53000
+        }
+      }
+    ]
+  },
+  {
+    "schemaVersion": "2.0",
+    "submissionUUID": "f10a769d-5d2b-45f9-9742-5eeef0a3b133",
+    "taxRegistrationNumber": "5000660086",
+    "submissionTimeStamp": "2026-03-02T09:15:35Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "SafeFacturas",
+        "productVersion": "1.0.1",
+        "softwareValidationNumber": "FE/BB/AGT/2026",
+        "signatureVersion": 1
+      },
+      "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "RA 2026A/000019",
+        "documentStatus": "N",
+        "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiUkEgMjAyNkEvMDAwMDE5IiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6IlJBIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJSRVNTRUdVUkFET1JBIEFUTMOCTlRJQ08sIFMuQS4iLCJkb2N1bWVudFRvdGFscyI6eyJ0YXhQYXlhYmxlIjoxNTYwMCwibmV0VG90YWwiOjI0NjAwMDAsImdyb3NzVG90YWwiOjI0NzU2MDB9fQ.nWL5V5GpoSLpncx1DVdFNMOlxRXgjqihtNocG_yOD3ZYiBkam2f8opbwWJqiawB4qbG4zrdYWPlAHOgVjH_MpioSG5M1IOXht4Xv52F2jKu-O-0EvIKjp6bTWQvPOlMEOtpwnxi9kDk5peucEKhd85keD7Iq4bYJ_Ao07rP9bzRrc7QMLoegqMpVEy_s_Kpp6TTyHAAbfTXrZ7KPGSS2kZ6TNALE4d1BydPuUbjQTgCEOaj44Kg8w-MIB81I_BvuLp-wYAwoy-oBHapjWNnpexjVIKNjc8LGusAlU4yKNpxpXu3uvdwV_WEVQco-0P4O9UPfaf6KDHIOzgO615d6-Q",
+        "documentDate": "2026-03-02",
+        "documentType": "RA",
+        "eacCode": "65200",
+        "systemEntryDate": "2026-03-02T09:15:30Z",
+        "customerCountry": "AO",
+        "customerTaxID": "003043657LA038",
+        "companyName": "RESSEGURADORA ATLÂNTICO, S.A.",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "operationType": "SIF",
+            "productCode": "RES-CED-001",
+            "productDescription": "Prémio de resseguro aceite - tratado proporcional 2026",
+            "quantity": 1,
+            "unitOfMeasure": "Tratado",
+            "unitPriceBase": 2400000,
+            "unitPrice": 2400000,
+            "creditAmount": 2400000,
+            "taxes": [
+              {
+                "taxType": "IS",
+                "taxCountryRegion": "AO",
+                "taxCode": "22.1.5",
+                "taxPercentage": 0.3,
+                "taxContribution": 7200
+              }
+            ],
+            "settlementAmount": 0
+          },
+          {
+            "lineNumber": 2,
+            "operationType": "SIF",
+            "productCode": "RES-COM-001",
+            "productDescription": "Comissão de resseguro",
+            "quantity": 1,
+            "unitOfMeasure": "Serviço",
+            "unitPriceBase": 60000,
+            "unitPrice": 60000,
+            "creditAmount": 60000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxContribution": 8400
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "taxPayable": 15600,
+          "netTotal": 2460000,
+          "grossTotal": 2475600
+        }
+      }
+    ]
+  },
+  {
+    "schemaVersion": "2.0",
+    "submissionUUID": "ccf6c920-2667-415a-87df-802f943f4551",
+    "taxRegistrationNumber": "5000660086",
+    "submissionTimeStamp": "2026-03-02T09:15:35Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "SafeFacturas",
+        "productVersion": "1.0.1",
+        "softwareValidationNumber": "FE/BB/AGT/2026",
+        "signatureVersion": 1
+      },
+      "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "RC 2026C/000256",
+        "documentStatus": "N",
+        "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiUkMgMjAyNkMvMDAwMjU2IiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6IlJDIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJDT05TVU1JRE9SIEZJTkFMIiwiZG9jdW1lbnRUb3RhbHMiOnsidGF4UGF5YWJsZSI6NjAyMDAsIm5ldFRvdGFsIjo0MzAwMDAsImdyb3NzVG90YWwiOjQ5MDIwMH19.gFw8iEhJB4kfpKt24wvLJce-_LqtGXERyvrfi9RlLdBGZY6VhDK_mFdOrLmcBzu5zdhcktv5K4ogqGVEVCXmo4OaEl48Y5YVa60mZs9KbZ6sXWWkJLzUvwdB5lmbziLhZFxlM-VpCNAb6LCB-OXrDtjglXlwf058DefpsQCrFCboBcrzTpYffn_IojSuCoz39vBcw30CPmIuR40wKOu4vBaJYYchEwQrBgPfMpJcZGfv-jU0wgWt2TS329keRQ5yt1QrG6OScURo318iyKPDnX_n6VCHFojPQaRnXmh5azBnn4-9i17-WQZSP4lMFkusN7DEzWwzUAxTB5hIai5U8w",
+        "documentDate": "2026-03-02",
+        "documentType": "RC",
+        "eacCode": "47190",
+        "systemEntryDate": "2026-03-02T09:15:30Z",
+        "customerCountry": "AO",
+        "customerTaxID": "003043657LA038",
+        "companyName": "CONSUMIDOR FINAL",
+        "paymentReceipt": {
+          "sourceDocuments": [
+            {
+              "lineNo": 1,
+              "sourceDocumentID": {
+                "originatingON": "FT 2026A/000080",
+                "documentDate": "2026-01-20"
+              },
+              "creditAmount": 250000
+            },
+            {
+              "lineNo": 2,
+              "sourceDocumentID": {
+                "originatingON": "FT 2026A/000081",
+                "documentDate": "2026-01-22"
+              },
+              "creditAmount": 180000
+            }
+          ]
+        },
+        "documentTotals": {
+          "taxPayable": 60200,
+          "netTotal": 430000,
+          "grossTotal": 490200
+        }
+      }
+    ]
+  },
+  {
+    "schemaVersion": "2.0",
+    "submissionUUID": "c5020067-76f0-457f-adb3-162328a2fd76",
+    "taxRegistrationNumber": "5000660086",
+    "submissionTimeStamp": "2026-03-02T09:15:35Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "SafeFacturas",
+        "productVersion": "1.0.1",
+        "softwareValidationNumber": "FE/BB/AGT/2026",
+        "signatureVersion": 1
+      },
+      "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "RE 2026C/000257",
+        "documentStatus": "N",
+        "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiUkUgMjAyNkMvMDAwMjU3IiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6IlJFIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJDT05TVU1JRE9SIEZJTkFMIiwiZG9jdW1lbnRUb3RhbHMiOnsidGF4UGF5YWJsZSI6NjAyMDAsIm5ldFRvdGFsIjo0MzAwMDAsImdyb3NzVG90YWwiOjQ5MDIwMH19.9hgxdOLiFvLPx4N-aj7Jcq1AJxOMVVY1F4UJ8LC8lAd5OvLNVQIcXKuTp5nOVC1r2ayO1ij8_84A-RBDpiBCsnUWVaMe7X_NBAanD_Xas9SjWdXcwDTwH-eed48xhknfUJva1azGbWW5vYro9pJV5k9w7pn0fMg356YvuBaU9m8hdEKw7bZLgTe3nFeYC2NzH2kEsnw2YGbvmoOk0CJBrsdQ33FU7d69VXgzITi37embrdwvRaJrN7Oxx1IU8t63STb4GfwuhS0aNpg2s8aYnXOQ_BhZdmrgJJMGEtLKJtVuUHeHgM9SumAD9kaAQ5WTIW3V0sVR6HRjJnTMOGMDpQ",
+        "documentDate": "2026-03-02",
+        "documentType": "RE",
+        "eacCode": "47190",
+        "systemEntryDate": "2026-03-02T09:15:30Z",
+        "customerCountry": "AO",
+        "customerTaxID": "003043657LA038",
+        "companyName": "CONSUMIDOR FINAL",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "operationType": "SG",
+            "productCode": "EST-RC-256",
+            "productDescription": "Estorno integral do recibo RC 2026C/000256 - anulação de recebimento em numerário",
+            "quantity": 1,
+            "unitOfMeasure": "Serviço",
+            "unitPriceBase": 430000,
+            "unitPrice": 430000,
+            "referenceInfo": {
+              "reference": "RC 2026C/000256",
+              "referenceItemLineNo": 1,
+              "reason": "Estorno integral do recibo"
+            },
+            "creditAmount": 430000,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxContribution": 60200
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "taxPayable": 60200,
+          "netTotal": 430000,
+          "grossTotal": 490200
+        }
+      }
+    ]
+  },
+  {
+    "schemaVersion": "2.0",
+    "submissionUUID": "b4ee2a6a-1e3f-462f-a106-2d7589c7bd2f",
+    "taxRegistrationNumber": "5000660086",
+    "submissionTimeStamp": "2026-03-02T09:15:35Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "SafeFacturas",
+        "productVersion": "1.0.1",
+        "softwareValidationNumber": "FE/BB/AGT/2026",
+        "signatureVersion": 1
+      },
+      "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "RG 2026C/000311",
+        "documentStatus": "N",
+        "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiUkcgMjAyNkMvMDAwMzExIiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6IlJHIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJBU1NPQ0lBw4fDg08gREUgTU9SQURPUkVTIERPIFRBTEFUT05BIiwiZG9jdW1lbnRUb3RhbHMiOnsidGF4UGF5YWJsZSI6MzM2MDAsIm5ldFRvdGFsIjoyNDAwMDAsImdyb3NzVG90YWwiOjI3MzYwMH19.PfJHPxNaj0lWvTVhEQ7jY1Q3mGo-UwxA25tpS0aNRxTro4df2GBIt2iqKomciq-1EaqGCa7-1oS4dkAs4ohyppMqXxDM4n4G6TeCVFPpKU3ohn8qrm_-yvBzOaouSJHhvbxocLuY87wSB-BtuUovzkDzDRU3UrGNQ2h0rAwjLSpWFgO8VplV_4JJMpatiDU7AYUao94Qi1ueYU4MKKHJuYqUtgx0HGo2QODhksPMdTydfsJ7c49SsOmOJJbeaDQgrP3XRbi-5c6IZh6CTsGn-LXU685Yb-IvakxyUBwukkvKZPenmyxdkBGDCjM_u8NcyqYKp1Z9as6m9Zlfden7_w",
+        "documentDate": "2026-03-02",
+        "documentType": "RG",
+        "eacCode": "47190",
+        "systemEntryDate": "2026-03-02T09:15:30Z",
+        "customerCountry": "AO",
+        "customerTaxID": "003043657LA038",
+        "companyName": "ASSOCIAÇÃO DE MORADORES DO TALATONA",
+        "paymentReceipt": {
+          "sourceDocuments": [
+            {
+              "lineNo": 1,
+              "sourceDocumentID": {
+                "originatingON": "FT 2026A/000101",
+                "documentDate": "2026-02-26"
+              },
+              "creditAmount": 150000
+            },
+            {
+              "lineNo": 2,
+              "sourceDocumentID": {
+                "originatingON": "FT 2026A/000102",
+                "documentDate": "2026-02-27"
+              },
+              "creditAmount": 90000
+            }
+          ]
+        },
+        "documentTotals": {
+          "taxPayable": 33600,
+          "netTotal": 240000,
+          "grossTotal": 273600
+        }
+      }
+    ]
+  },
+  {
+    "schemaVersion": "2.0",
+    "submissionUUID": "ed0220ba-f79b-4570-b366-c0c3ae739947",
+    "taxRegistrationNumber": "5000660086",
+    "submissionTimeStamp": "2026-03-02T09:15:35Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "SafeFacturas",
+        "productVersion": "1.0.1",
+        "softwareValidationNumber": "FE/BB/AGT/2026",
+        "signatureVersion": 1
+      },
+      "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "RP 2026A/000074",
+        "documentStatus": "N",
+        "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiUlAgMjAyNkEvMDAwMDc0IiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6IlJQIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJKT1PDiSBNQU5VRUwgRE9TIFNBTlRPUyIsImRvY3VtZW50VG90YWxzIjp7InRheFBheWFibGUiOjE0NzYsIm5ldFRvdGFsIjo0OTIwMDAsImdyb3NzVG90YWwiOjQ5MzQ3Nn19.8cExQZF6ugrnHh4UjXdvrq2Svsbg9W2ZRc0WwsLuKsIioB9hPc90dWBCdRmAXLMrVNKY34mOBLQNCrW_-8ydROP4WpqExzcuJhltC31jgqygfEffuVGYnqHCRLZWZFmqwrHPlxA0wCcs62Onw95CjmWrbzvmh0romTNMkclfGkcZHy8_VqeduvquEN0YZwtd2rq7Qem5bF2S-HIFf-2VeTTrITq6EqQrmveVqe5UDuTYybzGrcDK19-eb3WUOAuCmf3qChBmywU2rJmtJz8Qs7n2Ce9HjMO2UUtOYUBHbBWG4ZYZI3B4k0ThOJVtK9RPPkE4sLGC2a8JnxZ_SncASA",
+        "documentDate": "2026-03-02",
+        "documentType": "RP",
+        "eacCode": "65120",
+        "systemEntryDate": "2026-03-02T09:15:30Z",
+        "customerCountry": "AO",
+        "customerTaxID": "003043657LA038",
+        "companyName": "JOSÉ MANUEL DOS SANTOS",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "operationType": "SIF",
+            "productCode": "APOL-AUTO-2026-7781",
+            "productDescription": "Prémio de seguro automóvel - apólice AUTO-2026-7781",
+            "quantity": 1,
+            "unitOfMeasure": "Apólice",
+            "unitPriceBase": 480000,
+            "unitPrice": 480000,
+            "creditAmount": 480000,
+            "taxes": [
+              {
+                "taxType": "IS",
+                "taxCountryRegion": "AO",
+                "taxCode": "22.1.5",
+                "taxPercentage": 0.3,
+                "taxContribution": 1440
+              }
+            ],
+            "settlementAmount": 0
+          },
+          {
+            "lineNumber": 2,
+            "operationType": "SIF",
+            "productCode": "ENC-APOL-001",
+            "productDescription": "Custo da apólice e taxas administrativas",
+            "quantity": 1,
+            "unitOfMeasure": "Serviço",
+            "unitPriceBase": 12000,
+            "unitPrice": 12000,
+            "creditAmount": 12000,
+            "taxes": [
+              {
+                "taxType": "IS",
+                "taxCountryRegion": "AO",
+                "taxCode": "22.1.5",
+                "taxPercentage": 0.3,
+                "taxContribution": 36
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "taxPayable": 1476,
+          "netTotal": 492000,
+          "grossTotal": 493476
+        }
+      }
+    ]
+  },
+  {
+    "schemaVersion": "2.0",
+    "submissionUUID": "4fc544c1-6641-4609-a00a-029a921d41ed",
+    "taxRegistrationNumber": "5000660086",
+    "submissionTimeStamp": "2026-03-02T09:15:35Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "SafeFacturas",
+        "productVersion": "1.0.1",
+        "softwareValidationNumber": "FE/BB/AGT/2026",
+        "signatureVersion": 1
+      },
+      "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "TV 2026A/001842",
+        "documentStatus": "N",
+        "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiVFYgMjAyNkEvMDAxODQyIiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6IlRWIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJDT05TVU1JRE9SIEZJTkFMIiwiZG9jdW1lbnRUb3RhbHMiOnsidGF4UGF5YWJsZSI6MTAyNjIuNCwibmV0VG90YWwiOjM5OTAwLCJncm9zc1RvdGFsIjo1MDE2Mi40fX0.KfudrrG4de4oaNcsShcEfuFiyYk_Qk_3GZOyHRW-0-9CEYjVsCEg0zkY8DfxIOpZ09GCrQCUSPwW2blh5K-whEYLF2uZHdGe9LdkC8-ZT5C7UWjzGOgXwmjf7c2qkoLzKtQJr0kuRnrA8caCZ4h6vQ3zEHjMQGoVVB-3cph2U3syIkVyRYAnUGPz8Kn3n7gzHM5bxKWgxjJt3ZUQu5taoNTZAhkvadKfcLIHFCzn-DAN7FjfrhgeNDLpa7jx1W4B-9xkJoxnXCodt2467mnjJdqKHpHQujlIA_48MFRpcFHSaxrGDgURNFdz_JdHDB2-Kj2gGqNze5OuE8TkHGh-gA",
+        "documentDate": "2026-03-02",
+        "documentType": "TV",
+        "eacCode": "47190",
+        "systemEntryDate": "2026-03-02T09:15:30Z",
+        "customerCountry": "AO",
+        "customerTaxID": "003043657LA038",
+        "companyName": "CONSUMIDOR FINAL",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "operationType": "TB",
+            "productCode": "TAL-001",
+            "productDescription": "Arroz agulha 5kg - bem alimentar isento",
+            "quantity": 3,
+            "unitOfMeasure": "Unidade",
+            "unitPriceBase": 4500,
+            "unitPrice": 4500,
+            "creditAmount": 13500,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "ISE",
+                "taxPercentage": 0,
+                "taxContribution": 0,
+                "taxExemptionCode": "M10"
+              }
+            ],
+            "settlementAmount": 0
+          },
+          {
+            "lineNumber": 2,
+            "operationType": "TB",
+            "productCode": "TAL-002",
+            "productDescription": "Bebida não alcoólica 1,5L",
+            "quantity": 6,
+            "unitOfMeasure": "Unidade",
+            "unitPriceBase": 1200,
+            "unitPrice": 1200,
+            "creditAmount": 7200,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxContribution": 1008
+              }
+            ],
+            "settlementAmount": 0
+          },
+          {
+            "lineNumber": 3,
+            "operationType": "TB",
+            "productCode": "TAL-003",
+            "productDescription": "Cerveja nacional - garrafa 0,33L",
+            "quantity": 24,
+            "unitOfMeasure": "Unidade",
+            "unitPriceBase": 800,
+            "unitPrice": 800,
+            "creditAmount": 19200,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxContribution": 3494.4
+              },
+              {
+                "taxType": "IEC",
+                "taxCountryRegion": "AO",
+                "taxCode": "2203",
+                "taxPercentage": 30,
+                "taxContribution": 5760
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "taxPayable": 10262.4,
+          "netTotal": 39900,
+          "grossTotal": 50162.4
+        }
+      }
+    ]
+  }
+]

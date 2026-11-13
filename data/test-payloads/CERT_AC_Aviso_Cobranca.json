@@ -1,0 +1,79 @@
+{
+  "schemaVersion": "2.0",
+  "submissionUUID": "e33e7948-2932-4df2-b4a0-44e8ef1f49b0",
+  "taxRegistrationNumber": "5000660086",
+  "submissionTimeStamp": "2026-03-02T09:15:35Z",
+  "softwareInfo": {
+    "softwareInfoDetail": {
+      "productId": "SafeFacturas",
+      "productVersion": "1.0.1",
+      "softwareValidationNumber": "FE/BB/AGT/2026",
+      "signatureVersion": 1
+    },
+    "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+  },
+  "numberOfEntries": 1,
+  "documents": [
+    {
+      "documentNo": "AC 2026A/000201",
+      "documentStatus": "N",
+      "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiQUMgMjAyNkEvMDAwMjAxIiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6IkFDIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJDT05TVFJVVE9SQSBOT1ZBIExVQU5EQSwgTERBIiwiZG9jdW1lbnRUb3RhbHMiOnsidGF4UGF5YWJsZSI6MjczMDAsIm5ldFRvdGFsIjoxOTUwMDAsImdyb3NzVG90YWwiOjIyMjMwMH19.wCxIh9spQYOTxWcRuyPAWoNG11QpH6vvfbhWSjnL4GEwcD5gEYh61XpZu8Ex73-QLE4iuYIfhxjwMXYp62GJg48mg1teWEikioyb5-AfQWokZhYPoVvdNHg8ZIn_Ewlm0ML0uSVjALLDv8cM7NR0HvJZwd47cZlQqLcGenBamwfkj_WiKKqJeoimDPx1ias9GpEb7_M20AQGko7psUxNss_0MCAQhA2Jw2jH3zQfshXNQH2Yva0bCiaaUBOx2or_Ygrbi0NLphQ0DteYLlHCy2rASUJFZmmDQLyxpXlfWm3rD9xyRzdXTTCXrgCLp0lPPeUp_PLJbHO6W7Hp9uqaUw",
+      "documentDate": "2026-03-02",
+      "documentType": "AC",
+      "eacCode": "70220",
+      "systemEntryDate": "2026-03-02T09:15:30Z",
+      "customerCountry": "AO",
+      "customerTaxID": "003043657LA038",
+      "companyName": "CONSTRUTORA NOVA LUANDA, LDA",
+      "lines": [
+        {
+          "lineNumber": 1,
+          "operationType": "SG",
+          "productCode": "SERV-MAN-001",
+          "productDescription": "Manutenção preventiva de equipamentos industriais - contrato mensal",
+          "quantity": 2,
+          "unitOfMeasure": "Serviço",
+          "unitPriceBase": 75000,
+          "unitPrice": 75000,
+          "creditAmount": 150000,
+          "taxes": [
+            {
+              "taxType": "IVA",
+              "taxCountryRegion": "AO",
+              "taxCode": "NOR",
+              "taxPercentage": 14,
+              "taxContribution": 21000
+            }
+          ],
+          "settlementAmount": 0
+        },
+        {
+          "lineNumber": 2,
+          "operationType": "TB",
+          "productCode": "PROD-PEC-014",
+          "productDescription": "Peças de substituição - kit de vedantes e rolamentos",
+          "quantity": 1,
+          "unitOfMeasure": "Kit",
+          "unitPriceBase": 45000,
+          "unitPrice": 45000,
+          "creditAmount": 45000,
+          "taxes": [
+            {
+              "taxType": "IVA",
+              "taxCountryRegion": "AO",
+              "taxCode": "NOR",
+              "taxPercentage": 14,
+              "taxContribution": 6300
+            }
+          ],
+          "settlementAmount": 0
+        }
+      ],
+      "documentTotals": {
+        "taxPayable": 27300,
+        "netTotal": 195000,
+        "grossTotal": 222300
+      }
+    }
+  ]
+}

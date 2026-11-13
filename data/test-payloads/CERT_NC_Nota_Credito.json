@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "2.0",
+  "submissionUUID": "8fb80b21-a95f-47c9-a5c7-e997e54306b8",
+  "taxRegistrationNumber": "5000660086",
+  "submissionTimeStamp": "2026-03-02T09:15:35Z",
+  "softwareInfo": {
+    "softwareInfoDetail": {
+      "productId": "SafeFacturas",
+      "productVersion": "1.0.1",
+      "softwareValidationNumber": "FE/BB/AGT/2026",
+      "signatureVersion": 1
+    },
+    "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+  },
+  "numberOfEntries": 1,
+  "documents": [
+    {
+      "documentNo": "NC 2026A/000015",
+      "documentStatus": "N",
+      "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiTkMgMjAyNkEvMDAwMDE1IiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6Ik5DIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJESVNUUklCVUlET1JBIENFTlRSQUwgRE8gSFVBTUJPLCBMREEiLCJkb2N1bWVudFRvdGFscyI6eyJ0YXhQYXlhYmxlIjoyNTkwMCwibmV0VG90YWwiOjE4NTAwMCwiZ3Jvc3NUb3RhbCI6MjEwOTAwfX0.u5QWkGxgjhHHeyZKM58W49eL2SWtJ-6vg75c0cxEtrPyCcJVZQ17MJ0qOVzOTm8JOJ9vDUVvgA8NdkcPZRled02RxSBX-HdU7oV061nYNO8a-xUVTSOcYm5Q7heH6HYxKAwrQZNcVWCYrHby481uJyTfnObhNF0Hka8cr5siLIoMlT2x1BEBZlNomFw6IPDQe175TkPNPgrTOBz4DRxJYJ5_9WDpBeRFRIe8Y4I7I6Yp8xVjNwKKZ3LUrIRJ5m3snlfDwP5or5t5gVpjJdlsqxxzdZPcrM-9_yAR1IT0Q40tWn5GrROHxUSGub_7aj7YDfMjFNNkX2QBgU62RA72Wg",
+      "documentDate": "2026-03-02",
+      "documentType": "NC",
+      "eacCode": "47190",
+      "systemEntryDate": "2026-03-02T09:15:30Z",
+      "customerCountry": "AO",
+      "customerTaxID": "003043657LA038",
+      "companyName": "DISTRIBUIDORA CENTRAL DO HUAMBO, LDA",
+      "lines": [
+        {
+          "lineNumber": 1,
+          "operationType": "TB",
+          "productCode": "PROD-NB-001",
+          "productDescription": "Notebook Dell Latitude 5520 - devolução por defeito de fabrico",
+          "quantity": 1,
+          "unitOfMeasure": "Unidade",
+          "unitPriceBase": 185000,
+          "unitPrice": 185000,
+          "referenceInfo": {
+            "reference": "FT 2026A/000100",
+            "referenceItemLineNo": 1,
+            "reason": "Devolução de mercadoria por defeito"
+          },
+          "debitAmount": 185000,
+          "taxes": [
+            {
+              "taxType": "IVA",
+              "taxCountryRegion": "AO",
+              "taxCode": "NOR",
+              "taxPercentage": 14,
+              "taxContribution": 25900
+            }
+          ],
+          "settlementAmount": 0
+        }
+      ],
+      "documentTotals": {
+        "taxPayable": 25900,
+        "netTotal": 185000,
+        "grossTotal": 210900
+      }
+    }
+  ]
+}

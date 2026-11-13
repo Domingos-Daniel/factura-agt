@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "lastUpdated": "2026-02-03T12:31:37.293Z",
+    "lastUpdated": "2026-03-19T10:56:59.380Z",
     "version": "1.0",
-    "totalFacturas": 12,
+    "totalFacturas": 17,
     "totalSeries": 1,
-    "totalOperations": 100
+    "totalOperations": 169
   },
   "facturas": [
     {
@@ -114,12 +114,12 @@
       "type": "factura",
       "serviceName": "direct",
       "status": "error",
-      "requestID": "202600000353439",
+      "requestID": "202600001268194",
       "request": {
         "schemaVersion": "1.2",
-        "submissionGUID": "5ba2ce70-98fc-4958-801b-891be5a1645a",
+        "submissionGUID": "18ef60a1-80a5-4c8d-be01-2832aeb6a77a",
         "taxRegistrationNumber": "999888777",
-        "submissionTimeStamp": "2026-01-20T23:02:05.365Z",
+        "submissionTimeStamp": "2026-02-24T07:57:42.627Z",
         "softwareInfo": {
           "softwareInfoDetail": {
             "productId": "FacturAGT",
@@ -136,7 +136,7 @@
             "documentType": "FT",
             "documentDate": "2025-01-20",
             "eacCode": "47410",
-            "systemEntryDate": "2026-01-20T23:02:05.360Z",
+            "systemEntryDate": "2026-02-24T07:57:42.626Z",
             "customerCountry": "AO",
             "customerTaxID": "123456789",
             "companyName": "Empresa A Lda",
@@ -177,18 +177,18 @@
         ]
       },
       "response": {
-        "requestID": "202600000353439",
+        "requestID": "202600001268194",
         "errorList": [
           ""
         ]
       },
       "errors": [],
       "createdAt": "2026-01-20T22:42:46.720Z",
-      "updatedAt": "2026-01-20T23:02:06.509Z",
+      "updatedAt": "2026-02-24T07:58:00.997Z",
       "metadata": {
         "nif": "999888777",
         "documentNo": "FT 2025/00001",
-        "submissionGUID": "5ba2ce70-98fc-4958-801b-891be5a1645a"
+        "submissionGUID": "18ef60a1-80a5-4c8d-be01-2832aeb6a77a"
       }
     },
     {
@@ -196,12 +196,12 @@
       "type": "factura",
       "serviceName": "direct",
       "status": "error",
-      "requestID": "202600000353440",
+      "requestID": "202600001268197",
       "request": {
         "schemaVersion": "1.2",
-        "submissionGUID": "45fdea45-aad4-4ef0-8019-247a355be294",
+        "submissionGUID": "f2d6a379-4df7-40db-9fab-9e3f76e9407a",
         "taxRegistrationNumber": "999888777",
-        "submissionTimeStamp": "2026-01-20T23:02:05.365Z",
+        "submissionTimeStamp": "2026-02-24T07:57:42.627Z",
         "softwareInfo": {
           "softwareInfoDetail": {
             "productId": "FacturAGT",
@@ -218,7 +218,7 @@
             "documentType": "FT",
             "documentDate": "2025-01-20",
             "eacCode": "47410",
-            "systemEntryDate": "2026-01-20T23:02:05.362Z",
+            "systemEntryDate": "2026-02-24T07:57:42.626Z",
             "customerCountry": "AO",
             "customerTaxID": "987654321",
             "companyName": "Empresa B Lda",
@@ -259,18 +259,18 @@
         ]
       },
       "response": {
-        "requestID": "202600000353440",
+        "requestID": "202600001268197",
         "errorList": [
           ""
         ]
       },
       "errors": [],
       "createdAt": "2026-01-20T23:02:07.294Z",
-      "updatedAt": "2026-01-20T23:02:07.294Z",
+      "updatedAt": "2026-02-24T07:58:16.629Z",
       "metadata": {
         "nif": "999888777",
         "documentNo": "FT 2025/00002",
-        "submissionGUID": "45fdea45-aad4-4ef0-8019-247a355be294"
+        "submissionGUID": "f2d6a379-4df7-40db-9fab-9e3f76e9407a"
       }
     },
     {
@@ -278,12 +278,12 @@
       "type": "factura",
       "serviceName": "direct",
       "status": "error",
-      "requestID": "202600000353441",
+      "requestID": "202600001268198",
       "request": {
         "schemaVersion": "1.2",
-        "submissionGUID": "8c929b91-af8d-445c-a7c5-f2b7a56ba97d",
+        "submissionGUID": "3a136142-7be8-43ed-a3dc-1dce86336e08",
         "taxRegistrationNumber": "999888777",
-        "submissionTimeStamp": "2026-01-20T23:02:05.365Z",
+        "submissionTimeStamp": "2026-02-24T07:57:42.627Z",
         "softwareInfo": {
           "softwareInfoDetail": {
             "productId": "FacturAGT",
@@ -300,7 +300,7 @@
             "documentType": "FT",
             "documentDate": "2025-01-20",
             "eacCode": "47410",
-            "systemEntryDate": "2026-01-20T23:02:05.363Z",
+            "systemEntryDate": "2026-02-24T07:57:42.626Z",
             "customerCountry": "AO",
             "customerTaxID": "555555555",
             "companyName": "Empresa C Lda",
@@ -341,18 +341,18 @@
         ]
       },
       "response": {
-        "requestID": "202600000353441",
+        "requestID": "202600001268198",
         "errorList": [
           ""
         ]
       },
       "errors": [],
       "createdAt": "2026-01-20T23:02:07.914Z",
-      "updatedAt": "2026-01-20T23:02:07.914Z",
+      "updatedAt": "2026-02-24T07:58:34.594Z",
       "metadata": {
         "nif": "999888777",
         "documentNo": "FT 2025/00003",
-        "submissionGUID": "8c929b91-af8d-445c-a7c5-f2b7a56ba97d"
+        "submissionGUID": "3a136142-7be8-43ed-a3dc-1dce86336e08"
       }
     },
     {
@@ -931,12 +931,12 @@
       "type": "factura",
       "serviceName": "direct",
       "status": "error",
-      "requestID": "49e5d086-87eb-4c61-b606-310c03366050",
+      "requestID": "202600001280695",
       "request": {
         "schemaVersion": "1.2",
-        "submissionGUID": "49e5d086-87eb-4c61-b606-310c03366050",
+        "submissionGUID": "1bbebd2f-6168-4d79-bf5f-66be50ebfcfa",
         "taxRegistrationNumber": "5000000000",
-        "submissionTimeStamp": "2026-02-03T12:31:22.398Z",
+        "submissionTimeStamp": "2026-02-24T16:12:57.308Z",
         "softwareInfo": {
           "softwareInfoDetail": {
             "productId": "FacturAGT",
@@ -950,10 +950,10 @@
           {
             "documentNo": "FT ZFC2000H22026/9105044921",
             "documentStatus": "C",
-            "documentType": "FT",
+            "documentType": "NC",
             "documentDate": "2026-01-26",
             "eacCode": "47410",
-            "systemEntryDate": "2026-02-03T12:31:22.396Z",
+            "systemEntryDate": "2026-02-24T16:12:57.307Z",
             "customerCountry": "AO",
             "customerTaxID": "000370717HA033",
             "companyName": "Cimenfort",
@@ -961,27 +961,6 @@
               {
                 "lineNumber": 1,
                 "productCode": "PROD001",
-                "productDescription": "1.0",
-                "quantity": 1,
-                "unitOfMeasure": "UN",
-                "unitPrice": 22800,
-                "unitPriceBase": 22800,
-                "debitAmount": 22800,
-                "taxes": [
-                  {
-                    "taxType": "IVA",
-                    "taxCountryRegion": "AO",
-                    "taxCode": "NOR",
-                    "taxPercentage": 14,
-                    "taxAmount": 3192,
-                    "taxContribution": 3192
-                  }
-                ],
-                "settlementAmount": 0
-              },
-              {
-                "lineNumber": 2,
-                "productCode": "PROD002",
                 "productDescription": "1.0",
                 "quantity": 1,
                 "unitOfMeasure": "UN",
@@ -1002,12 +981,12 @@
               }
             ],
             "documentTotals": {
-              "netTotal": 20000,
-              "taxPayable": 2800,
-              "grossTotal": 22800,
+              "netTotal": 100,
+              "taxPayable": 14,
+              "grossTotal": 114,
               "currency": {
                 "currencyCode": "AOA",
-                "currencyAmount": 22800,
+                "currencyAmount": 114,
                 "exchangeRate": 1
               }
             }
@@ -1015,37 +994,428 @@
         ]
       },
       "response": {
-        "success": true,
-        "documentId": "3dfd91d4-0686-426f-91ad-3d6ba32815e5",
-        "processingStatus": "processing",
-        "provider": "appypay",
-        "createdAt": "2026-02-03T12:31:37.285Z",
-        "rawResponse": {
-          "id": "3dfd91d4-0686-426f-91ad-3d6ba32815e5",
-          "code": 100,
-          "responseStatus": {
-            "successful": false,
-            "status": "Pending",
-            "code": null,
-            "message": null,
-            "source": "FiscalDoc",
-            "sourceDetails": {
-              "attempt": 1,
-              "type": "FT",
-              "code": "",
-              "message": "The request has been accepted for processing."
-            },
-            "reference": null
-          }
-        }
+        "requestID": "202600001280695",
+        "errorList": [
+          ""
+        ]
       },
       "errors": [],
       "createdAt": "2026-02-03T12:31:37.292Z",
-      "updatedAt": "2026-02-03T12:31:37.292Z",
+      "updatedAt": "2026-02-24T16:13:25.845Z",
       "metadata": {
         "nif": "5000000000",
         "documentNo": "FT ZFC2000H22026/9105044921",
-        "submissionGUID": "49e5d086-87eb-4c61-b606-310c03366050"
+        "submissionGUID": "1bbebd2f-6168-4d79-bf5f-66be50ebfcfa"
+      }
+    },
+    {
+      "id": "FT-999888777-1771921632316-lgil2v",
+      "type": "factura",
+      "serviceName": "direct",
+      "status": "error",
+      "requestID": "202600001268255",
+      "request": {
+        "schemaVersion": "1.2",
+        "submissionGUID": "17bac587-7333-4f32-989e-8df706fb9cf3",
+        "taxRegistrationNumber": "999888777",
+        "submissionTimeStamp": "2026-02-24T08:26:51.738Z",
+        "softwareInfo": {
+          "softwareInfoDetail": {
+            "productId": "FacturAGT",
+            "productVersion": "1.0.0",
+            "softwareValidationNumber": "AGT-2025-001"
+          },
+          "jwsSoftwareSignature": "placeholder"
+        },
+        "numberOfEntries": 1,
+        "documents": [
+          {
+            "documentNo": "FT ZFC2000H22026/9105044919",
+            "documentStatus": "C",
+            "documentType": "FT",
+            "documentDate": "2026-01-21",
+            "eacCode": "47410",
+            "systemEntryDate": "2026-02-24T08:26:51.737Z",
+            "customerCountry": "AO",
+            "customerTaxID": "000370717HA033",
+            "companyName": "Cimenfort",
+            "lines": [
+              {
+                "lineNumber": 1,
+                "productCode": "PROD001",
+                "productDescription": "1.0",
+                "quantity": 1,
+                "unitOfMeasure": "UN",
+                "unitPrice": 1140,
+                "unitPriceBase": 1140,
+                "debitAmount": 1140,
+                "taxes": [
+                  {
+                    "taxType": "IVA",
+                    "taxCountryRegion": "AO",
+                    "taxCode": "NOR",
+                    "taxPercentage": 14,
+                    "taxAmount": 159.6,
+                    "taxContribution": 159.6
+                  }
+                ],
+                "settlementAmount": 0
+              }
+            ],
+            "documentTotals": {
+              "netTotal": 1000,
+              "taxPayable": 140,
+              "grossTotal": 1140,
+              "currency": {
+                "currencyCode": "AOA",
+                "currencyAmount": 1140,
+                "exchangeRate": 1
+              }
+            }
+          }
+        ]
+      },
+      "response": {
+        "requestID": "202600001268255",
+        "errorList": [
+          ""
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T08:27:12.318Z",
+      "updatedAt": "2026-02-24T08:27:12.318Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "FT ZFC2000H22026/9105044919",
+        "submissionGUID": "17bac587-7333-4f32-989e-8df706fb9cf3"
+      }
+    },
+    {
+      "id": "FT-999888777-1771921654382-hifysl",
+      "type": "factura",
+      "serviceName": "direct",
+      "status": "error",
+      "requestID": "202600001268258",
+      "request": {
+        "schemaVersion": "1.2",
+        "submissionGUID": "ab9e994c-6a88-493f-a899-71eb87e9769a",
+        "taxRegistrationNumber": "999888777",
+        "submissionTimeStamp": "2026-02-24T08:26:51.738Z",
+        "softwareInfo": {
+          "softwareInfoDetail": {
+            "productId": "FacturAGT",
+            "productVersion": "1.0.0",
+            "softwareValidationNumber": "AGT-2025-001"
+          },
+          "jwsSoftwareSignature": "placeholder"
+        },
+        "numberOfEntries": 1,
+        "documents": [
+          {
+            "documentNo": "FT ZFC2000H22026/9105044920",
+            "documentStatus": "C",
+            "documentType": "FT",
+            "documentDate": "2026-01-21",
+            "eacCode": "47410",
+            "systemEntryDate": "2026-02-24T08:26:51.737Z",
+            "customerCountry": "AO",
+            "customerTaxID": "000370717HA033",
+            "companyName": "Cimenfort",
+            "lines": [
+              {
+                "lineNumber": 1,
+                "productCode": "PROD001",
+                "productDescription": "1.0",
+                "quantity": 1,
+                "unitOfMeasure": "UN",
+                "unitPrice": 114,
+                "unitPriceBase": 114,
+                "debitAmount": 114,
+                "taxes": [
+                  {
+                    "taxType": "IVA",
+                    "taxCountryRegion": "AO",
+                    "taxCode": "NOR",
+                    "taxPercentage": 14,
+                    "taxAmount": 15.96,
+                    "taxContribution": 15.96
+                  }
+                ],
+                "settlementAmount": 0
+              }
+            ],
+            "documentTotals": {
+              "netTotal": 100,
+              "taxPayable": 14,
+              "grossTotal": 114,
+              "currency": {
+                "currencyCode": "AOA",
+                "currencyAmount": 114,
+                "exchangeRate": 1
+              }
+            }
+          }
+        ]
+      },
+      "response": {
+        "requestID": "202600001268258",
+        "errorList": [
+          ""
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T08:27:34.382Z",
+      "updatedAt": "2026-02-24T08:27:34.382Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "FT ZFC2000H22026/9105044920",
+        "submissionGUID": "ab9e994c-6a88-493f-a899-71eb87e9769a"
+      }
+    },
+    {
+      "id": "FT-999888777-1771921672788-dbssw3",
+      "type": "factura",
+      "serviceName": "direct",
+      "status": "error",
+      "requestID": "202600001268261",
+      "request": {
+        "schemaVersion": "1.2",
+        "submissionGUID": "d6f1796c-2f97-401e-8aee-7d3bea602dd8",
+        "taxRegistrationNumber": "999888777",
+        "submissionTimeStamp": "2026-02-24T08:26:51.738Z",
+        "softwareInfo": {
+          "softwareInfoDetail": {
+            "productId": "FacturAGT",
+            "productVersion": "1.0.0",
+            "softwareValidationNumber": "AGT-2025-001"
+          },
+          "jwsSoftwareSignature": "placeholder"
+        },
+        "numberOfEntries": 1,
+        "documents": [
+          {
+            "documentNo": "FT ZFC2000H22026/9105044921",
+            "documentStatus": "C",
+            "documentType": "NC",
+            "documentDate": "2026-01-26",
+            "eacCode": "47410",
+            "systemEntryDate": "2026-02-24T08:26:51.737Z",
+            "customerCountry": "AO",
+            "customerTaxID": "000370717HA033",
+            "companyName": "Cimenfort",
+            "lines": [
+              {
+                "lineNumber": 1,
+                "productCode": "PROD001",
+                "productDescription": "1.0",
+                "quantity": 1,
+                "unitOfMeasure": "UN",
+                "unitPrice": 114,
+                "unitPriceBase": 114,
+                "debitAmount": 114,
+                "taxes": [
+                  {
+                    "taxType": "IVA",
+                    "taxCountryRegion": "AO",
+                    "taxCode": "NOR",
+                    "taxPercentage": 14,
+                    "taxAmount": 15.96,
+                    "taxContribution": 15.96
+                  }
+                ],
+                "settlementAmount": 0
+              }
+            ],
+            "documentTotals": {
+              "netTotal": 100,
+              "taxPayable": 14,
+              "grossTotal": 114,
+              "currency": {
+                "currencyCode": "AOA",
+                "currencyAmount": 114,
+                "exchangeRate": 1
+              }
+            }
+          }
+        ]
+      },
+      "response": {
+        "requestID": "202600001268261",
+        "errorList": [
+          ""
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T08:27:52.788Z",
+      "updatedAt": "2026-02-24T08:28:13.574Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "FT ZFC2000H22026/9105044921",
+        "submissionGUID": "d6f1796c-2f97-401e-8aee-7d3bea602dd8"
+      }
+    },
+    {
+      "id": "FT-5000000000-1771927275137-zdt7nc",
+      "type": "factura",
+      "serviceName": "direct",
+      "status": "error",
+      "requestID": "202600001280690",
+      "request": {
+        "schemaVersion": "1.2",
+        "submissionGUID": "056106d5-b6fb-4b7a-aa31-66b688401a4f",
+        "taxRegistrationNumber": "5000000000",
+        "submissionTimeStamp": "2026-02-24T16:12:57.308Z",
+        "softwareInfo": {
+          "softwareInfoDetail": {
+            "productId": "FacturAGT",
+            "productVersion": "1.0.0",
+            "softwareValidationNumber": "AGT-2025-001"
+          },
+          "jwsSoftwareSignature": "placeholder"
+        },
+        "numberOfEntries": 1,
+        "documents": [
+          {
+            "documentNo": "FT ZFC2000H22026/9105044919",
+            "documentStatus": "C",
+            "documentType": "FT",
+            "documentDate": "2026-01-21",
+            "eacCode": "47410",
+            "systemEntryDate": "2026-02-24T16:12:57.306Z",
+            "customerCountry": "AO",
+            "customerTaxID": "000370717HA033",
+            "companyName": "Cimenfort",
+            "lines": [
+              {
+                "lineNumber": 1,
+                "productCode": "PROD001",
+                "productDescription": "1.0",
+                "quantity": 1,
+                "unitOfMeasure": "UN",
+                "unitPrice": 1140,
+                "unitPriceBase": 1140,
+                "debitAmount": 1140,
+                "taxes": [
+                  {
+                    "taxType": "IVA",
+                    "taxCountryRegion": "AO",
+                    "taxCode": "NOR",
+                    "taxPercentage": 14,
+                    "taxAmount": 159.6,
+                    "taxContribution": 159.6
+                  }
+                ],
+                "settlementAmount": 0
+              }
+            ],
+            "documentTotals": {
+              "netTotal": 1000,
+              "taxPayable": 140,
+              "grossTotal": 1140,
+              "currency": {
+                "currencyCode": "AOA",
+                "currencyAmount": 1140,
+                "exchangeRate": 1
+              }
+            }
+          }
+        ]
+      },
+      "response": {
+        "requestID": "202600001280690",
+        "errorList": [
+          ""
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T10:01:15.139Z",
+      "updatedAt": "2026-02-24T16:13:05.217Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "FT ZFC2000H22026/9105044919",
+        "submissionGUID": "056106d5-b6fb-4b7a-aa31-66b688401a4f"
+      }
+    },
+    {
+      "id": "FT-5000000000-1771927293008-62zngm",
+      "type": "factura",
+      "serviceName": "direct",
+      "status": "error",
+      "requestID": "202600001280691",
+      "request": {
+        "schemaVersion": "1.2",
+        "submissionGUID": "3fb3a762-0590-4598-85ba-405aa8ffde95",
+        "taxRegistrationNumber": "5000000000",
+        "submissionTimeStamp": "2026-02-24T16:12:57.308Z",
+        "softwareInfo": {
+          "softwareInfoDetail": {
+            "productId": "FacturAGT",
+            "productVersion": "1.0.0",
+            "softwareValidationNumber": "AGT-2025-001"
+          },
+          "jwsSoftwareSignature": "placeholder"
+        },
+        "numberOfEntries": 1,
+        "documents": [
+          {
+            "documentNo": "FT ZFC2000H22026/9105044920",
+            "documentStatus": "C",
+            "documentType": "FT",
+            "documentDate": "2026-01-21",
+            "eacCode": "47410",
+            "systemEntryDate": "2026-02-24T16:12:57.307Z",
+            "customerCountry": "AO",
+            "customerTaxID": "000370717HA033",
+            "companyName": "Cimenfort",
+            "lines": [
+              {
+                "lineNumber": 1,
+                "productCode": "PROD001",
+                "productDescription": "1.0",
+                "quantity": 1,
+                "unitOfMeasure": "UN",
+                "unitPrice": 114,
+                "unitPriceBase": 114,
+                "debitAmount": 114,
+                "taxes": [
+                  {
+                    "taxType": "IVA",
+                    "taxCountryRegion": "AO",
+                    "taxCode": "NOR",
+                    "taxPercentage": 14,
+                    "taxAmount": 15.96,
+                    "taxContribution": 15.96
+                  }
+                ],
+                "settlementAmount": 0
+              }
+            ],
+            "documentTotals": {
+              "netTotal": 100,
+              "taxPayable": 14,
+              "grossTotal": 114,
+              "currency": {
+                "currencyCode": "AOA",
+                "currencyAmount": 114,
+                "exchangeRate": 1
+              }
+            }
+          }
+        ]
+      },
+      "response": {
+        "requestID": "202600001280691",
+        "errorList": [
+          ""
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T10:01:33.009Z",
+      "updatedAt": "2026-02-24T16:13:10.920Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "FT ZFC2000H22026/9105044920",
+        "submissionGUID": "3fb3a762-0590-4598-85ba-405aa8ffde95"
       }
     }
   ],
@@ -3751,6 +4121,1377 @@
       "updatedAt": "2026-01-21T10:58:29.230Z",
       "metadata": {
         "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1771943425925-5tkpat",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "202600000377770"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600000377770\",\"resultCode\":\"2\",\"taxRegistrationNumber\":\"999888777\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E08\",\"descriptionError\":\"A assinatura do produtor de software \"jwsSoftwareSignature\" n�o est� de acordo com a informa��o transmitida.\"}]}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T14:30:25.925Z",
+      "updatedAt": "2026-02-24T14:30:25.925Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1771943431578-v0gueb",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "202600000377765"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600000377765\",\"resultCode\":\"2\",\"taxRegistrationNumber\":\"999888777\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E08\",\"descriptionError\":\"A assinatura do produtor de software \"jwsSoftwareSignature\" n�o est� de acordo com a informa��o transmitida.\"}]}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T14:30:31.578Z",
+      "updatedAt": "2026-02-24T14:30:31.578Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1771943436819-x7adrj",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "202600000377768"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600000377768\",\"resultCode\":\"2\",\"taxRegistrationNumber\":\"999888777\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E08\",\"descriptionError\":\"A assinatura do produtor de software \"jwsSoftwareSignature\" n�o est� de acordo com a informa��o transmitida.\"}]}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T14:30:36.819Z",
+      "updatedAt": "2026-02-24T14:30:36.819Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1771943441854-shrao7",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "REQ-1770062850784"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"REQ-1770062850784\",\"resultCode\":\"2\",\"taxRegistrationNumber\":\"999888777\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E08\",\"descriptionError\":\"A assinatura do produtor de software \"jwsSoftwareSignature\" n�o est� de acordo com a informa��o transmitida.\"}]}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T14:30:41.854Z",
+      "updatedAt": "2026-02-24T14:30:41.854Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1771943447158-ixwp39",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "REQ-1770064709423"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"REQ-1770064709423\",\"resultCode\":\"2\",\"taxRegistrationNumber\":\"999888777\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E08\",\"descriptionError\":\"A assinatura do produtor de software \"jwsSoftwareSignature\" n�o est� de acordo com a informa��o transmitida.\"}]}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T14:30:47.158Z",
+      "updatedAt": "2026-02-24T14:30:47.158Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1771943452069-2eh7fc",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "REQ-1770062848712"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"REQ-1770062848712\",\"resultCode\":\"2\",\"taxRegistrationNumber\":\"999888777\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E08\",\"descriptionError\":\"A assinatura do produtor de software \"jwsSoftwareSignature\" n�o est� de acordo com a informa��o transmitida.\"}]}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T14:30:52.069Z",
+      "updatedAt": "2026-02-24T14:30:52.069Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000413178-1771943457767-y88pdj",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000413178",
+        "requestID": "REQ-1770065552688"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"REQ-1770065552688\",\"resultCode\":\"2\",\"taxRegistrationNumber\":\"5000413178\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E08\",\"descriptionError\":\"A assinatura do produtor de software \"jwsSoftwareSignature\" n�o est� de acordo com a informa��o transmitida.\"}]}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T14:30:57.767Z",
+      "updatedAt": "2026-02-24T14:30:57.767Z",
+      "metadata": {
+        "nif": "5000413178",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1771943463217-747aap",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "REQ-1770115797156"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"REQ-1770115797156\",\"resultCode\":\"2\",\"taxRegistrationNumber\":\"999888777\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E08\",\"descriptionError\":\"A assinatura do produtor de software \"jwsSoftwareSignature\" n�o est� de acordo com a informa��o transmitida.\"}]}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T14:31:03.217Z",
+      "updatedAt": "2026-02-24T14:31:03.217Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1771943468101-a3z0vx",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "REQ-1770121897286"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"REQ-1770121897286\",\"resultCode\":\"2\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E08\",\"descriptionError\":\"A assinatura do produtor de software \"jwsSoftwareSignature\" n�o est� de acordo com a informa��o transmitida.\"}]}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T14:31:08.101Z",
+      "updatedAt": "2026-02-24T14:31:08.101Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-999888777-1771943473550-33baqa",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "999888777",
+        "requestID": "202600001268194"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001268194\",\"resultCode\":\"2\",\"taxRegistrationNumber\":\"999888777\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E08\",\"descriptionError\":\"A assinatura do produtor de software \"jwsSoftwareSignature\" n�o est� de acordo com a informa��o transmitida.\"}]}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T14:31:13.550Z",
+      "updatedAt": "2026-02-24T14:31:13.550Z",
+      "metadata": {
+        "nif": "999888777",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1771945418243-4lv6gy",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001279851"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001279851\",\"resultCode\":\"2\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E08\",\"descriptionError\":\"A assinatura do produtor de software \"jwsSoftwareSignature\" n�o est� de acordo com a informa��o transmitida.\"}]}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T15:03:38.243Z",
+      "updatedAt": "2026-02-24T15:03:38.243Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1771945438062-pbuotu",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001279851"
+      },
+      "response": {
+        "requestID": "202600001279851",
+        "resultCode": "",
+        "taxRegistrationNumber": "5000000000",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "429",
+            "descriptionError": "Limite de requisi��es excedido. Tente novamente em 2 mintutos"
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T15:03:58.062Z",
+      "updatedAt": "2026-02-24T15:03:58.062Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1771945478374-kbaqim",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001279851"
+      },
+      "response": {
+        "requestID": "202600001279851",
+        "resultCode": "",
+        "taxRegistrationNumber": "5000000000",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "429",
+            "descriptionError": "Limite de requisi��es excedido. Tente novamente em 2 mintutos"
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T15:04:38.374Z",
+      "updatedAt": "2026-02-24T15:04:38.374Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1771945482302-1ueo1l",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001279855"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001279855\",\"resultCode\":\"2\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E08\",\"descriptionError\":\"A assinatura do produtor de software \"jwsSoftwareSignature\" n�o est� de acordo com a informa��o transmitida.\"}]}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T15:04:42.302Z",
+      "updatedAt": "2026-02-24T15:04:42.302Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1771945486054-0s2zkm",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001279857"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001279857\",\"resultCode\":\"2\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E08\",\"descriptionError\":\"A assinatura do produtor de software \"jwsSoftwareSignature\" n�o est� de acordo com a informa��o transmitida.\"}]}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T15:04:46.054Z",
+      "updatedAt": "2026-02-24T15:04:46.054Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1771945489826-cqr0ft",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001279848"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001279848\",\"resultCode\":\"2\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E08\",\"descriptionError\":\"A assinatura do produtor de software \"jwsSoftwareSignature\" n�o est� de acordo com a informa��o transmitida.\"}]}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T15:04:49.826Z",
+      "updatedAt": "2026-02-24T15:04:49.826Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1771946507564-i6jg0c",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280279"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280279\",\"resultCode\":\"2\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E08\",\"descriptionError\":\"A assinatura do produtor de software \"jwsSoftwareSignature\" n�o est� de acordo com a informa��o transmitida.\"}]}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T15:21:47.564Z",
+      "updatedAt": "2026-02-24T15:21:47.564Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1771946511339-ntclu0",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280287"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280287\",\"resultCode\":\"2\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E08\",\"descriptionError\":\"A assinatura do produtor de software \"jwsSoftwareSignature\" n�o est� de acordo com a informa��o transmitida.\"}]}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T15:21:51.339Z",
+      "updatedAt": "2026-02-24T15:21:51.339Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1771946515092-pufi7e",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280284"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280284\",\"resultCode\":\"2\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E08\",\"descriptionError\":\"A assinatura do produtor de software \"jwsSoftwareSignature\" n�o est� de acordo com a informa��o transmitida.\"}]}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T15:21:55.092Z",
+      "updatedAt": "2026-02-24T15:21:55.092Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1771946518755-tvxk2e",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280290"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280290\",\"resultCode\":\"2\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E08\",\"descriptionError\":\"A assinatura do produtor de software \"jwsSoftwareSignature\" n�o est� de acordo com a informa��o transmitida.\"}]}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T15:21:58.755Z",
+      "updatedAt": "2026-02-24T15:21:58.755Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1771946539496-ilocii",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280284"
+      },
+      "response": {
+        "requestID": "202600001280284",
+        "resultCode": "",
+        "taxRegistrationNumber": "5000000000",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "429",
+            "descriptionError": "Limite de requisi��es excedido. Tente novamente em 2 mintutos"
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T15:22:19.496Z",
+      "updatedAt": "2026-02-24T15:22:19.496Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1771947575013-n2o134",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280279"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280279\",\"resultCode\":\"2\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E08\",\"descriptionError\":\"A assinatura do produtor de software \"jwsSoftwareSignature\" n�o est� de acordo com a informa��o transmitida.\"}]}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T15:39:35.013Z",
+      "updatedAt": "2026-02-24T15:39:35.013Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1771947579033-8jbz1m",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280284"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280284\",\"resultCode\":\"2\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E08\",\"descriptionError\":\"A assinatura do produtor de software \"jwsSoftwareSignature\" n�o est� de acordo com a informa��o transmitida.\"}]}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T15:39:39.033Z",
+      "updatedAt": "2026-02-24T15:39:39.033Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1771947582869-g5m4uw",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280290"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280290\",\"resultCode\":\"2\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E08\",\"descriptionError\":\"A assinatura do produtor de software \"jwsSoftwareSignature\" n�o est� de acordo com a informa��o transmitida.\"}]}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T15:39:42.869Z",
+      "updatedAt": "2026-02-24T15:39:42.869Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1771947586631-ysf9p5",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280290"
+      },
+      "response": {
+        "requestID": "202600001280290",
+        "resultCode": "",
+        "taxRegistrationNumber": "5000000000",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "429",
+            "descriptionError": "Limite de requisi��es excedido. Tente novamente em 2 mintutos"
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T15:39:46.631Z",
+      "updatedAt": "2026-02-24T15:39:46.631Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1771949789042-qlg8v9",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280279"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280279\",\"resultCode\":\"2\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E08\",\"descriptionError\":\"A assinatura do produtor de software \"jwsSoftwareSignature\" n�o est� de acordo com a informa��o transmitida.\"}]}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T16:16:29.042Z",
+      "updatedAt": "2026-02-24T16:16:29.042Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1771949793040-gppscv",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280284"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280284\",\"resultCode\":\"2\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E08\",\"descriptionError\":\"A assinatura do produtor de software \"jwsSoftwareSignature\" n�o est� de acordo com a informa��o transmitida.\"}]}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T16:16:33.040Z",
+      "updatedAt": "2026-02-24T16:16:33.040Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1771949796938-vr5lv0",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280290"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280290\",\"resultCode\":\"2\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E08\",\"descriptionError\":\"A assinatura do produtor de software \"jwsSoftwareSignature\" n�o est� de acordo com a informa��o transmitida.\"}]}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T16:16:36.938Z",
+      "updatedAt": "2026-02-24T16:16:36.938Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1771949800904-69rw3b",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280690"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280690\",\"resultCode\":\"2\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E08\",\"descriptionError\":\"A assinatura do produtor de software \"jwsSoftwareSignature\" n�o est� de acordo com a informa��o transmitida.\"}]}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T16:16:40.904Z",
+      "updatedAt": "2026-02-24T16:16:40.904Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1771949804823-yyxht9",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280691"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280691\",\"resultCode\":\"2\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E08\",\"descriptionError\":\"A assinatura do produtor de software \"jwsSoftwareSignature\" n�o est� de acordo com a informa��o transmitida.\"}]}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T16:16:44.823Z",
+      "updatedAt": "2026-02-24T16:16:44.823Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1771949813169-0bnu3b",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280694"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280694\",\"resultCode\":\"2\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E08\",\"descriptionError\":\"A assinatura do produtor de software \"jwsSoftwareSignature\" n�o est� de acordo com a informa��o transmitida.\"}]}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T16:16:53.169Z",
+      "updatedAt": "2026-02-24T16:16:53.169Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1771949817165-wlgs5p",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280695"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280695\",\"resultCode\":\"2\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E08\",\"descriptionError\":\"A assinatura do produtor de software \"jwsSoftwareSignature\" n�o est� de acordo com a informa��o transmitida.\"}]}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T16:16:57.165Z",
+      "updatedAt": "2026-02-24T16:16:57.165Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1771949821087-tvieit",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280290"
+      },
+      "response": {
+        "requestID": "202600001280290",
+        "resultCode": "",
+        "taxRegistrationNumber": "5000000000",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "429",
+            "descriptionError": "Limite de requisi��es excedido. Tente novamente em 2 mintutos"
+          }
+        ]
+      },
+      "errors": [],
+      "createdAt": "2026-02-24T16:17:01.087Z",
+      "updatedAt": "2026-02-24T16:17:01.087Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1773916439865-2k2b5c",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280279"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280279\",\"resultCode\":\"10\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E11\",\"descriptionError\":\"N�mero fiscal Angolano especificado no par�metro taxRegistrationNumber (5000000000) � desconhecido no sistema da AGT.\"},{\"idError\":\"E28\",\"descriptionError\":\"N�mero fiscal do emissor especificado no par�metro taxRegistrationNumber (5000000000) n�o aderiu � factura��o electr�nica no sistema da AGT.\"},{\"idError\":\"E07\",\"descriptionError\":\"Software de factura��o especificado no par�metro \"softwareValidationNo\" (AGT-2025-001) n�o est� certificado.\"}],\"successRequestID\":\"\"}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-03-19T10:33:59.865Z",
+      "updatedAt": "2026-03-19T10:33:59.865Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1773916447056-wuo8xk",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280284"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280284\",\"resultCode\":\"10\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E11\",\"descriptionError\":\"N�mero fiscal Angolano especificado no par�metro taxRegistrationNumber (5000000000) � desconhecido no sistema da AGT.\"},{\"idError\":\"E28\",\"descriptionError\":\"N�mero fiscal do emissor especificado no par�metro taxRegistrationNumber (5000000000) n�o aderiu � factura��o electr�nica no sistema da AGT.\"},{\"idError\":\"E07\",\"descriptionError\":\"Software de factura��o especificado no par�metro \"softwareValidationNo\" (AGT-2025-001) n�o est� certificado.\"}],\"successRequestID\":\"\"}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-03-19T10:34:07.056Z",
+      "updatedAt": "2026-03-19T10:34:07.056Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1773916453303-njnhaw",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280695"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280695\",\"resultCode\":\"10\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E11\",\"descriptionError\":\"N�mero fiscal Angolano especificado no par�metro taxRegistrationNumber (5000000000) � desconhecido no sistema da AGT.\"},{\"idError\":\"E28\",\"descriptionError\":\"N�mero fiscal do emissor especificado no par�metro taxRegistrationNumber (5000000000) n�o aderiu � factura��o electr�nica no sistema da AGT.\"},{\"idError\":\"E07\",\"descriptionError\":\"Software de factura��o especificado no par�metro \"softwareValidationNo\" (AGT-2025-001) n�o est� certificado.\"}],\"successRequestID\":\"\"}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-03-19T10:34:13.303Z",
+      "updatedAt": "2026-03-19T10:34:13.303Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1773916458567-sv96wz",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280290"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280290\",\"resultCode\":\"10\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E11\",\"descriptionError\":\"N�mero fiscal Angolano especificado no par�metro taxRegistrationNumber (5000000000) � desconhecido no sistema da AGT.\"},{\"idError\":\"E28\",\"descriptionError\":\"N�mero fiscal do emissor especificado no par�metro taxRegistrationNumber (5000000000) n�o aderiu � factura��o electr�nica no sistema da AGT.\"},{\"idError\":\"E07\",\"descriptionError\":\"Software de factura��o especificado no par�metro \"softwareValidationNo\" (AGT-2025-001) n�o est� certificado.\"}],\"successRequestID\":\"\"}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-03-19T10:34:18.567Z",
+      "updatedAt": "2026-03-19T10:34:18.567Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1773916463789-wxntk0",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280690"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280690\",\"resultCode\":\"10\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E11\",\"descriptionError\":\"N�mero fiscal Angolano especificado no par�metro taxRegistrationNumber (5000000000) � desconhecido no sistema da AGT.\"},{\"idError\":\"E28\",\"descriptionError\":\"N�mero fiscal do emissor especificado no par�metro taxRegistrationNumber (5000000000) n�o aderiu � factura��o electr�nica no sistema da AGT.\"},{\"idError\":\"E07\",\"descriptionError\":\"Software de factura��o especificado no par�metro \"softwareValidationNo\" (AGT-2025-001) n�o est� certificado.\"}],\"successRequestID\":\"\"}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-03-19T10:34:23.789Z",
+      "updatedAt": "2026-03-19T10:34:23.789Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1773916468171-a6nbrc",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280695"
+      },
+      "response": {
+        "requestID": "202600001280695",
+        "resultCode": "",
+        "taxRegistrationNumber": "5000000000",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "429",
+            "descriptionError": "Limite de requisi��es excedido. Tente novamente em 2 mintutos"
+          }
+        ],
+        "successRequestID": ""
+      },
+      "errors": [],
+      "createdAt": "2026-03-19T10:34:28.171Z",
+      "updatedAt": "2026-03-19T10:34:28.171Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1773916474177-m3lzqa",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280691"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280691\",\"resultCode\":\"10\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E11\",\"descriptionError\":\"N�mero fiscal Angolano especificado no par�metro taxRegistrationNumber (5000000000) � desconhecido no sistema da AGT.\"},{\"idError\":\"E28\",\"descriptionError\":\"N�mero fiscal do emissor especificado no par�metro taxRegistrationNumber (5000000000) n�o aderiu � factura��o electr�nica no sistema da AGT.\"},{\"idError\":\"E07\",\"descriptionError\":\"Software de factura��o especificado no par�metro \"softwareValidationNo\" (AGT-2025-001) n�o est� certificado.\"}],\"successRequestID\":\"\"}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-03-19T10:34:34.177Z",
+      "updatedAt": "2026-03-19T10:34:34.177Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1773916480946-qq98fi",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280694"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280694\",\"resultCode\":\"10\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E11\",\"descriptionError\":\"N�mero fiscal Angolano especificado no par�metro taxRegistrationNumber (5000000000) � desconhecido no sistema da AGT.\"},{\"idError\":\"E28\",\"descriptionError\":\"N�mero fiscal do emissor especificado no par�metro taxRegistrationNumber (5000000000) n�o aderiu � factura��o electr�nica no sistema da AGT.\"},{\"idError\":\"E07\",\"descriptionError\":\"Software de factura��o especificado no par�metro \"softwareValidationNo\" (AGT-2025-001) n�o est� certificado.\"}],\"successRequestID\":\"\"}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-03-19T10:34:40.946Z",
+      "updatedAt": "2026-03-19T10:34:40.946Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1773916599096-zoe35c",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280279"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280279\",\"resultCode\":\"10\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E11\",\"descriptionError\":\"N�mero fiscal Angolano especificado no par�metro taxRegistrationNumber (5000000000) � desconhecido no sistema da AGT.\"},{\"idError\":\"E28\",\"descriptionError\":\"N�mero fiscal do emissor especificado no par�metro taxRegistrationNumber (5000000000) n�o aderiu � factura��o electr�nica no sistema da AGT.\"},{\"idError\":\"E07\",\"descriptionError\":\"Software de factura��o especificado no par�metro \"softwareValidationNo\" (AGT-2025-001) n�o est� certificado.\"}],\"successRequestID\":\"\"}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-03-19T10:36:39.096Z",
+      "updatedAt": "2026-03-19T10:36:39.096Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1773916604489-r3efi5",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280284"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280284\",\"resultCode\":\"10\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E11\",\"descriptionError\":\"N�mero fiscal Angolano especificado no par�metro taxRegistrationNumber (5000000000) � desconhecido no sistema da AGT.\"},{\"idError\":\"E28\",\"descriptionError\":\"N�mero fiscal do emissor especificado no par�metro taxRegistrationNumber (5000000000) n�o aderiu � factura��o electr�nica no sistema da AGT.\"},{\"idError\":\"E07\",\"descriptionError\":\"Software de factura��o especificado no par�metro \"softwareValidationNo\" (AGT-2025-001) n�o est� certificado.\"}],\"successRequestID\":\"\"}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-03-19T10:36:44.489Z",
+      "updatedAt": "2026-03-19T10:36:44.489Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1773916612213-logo0s",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280695"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280695\",\"resultCode\":\"10\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E11\",\"descriptionError\":\"N�mero fiscal Angolano especificado no par�metro taxRegistrationNumber (5000000000) � desconhecido no sistema da AGT.\"},{\"idError\":\"E28\",\"descriptionError\":\"N�mero fiscal do emissor especificado no par�metro taxRegistrationNumber (5000000000) n�o aderiu � factura��o electr�nica no sistema da AGT.\"},{\"idError\":\"E07\",\"descriptionError\":\"Software de factura��o especificado no par�metro \"softwareValidationNo\" (AGT-2025-001) n�o est� certificado.\"}],\"successRequestID\":\"\"}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-03-19T10:36:52.213Z",
+      "updatedAt": "2026-03-19T10:36:52.213Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1773916618456-99mux1",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280690"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280690\",\"resultCode\":\"10\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E11\",\"descriptionError\":\"N�mero fiscal Angolano especificado no par�metro taxRegistrationNumber (5000000000) � desconhecido no sistema da AGT.\"},{\"idError\":\"E28\",\"descriptionError\":\"N�mero fiscal do emissor especificado no par�metro taxRegistrationNumber (5000000000) n�o aderiu � factura��o electr�nica no sistema da AGT.\"},{\"idError\":\"E07\",\"descriptionError\":\"Software de factura��o especificado no par�metro \"softwareValidationNo\" (AGT-2025-001) n�o est� certificado.\"}],\"successRequestID\":\"\"}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-03-19T10:36:58.456Z",
+      "updatedAt": "2026-03-19T10:36:58.456Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1773916624426-lr9zi5",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280691"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280691\",\"resultCode\":\"10\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E11\",\"descriptionError\":\"N�mero fiscal Angolano especificado no par�metro taxRegistrationNumber (5000000000) � desconhecido no sistema da AGT.\"},{\"idError\":\"E28\",\"descriptionError\":\"N�mero fiscal do emissor especificado no par�metro taxRegistrationNumber (5000000000) n�o aderiu � factura��o electr�nica no sistema da AGT.\"},{\"idError\":\"E07\",\"descriptionError\":\"Software de factura��o especificado no par�metro \"softwareValidationNo\" (AGT-2025-001) n�o est� certificado.\"}],\"successRequestID\":\"\"}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-03-19T10:37:04.426Z",
+      "updatedAt": "2026-03-19T10:37:04.426Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1773916630203-fdkrk3",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280290"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280290\",\"resultCode\":\"10\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E11\",\"descriptionError\":\"N�mero fiscal Angolano especificado no par�metro taxRegistrationNumber (5000000000) � desconhecido no sistema da AGT.\"},{\"idError\":\"E28\",\"descriptionError\":\"N�mero fiscal do emissor especificado no par�metro taxRegistrationNumber (5000000000) n�o aderiu � factura��o electr�nica no sistema da AGT.\"},{\"idError\":\"E07\",\"descriptionError\":\"Software de factura��o especificado no par�metro \"softwareValidationNo\" (AGT-2025-001) n�o est� certificado.\"}],\"successRequestID\":\"\"}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-03-19T10:37:10.203Z",
+      "updatedAt": "2026-03-19T10:37:10.203Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1773916636111-ihbbdi",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280694"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280694\",\"resultCode\":\"10\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E11\",\"descriptionError\":\"N�mero fiscal Angolano especificado no par�metro taxRegistrationNumber (5000000000) � desconhecido no sistema da AGT.\"},{\"idError\":\"E28\",\"descriptionError\":\"N�mero fiscal do emissor especificado no par�metro taxRegistrationNumber (5000000000) n�o aderiu � factura��o electr�nica no sistema da AGT.\"},{\"idError\":\"E07\",\"descriptionError\":\"Software de factura��o especificado no par�metro \"softwareValidationNo\" (AGT-2025-001) n�o est� certificado.\"}],\"successRequestID\":\"\"}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-03-19T10:37:16.111Z",
+      "updatedAt": "2026-03-19T10:37:16.111Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1773917469970-uwc1zj",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280284"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280284\",\"resultCode\":\"10\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E11\",\"descriptionError\":\"N�mero fiscal Angolano especificado no par�metro taxRegistrationNumber (5000000000) � desconhecido no sistema da AGT.\"},{\"idError\":\"E28\",\"descriptionError\":\"N�mero fiscal do emissor especificado no par�metro taxRegistrationNumber (5000000000) n�o aderiu � factura��o electr�nica no sistema da AGT.\"},{\"idError\":\"E07\",\"descriptionError\":\"Software de factura��o especificado no par�metro \"softwareValidationNo\" (AGT-2025-001) n�o est� certificado.\"}],\"successRequestID\":\"\"}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-03-19T10:51:09.971Z",
+      "updatedAt": "2026-03-19T10:51:09.971Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1773917472970-uo6x5b",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280290"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280290\",\"resultCode\":\"10\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E11\",\"descriptionError\":\"N�mero fiscal Angolano especificado no par�metro taxRegistrationNumber (5000000000) � desconhecido no sistema da AGT.\"},{\"idError\":\"E28\",\"descriptionError\":\"N�mero fiscal do emissor especificado no par�metro taxRegistrationNumber (5000000000) n�o aderiu � factura��o electr�nica no sistema da AGT.\"},{\"idError\":\"E07\",\"descriptionError\":\"Software de factura��o especificado no par�metro \"softwareValidationNo\" (AGT-2025-001) n�o est� certificado.\"}],\"successRequestID\":\"\"}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-03-19T10:51:12.970Z",
+      "updatedAt": "2026-03-19T10:51:12.970Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1773917476219-b0iq4t",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280690"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280690\",\"resultCode\":\"10\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E11\",\"descriptionError\":\"N�mero fiscal Angolano especificado no par�metro taxRegistrationNumber (5000000000) � desconhecido no sistema da AGT.\"},{\"idError\":\"E28\",\"descriptionError\":\"N�mero fiscal do emissor especificado no par�metro taxRegistrationNumber (5000000000) n�o aderiu � factura��o electr�nica no sistema da AGT.\"},{\"idError\":\"E07\",\"descriptionError\":\"Software de factura��o especificado no par�metro \"softwareValidationNo\" (AGT-2025-001) n�o est� certificado.\"}],\"successRequestID\":\"\"}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-03-19T10:51:16.219Z",
+      "updatedAt": "2026-03-19T10:51:16.219Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1773917479330-l1be0y",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280694"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280694\",\"resultCode\":\"10\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E11\",\"descriptionError\":\"N�mero fiscal Angolano especificado no par�metro taxRegistrationNumber (5000000000) � desconhecido no sistema da AGT.\"},{\"idError\":\"E28\",\"descriptionError\":\"N�mero fiscal do emissor especificado no par�metro taxRegistrationNumber (5000000000) n�o aderiu � factura��o electr�nica no sistema da AGT.\"},{\"idError\":\"E07\",\"descriptionError\":\"Software de factura��o especificado no par�metro \"softwareValidationNo\" (AGT-2025-001) n�o est� certificado.\"}],\"successRequestID\":\"\"}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-03-19T10:51:19.330Z",
+      "updatedAt": "2026-03-19T10:51:19.330Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1773917482292-q9umwm",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280691"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280691\",\"resultCode\":\"10\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E11\",\"descriptionError\":\"N�mero fiscal Angolano especificado no par�metro taxRegistrationNumber (5000000000) � desconhecido no sistema da AGT.\"},{\"idError\":\"E28\",\"descriptionError\":\"N�mero fiscal do emissor especificado no par�metro taxRegistrationNumber (5000000000) n�o aderiu � factura��o electr�nica no sistema da AGT.\"},{\"idError\":\"E07\",\"descriptionError\":\"Software de factura��o especificado no par�metro \"softwareValidationNo\" (AGT-2025-001) n�o est� certificado.\"}],\"successRequestID\":\"\"}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-03-19T10:51:22.292Z",
+      "updatedAt": "2026-03-19T10:51:22.292Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1773917485728-7q4irc",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280279"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280279\",\"resultCode\":\"10\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E11\",\"descriptionError\":\"N�mero fiscal Angolano especificado no par�metro taxRegistrationNumber (5000000000) � desconhecido no sistema da AGT.\"},{\"idError\":\"E28\",\"descriptionError\":\"N�mero fiscal do emissor especificado no par�metro taxRegistrationNumber (5000000000) n�o aderiu � factura��o electr�nica no sistema da AGT.\"},{\"idError\":\"E07\",\"descriptionError\":\"Software de factura��o especificado no par�metro \"softwareValidationNo\" (AGT-2025-001) n�o est� certificado.\"}],\"successRequestID\":\"\"}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-03-19T10:51:25.728Z",
+      "updatedAt": "2026-03-19T10:51:25.728Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1773917487402-t0nat3",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280694"
+      },
+      "response": {
+        "requestID": "202600001280694",
+        "resultCode": "",
+        "taxRegistrationNumber": "5000000000",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "429",
+            "descriptionError": "Limite de requisi��es excedido. Tente novamente em 2 mintutos"
+          }
+        ],
+        "successRequestID": ""
+      },
+      "errors": [],
+      "createdAt": "2026-03-19T10:51:27.402Z",
+      "updatedAt": "2026-03-19T10:51:27.402Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1773917490875-qrtqkm",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280695"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280695\",\"resultCode\":\"10\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E11\",\"descriptionError\":\"N�mero fiscal Angolano especificado no par�metro taxRegistrationNumber (5000000000) � desconhecido no sistema da AGT.\"},{\"idError\":\"E28\",\"descriptionError\":\"N�mero fiscal do emissor especificado no par�metro taxRegistrationNumber (5000000000) n�o aderiu � factura��o electr�nica no sistema da AGT.\"},{\"idError\":\"E07\",\"descriptionError\":\"Software de factura��o especificado no par�metro \"softwareValidationNo\" (AGT-2025-001) n�o est� certificado.\"}],\"successRequestID\":\"\"}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-03-19T10:51:30.875Z",
+      "updatedAt": "2026-03-19T10:51:30.875Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1773917796034-tzphky",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280279"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280279\",\"resultCode\":\"10\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E11\",\"descriptionError\":\"N�mero fiscal Angolano especificado no par�metro taxRegistrationNumber (5000000000) � desconhecido no sistema da AGT.\"},{\"idError\":\"E28\",\"descriptionError\":\"N�mero fiscal do emissor especificado no par�metro taxRegistrationNumber (5000000000) n�o aderiu � factura��o electr�nica no sistema da AGT.\"},{\"idError\":\"E07\",\"descriptionError\":\"Software de factura��o especificado no par�metro \"softwareValidationNo\" (AGT-2025-001) n�o est� certificado.\"}],\"successRequestID\":\"\"}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-03-19T10:56:36.034Z",
+      "updatedAt": "2026-03-19T10:56:36.034Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1773917800016-xz0ijn",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280284"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280284\",\"resultCode\":\"10\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E11\",\"descriptionError\":\"N�mero fiscal Angolano especificado no par�metro taxRegistrationNumber (5000000000) � desconhecido no sistema da AGT.\"},{\"idError\":\"E28\",\"descriptionError\":\"N�mero fiscal do emissor especificado no par�metro taxRegistrationNumber (5000000000) n�o aderiu � factura��o electr�nica no sistema da AGT.\"},{\"idError\":\"E07\",\"descriptionError\":\"Software de factura��o especificado no par�metro \"softwareValidationNo\" (AGT-2025-001) n�o est� certificado.\"}],\"successRequestID\":\"\"}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-03-19T10:56:40.016Z",
+      "updatedAt": "2026-03-19T10:56:40.016Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1773917803164-jpofe0",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280694"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280694\",\"resultCode\":\"10\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E11\",\"descriptionError\":\"N�mero fiscal Angolano especificado no par�metro taxRegistrationNumber (5000000000) � desconhecido no sistema da AGT.\"},{\"idError\":\"E28\",\"descriptionError\":\"N�mero fiscal do emissor especificado no par�metro taxRegistrationNumber (5000000000) n�o aderiu � factura��o electr�nica no sistema da AGT.\"},{\"idError\":\"E07\",\"descriptionError\":\"Software de factura��o especificado no par�metro \"softwareValidationNo\" (AGT-2025-001) n�o est� certificado.\"}],\"successRequestID\":\"\"}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-03-19T10:56:43.164Z",
+      "updatedAt": "2026-03-19T10:56:43.164Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1773917806295-vouucd",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280290"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280290\",\"resultCode\":\"10\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E11\",\"descriptionError\":\"N�mero fiscal Angolano especificado no par�metro taxRegistrationNumber (5000000000) � desconhecido no sistema da AGT.\"},{\"idError\":\"E28\",\"descriptionError\":\"N�mero fiscal do emissor especificado no par�metro taxRegistrationNumber (5000000000) n�o aderiu � factura��o electr�nica no sistema da AGT.\"},{\"idError\":\"E07\",\"descriptionError\":\"Software de factura��o especificado no par�metro \"softwareValidationNo\" (AGT-2025-001) n�o est� certificado.\"}],\"successRequestID\":\"\"}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-03-19T10:56:46.295Z",
+      "updatedAt": "2026-03-19T10:56:46.295Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1773917809380-44ocyw",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280690"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280690\",\"resultCode\":\"10\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E11\",\"descriptionError\":\"N�mero fiscal Angolano especificado no par�metro taxRegistrationNumber (5000000000) � desconhecido no sistema da AGT.\"},{\"idError\":\"E28\",\"descriptionError\":\"N�mero fiscal do emissor especificado no par�metro taxRegistrationNumber (5000000000) n�o aderiu � factura��o electr�nica no sistema da AGT.\"},{\"idError\":\"E07\",\"descriptionError\":\"Software de factura��o especificado no par�metro \"softwareValidationNo\" (AGT-2025-001) n�o est� certificado.\"}],\"successRequestID\":\"\"}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-03-19T10:56:49.380Z",
+      "updatedAt": "2026-03-19T10:56:49.380Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1773917813356-p13rem",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280691"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280691\",\"resultCode\":\"10\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E11\",\"descriptionError\":\"N�mero fiscal Angolano especificado no par�metro taxRegistrationNumber (5000000000) � desconhecido no sistema da AGT.\"},{\"idError\":\"E28\",\"descriptionError\":\"N�mero fiscal do emissor especificado no par�metro taxRegistrationNumber (5000000000) n�o aderiu � factura��o electr�nica no sistema da AGT.\"},{\"idError\":\"E07\",\"descriptionError\":\"Software de factura��o especificado no par�metro \"softwareValidationNo\" (AGT-2025-001) n�o est� certificado.\"}],\"successRequestID\":\"\"}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-03-19T10:56:53.356Z",
+      "updatedAt": "2026-03-19T10:56:53.356Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1773917817549-kc8pb2",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280695"
+      },
+      "response": {
+        "__agtRaw": "{\"requestID\":\"202600001280695\",\"resultCode\":\"10\",\"taxRegistrationNumber\":\"5000000000\",\"documentStatusList\":[\"\"],\"requestErrorList\":[{\"idError\":\"E11\",\"descriptionError\":\"N�mero fiscal Angolano especificado no par�metro taxRegistrationNumber (5000000000) � desconhecido no sistema da AGT.\"},{\"idError\":\"E28\",\"descriptionError\":\"N�mero fiscal do emissor especificado no par�metro taxRegistrationNumber (5000000000) n�o aderiu � factura��o electr�nica no sistema da AGT.\"},{\"idError\":\"E07\",\"descriptionError\":\"Software de factura��o especificado no par�metro \"softwareValidationNo\" (AGT-2025-001) n�o est� certificado.\"}],\"successRequestID\":\"\"}\r\n"
+      },
+      "errors": [],
+      "createdAt": "2026-03-19T10:56:57.549Z",
+      "updatedAt": "2026-03-19T10:56:57.549Z",
+      "metadata": {
+        "nif": "5000000000",
+        "documentNo": "obterEstado"
+      }
+    },
+    {
+      "id": "obt-5000000000-1773917819380-wiqkpr",
+      "type": "consulta",
+      "serviceName": "api",
+      "status": "error",
+      "request": {
+        "taxRegistrationNumber": "5000000000",
+        "requestID": "202600001280694"
+      },
+      "response": {
+        "requestID": "202600001280694",
+        "resultCode": "",
+        "taxRegistrationNumber": "5000000000",
+        "documentStatusList": [
+          ""
+        ],
+        "requestErrorList": [
+          {
+            "idError": "429",
+            "descriptionError": "Limite de requisi��es excedido. Tente novamente em 2 mintutos"
+          }
+        ],
+        "successRequestID": ""
+      },
+      "errors": [],
+      "createdAt": "2026-03-19T10:56:59.380Z",
+      "updatedAt": "2026-03-19T10:56:59.380Z",
+      "metadata": {
+        "nif": "5000000000",
         "documentNo": "obterEstado"
       }
     }

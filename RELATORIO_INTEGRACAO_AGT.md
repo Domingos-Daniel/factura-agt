@@ -39,7 +39,7 @@ A integração com o sistema de **Facturação Electrónica da AGT** (Administra
 AGT_ENVIRONMENT=hml
 AGT_HML_BASE_URL=https://sifphml.minfin.gov.ao/sigt/fe/v1
 AGT_HML_USERNAME=ws.hml.addonsaftb1
-AGT_HML_PASSWORD=mfn+3534+2025
+AGT_HML_PASSWORD=***REDACTED***
 AGT_HML_NIF_TEST=5000413178
 AGT_AUTH_TYPE=basic
 AGT_TIMEOUT_MS=30000

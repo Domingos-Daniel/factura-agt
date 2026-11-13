@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "2.0",
+  "submissionUUID": "b4ee2a6a-1e3f-462f-a106-2d7589c7bd2f",
+  "taxRegistrationNumber": "5000660086",
+  "submissionTimeStamp": "2026-03-02T09:15:35Z",
+  "softwareInfo": {
+    "softwareInfoDetail": {
+      "productId": "SafeFacturas",
+      "productVersion": "1.0.1",
+      "softwareValidationNumber": "FE/BB/AGT/2026",
+      "signatureVersion": 1
+    },
+    "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+  },
+  "numberOfEntries": 1,
+  "documents": [
+    {
+      "documentNo": "RG 2026C/000311",
+      "documentStatus": "N",
+      "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiUkcgMjAyNkMvMDAwMzExIiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6IlJHIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJBU1NPQ0lBw4fDg08gREUgTU9SQURPUkVTIERPIFRBTEFUT05BIiwiZG9jdW1lbnRUb3RhbHMiOnsidGF4UGF5YWJsZSI6MzM2MDAsIm5ldFRvdGFsIjoyNDAwMDAsImdyb3NzVG90YWwiOjI3MzYwMH19.PfJHPxNaj0lWvTVhEQ7jY1Q3mGo-UwxA25tpS0aNRxTro4df2GBIt2iqKomciq-1EaqGCa7-1oS4dkAs4ohyppMqXxDM4n4G6TeCVFPpKU3ohn8qrm_-yvBzOaouSJHhvbxocLuY87wSB-BtuUovzkDzDRU3UrGNQ2h0rAwjLSpWFgO8VplV_4JJMpatiDU7AYUao94Qi1ueYU4MKKHJuYqUtgx0HGo2QODhksPMdTydfsJ7c49SsOmOJJbeaDQgrP3XRbi-5c6IZh6CTsGn-LXU685Yb-IvakxyUBwukkvKZPenmyxdkBGDCjM_u8NcyqYKp1Z9as6m9Zlfden7_w",
+      "documentDate": "2026-03-02",
+      "documentType": "RG",
+      "eacCode": "47190",
+      "systemEntryDate": "2026-03-02T09:15:30Z",
+      "customerCountry": "AO",
+      "customerTaxID": "003043657LA038",
+      "companyName": "ASSOCIAÇÃO DE MORADORES DO TALATONA",
+      "paymentReceipt": {
+        "sourceDocuments": [
+          {
+            "lineNo": 1,
+            "sourceDocumentID": {
+              "originatingON": "FT 2026A/000101",
+              "documentDate": "2026-02-26"
+            },
+            "creditAmount": 150000
+          },
+          {
+            "lineNo": 2,
+            "sourceDocumentID": {
+              "originatingON": "FT 2026A/000102",
+              "documentDate": "2026-02-27"
+            },
+            "creditAmount": 90000
+          }
+        ]
+      },
+      "documentTotals": {
+        "taxPayable": 33600,
+        "netTotal": 240000,
+        "grossTotal": 273600
+      }
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "schemaVersion": "2.0",
+  "submissionUUID": "b985f8fa-0f55-49d9-8f79-c1c41ddf3f3c",
+  "taxRegistrationNumber": "5000660086",
+  "submissionTimeStamp": "2026-03-02T09:15:35Z",
+  "softwareInfo": {
+    "softwareInfoDetail": {
+      "productId": "SafeFacturas",
+      "productVersion": "1.0.1",
+      "softwareValidationNumber": "FE/BB/AGT/2026",
+      "signatureVersion": 1
+    },
+    "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+  },
+  "numberOfEntries": 1,
+  "documents": [
+    {
+      "documentNo": "FG 2026A/000128",
+      "documentStatus": "N",
+      "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiRkcgMjAyNkEvMDAwMTI4IiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6IkZHIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJDT05TVU1JRE9SIEZJTkFMIiwiZG9jdW1lbnRUb3RhbHMiOnsidGF4UGF5YWJsZSI6ODQ3MDAsIm5ldFRvdGFsIjo2NDUwMDAsImdyb3NzVG90YWwiOjcyOTcwMH19.YnxzQhli96RnpWRj6m6NAtgUtiS4alXuGHQCYapi0awQluzh2Iqq46pmQArzvL0KO4OKT6WZZxf2_0JHwffVn3hCPCk9-xsAH3tC7C0mS2Kr3Pxvvt8C9byZviXNzGTGcNbR70iU6JB7XrMSlfUK60i5epXZFh5HEbgYV4a0MywBm1KKAu-vN-svX8OEO_-V70Fr61aPbgNmvrMneeGlo-vZ9qxcLXeCMztQcvg3nHbHFsnAln3jEzHo_VRHyWWXbcwCR2ul0NIKt_2W_ef-QtY1k6GJIXzD54fAWJcePVpqXq1aswfoipxUg0yh2d3dHwFMcK4vYQF4naUG0HYxOw",
+      "documentDate": "2026-03-02",
+      "documentType": "FG",
+      "eacCode": "47190",
+      "systemEntryDate": "2026-03-02T09:15:30Z",
+      "customerCountry": "AO",
+      "customerTaxID": "003043657LA038",
+      "companyName": "CONSUMIDOR FINAL",
+      "lines": [
+        {
+          "lineNumber": 1,
+          "operationType": "TB",
+          "operationDate": "2026-02-28",
+          "productCode": "VEN-DIA-0228",
+          "productDescription": "Vendas a dinheiro consolidadas - 28/02/2026",
+          "quantity": 1,
+          "unitOfMeasure": "Serviço",
+          "unitPriceBase": 320000,
+          "unitPrice": 320000,
+          "creditAmount": 320000,
+          "taxes": [
+            {
+              "taxType": "IVA",
+              "taxCountryRegion": "AO",
+              "taxCode": "NOR",
+              "taxPercentage": 14,
+              "taxContribution": 44800
+            }
+          ],
+          "settlementAmount": 0
+        },
+        {
+          "lineNumber": 2,
+          "operationType": "TB",
+          "operationDate": "2026-03-01",
+          "productCode": "VEN-DIA-0301",
+          "productDescription": "Vendas a dinheiro consolidadas - 01/03/2026",
+          "quantity": 1,
+          "unitOfMeasure": "Serviço",
+          "unitPriceBase": 285000,
+          "unitPrice": 285000,
+          "creditAmount": 285000,
+          "taxes": [
+            {
+              "taxType": "IVA",
+              "taxCountryRegion": "AO",
+              "taxCode": "NOR",
+              "taxPercentage": 14,
+              "taxContribution": 39900
+            }
+          ],
+          "settlementAmount": 0
+        },
+        {
+          "lineNumber": 3,
+          "operationType": "TB",
+          "operationDate": "2026-03-01",
+          "productCode": "VEN-ALIM-0301",
+          "productDescription": "Vendas de bens alimentares isentos - 01/03/2026",
+          "quantity": 1,
+          "unitOfMeasure": "Serviço",
+          "unitPriceBase": 40000,
+          "unitPrice": 40000,
+          "creditAmount": 40000,
+          "taxes": [
+            {
+              "taxType": "IVA",
+              "taxCountryRegion": "AO",
+              "taxCode": "ISE",
+              "taxPercentage": 0,
+              "taxContribution": 0,
+              "taxExemptionCode": "M10"
+            }
+          ],
+          "settlementAmount": 0
+        }
+      ],
+      "documentTotals": {
+        "taxPayable": 84700,
+        "netTotal": 645000,
+        "grossTotal": 729700
+      }
+    }
+  ]
+}

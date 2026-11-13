@@ -1,0 +1,79 @@
+{
+  "schemaVersion": "2.0",
+  "submissionUUID": "62e058b7-366e-4659-9cfe-fedf6f8d0a03",
+  "taxRegistrationNumber": "5000660086",
+  "submissionTimeStamp": "2026-03-02T09:15:35Z",
+  "softwareInfo": {
+    "softwareInfoDetail": {
+      "productId": "SafeFacturas",
+      "productVersion": "1.0.1",
+      "softwareValidationNumber": "FE/BB/AGT/2026",
+      "signatureVersion": 1
+    },
+    "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+  },
+  "numberOfEntries": 1,
+  "documents": [
+    {
+      "documentNo": "CS 2026A/000007",
+      "documentStatus": "N",
+      "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiQ1MgMjAyNkEvMDAwMDA3IiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6IkNTIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJTRUdVUkFET1JBIENPLVNFR1VSQURPUkEgQU5HT0xBLCBTLkEuIiwiZG9jdW1lbnRUb3RhbHMiOnsidGF4UGF5YWJsZSI6NzEwMCwibmV0VG90YWwiOjEyMjUwMDAsImdyb3NzVG90YWwiOjEyMzIxMDB9fQ.Sw5F3YW2Lo-so5OrbVsYefLCf7T7z6oE3Ia7I4JUaLEK9Q0fBWidGWOPefayrmcX52ybk9_9mixONKX5eNy36D2OKHxGWu6X_pVuXQJRif59CZiNAPP6fyXlwRG5jjPu8HmLH6im3XXZQd1eycxii4s09f71a7Z6KI8g4r2JdTrK5GUrhDEoXbwT4V5wTTRYj7MA1x1AqvKnZt4RsL-iRdGHvOdZikAtfUFJrB_5H1E5dmzJWJMn4MJQd-NN_u3hDdT1RdOBcDrnVUHEPKWK4SMO2fTS-edU-mhLC9WHO5RHqENDdx0-xTRJREXqNF1jz5TY7FMDtwjHwCYQE0SGig",
+      "documentDate": "2026-03-02",
+      "documentType": "CS",
+      "eacCode": "65120",
+      "systemEntryDate": "2026-03-02T09:15:30Z",
+      "customerCountry": "AO",
+      "customerTaxID": "003043657LA038",
+      "companyName": "SEGURADORA CO-SEGURADORA ANGOLA, S.A.",
+      "lines": [
+        {
+          "lineNumber": 1,
+          "operationType": "SIF",
+          "productCode": "APOL-INC-2026-0042",
+          "productDescription": "Prémio de seguro multirriscos - apólice INC-2026-0042 - quota-parte 40%",
+          "quantity": 1,
+          "unitOfMeasure": "Apólice",
+          "unitPriceBase": 1200000,
+          "unitPrice": 1200000,
+          "creditAmount": 1200000,
+          "taxes": [
+            {
+              "taxType": "IS",
+              "taxCountryRegion": "AO",
+              "taxCode": "22.1.5",
+              "taxPercentage": 0.3,
+              "taxContribution": 3600
+            }
+          ],
+          "settlementAmount": 0
+        },
+        {
+          "lineNumber": 2,
+          "operationType": "SG",
+          "productCode": "ENC-GEST-001",
+          "productDescription": "Encargos de gestão de co-seguro",
+          "quantity": 1,
+          "unitOfMeasure": "Serviço",
+          "unitPriceBase": 25000,
+          "unitPrice": 25000,
+          "creditAmount": 25000,
+          "taxes": [
+            {
+              "taxType": "IVA",
+              "taxCountryRegion": "AO",
+              "taxCode": "NOR",
+              "taxPercentage": 14,
+              "taxContribution": 3500
+            }
+          ],
+          "settlementAmount": 0
+        }
+      ],
+      "documentTotals": {
+        "taxPayable": 7100,
+        "netTotal": 1225000,
+        "grossTotal": 1232100
+      }
+    }
+  ]
+}

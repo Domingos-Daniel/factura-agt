@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "2.0",
+  "submissionUUID": "ccf6c920-2667-415a-87df-802f943f4551",
+  "taxRegistrationNumber": "5000660086",
+  "submissionTimeStamp": "2026-03-02T09:15:35Z",
+  "softwareInfo": {
+    "softwareInfoDetail": {
+      "productId": "SafeFacturas",
+      "productVersion": "1.0.1",
+      "softwareValidationNumber": "FE/BB/AGT/2026",
+      "signatureVersion": 1
+    },
+    "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+  },
+  "numberOfEntries": 1,
+  "documents": [
+    {
+      "documentNo": "RC 2026C/000256",
+      "documentStatus": "N",
+      "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiUkMgMjAyNkMvMDAwMjU2IiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6IlJDIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJDT05TVU1JRE9SIEZJTkFMIiwiZG9jdW1lbnRUb3RhbHMiOnsidGF4UGF5YWJsZSI6NjAyMDAsIm5ldFRvdGFsIjo0MzAwMDAsImdyb3NzVG90YWwiOjQ5MDIwMH19.gFw8iEhJB4kfpKt24wvLJce-_LqtGXERyvrfi9RlLdBGZY6VhDK_mFdOrLmcBzu5zdhcktv5K4ogqGVEVCXmo4OaEl48Y5YVa60mZs9KbZ6sXWWkJLzUvwdB5lmbziLhZFxlM-VpCNAb6LCB-OXrDtjglXlwf058DefpsQCrFCboBcrzTpYffn_IojSuCoz39vBcw30CPmIuR40wKOu4vBaJYYchEwQrBgPfMpJcZGfv-jU0wgWt2TS329keRQ5yt1QrG6OScURo318iyKPDnX_n6VCHFojPQaRnXmh5azBnn4-9i17-WQZSP4lMFkusN7DEzWwzUAxTB5hIai5U8w",
+      "documentDate": "2026-03-02",
+      "documentType": "RC",
+      "eacCode": "47190",
+      "systemEntryDate": "2026-03-02T09:15:30Z",
+      "customerCountry": "AO",
+      "customerTaxID": "003043657LA038",
+      "companyName": "CONSUMIDOR FINAL",
+      "paymentReceipt": {
+        "sourceDocuments": [
+          {
+            "lineNo": 1,
+            "sourceDocumentID": {
+              "originatingON": "FT 2026A/000080",
+              "documentDate": "2026-01-20"
+            },
+            "creditAmount": 250000
+          },
+          {
+            "lineNo": 2,
+            "sourceDocumentID": {
+              "originatingON": "FT 2026A/000081",
+              "documentDate": "2026-01-22"
+            },
+            "creditAmount": 180000
+          }
+        ]
+      },
+      "documentTotals": {
+        "taxPayable": 60200,
+        "netTotal": 430000,
+        "grossTotal": 490200
+      }
+    }
+  ]
+}

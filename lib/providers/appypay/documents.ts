@@ -326,6 +326,7 @@ export async function listAppyPayDocuments(): Promise<any[]> {
   const url = `${baseUrl}/fiscal-documents`;
   
   console.log('[AppyPay Docs] Listando documentos...');
+  console.log('[AppyPay Docs] URL:', url);
   
   try {
     const headers = await getAppyPayHeaders();
@@ -333,26 +334,39 @@ export async function listAppyPayDocuments(): Promise<any[]> {
     const response = await fetch(url, {
       method: 'GET',
       headers,
+      cache: 'no-store',
     });
     
-    const data = await response.json();
+    console.log('[AppyPay Docs] Status:', response.status);
     
     if (!response.ok) {
-      console.error('[AppyPay Docs] Erro ao listar documentos:', response.status, data);
+      const errorText = await response.text();
+      console.error('[AppyPay Docs] Erro HTTP:', response.status, errorText.substring(0, 200));
       return [];
     }
     
+    const data = await response.json();
+    
     // Retornar array de documentos
+    let documents: any[] = [];
+    
     if (Array.isArray(data)) {
-      return data;
+      documents = data;
     } else if (data?.documents && Array.isArray(data.documents)) {
-      return data.documents;
+      documents = data.documents;
     } else if (data?.items && Array.isArray(data.items)) {
-      return data.items;
+      documents = data.items;
+    } else if (data?.data && Array.isArray(data.data)) {
+      documents = data.data;
     }
     
-    console.log('[AppyPay Docs] Resposta inesperada:', data);
-    return [];
+    console.log('[AppyPay Docs] ✅ Total documentos:', documents.length);
+    
+    if (data?.totalCount) {
+      console.log('[AppyPay Docs] 📊 Total no servidor:', data.totalCount);
+    }
+    
+    return documents;
   } catch (error) {
     console.error('[AppyPay Docs] Erro ao listar documentos:', error);
     return [];

@@ -1,0 +1,554 @@
+[
+  {
+    "schemaVersion": "1.2",
+    "submissionGUID": "56373b70-a7b0-4a3e-8093-468f1f7c842b",
+    "taxRegistrationNumber": "5000000000",
+    "submissionTimeStamp": "2026-02-24T15:19:23.122Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "FacturAGT",
+        "productVersion": "1.0.0",
+        "softwareValidationNumber": "AGT-2025-001"
+      },
+      "jwsSoftwareSignature": "placeholder"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "FT ZFC2000H22026/9105044919",
+        "documentStatus": "C",
+        "documentType": "FT",
+        "documentDate": "2026-01-21",
+        "eacCode": "47410",
+        "systemEntryDate": "2026-02-24T15:19:23.122Z",
+        "customerCountry": "AO",
+        "customerTaxID": "000370717HA033",
+        "companyName": "Cimenfort",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "productCode": "PROD001",
+            "productDescription": "1.0",
+            "quantity": 1,
+            "unitOfMeasure": "UN",
+            "unitPrice": 1140,
+            "unitPriceBase": 1140,
+            "debitAmount": 1140,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxAmount": 159.6,
+                "taxContribution": 159.6
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "netTotal": 1000,
+          "taxPayable": 140,
+          "grossTotal": 1140,
+          "currency": {
+            "currencyCode": "AOA",
+            "currencyAmount": 1140,
+            "exchangeRate": 1
+          }
+        }
+      }
+    ],
+    "id": "56373b70-a7b0-4a3e-8093-468f1f7c842b",
+    "requestID": "202600001280279",
+    "provider": "agt",
+    "createdAt": "2026-02-24T15:19:28.940Z",
+    "updatedAt": "2026-03-19T10:51:25.738Z",
+    "validationDate": "2026-03-19T10:51:25.730Z",
+    "agtEstadoLastSyncAt": "2026-03-19T10:51:25.730Z",
+    "agtObterEstado": {
+      "documentStatusListCount": 0
+    }
+  },
+  {
+    "schemaVersion": "1.2",
+    "submissionGUID": "29bad8ee-752f-4213-aa95-9f02aa9657a3",
+    "taxRegistrationNumber": "5000000000",
+    "submissionTimeStamp": "2026-02-24T15:19:23.122Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "FacturAGT",
+        "productVersion": "1.0.0",
+        "softwareValidationNumber": "AGT-2025-001"
+      },
+      "jwsSoftwareSignature": "placeholder"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "FT ZFC2000H22026/9105044920",
+        "documentStatus": "C",
+        "documentType": "FT",
+        "documentDate": "2026-01-21",
+        "eacCode": "47410",
+        "systemEntryDate": "2026-02-24T15:19:23.122Z",
+        "customerCountry": "AO",
+        "customerTaxID": "000370717HA033",
+        "companyName": "Cimenfort",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "productCode": "PROD001",
+            "productDescription": "1.0",
+            "quantity": 1,
+            "unitOfMeasure": "UN",
+            "unitPrice": 114,
+            "unitPriceBase": 114,
+            "debitAmount": 114,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxAmount": 15.96,
+                "taxContribution": 15.96
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "netTotal": 100,
+          "taxPayable": 14,
+          "grossTotal": 114,
+          "currency": {
+            "currencyCode": "AOA",
+            "currencyAmount": 114,
+            "exchangeRate": 1
+          }
+        }
+      }
+    ],
+    "id": "29bad8ee-752f-4213-aa95-9f02aa9657a3",
+    "requestID": "202600001280284",
+    "provider": "agt",
+    "createdAt": "2026-02-24T15:19:34.983Z",
+    "updatedAt": "2026-02-24T15:22:19.500Z",
+    "validationDate": "2026-02-24T15:22:19.499Z",
+    "agtEstadoLastSyncAt": "2026-02-24T15:22:19.499Z",
+    "agtObterEstado": {
+      "resultCode": "",
+      "documentStatusListCount": 1
+    },
+    "validationMessages": [
+      "[429] Limite de requisi��es excedido. Tente novamente em 2 mintutos"
+    ]
+  },
+  {
+    "schemaVersion": "1.2",
+    "submissionGUID": "dea83240-51c9-4c91-98f7-801393f7a706",
+    "taxRegistrationNumber": "5000000000",
+    "submissionTimeStamp": "2026-02-24T15:19:23.122Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "FacturAGT",
+        "productVersion": "1.0.0",
+        "softwareValidationNumber": "AGT-2025-001"
+      },
+      "jwsSoftwareSignature": "placeholder"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "FT ZFC2000H22026/9105044921",
+        "documentStatus": "C",
+        "documentType": "NC",
+        "documentDate": "2026-01-26",
+        "eacCode": "47410",
+        "systemEntryDate": "2026-02-24T15:19:23.122Z",
+        "customerCountry": "AO",
+        "customerTaxID": "000370717HA033",
+        "companyName": "Cimenfort",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "productCode": "PROD001",
+            "productDescription": "1.0",
+            "quantity": 1,
+            "unitOfMeasure": "UN",
+            "unitPrice": 114,
+            "unitPriceBase": 114,
+            "debitAmount": 114,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxAmount": 15.96,
+                "taxContribution": 15.96
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "netTotal": 100,
+          "taxPayable": 14,
+          "grossTotal": 114,
+          "currency": {
+            "currencyCode": "AOA",
+            "currencyAmount": 114,
+            "exchangeRate": 1
+          }
+        }
+      }
+    ],
+    "id": "dea83240-51c9-4c91-98f7-801393f7a706",
+    "requestID": "202600001280290",
+    "provider": "agt",
+    "createdAt": "2026-02-24T15:19:40.492Z",
+    "updatedAt": "2026-03-19T10:56:46.313Z",
+    "validationDate": "2026-03-19T10:56:46.299Z",
+    "agtEstadoLastSyncAt": "2026-03-19T10:56:46.299Z",
+    "agtObterEstado": {
+      "documentStatusListCount": 0
+    }
+  },
+  {
+    "schemaVersion": "1.2",
+    "submissionGUID": "dea83240-51c9-4c91-98f7-801393f7a706",
+    "taxRegistrationNumber": "5000000000",
+    "submissionTimeStamp": "2026-02-24T15:19:23.122Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "FacturAGT",
+        "productVersion": "1.0.0",
+        "softwareValidationNumber": "AGT-2025-001"
+      },
+      "jwsSoftwareSignature": "placeholder"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "FT ZFC2000H22026/9105044921",
+        "documentStatus": "C",
+        "documentType": "NC",
+        "documentDate": "2026-01-26",
+        "eacCode": "47410",
+        "systemEntryDate": "2026-02-24T15:19:23.122Z",
+        "customerCountry": "AO",
+        "customerTaxID": "000370717HA033",
+        "companyName": "Cimenfort",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "productCode": "PROD001",
+            "productDescription": "1.0",
+            "quantity": 1,
+            "unitOfMeasure": "UN",
+            "unitPrice": 114,
+            "unitPriceBase": 114,
+            "debitAmount": 114,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxAmount": 15.96,
+                "taxContribution": 15.96
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "netTotal": 100,
+          "taxPayable": 14,
+          "grossTotal": 114,
+          "currency": {
+            "currencyCode": "AOA",
+            "currencyAmount": 114,
+            "exchangeRate": 1
+          }
+        }
+      }
+    ],
+    "id": "dea83240-51c9-4c91-98f7-801393f7a706",
+    "requestID": "202600001280290",
+    "validationStatus": "P",
+    "provider": "agt",
+    "createdAt": "2026-02-24T15:19:45.613Z",
+    "updatedAt": "2026-02-24T15:19:45.613Z"
+  },
+  {
+    "schemaVersion": "1.2",
+    "submissionGUID": "056106d5-b6fb-4b7a-aa31-66b688401a4f",
+    "taxRegistrationNumber": "5000000000",
+    "submissionTimeStamp": "2026-02-24T16:12:57.308Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "FacturAGT",
+        "productVersion": "1.0.0",
+        "softwareValidationNumber": "AGT-2025-001"
+      },
+      "jwsSoftwareSignature": "placeholder"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "FT ZFC2000H22026/9105044919",
+        "documentStatus": "C",
+        "documentType": "FT",
+        "documentDate": "2026-01-21",
+        "eacCode": "47410",
+        "systemEntryDate": "2026-02-24T16:12:57.306Z",
+        "customerCountry": "AO",
+        "customerTaxID": "000370717HA033",
+        "companyName": "Cimenfort",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "productCode": "PROD001",
+            "productDescription": "1.0",
+            "quantity": 1,
+            "unitOfMeasure": "UN",
+            "unitPrice": 1140,
+            "unitPriceBase": 1140,
+            "debitAmount": 1140,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxAmount": 159.6,
+                "taxContribution": 159.6
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "netTotal": 1000,
+          "taxPayable": 140,
+          "grossTotal": 1140,
+          "currency": {
+            "currencyCode": "AOA",
+            "currencyAmount": 1140,
+            "exchangeRate": 1
+          }
+        }
+      }
+    ],
+    "id": "056106d5-b6fb-4b7a-aa31-66b688401a4f",
+    "requestID": "202600001280690",
+    "validationStatus": "P",
+    "provider": "agt",
+    "createdAt": "2026-02-24T16:13:05.214Z",
+    "updatedAt": "2026-02-24T16:13:05.215Z"
+  },
+  {
+    "schemaVersion": "1.2",
+    "submissionGUID": "3fb3a762-0590-4598-85ba-405aa8ffde95",
+    "taxRegistrationNumber": "5000000000",
+    "submissionTimeStamp": "2026-02-24T16:12:57.308Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "FacturAGT",
+        "productVersion": "1.0.0",
+        "softwareValidationNumber": "AGT-2025-001"
+      },
+      "jwsSoftwareSignature": "placeholder"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "FT ZFC2000H22026/9105044920",
+        "documentStatus": "C",
+        "documentType": "FT",
+        "documentDate": "2026-01-21",
+        "eacCode": "47410",
+        "systemEntryDate": "2026-02-24T16:12:57.307Z",
+        "customerCountry": "AO",
+        "customerTaxID": "000370717HA033",
+        "companyName": "Cimenfort",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "productCode": "PROD001",
+            "productDescription": "1.0",
+            "quantity": 1,
+            "unitOfMeasure": "UN",
+            "unitPrice": 114,
+            "unitPriceBase": 114,
+            "debitAmount": 114,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxAmount": 15.96,
+                "taxContribution": 15.96
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "netTotal": 100,
+          "taxPayable": 14,
+          "grossTotal": 114,
+          "currency": {
+            "currencyCode": "AOA",
+            "currencyAmount": 114,
+            "exchangeRate": 1
+          }
+        }
+      }
+    ],
+    "id": "3fb3a762-0590-4598-85ba-405aa8ffde95",
+    "requestID": "202600001280691",
+    "validationStatus": "P",
+    "provider": "agt",
+    "createdAt": "2026-02-24T16:13:10.918Z",
+    "updatedAt": "2026-02-24T16:13:10.918Z"
+  },
+  {
+    "schemaVersion": "1.2",
+    "submissionGUID": "a791bd60-f001-4ff3-83c4-0f2017f39ff3",
+    "taxRegistrationNumber": "5000000000",
+    "submissionTimeStamp": "2026-02-24T16:12:57.308Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "FacturAGT",
+        "productVersion": "1.0.0",
+        "softwareValidationNumber": "AGT-2025-001"
+      },
+      "jwsSoftwareSignature": "placeholder"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "FT ZFC2000H22026/9105044921",
+        "documentStatus": "C",
+        "documentType": "FT",
+        "documentDate": "2026-01-26",
+        "eacCode": "47410",
+        "systemEntryDate": "2026-02-24T16:12:57.307Z",
+        "customerCountry": "AO",
+        "customerTaxID": "000370717HA033",
+        "companyName": "Cimenfort",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "productCode": "PROD001",
+            "productDescription": "1.0",
+            "quantity": 1,
+            "unitOfMeasure": "UN",
+            "unitPrice": 22800,
+            "unitPriceBase": 22800,
+            "debitAmount": 22800,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxAmount": 3192,
+                "taxContribution": 3192
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "netTotal": 20000,
+          "taxPayable": 2800,
+          "grossTotal": 22800,
+          "currency": {
+            "currencyCode": "AOA",
+            "currencyAmount": 22800,
+            "exchangeRate": 1
+          }
+        }
+      }
+    ],
+    "id": "a791bd60-f001-4ff3-83c4-0f2017f39ff3",
+    "requestID": "202600001280694",
+    "validationStatus": "P",
+    "provider": "agt",
+    "createdAt": "2026-02-24T16:13:18.589Z",
+    "updatedAt": "2026-02-24T16:13:18.589Z"
+  },
+  {
+    "schemaVersion": "1.2",
+    "submissionGUID": "1bbebd2f-6168-4d79-bf5f-66be50ebfcfa",
+    "taxRegistrationNumber": "5000000000",
+    "submissionTimeStamp": "2026-02-24T16:12:57.308Z",
+    "softwareInfo": {
+      "softwareInfoDetail": {
+        "productId": "FacturAGT",
+        "productVersion": "1.0.0",
+        "softwareValidationNumber": "AGT-2025-001"
+      },
+      "jwsSoftwareSignature": "placeholder"
+    },
+    "numberOfEntries": 1,
+    "documents": [
+      {
+        "documentNo": "FT ZFC2000H22026/9105044921",
+        "documentStatus": "C",
+        "documentType": "NC",
+        "documentDate": "2026-01-26",
+        "eacCode": "47410",
+        "systemEntryDate": "2026-02-24T16:12:57.307Z",
+        "customerCountry": "AO",
+        "customerTaxID": "000370717HA033",
+        "companyName": "Cimenfort",
+        "lines": [
+          {
+            "lineNumber": 1,
+            "productCode": "PROD001",
+            "productDescription": "1.0",
+            "quantity": 1,
+            "unitOfMeasure": "UN",
+            "unitPrice": 114,
+            "unitPriceBase": 114,
+            "debitAmount": 114,
+            "taxes": [
+              {
+                "taxType": "IVA",
+                "taxCountryRegion": "AO",
+                "taxCode": "NOR",
+                "taxPercentage": 14,
+                "taxAmount": 15.96,
+                "taxContribution": 15.96
+              }
+            ],
+            "settlementAmount": 0
+          }
+        ],
+        "documentTotals": {
+          "netTotal": 100,
+          "taxPayable": 14,
+          "grossTotal": 114,
+          "currency": {
+            "currencyCode": "AOA",
+            "currencyAmount": 114,
+            "exchangeRate": 1
+          }
+        }
+      }
+    ],
+    "id": "1bbebd2f-6168-4d79-bf5f-66be50ebfcfa",
+    "requestID": "202600001280695",
+    "validationStatus": "P",
+    "provider": "agt",
+    "createdAt": "2026-02-24T16:13:25.843Z",
+    "updatedAt": "2026-02-24T16:13:25.843Z"
+  }
+]

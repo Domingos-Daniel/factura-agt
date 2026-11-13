@@ -1,22 +1,22 @@
 {
   "schemaVersion": "1.0",
-  "submissionUUID": "2073b819-9284-499d-872f-32ab98164042",
+  "submissionUUID": "94f7f691-17a7-4910-b724-e42c16278709",
   "taxRegistrationNumber": "5000413178",
-  "submissionTimeStamp": "2026-02-03T16:25:15.131Z",
+  "submissionTimeStamp": "2026-02-03T17:58:49.198Z",
   "softwareInfo": {
     "softwareInfoDetail": {
-      "productId": "SOFT-FACT-2025",
-      "productVersion": "1.0.0",
-      "softwareValidationNumber": "AGT-CERT-2025-001234"
+      "productId": "SafeFacturas",
+      "productVersion": "1.0.1",
+      "softwareValidationNumber": "FE/164/AGT/2026"
     },
-    "jwsSoftwareSignature": "eyJwcm9kdWN0SWQiOiJTT0ZULUZBQ1QtMjAyNSIsInByb2R1Y3RWZXJzaW9uIjoiMS4wLjAiLCJzb2Z0d2FyZVZhbGlkYXRpb25OdW1iZXIiOiJBR1QtQ0VSVC0yMDI1LTAwMTIzNCIsInRpbWVzdGFtcCI6IjIwMjYtMDItMDNUMTY6MjU6MTUuMTMxWiJ9X1NJR05FRF8xNzcwMTM1OTE1MTMx===================================="
+    "jwsSoftwareSignature": "l7YC8RymlTfxtJWahWJhJmEIxL9iQ94AgwjoWHSEASHj5GSu0RPBl+DWe2ScRsUmsnZkb78vhhcIQYMj4xmgia8QCWjLu4ZsShTRnNSv9LF7IDR5ChIpt7eZGGxQCutFJOUb2BPcTQZGCzgms3fluXuAmy/o2xfVbUT1z8SOpkokgw/5oDcQMbMySYvK3RtWN6rERzD7MxnMhmmMCivaHhmLUczqm+6zf2nc4WZCJsfgAngm9N9e00YGNjRhXB4k"
   },
   "numberOfEntries": 1,
   "documents": [
     {
       "documentNo": "AC A/000001",
       "documentStatus": "N",
-      "jwsDocumentSignature": "eyJkb2N1bWVudE5vIjoiQUMgQS8wMDAwMDEiLCJkb2N1bWVudFN0YXR1cyI6Ik4iLCJqd3NEb2N1bWVudFNpZ25hdHVyZSI6IiIsImRvY3VtZW50RGF0ZSI6IjIwMjUtMDItMDMiLCJkb2N1bWVudFR5cGUiOiJBQyIsImVhY0NvZGUiOiI2MjAxMCIsInN5c3RlbUVudHJ5RGF0ZSI6IjIwMjUtMDItMDNUMDA6MDA6MDAuMDAwWiIsImN1c3Rv",
+      "jwsDocumentSignature": "ZkhZWTVTTzdXbg6rlxFhaH0fR8HN9BejsrZLgHBHYG56Qimnv/6tcdDibCBTqOyVk4bq8Bv/kgIWkzqjVAgnWxj8iz79FDPhgsfzT+tBpauy6tU6RmQFwXwL8xeMs+RbyzGWGshyDBHRTMWpH6OfaYzkZq3CWpLldz2qiUnXwMYxW3ALV1yFz1EdzxKNHG5XeB3l5Ioc7yys7r2x3775wbb6DmdopxlnhITpWJuQJv9+mLNz1U+52IQEKzSPyp/1",
       "documentDate": "2025-02-03",
       "documentType": "AC",
       "eacCode": "62010",

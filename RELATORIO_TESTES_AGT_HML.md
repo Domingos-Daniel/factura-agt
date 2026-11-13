@@ -354,7 +354,7 @@ const result = await client.registarFactura(factura)
 ### Credenciais HML Testadas ✅
 
 - **Username**: ws.hml.addonsaftb1
-- **Password**: mfn+3534+2025
+- **Password**: ***REDACTED***
 - **Autenticação**: HTTP Basic Auth
 - **Status**: ✅ Válidas e funcionando
 

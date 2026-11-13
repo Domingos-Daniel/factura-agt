@@ -1,0 +1,65 @@
+{
+  "timestamp": "2026-02-03T17:24:26.412Z",
+  "config": {
+    "baseURL": "https://sifphml.minfin.gov.ao/sigt/fe/v1",
+    "username": "ws.hml.safe",
+    "nifTest": "5000413178"
+  },
+  "summary": {
+    "success": 0,
+    "validationErrors": 0,
+    "failures": 7,
+    "total": 7
+  },
+  "results": [
+    {
+      "service": "SERVIÇO 1",
+      "error": {
+        "error": "Client network socket disconnected before secure TLS connection was established",
+        "service": "SERVIÇO 1: Registar Factura"
+      }
+    },
+    {
+      "service": "SERVIÇO 2",
+      "error": {
+        "error": "Client network socket disconnected before secure TLS connection was established",
+        "service": "SERVIÇO 2: Obter Estado"
+      }
+    },
+    {
+      "service": "SERVIÇO 3",
+      "error": {
+        "error": "Client network socket disconnected before secure TLS connection was established",
+        "service": "SERVIÇO 3: Listar Facturas"
+      }
+    },
+    {
+      "service": "SERVIÇO 4",
+      "error": {
+        "error": "Client network socket disconnected before secure TLS connection was established",
+        "service": "SERVIÇO 4: Consultar Factura"
+      }
+    },
+    {
+      "service": "SERVIÇO 5",
+      "error": {
+        "error": "Client network socket disconnected before secure TLS connection was established",
+        "service": "SERVIÇO 5: Solicitar Série"
+      }
+    },
+    {
+      "service": "SERVIÇO 6",
+      "error": {
+        "error": "Client network socket disconnected before secure TLS connection was established",
+        "service": "SERVIÇO 6: Listar Séries"
+      }
+    },
+    {
+      "service": "SERVIÇO 7",
+      "error": {
+        "error": "Client network socket disconnected before secure TLS connection was established",
+        "service": "SERVIÇO 7: Validar Documento"
+      }
+    }
+  ]
+}

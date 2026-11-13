@@ -16,7 +16,7 @@ const USERNAME = process.env.AGT_HML_USERNAME || 'ws.hml.addonsaftb1';
 const PASSWORD = process.env.AGT_HML_PASSWORD || 'mfn+3534+2025';
 const NIF = process.env.AGT_HML_NIF_TEST || '5000413178';
 
-// Software Info do parceiro certificado (do .env.local)
+// Software Info do parceiro certificado (do .env.local) 
 const SOFTWARE_INFO_DETAIL = {
   productId: process.env.AGT_SOFTWARE_PRODUCT_ID || 'ADDON SAFT B1 E-INVOICE',
   productVersion: process.env.AGT_SOFTWARE_VERSION || '1.0',

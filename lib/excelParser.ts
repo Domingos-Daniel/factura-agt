@@ -263,3 +263,148 @@ function parseJsonData(jsonData: ExcelRow[]): ParsedExcelData {
     },
   }
 }
+
+// Schema para validação de linha Excel (formato Série)
+export const SeriesRowSchema = z.object({
+  'Code': z.string().optional(), // Código Série
+  'Cod Serie': z.string().optional(), // Variação
+  'Série': z.string().optional(), // Variação
+  'Serie': z.string().optional(), // Variação
+  'Year': z.string().or(z.number()).optional(), // Ano Série
+  'Ano': z.string().or(z.number()).optional(), // Variação
+  'Doc Type': z.string().optional(), // Tipo Documento
+  'Tipo Doc': z.string().optional(), // Variação
+  'Tipo': z.string().optional(), // Variação
+  'Start Number': z.string().or(z.number()).optional(), // Número Inicial
+  'Inicio': z.string().or(z.number()).optional(), // Variação
+  'Status': z.string().optional(), // Status
+})
+
+export type SeriesRow = z.infer<typeof SeriesRowSchema>
+
+export interface ParsedSeriesData {
+  success: boolean
+  rows: SeriesRow[]
+  errors: Array<{ row: number; field: string; error: string }>
+  summary: {
+    totalRows: number
+    validRows: number
+    errorRows: number
+  }
+}
+
+/**
+ * Parse ficheiro Excel de Séries
+ *
+ * Suporta os modelos de série 1 e 2 (MODELO-SERIE-1.XLSX, MODELO-SERIE-2.XLSX).
+ * Ambos têm os cabeçalhos deslocados para a linha 2 e nomes ligeiramente
+ * diferentes; a função normaliza colunas (`Code`, `Year`, `Doc Type`,
+ * `Start Number`, `Status`) para manter compatibilidade.
+ */
+
+// helper para mapear cabeçalhos variados para chaves canónicas
+function normalizeSeriesHeader(header: string): string {
+  const h = header.toString().trim().toLowerCase()
+  if (h.includes('code') && h.includes('serie')) return 'Code'
+  if (h.includes('cod serie')) return 'Cod Serie'
+  if (h === 'série' || h === 'serie') return 'Serie'
+  if (h.includes('ano')) return 'Year'
+  if (h.includes('tipo')) return 'Doc Type'
+  if (h.includes('num') && h.includes('doc')) return 'Start Number'
+  if (h.includes('inicio')) return 'Start Number'
+  if (h.includes('status')) return 'Status'
+  // fallback para cabecalhos já no formato usado pelo schema
+  return header
+}
+
+export function parseSeriesExcelFile(file: File): Promise<ParsedSeriesData> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+
+    reader.onload = (e) => {
+      try {
+        const data = e.target?.result
+        const workbook = XLSX.read(data, { type: 'array' })
+        const worksheet = workbook.Sheets[workbook.SheetNames[0]]
+
+        // ler raw para detectar header deslocado como nos templates
+        const rawData = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: '' }) as any[][]
+        let jsonData: any[] = []
+
+        // procurar linha de cabeçalhos contendo algum indicativo de série
+        const headerIdx = rawData.findIndex(row =>
+          row.some(cell => typeof cell === 'string' && cell.toLowerCase().includes('serie'))
+        )
+
+        if (headerIdx >= 0) {
+          const headers = rawData[headerIdx].map((h: any) => h.toString().trim())
+          const dataRows = rawData.slice(headerIdx + 1)
+
+          jsonData = dataRows
+            .filter(row => row && row.length > 0)
+            .map(row => {
+              const obj: any = {}
+              row.forEach((cell: any, idx: number) => {
+                const rawHeader = headers[idx]
+                if (rawHeader) {
+                  const key = normalizeSeriesHeader(rawHeader)
+                  if (key) obj[key] = cell
+                }
+              })
+              return obj
+            })
+            .filter(o => Object.keys(o).length > 0)
+        } else {
+          // fallback: usar conversão padrão
+          jsonData = XLSX.utils.sheet_to_json(worksheet, { defval: '' })
+        }
+
+        // Eliminar linhas completamente vazias (ocorrem quando a primeira
+        // linha do template é usada como header e depois mapeada para um
+        // objeto com propriedades mas sem valores significativos).
+        jsonData = jsonData.filter(r => {
+          return Object.values(r).some(v => v !== '' && v !== null && v !== undefined)
+        })
+
+        const rows: SeriesRow[] = []
+        const errors: Array<{ row: number; field: string; error: string }> = []
+
+        jsonData.forEach((row, index) => {
+          try {
+            const validated = SeriesRowSchema.parse(row)
+            rows.push(validated)
+          } catch (error) {
+            if (error instanceof z.ZodError) {
+              errors.push({
+                row: index + 2,
+                field: error.issues[0]?.path.join('.') || 'unknown',
+                error: error.issues[0]?.message || 'Erro de validação',
+              })
+            }
+          }
+        })
+
+        resolve({
+          success: errors.length === 0,
+          rows,
+          errors,
+          summary: {
+            totalRows: jsonData.length,
+            validRows: rows.length,
+            errorRows: errors.length,
+          }
+        })
+      } catch (error) {
+        reject(new Error(`Erro ao processar ficheiro Excel: ${error}`))
+      }
+    }
+
+    reader.onerror = () => {
+      reject(new Error('Erro ao ler ficheiro'))
+    }
+
+    reader.readAsArrayBuffer(file)
+  })
+}
+
+

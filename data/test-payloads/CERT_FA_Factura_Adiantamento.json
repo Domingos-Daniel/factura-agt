@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "2.0",
+  "submissionUUID": "3af76470-96e7-452f-80c7-09eb9296ec37",
+  "taxRegistrationNumber": "5000660086",
+  "submissionTimeStamp": "2026-03-02T09:15:35Z",
+  "softwareInfo": {
+    "softwareInfoDetail": {
+      "productId": "SafeFacturas",
+      "productVersion": "1.0.1",
+      "softwareValidationNumber": "FE/BB/AGT/2026",
+      "signatureVersion": 1
+    },
+    "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+  },
+  "numberOfEntries": 1,
+  "documents": [
+    {
+      "documentNo": "FA 2026A/000033",
+      "documentStatus": "N",
+      "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiRkEgMjAyNkEvMDAwMDMzIiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6IkZBIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJJTkRVU1RSSUFMIEtJTEFNQkEsIFMuQS4iLCJkb2N1bWVudFRvdGFscyI6eyJ0YXhQYXlhYmxlIjoxMjYwMDAsIm5ldFRvdGFsIjo5MDAwMDAsImdyb3NzVG90YWwiOjEwMjYwMDB9fQ.3OBSfkWsZYKsPlPpUuCgTK5tmKRhECZ_v6DjSiZDuZEG6Trp2itbxp7obWv41FF2qVGS04K1lA-8L5aoV8QbfOSqB9gpghBqcCdQAH7pPKj5PmGZjhjGQp2BpfMpf06zUSJWM0HFwpVcrhPakB7iA5rUX0BKS0C5vrllFS6M0qSvHHpK_yr0a1PqazAlR-taHwXhj5PDis8gfg90w2ICkokUpksxz8iiNS0q02v0L1n7j89CJJqYCx_eCY7C0OBP7TJn6GVSs2-AOFlj5-pyR5K0CAGiZ8hCdXIt7r0rNKE5OCi1Q0pWXcD7qkJ7C4TipD2T4ONy3bEJfSrEauQBDA",
+      "documentDate": "2026-03-02",
+      "documentType": "FA",
+      "eacCode": "46630",
+      "systemEntryDate": "2026-03-02T09:15:30Z",
+      "customerCountry": "AO",
+      "customerTaxID": "003043657LA038",
+      "companyName": "INDUSTRIAL KILAMBA, S.A.",
+      "lines": [
+        {
+          "lineNumber": 1,
+          "operationType": "SG",
+          "productCode": "ADIANT-ENC-118",
+          "productDescription": "Adiantamento de 30% sobre a encomenda ENC-2026-118 - fornecimento de equipamentos",
+          "quantity": 1,
+          "unitOfMeasure": "Serviço",
+          "unitPriceBase": 900000,
+          "unitPrice": 900000,
+          "creditAmount": 900000,
+          "taxes": [
+            {
+              "taxType": "IVA",
+              "taxCountryRegion": "AO",
+              "taxCode": "NOR",
+              "taxPercentage": 14,
+              "taxContribution": 126000
+            }
+          ],
+          "settlementAmount": 0
+        }
+      ],
+      "documentTotals": {
+        "taxPayable": 126000,
+        "netTotal": 900000,
+        "grossTotal": 1026000
+      }
+    }
+  ]
+}

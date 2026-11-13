@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "2.0",
+  "submissionUUID": "c5020067-76f0-457f-adb3-162328a2fd76",
+  "taxRegistrationNumber": "5000660086",
+  "submissionTimeStamp": "2026-03-02T09:15:35Z",
+  "softwareInfo": {
+    "softwareInfoDetail": {
+      "productId": "SafeFacturas",
+      "productVersion": "1.0.1",
+      "softwareValidationNumber": "FE/BB/AGT/2026",
+      "signatureVersion": 1
+    },
+    "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+  },
+  "numberOfEntries": 1,
+  "documents": [
+    {
+      "documentNo": "RE 2026C/000257",
+      "documentStatus": "N",
+      "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiUkUgMjAyNkMvMDAwMjU3IiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6IlJFIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJDT05TVU1JRE9SIEZJTkFMIiwiZG9jdW1lbnRUb3RhbHMiOnsidGF4UGF5YWJsZSI6NjAyMDAsIm5ldFRvdGFsIjo0MzAwMDAsImdyb3NzVG90YWwiOjQ5MDIwMH19.9hgxdOLiFvLPx4N-aj7Jcq1AJxOMVVY1F4UJ8LC8lAd5OvLNVQIcXKuTp5nOVC1r2ayO1ij8_84A-RBDpiBCsnUWVaMe7X_NBAanD_Xas9SjWdXcwDTwH-eed48xhknfUJva1azGbWW5vYro9pJV5k9w7pn0fMg356YvuBaU9m8hdEKw7bZLgTe3nFeYC2NzH2kEsnw2YGbvmoOk0CJBrsdQ33FU7d69VXgzITi37embrdwvRaJrN7Oxx1IU8t63STb4GfwuhS0aNpg2s8aYnXOQ_BhZdmrgJJMGEtLKJtVuUHeHgM9SumAD9kaAQ5WTIW3V0sVR6HRjJnTMOGMDpQ",
+      "documentDate": "2026-03-02",
+      "documentType": "RE",
+      "eacCode": "47190",
+      "systemEntryDate": "2026-03-02T09:15:30Z",
+      "customerCountry": "AO",
+      "customerTaxID": "003043657LA038",
+      "companyName": "CONSUMIDOR FINAL",
+      "lines": [
+        {
+          "lineNumber": 1,
+          "operationType": "SG",
+          "productCode": "EST-RC-256",
+          "productDescription": "Estorno integral do recibo RC 2026C/000256 - anulação de recebimento em numerário",
+          "quantity": 1,
+          "unitOfMeasure": "Serviço",
+          "unitPriceBase": 430000,
+          "unitPrice": 430000,
+          "referenceInfo": {
+            "reference": "RC 2026C/000256",
+            "referenceItemLineNo": 1,
+            "reason": "Estorno integral do recibo"
+          },
+          "creditAmount": 430000,
+          "taxes": [
+            {
+              "taxType": "IVA",
+              "taxCountryRegion": "AO",
+              "taxCode": "NOR",
+              "taxPercentage": 14,
+              "taxContribution": 60200
+            }
+          ],
+          "settlementAmount": 0
+        }
+      ],
+      "documentTotals": {
+        "taxPayable": 60200,
+        "netTotal": 430000,
+        "grossTotal": 490200
+      }
+    }
+  ]
+}

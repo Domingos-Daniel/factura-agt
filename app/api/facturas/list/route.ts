@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { readFileSync, existsSync } from 'fs'
+import { readFileSync, existsSync, unlinkSync } from 'fs'
 import { join } from 'path'
 import { Factura } from '@/lib/types'
 import { ProviderManager } from '@/lib/providers'
@@ -13,17 +13,23 @@ function getActiveProvider(): 'agt' | 'appypay' {
 
 // Mapear documento AppyPay para formato Factura
 function mapAppyPayDocToFactura(doc: any): Partial<Factura> {
+  // Determinar status real: validationStatus tem prioridade
+  const validationStatus = doc.validationStatus || doc.documentStatus;
+  const mappedStatus = mapAppyPayStatus(validationStatus);
+  
   return {
     id: doc.id,
     submissionGUID: doc.id,
     taxRegistrationNumber: doc.customerTaxId || '',
     submissionTimeStamp: doc.documentDate || new Date().toISOString(),
-    validationStatus: mapAppyPayStatus(doc.validationStatus || doc.documentStatus),
+    validationStatus: mappedStatus,
     validationResult: {
-      status: doc.validationStatus === 'V' ? 'Validada' : 
-              doc.validationStatus === 'I' ? 'Rejeitada' : 'Com Erros',
+      status: mappedStatus === 'V' ? 'Validada' : 
+              mappedStatus === 'I' ? 'Rejeitada' : 
+              mappedStatus === 'P' ? 'Pendente' : 'Com Erros',
       qrCode: doc.qrCode,
       hash: doc.hash,
+      errors: doc.providerResultDescription ? [doc.providerResultDescription] : undefined,
     },
     requestID: doc.providerRequestId,
     documents: [{
@@ -49,18 +55,21 @@ function mapAppyPayDocToFactura(doc: any): Partial<Factura> {
 
 function mapAppyPayStatus(status: string): 'P' | 'V' | 'I' | 'R' | 'E' {
   switch (status?.toUpperCase()) {
-    case 'N':
-    case 'PENDING':
-    case 'PROCESSING':
-      return 'P'
-    case 'V':
+    // AppyPay validationStatus:
+    case 'N': // N = Novo/Aprovado (documento válido esperando processamento)
+      return 'V'
+    case 'V': // V = Validado pela AGT
     case 'SUCCESS':
     case 'COMPLETED':
       return 'V'
-    case 'I':
+    case 'I': // I = Inválido/Rejeitado pela AGT
     case 'FAILED':
     case 'REJECTED':
       return 'I'
+    // AppyPay documentStatus:
+    case 'PENDING':
+    case 'PROCESSING':
+      return 'P'
     case 'R':
       return 'R'
     case 'E':
@@ -75,14 +84,28 @@ export async function GET(request: NextRequest) {
     const activeProvider = getActiveProvider()
     const url = new URL(request.url)
     const refresh = url.searchParams.get('refresh') === 'true'
-    
+    const reset = url.searchParams.get('reset') === '1'
+
+    // allow resetting local backup
+    if (reset) {
+      const jsonPath = join(process.cwd(), 'data', 'facturas.json')
+      try { if (existsSync(jsonPath)) { unlinkSync(jsonPath) } } catch {} // ignore
+      return NextResponse.json({ success: true })
+    }
+
     // Se AppyPay e pediu refresh, buscar da API
     if (activeProvider === 'appypay' && refresh) {
       try {
+        console.log('[API /facturas/list] 🔄 Buscando documentos da AppyPay...');
         const providerManager = new ProviderManager()
         const documents = await providerManager.listDocuments()
         
+        console.log(`[API /facturas/list] 📦 ProviderManager retornou: ${documents.length} documentos`);
+        console.log(`[API /facturas/list] 📋 IDs dos documentos:`, documents.map(d => d.id || d.documentNo));
+        
         const facturas = documents.map(mapAppyPayDocToFactura)
+        
+        console.log(`[API /facturas/list] ✅ Mapeados: ${facturas.length} facturas`);
         
         return NextResponse.json({ 
           facturas,
@@ -107,7 +130,24 @@ export async function GET(request: NextRequest) {
     }
     
     const fileContent = readFileSync(jsonPath, 'utf-8')
-    const facturas: Factura[] = JSON.parse(fileContent)
+    let facturas: Factura[] = []
+    try {
+      facturas = JSON.parse(fileContent)
+    } catch (parseErr) {
+      console.error('Backup JSON parse error:', parseErr)
+      // corruption detected – delete file so subsequent reads start fresh
+      try { unlinkSync(jsonPath) } catch {}
+      return NextResponse.json(
+        { 
+          facturas: [],
+          count: 0,
+          provider: activeProvider,
+          source: 'backup',
+          warning: 'Backup local corrompido e apagado'
+        },
+        { status: 200 }
+      )
+    }
     
     return NextResponse.json({ 
       facturas,

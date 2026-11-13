@@ -83,15 +83,43 @@ export async function GET(req: NextRequest) {
   const url = new URL(req.url)
   const refresh = url.searchParams.get('refresh') === 'true' || url.searchParams.get('refresh') === '1'
   const timeoutMs = Number(url.searchParams.get('timeoutMs') || '45000')
+  const reset = url.searchParams.get('reset') === '1'
+
+  // allow resetting the local backup file when requested
+  if (reset) {
+    try {
+      const { unlink } = await import('fs/promises')
+      const { join } = await import('path')
+      const path = join(process.cwd(), 'data', 'series.json')
+      await unlink(path).catch(() => {})
+    } catch {
+      // ignore
+    }
+    return NextResponse.json({ success: true })
+  }
 
   const nif = getDefaultNif()
   const activeProvider = getActiveProvider()
 
   // 1) Se não pediu refresh, devolve backup se existir
   if (!refresh) {
-    const backup = await getAllSeriesJson()
-    if (backup.length > 0) {
-      return NextResponse.json({ series: backup, source: 'backup', provider: activeProvider }, { status: 200 })
+    try {
+      const backup = await getAllSeriesJson()
+      if (backup.length > 0) {
+        return NextResponse.json({ series: backup, source: 'backup', provider: activeProvider }, { status: 200 })
+      }
+    } catch (e: any) {
+      // caso o JSON esteja corrompido, apagar e devolver vazio com aviso
+      try {
+        const { unlink } = await import('fs/promises')
+        const { join } = await import('path')
+        const path = join(process.cwd(), 'data', 'series.json')
+        await unlink(path).catch(() => {})
+      } catch {}
+      return NextResponse.json(
+        { series: [], source: 'backup', provider: activeProvider, warning: 'Backup local corrompido e apagado' },
+        { status: 200 }
+      )
     }
   }
 
@@ -135,20 +163,26 @@ export async function GET(req: NextRequest) {
     
     // Software info
     const softwareInfoDetail = {
-      productId: process.env.AGT_SOFTWARE_PRODUCT_ID || 'ADDON SAFT B1 E-INVOICE',
-      productVersion: process.env.AGT_SOFTWARE_VERSION || '1.0',
-      softwareValidationNumber: process.env.AGT_SOFTWARE_VALIDATION_NUMBER || 'FE/81/AGT/2025'
+      productId: process.env.AGT_SOFTWARE_PRODUCT_ID || 'SafeFacturas',
+      productVersion: process.env.AGT_SOFTWARE_VERSION || '1.0.1',
+      softwareValidationNumber: process.env.AGT_SOFTWARE_VALIDATION_NUMBER || 'FE/308/AGT/2026'
     }
     
-    // Obter chave privada
-    const privateKey = process.env.AGT_PRIVATE_KEY
-    if (!privateKey) {
+    // Obter chaves privadas
+    const producerPrivateKey = process.env.AGT_PRODUCER_PRIVATE_KEY
+    const issuerPrivateKey = process.env.AGT_PRIVATE_KEY
+    if (!producerPrivateKey) {
+      throw new Error('AGT_PRODUCER_PRIVATE_KEY não configurada')
+    }
+    if (!issuerPrivateKey) {
       throw new Error('AGT_PRIVATE_KEY não configurada')
     }
     
     // Gerar assinaturas JWS
-    const jwsSoftwareSignature = signJwsRS256(softwareInfoDetail, privateKey)
-    const jwsSignature = makeListarSeriesSignature(nif, privateKey)
+    // jwsSoftwareSignature: assinar com CHAVE DO PRODUTOR
+    const jwsSoftwareSignature = signJwsRS256(softwareInfoDetail, producerPrivateKey)
+    // jwsSignature: assinar com CHAVE DO EMISSOR
+    const jwsSignature = makeListarSeriesSignature(nif, issuerPrivateKey)
     
     // Criar payload completo com todos os campos obrigatórios
     const payload = { 
@@ -163,9 +197,14 @@ export async function GET(req: NextRequest) {
       jwsSignature
     }
     
-    const res = await (client.listarSeriesWithTimeout
+    const res: any = await (client.listarSeriesWithTimeout
       ? client.listarSeriesWithTimeout(payload, timeoutMs)
       : client.listarSeries(payload))
+
+    if (res && res.__agtRaw) {
+      // raw response from PowerShell; treat as error so fallback/logging occurs
+      throw new Error(`AGT raw: ${res.__agtRaw}`)
+    }
 
     const list = Array.isArray(res?.seriesInfo) ? res.seriesInfo : []
     const mapped = list
@@ -181,16 +220,20 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ series: withMeta, source: 'agt' }, { status: 200 })
   } catch (e: any) {
-    // 3) Fallback backup
-    const backup = await getAllSeriesJson()
-    if (backup.length > 0) {
-      return NextResponse.json(
-        { series: backup, source: 'backup', warning: e?.message || 'Falha ao consultar AGT' },
-        { status: 200 }
-      )
+    // Only fall back to backup when the caller explicitly asked for it (refresh=false)
+    if (!refresh) {
+      const backup = await getAllSeriesJson()
+      if (backup.length > 0) {
+        return NextResponse.json(
+          { series: backup, source: 'backup', warning: e?.message || 'Falha ao consultar AGT', agtError: e?.message },
+          { status: 200 }
+        )
+      }
     }
+
+    // otherwise propagate error, include AGT message for debugging
     return NextResponse.json(
-      { error: e?.message || 'Falha ao consultar AGT e sem backup disponível' },
+      { error: e?.message || 'Falha ao consultar AGT', agtError: e?.message, details: e },
       { status: 502 }
     )
   }

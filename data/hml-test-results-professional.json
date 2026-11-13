@@ -1,0 +1,370 @@
+﻿[
+    {
+        "ts":  "2026-02-23T11:45:11.8162673+01:00",
+        "request":  {
+                        "schemaVersion":  "1.0",
+                        "submissionUUID":  "7b8e7546-63a6-4782-9acc-55b4d2709144",
+                        "taxRegistrationNumber":  "5000413178",
+                        "submissionTimeStamp":  "2026-02-23T11:45:06.6786267+01:00",
+                        "softwareInfo":  {
+                                             "softwareInfoDetail":  {
+                                                                        "productId":  "SafeFacturas",
+                                                                        "productVersion":  "1.0.1",
+                                                                        "softwareValidationNumber":  "FE/164/AGT/2026"
+                                                                    },
+                                             "jwsSoftwareSignature":  "l7YC8RymlTfxtJWahWJhJmEIxL9iQ94AgwjoWHSEASHj5GSu0RPBl+DWe2ScRsUmsnZkb78vhhcIQYMj4xmgia8QCWjLu4ZsShTRnNSv9LF7IDR5ChIpt7eZGGxQCutFJOUb2BPcTQZGCzgms3fluXuAmy/o2xfVbUT1z8SOpkokgw/5oDcQMbMySYvK3RtWN6rERzD7MxnMhmmMCivaHhmLUczqm+6zf2nc4WZCJsfgAngm9N9e00YGNjRhXB4k"
+                                         },
+                        "numberOfEntries":  1,
+                        "documents":  [
+                                          {
+                                              "documentNo":  "AC A/000001",
+                                              "documentStatus":  "N",
+                                              "jwsDocumentSignature":  "ZkhZWTVTTzdXbg6rlxFhaH0fR8HN9BejsrZLgHBHYG56Qimnv/6tcdDibCBTqOyVk4bq8Bv/kgIWkzqjVAgnWxj8iz79FDPhgsfzT+tBpauy6tU6RmQFwXwL8xeMs+RbyzGWGshyDBHRTMWpH6OfaYzkZq3CWpLldz2qiUnXwMYxW3ALV1yFz1EdzxKNHG5XeB3l5Ioc7yys7r2x3775wbb6DmdopxlnhITpWJuQJv9+mLNz1U+52IQEKzSPyp/1",
+                                              "documentDate":  "2025-02-03",
+                                              "documentType":  "AC",
+                                              "eacCode":  "62010",
+                                              "systemEntryDate":  "2025-02-03T00:00:00.000Z",
+                                              "customerCountry":  "AO",
+                                              "customerTaxID":  "999999999",
+                                              "companyName":  "CONSUMIDOR FINAL",
+                                              "lines":  [
+                                                            {
+                                                                "lineNumber":  "1",
+                                                                "productCode":  "SERV-001",
+                                                                "productDescription":  "Consultoria em Tecnologias de InformaÃ§Ã£o - Desenvolvimento de Software",
+                                                                "quantity":  "40.00",
+                                                                "unitOfMeasure":  "Hora",
+                                                                "unitPrice":  "15000.00",
+                                                                "unitPriceBase":  "15000.00",
+                                                                "creditAmount":  "600000.00",
+                                                                "taxes":  [
+                                                                              {
+                                                                                  "taxType":  "IVA",
+                                                                                  "taxCountryRegion":  "AO",
+                                                                                  "taxCode":  "NOR",
+                                                                                  "taxPercentage":  "14.00",
+                                                                                  "taxContribution":  "84000.00"
+                                                                              }
+                                                                          ],
+                                                                "settlementAmount":  "684000.00"
+                                                            },
+                                                            {
+                                                                "lineNumber":  "2",
+                                                                "productCode":  "LIC-SOFT-001",
+                                                                "productDescription":  "LicenÃ§a Anual de Software de GestÃ£o Empresarial",
+                                                                "quantity":  "1.00",
+                                                                "unitOfMeasure":  "Unidade",
+                                                                "unitPrice":  "250000.00",
+                                                                "unitPriceBase":  "250000.00",
+                                                                "creditAmount":  "250000.00",
+                                                                "taxes":  [
+                                                                              {
+                                                                                  "taxType":  "IVA",
+                                                                                  "taxCountryRegion":  "AO",
+                                                                                  "taxCode":  "NOR",
+                                                                                  "taxPercentage":  "14.00",
+                                                                                  "taxContribution":  "35000.00"
+                                                                              }
+                                                                          ],
+                                                                "settlementAmount":  "285000.00"
+                                                            },
+                                                            {
+                                                                "lineNumber":  "3",
+                                                                "productCode":  "FORM-001",
+                                                                "productDescription":  "FormaÃ§Ã£o em GestÃ£o de Projectos - 5 dias",
+                                                                "quantity":  "5.00",
+                                                                "unitOfMeasure":  "Dia",
+                                                                "unitPrice":  "8000.00",
+                                                                "unitPriceBase":  "8000.00",
+                                                                "creditAmount":  "40000.00",
+                                                                "taxes":  [
+                                                                              {
+                                                                                  "taxType":  "IVA",
+                                                                                  "taxCountryRegion":  "AO",
+                                                                                  "taxCode":  "NOR",
+                                                                                  "taxPercentage":  "14.00",
+                                                                                  "taxContribution":  "5600.00"
+                                                                              }
+                                                                          ],
+                                                                "settlementAmount":  "45600.00"
+                                                            }
+                                                        ],
+                                              "documentTotals":  {
+                                                                     "taxPayable":  "124600.00",
+                                                                     "netTotal":  "890000.00",
+                                                                     "grossTotal":  "1014600.00"
+                                                                 }
+                                          }
+                                      ]
+                    },
+        "service":  "registarFactura",
+        "result":  {
+                       "ok":  true,
+                       "body":  {
+                                    "requestID":  "202600001264823",
+                                    "errorList":  [
+                                                      ""
+                                                  ]
+                                },
+                       "status":  200
+                   }
+    },
+    {
+        "ts":  "2026-02-23T11:45:33.5428971+01:00",
+        "request":  {
+                        "schemaVersion":  "1.0",
+                        "submissionTimeStamp":  "2026-02-23T11:45:16.8387592+01:00",
+                        "softwareInfo":  {
+                                             "softwareInfoDetail":  {
+                                                                        "productId":  "SafeFacturas",
+                                                                        "productVersion":  "1.0.1",
+                                                                        "softwareValidationNumber":  "FE/164/AGT/2026"
+                                                                    },
+                                             "jwsSoftwareSignature":  "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                                         },
+                        "taxRegistrationNumber":  "5000660086",
+                        "requestID":  true
+                    },
+        "service":  "obterEstado",
+        "result":  {
+                       "ok":  false,
+                       "error":  "O servidor remoto devolveu um erro: (500) Erro interno de servidor.",
+                       "status":  true,
+                       "raw":  "\r\n\r\nIsMutuallyAuthenticated : False\r\nCookies                 : {}\r\nHeaders                 : {X-oracle-dms-ecid, X-oracle-dms-rid, Proxy-agent, \r\n                          Transfer-encoding...}\r\nSupportsHeaders         : True\r\nContentLength           : -1\r\nContentEncoding         : \r\nContentType             : application/json\r\nCharacterSet            : \r\nServer                  : Oracle-HTTP-Server\r\nLastModified            : 2/23/2026 11:45:33 AM\r\nStatusCode              : InternalServerError\r\nStatusDescription       : Internal Server Error\r\nProtocolVersion         : 1.1\r\nResponseUri             : https://sifphml.minfin.gov.ao/sigt/fe/v1/obterEstado\r\nMethod                  : POST\r\nIsFromCache             : False\r\n\r\n\r\n\r\n"
+                   }
+    },
+    {
+        "ts":  "2026-02-23T11:45:46.6317762+01:00",
+        "request":  {
+                        "startDate":  "2025-01-01",
+                        "taxRegistrationNumber":  "5000660086",
+                        "documentType":  "AC",
+                        "softwareInfo":  {
+                                             "softwareInfoDetail":  {
+                                                                        "productId":  "SafeFacturas",
+                                                                        "productVersion":  "1.0.1",
+                                                                        "softwareValidationNumber":  "FE/164/AGT/2026"
+                                                                    },
+                                             "jwsSoftwareSignature":  "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                                         },
+                        "endDate":  "2026-02-23",
+                        "pageSize":  10,
+                        "submissionTimeStamp":  "2026-02-23T11:45:38",
+                        "pageNumber":  1,
+                        "schemaVersion":  "1.0"
+                    },
+        "service":  "listarFacturas",
+        "result":  {
+                       "ok":  false,
+                       "error":  "O servidor remoto devolveu um erro: (500) Erro interno de servidor.",
+                       "status":  true,
+                       "raw":  "\r\n\r\nIsMutuallyAuthenticated : False\r\nCookies                 : {}\r\nHeaders                 : {X-oracle-dms-ecid, X-oracle-dms-rid, Proxy-agent, \r\n                          Transfer-encoding...}\r\nSupportsHeaders         : True\r\nContentLength           : -1\r\nContentEncoding         : \r\nContentType             : application/json\r\nCharacterSet            : \r\nServer                  : Oracle-HTTP-Server\r\nLastModified            : 2/23/2026 11:45:46 AM\r\nStatusCode              : InternalServerError\r\nStatusDescription       : Internal Server Error\r\nProtocolVersion         : 1.1\r\nResponseUri             : https://sifphml.minfin.gov.ao/sigt/fe/v1/listarFacturas\r\nMethod                  : POST\r\nIsFromCache             : False\r\n\r\n\r\n\r\n"
+                   }
+    },
+    {
+        "ts":  "2026-02-23T11:45:58.5060772+01:00",
+        "request":  {
+                        "documentType":  "AC",
+                        "schemaVersion":  "1.0",
+                        "softwareInfo":  {
+                                             "softwareInfoDetail":  {
+                                                                        "productId":  "SafeFacturas",
+                                                                        "productVersion":  "1.0.1",
+                                                                        "softwareValidationNumber":  "FE/164/AGT/2026"
+                                                                    },
+                                             "jwsSoftwareSignature":  "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                                         },
+                        "documentNo":  "AC A/000001",
+                        "submissionTimeStamp":  "2026-02-23T11:45:51.6406543+01:00",
+                        "taxRegistrationNumber":  "5000660086"
+                    },
+        "service":  "consultarFactura",
+        "result":  {
+                       "ok":  false,
+                       "error":  "O servidor remoto devolveu um erro: (500) Erro interno de servidor.",
+                       "status":  true,
+                       "raw":  "\r\n\r\nIsMutuallyAuthenticated : False\r\nCookies                 : {}\r\nHeaders                 : {X-oracle-dms-ecid, X-oracle-dms-rid, Proxy-agent, \r\n                          Transfer-encoding...}\r\nSupportsHeaders         : True\r\nContentLength           : -1\r\nContentEncoding         : \r\nContentType             : application/json\r\nCharacterSet            : \r\nServer                  : Oracle-HTTP-Server\r\nLastModified            : 2/23/2026 11:45:58 AM\r\nStatusCode              : InternalServerError\r\nStatusDescription       : Internal Server Error\r\nProtocolVersion         : 1.1\r\nResponseUri             : https://sifphml.minfin.gov.ao/sigt/fe/v1/consultarFactura\r\nMethod                  : POST\r\nIsFromCache             : False\r\n\r\n\r\n\r\n"
+                   }
+    },
+    {
+        "ts":  "2026-02-23T11:46:03.9370364+01:00",
+        "request":  {
+                        "taxRegistrationNumber":  "5000660086",
+                        "schemaVersion":  "1.0",
+                        "series":  "TESTPRO",
+                        "eacCode":  "62010",
+                        "seriesContingencyIndicator":  "N",
+                        "softwareInfo":  {
+                                             "softwareInfoDetail":  {
+                                                                        "productId":  "SafeFacturas",
+                                                                        "productVersion":  "1.0.1",
+                                                                        "softwareValidationNumber":  "FE/164/AGT/2026"
+                                                                    },
+                                             "jwsSoftwareSignature":  "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                                         },
+                        "documentType":  "FT",
+                        "firstDocumentNumber":  1,
+                        "establishmentNumber":  "SEDE",
+                        "submissionTimeStamp":  "2026-02-23T11:46:03.5175694+01:00",
+                        "submissionUUID":  "70bfe2bf-eb5d-418b-8042-6c0f924dc479",
+                        "seriesYear":  2026
+                    },
+        "service":  "solicitarSerie",
+        "result":  {
+                       "ok":  true,
+                       "body":  {
+                                    "resultCode":  0,
+                                    "errorList":  [
+                                                      {
+                                                          "idError":  "E99",
+                                                          "descriptionError":  "Aconteceu um erro inesperado, por favor tente mais tarde."
+                                                      }
+                                                  ],
+                                    "seriesFEResult":  ""
+                                },
+                       "status":  200
+                   }
+    },
+    {
+        "ts":  "2026-02-23T11:46:09.3561325+01:00",
+        "request":  {
+                        "schemaVersion":  "1.0",
+                        "softwareInfo":  {
+                                             "softwareInfoDetail":  {
+                                                                        "productId":  "SafeFacturas",
+                                                                        "productVersion":  "1.0.1",
+                                                                        "softwareValidationNumber":  "FE/164/AGT/2026"
+                                                                    },
+                                             "jwsSoftwareSignature":  "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                                         },
+                        "establishmentNumber":  "SEDE",
+                        "submissionTimeStamp":  "2026-02-23T11:46:08.9487652+01:00",
+                        "taxRegistrationNumber":  "5000660086",
+                        "seriesYear":  2026
+                    },
+        "service":  "listarSeries",
+        "result":  {
+                       "ok":  true,
+                       "body":  {
+                                    "resultCode":  "0",
+                                    "errorList":  [
+                                                      {
+                                                          "idError":  "E99",
+                                                          "descriptionError":  "Aconteceu um erro inesperado, por favor tente mais tarde."
+                                                      }
+                                                  ],
+                                    "seriesResultCount":  "",
+                                    "seriesInfo":  [
+                                                       ""
+                                                   ]
+                                },
+                       "status":  200
+                   }
+    },
+    {
+        "ts":  "2026-02-23T11:46:14.8011286+01:00",
+        "request":  {
+                        "numberOfEntries":  1,
+                        "softwareInfo":  {
+                                             "softwareInfoDetail":  {
+                                                                        "productId":  "SafeFacturas",
+                                                                        "productVersion":  "1.0.1",
+                                                                        "softwareValidationNumber":  "FE/164/AGT/2026"
+                                                                    },
+                                             "jwsSoftwareSignature":  "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                                         },
+                        "action":  "V",
+                        "schemaVersion":  "1.0",
+                        "submissionUUID":  "d51893b7-805d-4caa-8630-e7cf59f60b7d",
+                        "documents":  [
+                                          {
+                                              "documentNo":  "FR B/000042",
+                                              "documentStatus":  "N",
+                                              "jwsDocumentSignature":  "zYhxrf9quBiB6kyLVDBjHsKdwLHdUonmHC3RlyKyqT3V92KoEzdu1Def39yTfFYN3TxGNc+4dz1h8UP+ANaylyE1M1ih6PId21Q98/9uOUhBl8RcC4YCjJK1lJuMx43ywg0fV/LF98RTOKSVLhV57xNfMj8n1kNmcDB+Gcpp8jIw925c3VmECTY+M/en43Zw74mRni4hAxK15mqxGeaE0TVvSpY7BxblzcWCy0ZcVhME45V537/WVf5FgF9XYQXF",
+                                              "documentDate":  "2025-02-03",
+                                              "documentType":  "FR",
+                                              "eacCode":  "47190",
+                                              "systemEntryDate":  "2025-02-03T00:00:00.000Z",
+                                              "customerCountry":  "AO",
+                                              "customerTaxID":  "999999999",
+                                              "companyName":  "CONSUMIDOR FINAL",
+                                              "lines":  [
+                                                            {
+                                                                "lineNumber":  "1",
+                                                                "productCode":  "PROD-NB-001",
+                                                                "productDescription":  "Notebook Dell Latitude 5520 - Intel i7, 16GB RAM, 512GB SSD",
+                                                                "quantity":  "2.00",
+                                                                "unitOfMeasure":  "Unidade",
+                                                                "unitPrice":  "185000.00",
+                                                                "unitPriceBase":  "185000.00",
+                                                                "creditAmount":  "370000.00",
+                                                                "taxes":  [
+                                                                              {
+                                                                                  "taxType":  "IVA",
+                                                                                  "taxCountryRegion":  "AO",
+                                                                                  "taxCode":  "NOR",
+                                                                                  "taxPercentage":  "14.00",
+                                                                                  "taxContribution":  "51800.00"
+                                                                              }
+                                                                          ],
+                                                                "settlementAmount":  "421800.00"
+                                                            },
+                                                            {
+                                                                "lineNumber":  "2",
+                                                                "productCode":  "PROD-MS-001",
+                                                                "productDescription":  "Mouse Wireless Logitech MX Master 3",
+                                                                "quantity":  "2.00",
+                                                                "unitOfMeasure":  "Unidade",
+                                                                "unitPrice":  "4500.00",
+                                                                "unitPriceBase":  "4500.00",
+                                                                "creditAmount":  "9000.00",
+                                                                "taxes":  [
+                                                                              {
+                                                                                  "taxType":  "IVA",
+                                                                                  "taxCountryRegion":  "AO",
+                                                                                  "taxCode":  "NOR",
+                                                                                  "taxPercentage":  "14.00",
+                                                                                  "taxContribution":  "1260.00"
+                                                                              }
+                                                                          ],
+                                                                "settlementAmount":  "10260.00"
+                                                            },
+                                                            {
+                                                                "lineNumber":  "3",
+                                                                "productCode":  "PROD-MCH-001",
+                                                                "productDescription":  "Mochila para Notebook atÃ© 15.6\" - ImpermeÃ¡vel",
+                                                                "quantity":  "2.00",
+                                                                "unitOfMeasure":  "Unidade",
+                                                                "unitPrice":  "12000.00",
+                                                                "unitPriceBase":  "12000.00",
+                                                                "creditAmount":  "24000.00",
+                                                                "taxes":  [
+                                                                              {
+                                                                                  "taxType":  "IVA",
+                                                                                  "taxCountryRegion":  "AO",
+                                                                                  "taxCode":  "NOR",
+                                                                                  "taxPercentage":  "14.00",
+                                                                                  "taxContribution":  "3360.00"
+                                                                              }
+                                                                          ],
+                                                                "settlementAmount":  "27360.00"
+                                                            }
+                                                        ],
+                                              "documentTotals":  {
+                                                                     "taxPayable":  "56420.00",
+                                                                     "netTotal":  "403000.00",
+                                                                     "grossTotal":  "459420.00"
+                                                                 }
+                                          }
+                                      ],
+                        "submissionTimeStamp":  "2026-02-03T17:58:49.205Z",
+                        "taxRegistrationNumber":  "5000413178"
+                    },
+        "service":  "validarDocumento",
+        "result":  {
+                       "ok":  true,
+                       "body":  "",
+                       "status":  200
+                   }
+    }
+]

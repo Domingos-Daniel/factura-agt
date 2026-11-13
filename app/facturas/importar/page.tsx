@@ -8,13 +8,14 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { MainLayout } from '@/components/layout/MainLayout'
-import { ExcelUploader } from '@/components/upload/ExcelUploader'
+import { ExcelUploader, ParsedData } from '@/components/upload/ExcelUploader'
 import { ExcelPreview } from '@/components/upload/ExcelPreview'
-import { ParsedExcelData, ExcelRow } from '@/lib/excelParser'
-import { CheckCircle, AlertCircle, Loader, Zap, Cloud } from 'lucide-react'
+import { ParsedExcelData, ExcelRow, SeriesRow, ParsedSeriesData } from '@/lib/excelParser'
+import { CheckCircle, AlertCircle, Loader, Zap, Cloud, FileSpreadsheet, ListPlus, FileInput } from 'lucide-react'
 import { addFactura } from '@/lib/storage'
 import { Factura } from '@/lib/types'
 import { Badge } from '@/components/ui/badge'
+import { useToast } from '@/components/ui/use-toast'
 
 type Step = 'upload' | 'preview' | 'processing' | 'result'
 
@@ -63,7 +64,8 @@ interface UserProfile {
 
 export default function ImportarFacturasPage() {
   const [step, setStep] = useState<Step>('upload')
-  const [parsedData, setParsedData] = useState<ParsedExcelData | null>(null)
+  const [importMode, setImportMode] = useState<'factura' | 'serie'>('factura')
+  const [parsedData, setParsedData] = useState<ParsedData | null>(null)
   const [isProcessing, setIsProcessing] = useState(false)
   const [result, setResult] = useState<ProcessResult | null>(null)
   const [activeProvider, setActiveProvider] = useState<'agt' | 'appypay'>('agt')
@@ -104,7 +106,21 @@ export default function ImportarFacturasPage() {
     loadProfile()
   }, [])
 
-  const handleDataParsed = (data: ParsedExcelData) => {
+  const { toast } = useToast()
+
+  const handleDataParsed = (data: ParsedData) => {
+    // if no rows were returned, inform user and stay on upload step
+    if (data.rows.length === 0) {
+      toast({
+        variant: 'destructive',
+        title: 'Nenhum registo encontrado',
+        description: importMode === 'serie'
+          ? 'O ficheiro de séries não contém linhas válidas. Verifique o template MODELO-SERIE-1.XLSX.'
+          : 'O ficheiro de facturas não contém linhas válidas – verifique o formato.',
+      })
+      return
+    }
+
     setParsedData(data)
     setStep('preview')
   }
@@ -114,11 +130,80 @@ export default function ImportarFacturasPage() {
     setStep('upload')
   }
 
-  const handleConfirmAndProcess = async (rows: ExcelRow[]) => {
+  const handleConfirmAndProcess = async (rows: ExcelRow[] | SeriesRow[]) => {
     setStep('processing')
     setIsProcessing(true)
 
     try {
+      if (importMode === 'serie') {
+        // drop any rows lacking all three required fields (code/year/type)
+        const seriesRows = (rows as SeriesRow[]).filter(r => {
+          const code = r['Code'] || r['Cod Serie'] || r['Série'] || r['Serie']
+          const year = r['Year'] || r['Ano']
+          const type = r['Doc Type'] || r['Tipo Doc'] || r['Tipo']
+          return code || year || type // keep if at least one present; we still validate later
+        })
+
+        const results: Array<{
+          success: boolean
+          documentNo?: string
+          error?: string
+          provider?: 'agt' | 'appypay'
+        }> = []
+        let processed = 0
+        let successCount = 0
+
+        for (const row of seriesRows) {
+           processed++
+           try {
+             // Map fields and validate minimally
+             const code = row['Code'] || row['Cod Serie'] || row['Série'] || row['Serie']
+             const year = row['Year'] || row['Ano']
+             const type = row['Doc Type'] || row['Tipo Doc'] || row['Tipo']
+             
+             if (!code || !year || !type) {
+               // skip row but record error
+               results.push({ success: false, error: 'Dados incompletos (Serie, Ano, Tipo req)' })
+               continue
+             }
+
+             const payload = {
+              seriesCode: String(code),
+              seriesYear: Number(year),
+              documentType: String(type),
+              firstDocumentNumber: Number(row['Start Number'] || row['Inicio'] || 1),
+              status: row['Status'] ? String(row['Status']).substring(0, 1).toUpperCase() : 'A'
+            }
+
+            const res = await fetch('/api/series/agt/solicitar', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload),
+            })
+            const json = await res.json().catch(() => ({}))
+            
+            if (res.ok) {
+              successCount++
+              results.push({ success: true, documentNo: payload.seriesCode, provider: 'agt' as const })
+            } else {
+              results.push({ success: false, documentNo: payload.seriesCode, error: json.error || 'Erro na API' })
+            }
+           } catch (err: any) {
+             results.push({ success: false, error: err.message || 'Erro desconhecido' })
+           }
+        }
+
+        setResult({
+           success: successCount > 0,
+           processed,
+           documents: successCount,
+           results
+        })
+        setStep('result')
+        setIsProcessing(false)
+        return
+      }
+
       const response = await fetch('/api/excel/process', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -134,26 +219,38 @@ export default function ImportarFacturasPage() {
 
       // Salvar facturas no localStorage se sucesso
       if (data.success && data.results) {
-        data.results.forEach((result: any) => {
-          if (result.success && result.facturaId && result.requestID) {
-            // Reconstruir factura para salvar
-            const facturaToSave: Partial<Factura> = {
-              id: result.facturaId,
-              requestID: result.requestID,
-              taxRegistrationNumber: companyNIF,
-              validationStatus: 'V',
-              // Dados básicos serão preenchidos quando carregar da lista
-            }
-            
+        for (const result of data.results as any[]) {
+          if (result.success && result.facturaId) {
             try {
-              // Adicionar ao localStorage
-              // Note: addFactura requer Factura completa, então vamos apenas marcar para reload
-              console.log('✅ Factura salva:', result.facturaId, result.requestID)
-            } catch (storageError) {
-              console.error('Erro ao salvar no localStorage:', storageError)
+              const resp = await fetch(`/api/facturas/${encodeURIComponent(result.facturaId)}`)
+              if (resp.ok) {
+                const d = await resp.json()
+                if (d.success && d.factura) {
+                  addFactura(d.factura as Factura)
+                  toast({ title: 'Factura guardada localmente', description: `ID ${result.facturaId}` })
+                  console.log('✅ Factura adicionada ao armazenamento local:', result.facturaId)
+                  continue
+                }
+              }
+            } catch (err) {
+              console.warn('Não foi possível buscar factura para salvar localmente', err)
+            }
+            // fallback: push minimal record so user can at least navigate
+            try {
+              addFactura({
+                id: result.facturaId,
+                requestID: result.requestID,
+                taxRegistrationNumber: companyNIF,
+                validationStatus: 'P',
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+              } as Factura)
+              toast({ title: 'Factura guardada localmente (parcial)', description: `ID ${result.facturaId}` })
+            } catch (err) {
+              console.error('Erro ao salvar documento simples no localStorage:', err)
             }
           }
-        })
+        }
       }
 
       setResult(data)
@@ -189,14 +286,22 @@ export default function ImportarFacturasPage() {
         {/* Header */}
         <div>
           <div className="flex items-center gap-3 mb-2">
-            <h1 className="text-3xl font-bold">Importar Facturas de Excel</h1>
-            <Badge variant={activeProvider === 'appypay' ? 'default' : 'secondary'} className="flex items-center gap-1">
-              {activeProvider === 'appypay' ? <Zap className="h-3 w-3" /> : <Cloud className="h-3 w-3" />}
-              {activeProvider === 'appypay' ? 'AppyPay' : 'AGT'}
-            </Badge>
+            <h1 className="text-3xl font-bold">
+              {importMode === 'factura' ? 'Importar Facturas de Excel' : 'Importar Séries de Excel'}
+            </h1>
+            {importMode === 'factura' && (
+              <Badge variant={activeProvider === 'appypay' ? 'default' : 'secondary'} className="flex items-center gap-1">
+                {activeProvider === 'appypay' ? <Zap className="h-3 w-3" /> : <Cloud className="h-3 w-3" />}
+                {activeProvider === 'appypay' ? 'AppyPay' : 'AGT'}
+              </Badge>
+            )}
           </div>
           <p className="text-muted-foreground mt-2">
-            Carregue um ficheiro Excel com dados de facturas e processe-os para {activeProvider === 'appypay' ? 'AppyPay' : 'AGT'}
+            {importMode === 'factura'
+              ? `Carregue um ficheiro Excel com dados de facturas e processe-os para ${
+                  activeProvider === 'appypay' ? 'AppyPay' : 'AGT'
+                }`
+              : 'Carregue um ficheiro Excel com dados de séries para solicitar novas séries (modelo-serie-1).' }
           </p>
           {profile && (
             <div className="flex gap-6 mt-3 text-sm">
@@ -217,21 +322,43 @@ export default function ImportarFacturasPage() {
             </div>
           )}
           <div className="flex gap-3 mt-3">
-            <a 
-              href="/templates/modelo-planilha-exemplo.xlsx" 
-              download
-              className="text-sm text-primary hover:underline flex items-center gap-1"
-            >
-              📥 Baixar Template com Exemplo
-            </a>
-            <span className="text-muted-foreground">|</span>
-            <a 
-              href="/templates/exemplo_facturas_sap.csv" 
-              download
-              className="text-sm text-primary hover:underline flex items-center gap-1"
-            >
-              📥 Formato SAP (CSV)
-            </a>
+            {importMode === 'serie' ? (
+              <>
+                <a
+                  href="/templates/MODELO-SERIE-1.xlsx"
+                  download
+                  className="text-sm text-primary hover:underline flex items-center gap-1"
+                >
+                  📥 Template Série 1
+                </a>
+                <span className="text-muted-foreground">|</span>
+                <a
+                  href="/templates/MODELO-SERIE-2.xlsx"
+                  download
+                  className="text-sm text-primary hover:underline flex items-center gap-1"
+                >
+                  📥 Template Série 2
+                </a>
+              </>
+            ) : (
+              <>
+                <a
+                  href="/templates/modelo-planilha-exemplo.xlsx"
+                  download
+                  className="text-sm text-primary hover:underline flex items-center gap-1"
+                >
+                  📥 Baixar Template de Factura
+                </a>
+                <span className="text-muted-foreground">|</span>
+                <a
+                  href="/templates/exemplo_facturas_sap.csv"
+                  download
+                  className="text-sm text-primary hover:underline flex items-center gap-1"
+                >
+                  📥 Formato SAP (CSV)
+                </a>
+              </>
+            )}
           </div>
         </div>
 
@@ -261,10 +388,43 @@ export default function ImportarFacturasPage() {
             <CardContent className="space-y-6">
               {/* Upload */}
               {step === 'upload' && (
-                <ExcelUploader
-                  onDataParsed={handleDataParsed}
-                  isProcessing={isProcessing}
-                />
+                <div className="space-y-4">
+                  <div className="flex p-1 bg-muted rounded-lg">
+                    <button
+                      className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${
+                        importMode === 'factura' 
+                          ? 'bg-background shadow text-foreground' 
+                          : 'text-muted-foreground hover:text-foreground'
+                      }`}
+                      onClick={() => setImportMode('factura')}
+                    >
+                      Registar Factura
+                    </button>
+                    <button
+                      className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${
+                        importMode === 'serie' 
+                          ? 'bg-background shadow text-foreground' 
+                          : 'text-muted-foreground hover:text-foreground'
+                      }`}
+                      onClick={() => setImportMode('serie')}
+                    >
+                      Solicitar Série
+                    </button>
+                  </div>
+
+                  <div className="bg-blue-50 dark:bg-blue-950 p-3 rounded text-sm text-blue-800 dark:text-blue-200 flex items-center gap-2">
+                    <AlertCircle className="w-4 h-4" />
+                    {importMode === 'factura'
+                      ? 'Importe facturas para emissão/registo (Modelo 2, 3 ou SAP).'
+                      : 'Importe ficheiro de Séries para solicitar séries (MODELO-SERIE-1.XLSX ou MODELO-SERIE-2.XLSX).'}
+                  </div>
+
+                  <ExcelUploader
+                    onDataParsed={handleDataParsed}
+                    isProcessing={isProcessing}
+                    mode={importMode}
+                  />
+                </div>
               )}
 
               {/* Preview */}

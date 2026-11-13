@@ -109,7 +109,7 @@ export default function DashboardPage() {
             variant="primary"
           />
           <MetricCard
-            title="Séries Ativas"
+            title="Séries Pendentes"
             description="Séries de numeração"
             value={metrics.totalSeries}
             icon={FileStack}

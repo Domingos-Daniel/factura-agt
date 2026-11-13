@@ -4,14 +4,17 @@ import React, { useState, useRef } from 'react'
 import { Upload, AlertCircle, CheckCircle, XCircle, FileSpreadsheet } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Alert, AlertDescription } from '@/components/ui/alert'
-import { parseExcelFile, ParsedExcelData } from '@/lib/excelParser'
+import { parseExcelFile, parseSeriesExcelFile, ParsedExcelData, ParsedSeriesData } from '@/lib/excelParser'
+
+export type ParsedData = ParsedExcelData | ParsedSeriesData
 
 interface ExcelUploaderProps {
-  onDataParsed: (data: ParsedExcelData) => void
+  onDataParsed: (data: ParsedData) => void
   isProcessing?: boolean
+  mode?: 'factura' | 'serie'
 }
 
-export function ExcelUploader({ onDataParsed, isProcessing = false }: ExcelUploaderProps) {
+export function ExcelUploader({ onDataParsed, isProcessing = false, mode = 'factura' }: ExcelUploaderProps) {
   const [isDragging, setIsDragging] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -32,7 +35,14 @@ export function ExcelUploader({ onDataParsed, isProcessing = false }: ExcelUploa
     setFileName(file.name)
 
     try {
-      const parsedData = await parseExcelFile(file)
+      let parsedData: ParsedData
+      
+      if (mode === 'serie') {
+        parsedData = await parseSeriesExcelFile(file)
+      } else {
+        parsedData = await parseExcelFile(file)
+      }
+      
       onDataParsed(parsedData)
 
       if (!parsedData.success && parsedData.errors.length > 0) {

@@ -12,27 +12,50 @@ import { Button } from '@/components/ui/button'
 import { FacturaDetail } from '@/components/FacturaDetail'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { useToast } from '@/components/ui/use-toast'
 import { Progress } from '@/components/ui/progress'
 import { AsyncStatusTracker } from '@/components/providers'
 
 type DataSource = 'local' | 'backup' | 'agt' | 'agt-empty' | 'appypay' | null
 
+// Helper to format any raw AGT error string into readable text
+function formatAgtError(raw?: string | null) {
+  if (!raw) return ''
+  const prefix = 'AGT raw:'
+  if (raw.startsWith(prefix)) {
+    const payload = raw.slice(prefix.length).trim()
+    try {
+      const obj = JSON.parse(payload)
+      if (obj.errorList && Array.isArray(obj.errorList)) {
+        return obj.errorList.map((e: any) => `${e.idError}: ${e.descriptionError}`).join('; ')
+      }
+      return payload
+    } catch {
+      return payload
+    }
+  }
+  return raw
+}
+
 // Helper para mapear status AppyPay para status interno
 function mapAppyPayStatus(status: string): 'P' | 'V' | 'I' | 'R' | 'E' {
   switch (status?.toUpperCase()) {
-    case 'N':
-    case 'PENDING':
-    case 'PROCESSING':
-      return 'P'
-    case 'V':
+    // AppyPay validationStatus:
+    case 'N': // N = Novo/Aprovado (documento válido esperando processamento)
+      return 'V'
+    case 'V': // V = Validado pela AGT
     case 'SUCCESS':
     case 'COMPLETED':
       return 'V'
-    case 'I':
+    case 'I': // I = Inválido/Rejeitado pela AGT
     case 'FAILED':
     case 'REJECTED':
       return 'I'
+    // AppyPay documentStatus:
+    case 'PENDING':
+    case 'PROCESSING':
+      return 'P'
     case 'R':
       return 'R'
     case 'E':
@@ -54,10 +77,43 @@ export default function FacturaDetailPage() {
   const [syncProgress, setSyncProgress] = useState(0)
   const [syncMessage, setSyncMessage] = useState<string | null>(null)
   const [syncError, setSyncError] = useState<string | null>(null)
+  // error returned by initial AGT consult attempt
+  const [agtError, setAgtError] = useState<string | null>(null)
   const [pdfData, setPdfData] = useState<string | null>(null)
   const [qrCodeData, setQrCodeData] = useState<string | null>(null)
   const [showQrModal, setShowQrModal] = useState(false)
   const { toast } = useToast()
+
+  // utility to load a document only from localStorage or backup JSON
+  const loadFromBackup = useCallback(async () => {
+    if (!params?.id) {
+      setLoading(false)
+      return
+    }
+    setLoading(true)
+    try {
+      const localDoc = getFacturaById(params.id)
+      if (localDoc) {
+        setFactura(localDoc)
+        setSource('local')
+        setLoading(false)
+        return
+      }
+      const backupRes = await fetch(`/api/facturas/${encodeURIComponent(params.id)}`)
+      if (backupRes.ok) {
+        const d = await backupRes.json()
+        if (d.success && d.factura) {
+          setFactura(d.factura)
+          setSource('backup')
+          setLoading(false)
+          return
+        }
+      }
+    } catch (err) {
+      console.warn('Erro ao carregar backup:', err)
+    }
+    setLoading(false)
+  }, [params?.id])
 
   // Carregar factura do backup, AGT ou AppyPay
   const loadFactura = useCallback(async (forceRefresh = false) => {
@@ -647,6 +703,24 @@ export default function FacturaDetailPage() {
             )}
 
             <FacturaDetail factura={factura} />
+          </div>
+        ) : agtError ? (
+          <div className="space-y-4">
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertTitle>Erro ao consultar AGT</AlertTitle>
+              <AlertDescription className="flex flex-col gap-2">
+                {formatAgtError(agtError)}
+                <div className="flex gap-2">
+                  <Button size="sm" variant="outline" onClick={loadFromBackup}>
+                    Carregar local/backup
+                  </Button>
+                  <Button size="sm" variant="secondary" onClick={() => loadFactura(true)}>
+                    Tentar novamente AGT
+                  </Button>
+                </div>
+              </AlertDescription>
+            </Alert>
           </div>
         ) : (
           <Card>

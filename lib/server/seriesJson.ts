@@ -12,14 +12,28 @@ async function readAll(): Promise<any[]> {
     const raw = await fs.readFile(SERIES_JSON, 'utf-8')
     const parsed = JSON.parse(raw)
     return Array.isArray(parsed) ? parsed : []
-  } catch {
-    return []
+  } catch (err: any) {
+    // if the file doesn't exist just return empty, otherwise propagate so callers
+    // can detect corrupted backups (e.g. JSON parse errors)
+    if (err?.code === 'ENOENT') {
+      return []
+    }
+    throw err
   }
 }
 
 async function writeAll(series: any[]): Promise<void> {
   await fs.mkdir(DATA_DIR, { recursive: true })
-  await fs.writeFile(SERIES_JSON, JSON.stringify(series, null, 2), 'utf-8')
+  const tmp = SERIES_JSON + '.tmp'
+  try {
+    if (await fs.access(SERIES_JSON).then(() => true).catch(() => false)) {
+      const bak = SERIES_JSON + '.bak'
+      await fs.copyFile(SERIES_JSON, bak)
+    }
+  } catch {}
+  const payload = JSON.stringify(series, null, 2)
+  await fs.writeFile(tmp, payload, 'utf-8')
+  await fs.rename(tmp, SERIES_JSON)
 }
 
 export async function getAllSeriesJson(): Promise<Serie[]> {

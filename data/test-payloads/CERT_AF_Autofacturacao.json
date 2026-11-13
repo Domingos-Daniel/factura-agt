@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "2.0",
+  "submissionUUID": "43f897ce-c670-413d-a054-469c5effd617",
+  "taxRegistrationNumber": "5000660086",
+  "submissionTimeStamp": "2026-03-02T09:15:35Z",
+  "softwareInfo": {
+    "softwareInfoDetail": {
+      "productId": "SafeFacturas",
+      "productVersion": "1.0.1",
+      "softwareValidationNumber": "FE/BB/AGT/2026",
+      "signatureVersion": 1
+    },
+    "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+  },
+  "numberOfEntries": 1,
+  "documents": [
+    {
+      "documentNo": "AF 2026A/000012",
+      "documentStatus": "N",
+      "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiQUYgMjAyNkEvMDAwMDEyIiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6IkFGIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJFTVBSRVNBIEFEUVVJUkVOVEUgLSBBVVRPRkFDVFVSQcOHw4NPLCBMREEiLCJkb2N1bWVudFRvdGFscyI6eyJ0YXhQYXlhYmxlIjo2NzIwMCwibmV0VG90YWwiOjQ4MDAwMCwiZ3Jvc3NUb3RhbCI6NTQ3MjAwfX0.SotIrW-3qB3YNfx-hrrWGvoq3rq8VGmHs-n2Y_kuUp1KB9pdrgOR_CimBUTE1ebT40JIu1cCng_fOB5Pj0tPjYOThoxZJCBusYnwkxI91YkrWA9ZaDVt_owuMv8UhtF-tPxelQroI9bhMbR6eYPyrrym-AjljfkaDsonqlbhqxJpNgnghyuW0vw034XwZj73qdEVTVRQnFqZI4P5rLqnTKOvN0Fs1K9iICQsTKOvV4AQtYzKU9HnXu-OLsPysrqyWeOkaSmRlfKB4NAKtqJI1maRXhL9HiW77-IaXtyDeTnYU-HUaiGrqwOFwLVKbGWnMaMorEBcz80N0KRpN5MhFQ",
+      "documentDate": "2026-03-02",
+      "documentType": "AF",
+      "eacCode": "70220",
+      "systemEntryDate": "2026-03-02T09:15:30Z",
+      "customerCountry": "AO",
+      "customerTaxID": "003043657LA038",
+      "companyName": "EMPRESA ADQUIRENTE - AUTOFACTURAÇÃO, LDA",
+      "lines": [
+        {
+          "lineNumber": 1,
+          "operationType": "SG",
+          "productCode": "SERV-CONS-220",
+          "productDescription": "Prestação de serviços de consultoria - autofacturação pelo adquirente",
+          "quantity": 1,
+          "unitOfMeasure": "Serviço",
+          "unitPriceBase": 480000,
+          "unitPrice": 480000,
+          "creditAmount": 480000,
+          "taxes": [
+            {
+              "taxType": "IVA",
+              "taxCountryRegion": "AO",
+              "taxCode": "NOR",
+              "taxPercentage": 14,
+              "taxContribution": 67200
+            }
+          ],
+          "settlementAmount": 0
+        }
+      ],
+      "documentTotals": {
+        "taxPayable": 67200,
+        "netTotal": 480000,
+        "grossTotal": 547200
+      },
+      "withholdingTaxList": [
+        {
+          "withholdingTaxType": "IVA",
+          "withholdingTaxDescription": "Retenção de IVA na fonte - 6,5% do imposto (art. 26.º do CIVA)",
+          "withholdingTaxAmount": 4368
+        }
+      ]
+    }
+  ]
+}

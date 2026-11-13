@@ -31,9 +31,9 @@ function mapAgtFacturaEntry(entry: any): any {
     requestID: doc?.id || '',
     softwareInfo: {
       softwareInfoDetail: {
-        productId: process.env.AGT_SOFTWARE_PRODUCT_ID || 'ADDON SAFT B1 E-INVOICE',
-        productVersion: process.env.AGT_SOFTWARE_VERSION || '1.0',
-        softwareValidationNumber: process.env.AGT_SOFTWARE_VALIDATION_NUMBER || 'FE/81/AGT/2025'
+        productId: process.env.AGT_SOFTWARE_PRODUCT_ID || 'SafeFacturas',
+        productVersion: process.env.AGT_SOFTWARE_VERSION || '1.0.1',
+        softwareValidationNumber: process.env.AGT_SOFTWARE_VALIDATION_NUMBER || 'FE/308/AGT/2026'
       }
     },
     documents: [{
@@ -62,15 +62,28 @@ function mapAgtFacturaEntry(entry: any): any {
 export async function GET(req: NextRequest) {
   const url = new URL(req.url)
   const refresh = url.searchParams.get('refresh') === 'true'
+  const debug = url.searchParams.get('debug') === 'true'
   const timeoutMs = Number(url.searchParams.get('timeoutMs') || '180000') // 3 minutos default
   
   const nif = getDefaultNif()
   
   // 1) Se não pediu refresh, retorna backup
   if (!refresh) {
-    const backup = await getAllFacturasJson()
-    if (backup.length > 0) {
-      return NextResponse.json({ success: true, facturas: backup, source: 'backup' }, { status: 200 })
+    try {
+      const backup = await getAllFacturasJson()
+      if (backup.length > 0) {
+        return NextResponse.json({ success: true, facturas: backup, source: 'backup' }, { status: 200 })
+      }
+    } catch (e: any) {
+      console.error('Backup parse error ao listarFacturas:', e)
+      // delete corrupted file and continue to AGT
+      try {
+        const { unlinkSync } = await import('fs')
+        const { join } = await import('path')
+        const p = join(process.cwd(), 'data', 'facturas.json')
+        unlinkSync(p)
+      } catch {}
+      // allow execution to proceed to AGT block
     }
   }
   
@@ -91,20 +104,26 @@ export async function GET(req: NextRequest) {
     
     // Software info detail (formato v5)
     const softwareInfoDetail = {
-      productId: process.env.AGT_SOFTWARE_PRODUCT_ID || 'ADDON SAFT B1 E-INVOICE',
-      productVersion: process.env.AGT_SOFTWARE_VERSION || '1.0',
-      softwareValidationNumber: process.env.AGT_SOFTWARE_VALIDATION_NUMBER || 'FE/81/AGT/2025'
+      productId: process.env.AGT_SOFTWARE_PRODUCT_ID || 'SafeFacturas',
+      productVersion: process.env.AGT_SOFTWARE_VERSION || '1.0.1',
+      softwareValidationNumber: process.env.AGT_SOFTWARE_VALIDATION_NUMBER || 'FE/308/AGT/2026'
     }
     
-    // Obter chave privada
-    const privateKey = process.env.AGT_PRIVATE_KEY
-    if (!privateKey) {
+    // Obter chaves privadas
+    const producerPrivateKey = process.env.AGT_PRODUCER_PRIVATE_KEY
+    const issuerPrivateKey = process.env.AGT_PRIVATE_KEY
+    if (!producerPrivateKey) {
+      throw new Error('AGT_PRODUCER_PRIVATE_KEY não configurada')
+    }
+    if (!issuerPrivateKey) {
       throw new Error('AGT_PRIVATE_KEY não configurada')
     }
     
     // Gerar assinaturas JWS (formato v5)
-    const jwsSoftwareSignature = signJwsRS256(softwareInfoDetail, privateKey)
-    const jwsSignature = signJwsRS256({ taxRegistrationNumber: nif }, privateKey)
+    // jwsSoftwareSignature: assinar com CHAVE DO PRODUTOR
+    const jwsSoftwareSignature = signJwsRS256(softwareInfoDetail, producerPrivateKey)
+    // jwsSignature: assinar com CHAVE DO EMISSOR
+    const jwsSignature = signJwsRS256({ taxRegistrationNumber: nif }, issuerPrivateKey)
     
     const payload = {
       schemaVersion: '1.2',
@@ -121,18 +140,37 @@ export async function GET(req: NextRequest) {
     }
     
     console.log('📤 Enviando para AGT com NIF:', nif)
+    console.log('📤 Payload enviado:', JSON.stringify(payload, null, 2))
     
     const requestStart = Date.now()
-    const res = await (client.listarFacturasWithTimeout
+    const res: any = await (client.listarFacturasWithTimeout
       ? client.listarFacturasWithTimeout(payload, timeoutMs)
       : client.listarFacturas(payload))
     const requestDuration = ((Date.now() - requestStart) / 1000).toFixed(2)
+
+    if (res && res.__agtRaw) {
+      throw new Error(`AGT raw: ${res.__agtRaw}`)
+    }
     
     console.log(`✅ Resposta AGT recebida em ${requestDuration}s:`, {
       hasStatusResult: !!res?.statusResult,
       hasResultEntryList: !!res?.statusResult?.resultEntryList,
-      documentResultCount: res?.statusResult?.documentResultCount
+      documentResultCount: res?.statusResult?.documentResultCount,
+      resultEntryListIsArray: Array.isArray(res?.statusResult?.resultEntryList),
+      resultEntryListLength: Array.isArray(res?.statusResult?.resultEntryList) ? res.statusResult.resultEntryList.length : 'N/A',
+      firstEntryType: typeof res?.statusResult?.resultEntryList?.[0],
+      firstEntryKeys: res?.statusResult?.resultEntryList?.[0] ? Object.keys(res.statusResult.resultEntryList[0]) : []
     })
+    
+    // DEBUG: Log the full response structure
+    const debugInfo = {
+      receivedStatus: res?.statusResult?.resultCode,
+      statusKeys: Object.keys(res?.statusResult || {}),
+      resultEntryListType: Array.isArray(res?.statusResult?.resultEntryList) ? 'array' : typeof res?.statusResult?.resultEntryList,
+      resultEntryListLength: Array.isArray(res?.statusResult?.resultEntryList) ? res.statusResult.resultEntryList.length : 0,
+      resultEntryListSample: res?.statusResult?.resultEntryList ? (Array.isArray(res.statusResult.resultEntryList) ? res.statusResult.resultEntryList[0] : res.statusResult.resultEntryList) : 'undefined'
+    }
+    console.log('🔍 DEBUG AGT Response:', JSON.stringify(debugInfo, null, 2))
     
     // Extrair lista da resposta (formato v5)
     // resultEntryList é um ARRAY onde cada item tem { documentEntryResult: {...} }
@@ -146,7 +184,15 @@ export async function GET(req: NextRequest) {
     console.log(`📊 Entradas na resposta: ${rawList.length}`)
     
     // Cada entrada pode ter { documentEntryResult: ... } ou ser direto
-    const list = rawList.map((entry: any) => entry?.documentEntryResult || entry)
+    const list = rawList.map((entry: any) => {
+      const doc = entry?.documentEntryResult || entry
+      if (debug) {
+        console.log('🔍 Entry keys:', Object.keys(entry || {}))
+        console.log('🔍 documentEntryResult keys:', Object.keys(entry?.documentEntryResult || {}))
+        console.log('🔍 doc object:', doc)
+      }
+      return doc
+    })
     
     console.log(`📋 Facturas para mapear: ${list.length}`)
     
@@ -165,21 +211,38 @@ export async function GET(req: NextRequest) {
       console.log(`💾 Backup atualizado com ${withMeta.length} facturas`)
     }
     
-    return NextResponse.json({ success: true, facturas: withMeta, source: 'agt' }, { status: 200 })
+    const response: any = { success: true, facturas: withMeta, source: 'agt' }
+    if (debug) {
+      response._debug = {
+        rawListLength: rawList.length,
+        listLength: list.length,
+        mappedLength: mapped.length,
+        filteredLength: withMeta.length,
+        resultEntryListType: Array.isArray(resultEntryList) ? 'array' : typeof resultEntryList,
+        firstRawEntry: rawList[0],
+        firstListEntry: list[0],
+        firstMappedEntry: mapped[0],
+        agtStatusResult: res?.statusResult,
+        agtFullResponse: res  // Full response for detailed inspection
+      }
+    }
+    return NextResponse.json(response, { status: 200 })
   } catch (e: any) {
     console.error('❌ Erro ao consultar AGT:', e?.message || e)
     
-    // 3) Fallback para backup
-    const backup = await getAllFacturasJson()
-    if (backup.length > 0) {
-      console.log(`📦 Retornando ${backup.length} facturas do backup`)
-      return NextResponse.json(
-        { success: true, facturas: backup, source: 'backup', warning: e?.message || 'Falha ao consultar AGT' },
-        { status: 200 }
-      )
+    // only fall back if the caller specifically asked for backup (refresh=false)
+    if (!refresh) {
+      const backup = await getAllFacturasJson()
+      if (backup.length > 0) {
+        console.log(`📦 Retornando ${backup.length} facturas do backup`)
+        return NextResponse.json(
+          { success: true, facturas: backup, source: 'backup', warning: e?.message || 'Falha ao consultar AGT' },
+          { status: 200 }
+        )
+      }
     }
     return NextResponse.json(
-      { success: false, error: e?.message || 'Falha ao consultar AGT e sem backup disponível' },
+      { success: false, error: e?.message || 'Falha ao consultar AGT', agtError: e?.message, details: e },
       { status: 502 }
     )
   }

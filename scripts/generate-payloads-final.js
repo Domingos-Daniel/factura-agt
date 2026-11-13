@@ -15,16 +15,20 @@
 const fs = require('fs');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
+const { createSoftwareSignature, createDocumentSignature } = require('../lib/jws-signer');
+
+// Carregar .env.local
+require('dotenv').config({ path: path.join(__dirname, '..', '.env.local') });
 
 // =============================================================================
 // CONFIGURAÇÃO
 // =============================================================================
 
 const SOFTWARE_CONFIG = {
-  productId: 'SOFT-FACT-2025',
-  productVersion: '1.0.0',
-  validationNumber: 'AGT-CERT-2025-001234',
-  emitterNIF: '5000413178'
+  productId: process.env.AGT_SOFTWARE_PRODUCT_ID || 'SafeFacturas',
+  productVersion: process.env.AGT_SOFTWARE_VERSION || '1.0.1',
+  validationNumber: process.env.AGT_SOFTWARE_VALIDATION_NUMBER || 'FE/164/AGT/2026',
+  emitterNIF: process.env.AGT_HML_NIF_TEST || '5000413178'
 };
 
 const IVA_NORMAL = 14.0;
@@ -110,23 +114,20 @@ function calculateTotals(lines) {
   };
 }
 
-function signPayload(data) {
-  const mockSignature = Buffer.from(
-    JSON.stringify(data) + '_SIGNED_' + Date.now()
-  )
-    .toString('base64')
-    .substring(0, 256)
-    .padEnd(256, '=');
-  return mockSignature;
+// Função auxiliar de formatação
+function formatCurrency(num) {
+  return num.toFixed(2);
 }
 
 function createSoftwareInfo() {
-  const signature = signPayload({
+  const softwareData = {
     productId: SOFTWARE_CONFIG.productId,
     productVersion: SOFTWARE_CONFIG.productVersion,
     softwareValidationNumber: SOFTWARE_CONFIG.validationNumber,
     timestamp: generateTimestamp()
-  });
+  };
+  
+  const signature = createSoftwareSignature(softwareData);
 
   return {
     softwareInfoDetail: {
@@ -212,7 +213,7 @@ function generateAvisoCobranca() {
     documentTotals
   };
 
-  document.jwsDocumentSignature = signPayload(document);
+  document.jwsDocumentSignature = createDocumentSignature(document, SOFTWARE_CONFIG.emitterNIF);
 
   return {
     schemaVersion: '1.0',
@@ -293,7 +294,7 @@ function generateFacturaRecibo() {
     documentTotals
   };
 
-  document.jwsDocumentSignature = signPayload(document);
+  document.jwsDocumentSignature = createDocumentSignature(document, SOFTWARE_CONFIG.emitterNIF);
 
   return {
     schemaVersion: '1.0',
@@ -386,7 +387,7 @@ function generateFactura() {
     withholdingTaxList
   };
 
-  document.jwsDocumentSignature = signPayload(document);
+  document.jwsDocumentSignature = createDocumentSignature(document, SOFTWARE_CONFIG.emitterNIF);
 
   return {
     schemaVersion: '1.0',
@@ -444,7 +445,7 @@ function generateNotaCredito() {
     documentTotals
   };
 
-  document.jwsDocumentSignature = signPayload(document);
+  document.jwsDocumentSignature = createDocumentSignature(document, SOFTWARE_CONFIG.emitterNIF);
 
   return {
     schemaVersion: '1.0',
@@ -521,7 +522,7 @@ function generateNotaDebito() {
     documentTotals
   };
 
-  document.jwsDocumentSignature = signPayload(document);
+  document.jwsDocumentSignature = createDocumentSignature(document, SOFTWARE_CONFIG.emitterNIF);
 
   return {
     schemaVersion: '1.0',
@@ -591,7 +592,7 @@ function generateReciboNumerario() {
     documentTotals
   };
 
-  document.jwsDocumentSignature = signPayload(document);
+  document.jwsDocumentSignature = createDocumentSignature(document, SOFTWARE_CONFIG.emitterNIF);
 
   return {
     schemaVersion: '1.0',

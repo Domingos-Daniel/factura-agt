@@ -1,0 +1,91 @@
+{
+  "schemaVersion": "2.0",
+  "submissionUUID": "4f5614b8-53c2-4171-9df3-052a4b7f0794",
+  "taxRegistrationNumber": "5000660086",
+  "submissionTimeStamp": "2026-03-02T09:15:35Z",
+  "softwareInfo": {
+    "softwareInfoDetail": {
+      "productId": "SafeFacturas",
+      "productVersion": "1.0.1",
+      "softwareValidationNumber": "FE/BB/AGT/2026",
+      "signatureVersion": 1
+    },
+    "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+  },
+  "numberOfEntries": 1,
+  "documents": [
+    {
+      "documentNo": "ND 2026A/000008",
+      "documentStatus": "N",
+      "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiTkQgMjAyNkEvMDAwMDA4IiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6Ik5EIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJDT05TVFJVVE9SQSBOT1ZBIExVQU5EQSwgTERBIiwiZG9jdW1lbnRUb3RhbHMiOnsidGF4UGF5YWJsZSI6MCwibmV0VG90YWwiOjUzMDAwLCJncm9zc1RvdGFsIjo1MzAwMH19.iOgILQYN0AUSGLwMssT0rdB0xBoWTXkvHcHSIuLqkweTceyP0y6peH4XRkPobTFQn5n1aE6GwkOrRv1zFWbR7t2MBjpNd8Ubs_S6JZRckYqiPQsAjx4TN3GkCdC8iClF2fMogOIbjm25NS3_JHcm0QvGbr20HIFyy7By9TSwZ9FQqvoG11bWrTyZ1cqHtdGmB31D5Cp6kv1nK9sOXFIN-tEqO1xr3XJRWt28WAtPU4uf7EkX-sZ5AhvmExgUwAa1itK7H7X7ynCKqeFxMPou39sn5a08xzFOOLIGzp8btQWBG_3X1gPnAcvJSlFxJ8m3p5U1TDmXzzdYr1U3LyO_6w",
+      "documentDate": "2026-03-02",
+      "documentType": "ND",
+      "eacCode": "70220",
+      "systemEntryDate": "2026-03-02T09:15:30Z",
+      "customerCountry": "AO",
+      "customerTaxID": "003043657LA038",
+      "companyName": "CONSTRUTORA NOVA LUANDA, LDA",
+      "lines": [
+        {
+          "lineNumber": 1,
+          "operationType": "SG",
+          "productCode": "JUROS-MORA",
+          "productDescription": "Juros de mora por atraso de pagamento - 50 dias após vencimento",
+          "quantity": 1,
+          "unitOfMeasure": "Serviço",
+          "unitPriceBase": 45000,
+          "unitPrice": 45000,
+          "referenceInfo": {
+            "reference": "FT 2026A/000095",
+            "referenceItemLineNo": 1,
+            "reason": "Juros de mora"
+          },
+          "creditAmount": 45000,
+          "taxes": [
+            {
+              "taxType": "IVA",
+              "taxCountryRegion": "AO",
+              "taxCode": "ISE",
+              "taxPercentage": 0,
+              "taxContribution": 0,
+              "taxExemptionCode": "M10"
+            }
+          ],
+          "settlementAmount": 0
+        },
+        {
+          "lineNumber": 2,
+          "operationType": "RD",
+          "productCode": "DESP-COB",
+          "productDescription": "Despesas administrativas de cobrança",
+          "quantity": 1,
+          "unitOfMeasure": "Serviço",
+          "unitPriceBase": 8000,
+          "unitPrice": 8000,
+          "referenceInfo": {
+            "reference": "FT 2026A/000095",
+            "referenceItemLineNo": 2,
+            "reason": "Despesas de cobrança"
+          },
+          "creditAmount": 8000,
+          "taxes": [
+            {
+              "taxType": "IVA",
+              "taxCountryRegion": "AO",
+              "taxCode": "ISE",
+              "taxPercentage": 0,
+              "taxContribution": 0,
+              "taxExemptionCode": "M10"
+            }
+          ],
+          "settlementAmount": 0
+        }
+      ],
+      "documentTotals": {
+        "taxPayable": 0,
+        "netTotal": 53000,
+        "grossTotal": 53000
+      }
+    }
+  ]
+}

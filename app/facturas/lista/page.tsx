@@ -16,6 +16,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Progress } from '@/components/ui/progress'
 import { Badge } from '@/components/ui/badge'
+import { useToast } from '@/components/ui/use-toast'
 
 type DataSource = 'cache' | 'cache-stale' | 'agt' | 'appypay' | 'cache-fallback' | 'empty' | 'local' | 'loading' | 'no-cache'
 
@@ -42,13 +43,47 @@ export default function ListaFacturasPage() {
   const [facturas, setFacturas] = useState<Factura[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [isRefreshing, setIsRefreshing] = useState(false)
+  const { toast } = useToast()
   const [isSyncingEstados, setIsSyncingEstados] = useState(false)
   const [dataSource, setDataSource] = useState<DataSource>('loading')
   const [provider, setProvider] = useState<'agt' | 'appypay' | null>(null)
   const [loadingProgress, setLoadingProgress] = useState(0)
   const [loadingMessage, setLoadingMessage] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const [showRaw, setShowRaw] = useState(false)
+  const [backupCorrupted, setBackupCorrupted] = useState(false)
   const [cacheAge, setCacheAge] = useState<number | null>(null)
+
+  // error helpers
+  const unwrapAgtMessage = (msg?: string | null): string | null => {
+    if (!msg) return msg
+    try {
+      const o = JSON.parse(msg)
+      if (typeof o.error === 'string') return o.error
+      if (typeof o.agtError === 'string') return o.agtError
+    } catch {
+      // not JSON
+    }
+    return msg
+  }
+
+  const formatAgtError = (raw?: string | null) => {
+    if (!raw) return ''
+    const prefix = 'AGT raw:'
+    if (raw.startsWith(prefix)) {
+      const payload = raw.slice(prefix.length).trim()
+      try {
+        const obj = JSON.parse(payload)
+        if (obj.errorList && Array.isArray(obj.errorList)) {
+          return obj.errorList.map((e: any) => `${e.idError}: ${e.descriptionError}`).join('; ')
+        }
+        return payload
+      } catch {
+        return payload
+      }
+    }
+    return raw
+  }
   
   // Filtros e paginação
   const [documentTypeFilter, setDocumentTypeFilter] = useState<string>('all')
@@ -59,8 +94,31 @@ export default function ListaFacturasPage() {
   const refreshFromJsonBackup = useCallback(async () => {
     try {
       const response = await fetch('/api/facturas/list')
-      if (!response.ok) return
-      const data = await response.json()
+      if (!response.ok) {
+        const text = await response.text().catch(() => '')
+        const msg = text || `Backup fetch failed (${response.status})`
+        setError(msg)
+        if (msg.includes('Erro ao analisar backup local')) {
+          setBackupCorrupted(true)
+        }
+        return
+      }
+      const data = await response.json().catch((e) => {
+        setError(`Erro parse backup: ${e?.message}`)
+        setBackupCorrupted(true)
+        return null
+      })
+      if (!data) return
+      // if server warned us about corruption it has already deleted file
+      if (data.warning && String(data.warning).toLowerCase().includes('corrompido')) {
+        // clear client flags and show informational toast
+        setBackupCorrupted(false)
+        toast({ title: 'Backup removido', description: 'Backup local corrompido apagado.' })
+        setError(null)
+        return
+      }
+      // se conseguirmos ler com sucesso, limpar o flag de corrupção
+      setBackupCorrupted(false)
       const jsonFacturas: Factura[] = data.facturas || []
       if (!Array.isArray(jsonFacturas) || jsonFacturas.length === 0) return
 
@@ -82,9 +140,74 @@ export default function ListaFacturasPage() {
           } as any
         })
       )
+    } catch (e: any) {
+      const msg = `Erro backup: ${e?.message}`
+      setError(msg)
+      if (msg.includes('Erro ao analisar backup local')) {
+        setBackupCorrupted(true)
+      }
+    }
+  }, [])
+
+  // helper to build a single local/backup dataset when user asks for it
+  const loadLocalFacturas = useCallback(async () => {
+    setError(null)
+    const localFacturas = getFacturas()
+    let jsonFacturas: Factura[] = []
+
+    try {
+      const response = await fetch('/api/facturas/list')
+      if (response.ok) {
+        const data = await response.json()
+        // if the backup itself failed to parse the route returns an error message
+        if (data.error && String(data.error).includes('Erro ao analisar backup local')) {
+          setBackupCorrupted(true)
+          setError(data.error)
+          return
+        }
+        jsonFacturas = data.facturas || []
+      }
     } catch {
       // ignore
     }
+
+    const jsonIndex = new Map<string, Factura>()
+    jsonFacturas.forEach((f: any) => {
+      buildFacturaKeys(f).forEach((k) => jsonIndex.set(k, f))
+    })
+
+    const seen = new Set<string>()
+    const allFacturas = localFacturas.map((f: any) => {
+      const keys = buildFacturaKeys(f)
+      keys.forEach((k) => seen.add(k))
+      const candidate = keys.map((k) => jsonIndex.get(k)).find(Boolean) as any
+      if (!candidate) return f
+      return {
+        ...f,
+        validationStatus: normalizeValidationStatusForList(candidate),
+        validationDate: candidate.validationDate,
+        validationMessages: candidate.validationMessages,
+      } as any
+    })
+
+    jsonFacturas.forEach((f: any) => {
+      const keys = buildFacturaKeys(f)
+      const already = keys.some((k) => seen.has(k))
+      if (!already) {
+        keys.forEach((k) => seen.add(k))
+        allFacturas.push(f)
+      }
+    })
+
+    // Ordenar por data
+    allFacturas.sort((a, b) => {
+      const dateA = new Date(a.submissionTimeStamp || a.createdAt || 0)
+      const dateB = new Date(b.submissionTimeStamp || b.createdAt || 0)
+      return dateB.getTime() - dateA.getTime()
+    })
+
+    setFacturas(allFacturas)
+    setDataSource('local')
   }, [])
 
   const loadFacturas = useCallback(async (forceRefresh = false) => {
@@ -141,7 +264,7 @@ export default function ListaFacturasPage() {
         return
       }
       
-      // Provider AGT - lógica original
+      // Provider AGT
       if (forceRefresh) {
         setIsRefreshing(true)
         setLoadingProgress(0)
@@ -171,7 +294,7 @@ export default function ListaFacturasPage() {
               if (data.error && (data.facturas?.length === 0 || data.facturas === undefined)) {
                 const isAgtUnavailable = data.error?.includes?.('503') || data.error?.includes?.('indisponível')
                 if (isAgtUnavailable) {
-                  setError('Servidor AGT temporariamente indisponível (503). Os dados locais serão exibidos.')
+                  setError('Servidor AGT temporariamente indisponível (503).')
                 } else {
                   setError(data.error)
                 }
@@ -183,100 +306,84 @@ export default function ListaFacturasPage() {
               void refreshFromJsonBackup()
               setLoadingMessage(data.facturas?.length > 0 ? 'Concluído!' : 'AGT não retornou dados')
             } else {
-              throw new Error(data.error || 'Erro desconhecido')
+              // include entire payload for debugging
+              throw new Error(JSON.stringify(data, null, 2))
             }
           } else {
-            throw new Error(`HTTP ${response.status}`)
+            const text = await response.text().catch(() => '')
+            throw new Error(text || `HTTP ${response.status}`)
           }
         } catch (err: any) {
           clearInterval(progressInterval)
+          // propagate so outer catch can handle display
           throw err
         }
       } else {
         setLoadingMessage('Carregando...')
         
-        // 1. Tentar carregar da nova rota AGT com backup
         try {
           const response = await fetch('/api/facturas/agt/listar')
           if (response.ok) {
             const data = await response.json()
-            if (data.success && data.facturas?.length > 0) {
-              console.log(`📦 Carregadas ${data.facturas.length} facturas (${data.source})`)
-              setFacturas(data.facturas)
-              setDataSource(data.source)
-              setProvider('agt')
-              setCacheAge(data.cacheAge || null)
-              void refreshFromJsonBackup()
-              return
+
+            // warning from route (backup) should surface; but if it's a corruption notice we clean it
+            if (data.warning) {
+              const msg = String(data.warning)
+              if (msg.toLowerCase().includes('corrompido')) {
+                // we already removed backup on the server; just inform user via toast
+                toast({ title: 'Aviso', description: formatAgtError(msg) })
+              } else {
+                setError(formatAgtError(msg))
+              }
             }
+
+            if (data.success) {
+              if (data.facturas?.length > 0) {
+                console.log(`📦 Carregadas ${data.facturas.length} facturas (${data.source})`)
+                setFacturas(data.facturas)
+                setDataSource(data.source)
+                setProvider('agt')
+                setCacheAge(data.cacheAge || null)
+                void refreshFromJsonBackup()
+                return
+              } else {
+                // zero results is not an error, just show info and keep list empty
+                console.log('📦 AGT retornou 0 facturas')
+                setFacturas([])
+                setDataSource(data.source || 'agt')
+                setProvider('agt')
+                setCacheAge(data.cacheAge || null)
+                toast({ title: 'Aviso', description: 'Nenhuma factura encontrada para o período' })
+                setIsLoading(false)
+                setIsRefreshing(false)
+                return
+              }
+            }
+
+            // not success => treat as error
+            const msg = data.error || data.warning || 'Sem facturas retornadas'
+            setError(String(msg))
+            setIsLoading(false)
+            setIsRefreshing(false)
+            return
+          } else {
+            const text = await response.text().catch(() => '')
+            setError(text || `HTTP ${response.status}`)
           }
         } catch (e) {
           console.warn('⚠️ Falha ao carregar da AGT:', e)
+          setError(String(e))
+          // do not fall back automatically; stop here
+          setIsLoading(false)
+          setIsRefreshing(false)
+          return
         }
-        
-        // 2. Fallback: carregar dados locais (localStorage + JSON backup)
-        const localFacturas = getFacturas()
-        let jsonFacturas: Factura[] = []
-        
-        try {
-          const response = await fetch('/api/facturas/list')
-          if (response.ok) {
-            const data = await response.json()
-            jsonFacturas = data.facturas || []
-          }
-        } catch (e) {
-          console.warn('⚠️ Falha ao carregar JSON local:', e)
-        }
-        
-        const jsonIndex = new Map<string, Factura>()
-        jsonFacturas.forEach((f: any) => {
-          buildFacturaKeys(f).forEach((k) => jsonIndex.set(k, f))
-        })
-
-        const seen = new Set<string>()
-        const allFacturas = localFacturas.map((f: any) => {
-          const keys = buildFacturaKeys(f)
-          keys.forEach((k) => seen.add(k))
-          const candidate = keys.map((k) => jsonIndex.get(k)).find(Boolean) as any
-          if (!candidate) return f
-          return {
-            ...f,
-            validationStatus: normalizeValidationStatusForList(candidate),
-            validationDate: candidate.validationDate,
-            validationMessages: candidate.validationMessages,
-          } as any
-        })
-
-        jsonFacturas.forEach((f: any) => {
-          const keys = buildFacturaKeys(f)
-          const already = keys.some((k) => seen.has(k))
-          if (!already) {
-            keys.forEach((k) => seen.add(k))
-            allFacturas.push(f)
-          }
-        })
-        
-        // Ordenar por data
-        allFacturas.sort((a, b) => {
-          const dateA = new Date(a.submissionTimeStamp || a.createdAt || 0)
-          const dateB = new Date(b.submissionTimeStamp || b.createdAt || 0)
-          return dateB.getTime() - dateA.getTime()
-        })
-        
-        setFacturas(allFacturas)
-        setDataSource('local')
-        console.log(`📁 Carregadas ${allFacturas.length} facturas locais`)
       }
     } catch (error: any) {
       console.error('❌ Erro ao carregar facturas:', error)
-      setError(error.message || 'Erro ao carregar facturas')
-      
-      // Fallback para dados locais em caso de erro
-      const localFacturas = getFacturas()
-      if (localFacturas.length > 0) {
-        setFacturas(localFacturas)
-        setDataSource('local')
-      }
+      const msg = unwrapAgtMessage(error.message || '')
+      setError(msg || error.message || 'Erro ao carregar facturas')
+      // do not automatically render local data, user must click button
     } finally {
       setIsLoading(false)
       setIsRefreshing(false)
@@ -409,6 +516,17 @@ export default function ListaFacturasPage() {
               <RefreshCw className={`mr-2 h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
               {isRefreshing ? 'Carregando...' : `Actualizar ${provider === 'appypay' ? 'AppyPay' : 'AGT'}`}
             </Button>
+            {error && !isRefreshing && dataSource !== 'local' && (
+              <Button
+                variant="outline"
+                onClick={loadLocalFacturas}
+                disabled={isLoading}
+                className="ml-2"
+              >
+                <Database className="mr-2 h-4 w-4" />
+                Dados Locais
+              </Button>
+            )}
             {provider !== 'appypay' && (
               <Button
                 variant="outline"
@@ -452,12 +570,51 @@ export default function ListaFacturasPage() {
             <AlertCircle className="h-4 w-4" />
             <AlertTitle>{error.includes('503') ? 'AGT Temporariamente Indisponível' : 'Erro'}</AlertTitle>
             <AlertDescription>
-              {error}
-              {error.includes('503') && (
+              {formatAgtError(error)}
+              {error?.includes('503') && (
                 <span className="block mt-1 text-xs">
                   O servidor AGT HML pode estar em manutenção. Tente novamente mais tarde.
                 </span>
               )}
+              <button
+                className="text-xs text-blue-600 hover:underline mt-1"
+                onClick={() => setShowRaw((prev) => !prev)}
+              >
+                {showRaw ? 'Ocultar detalhes' : 'Mostrar detalhes'}
+              </button>
+              {showRaw && (
+                <pre className="mt-2 text-xs break-words whitespace-pre-wrap bg-white p-2 rounded">
+                  {error}
+                </pre>
+              )}
+            </AlertDescription>
+          </Alert>
+        )}
+        {/* quando o backup local está corrompido mostramos um aviso e botão para limpar */}
+        {backupCorrupted && (
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Backup local corrompido</AlertTitle>
+            <AlertDescription>
+              O ficheiro de backup em disco não pôde ser analisado. Você pode limpar o backup
+              para forçar a regeneração na próxima consulta.
+              <button
+                className="ml-2 text-xs text-blue-600 hover:underline"
+                onClick={async () => {
+                  try {
+                    await fetch('/api/facturas/list?reset=1')
+                    setBackupCorrupted(false)
+                    setError(null)
+                    toast({ title: 'Backup limpo', description: 'O backup local foi removido.' })
+                    // refetch from AGT para repopular o cache se possível
+                    await loadFacturas(true)
+                  } catch {
+                    // ignore
+                  }
+                }}
+              >
+                Limpar backup local
+              </button>
             </AlertDescription>
           </Alert>
         )}

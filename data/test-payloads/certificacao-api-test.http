@@ -1,0 +1,222 @@
+/**
+ * CERTIFICAÇÃO AGT — 18 TIPOS DE DOCUMENTO — SCHEMA 2.0
+ * =====================================================
+ * Colecção para REST Client (VS Code) ou referência de implementação.
+ *
+ * Documentação: https://portaldoparceiro.hml.minfin.gov.ao/doc-agt/faturacao-electronica/1/servicos/registar.html
+ *
+ * Pré-requisitos:
+ *   1. Substituir {{authToken}} pelo token válido de HML.
+ *   2. Substituir as assinaturas mock (jws*) por JWS RS256 reais (Base64URL).
+ *   3. Confirmar que as séries 2026A / 2026B / 2026C estão autorizadas.
+ *   4. Confirmar o signatureVersion registado para o produtor de software.
+ *
+ * Os ficheiros referenciados estão em data/test-payloads/ e usam schemaVersion 2.0.
+ */
+
+@baseUrl = https://sifphml.minfin.gov.ao/sigt/fe/v1
+@authToken = Bearer YOUR_TOKEN_HERE
+
+# PRODUÇÃO (usar apenas após certificação)
+# @baseUrl = https://sifp.minfin.gov.ao/sigt/fe/v1
+
+###############################################################################
+# 1. AC — Aviso de Cobrança
+###############################################################################
+### Registar Aviso de Cobrança
+POST {{baseUrl}}/registarFactura
+Content-Type: application/json
+Authorization: {{authToken}}
+
+< ./data/test-payloads/CERT_AC_Aviso_Cobranca.json
+
+###############################################################################
+# 2. AF — Factura/Recibo de Autofacturação (documentStatus = S)
+###############################################################################
+### Registar Autofacturação
+POST {{baseUrl}}/registarFactura
+Content-Type: application/json
+Authorization: {{authToken}}
+
+< ./data/test-payloads/CERT_AF_Autofacturacao.json
+
+###############################################################################
+# 3. AR — Aviso de Cobrança/Recibo (sem linhas, com paymentReceipt)
+###############################################################################
+### Registar Aviso de Cobrança/Recibo
+POST {{baseUrl}}/registarFactura
+Content-Type: application/json
+Authorization: {{authToken}}
+
+< ./data/test-payloads/CERT_AR_Aviso_Cobranca_Recibo.json
+
+###############################################################################
+# 4. CS — Imputação a Co-seguradoras
+###############################################################################
+### Registar Imputação a Co-seguradoras
+POST {{baseUrl}}/registarFactura
+Content-Type: application/json
+Authorization: {{authToken}}
+
+< ./data/test-payloads/CERT_CS_Imputacao_Co_Seguradoras.json
+
+###############################################################################
+# 5. FA — Factura de Adiantamento
+###############################################################################
+### Registar Factura de Adiantamento
+POST {{baseUrl}}/registarFactura
+Content-Type: application/json
+Authorization: {{authToken}}
+
+< ./data/test-payloads/CERT_FA_Factura_Adiantamento.json
+
+###############################################################################
+# 6. FG — Factura Global
+###############################################################################
+### Registar Factura Global
+POST {{baseUrl}}/registarFactura
+Content-Type: application/json
+Authorization: {{authToken}}
+
+< ./data/test-payloads/CERT_FG_Factura_Global.json
+
+###############################################################################
+# 7. FR — Factura/Recibo
+###############################################################################
+### Registar Factura/Recibo
+POST {{baseUrl}}/registarFactura
+Content-Type: application/json
+Authorization: {{authToken}}
+
+< ./data/test-payloads/CERT_FR_Factura_Recibo.json
+
+###############################################################################
+# 8. FT — Factura
+###############################################################################
+### Registar Factura
+POST {{baseUrl}}/registarFactura
+Content-Type: application/json
+Authorization: {{authToken}}
+
+< ./data/test-payloads/CERT_FT_Factura.json
+
+###############################################################################
+# 9. GF — Factura Genérica
+###############################################################################
+### Registar Factura Genérica
+POST {{baseUrl}}/registarFactura
+Content-Type: application/json
+Authorization: {{authToken}}
+
+< ./data/test-payloads/CERT_GF_Factura_Generica.json
+
+###############################################################################
+# 10. LD — Imputação a Co-seguradora Líder
+###############################################################################
+### Registar Imputação a Co-seguradora Líder
+POST {{baseUrl}}/registarFactura
+Content-Type: application/json
+Authorization: {{authToken}}
+
+< ./data/test-payloads/CERT_LD_Imputacao_Co_Seguradora_Lider.json
+
+###############################################################################
+# 11. NC — Nota de Crédito
+###############################################################################
+### Registar Nota de Crédito
+POST {{baseUrl}}/registarFactura
+Content-Type: application/json
+Authorization: {{authToken}}
+
+< ./data/test-payloads/CERT_NC_Nota_Credito.json
+
+###############################################################################
+# 12. ND — Nota de Débito
+###############################################################################
+### Registar Nota de Débito
+POST {{baseUrl}}/registarFactura
+Content-Type: application/json
+Authorization: {{authToken}}
+
+< ./data/test-payloads/CERT_ND_Nota_Debito.json
+
+###############################################################################
+# 13. RA — Resseguro Aceite
+###############################################################################
+### Registar Resseguro Aceite
+POST {{baseUrl}}/registarFactura
+Content-Type: application/json
+Authorization: {{authToken}}
+
+< ./data/test-payloads/CERT_RA_Resseguro_Aceite.json
+
+###############################################################################
+# 14. RC — Recibo em Numerário (cash)
+###############################################################################
+### Registar Recibo em Numerário
+POST {{baseUrl}}/registarFactura
+Content-Type: application/json
+Authorization: {{authToken}}
+
+< ./data/test-payloads/CERT_RC_Recibo_Numerario.json
+
+###############################################################################
+# 15. RE — Estorno ou Recibo de Estorno
+###############################################################################
+### Registar Estorno
+POST {{baseUrl}}/registarFactura
+Content-Type: application/json
+Authorization: {{authToken}}
+
+< ./data/test-payloads/CERT_RE_Estorno.json
+
+###############################################################################
+# 16. RG — Outros Recibos
+###############################################################################
+### Registar Outros Recibos
+POST {{baseUrl}}/registarFactura
+Content-Type: application/json
+Authorization: {{authToken}}
+
+< ./data/test-payloads/CERT_RG_Outros_Recibos.json
+
+###############################################################################
+# 17. RP — Prémio ou Recibo de Prémio
+###############################################################################
+### Registar Prémio
+POST {{baseUrl}}/registarFactura
+Content-Type: application/json
+Authorization: {{authToken}}
+
+< ./data/test-payloads/CERT_RP_Premio_Recibo_Premio.json
+
+###############################################################################
+# 18. TV — Talão de Venda
+###############################################################################
+### Registar Talão de Venda
+POST {{baseUrl}}/registarFactura
+Content-Type: application/json
+Authorization: {{authToken}}
+
+< ./data/test-payloads/CERT_TV_Talao_Venda.json
+
+###############################################################################
+# TODOS EM LOTE (array de pedidos — submissão individual por documento)
+###############################################################################
+### Ficheiro consolidado (referência)
+# < ./data/test-payloads/_ALL_PAYLOADS_CERTIFICACAO.json
+
+###############################################################################
+# PÓS-SUBMISSÃO
+###############################################################################
+### Obter estado de validação
+GET {{baseUrl}}/obterEstado?requestID=YOUR_REQUEST_ID_HERE
+Authorization: {{authToken}}
+
+### Consultar documento registado
+GET {{baseUrl}}/consultarFactura?documentNo=FT%202026A%2F000125&taxRegistrationNumber=5000660086
+Authorization: {{authToken}}
+
+### Listar séries autorizadas (verificar séries 2026A/2026B/2026C)
+GET {{baseUrl}}/listarSeries?taxRegistrationNumber=5000660086
+Authorization: {{authToken}}

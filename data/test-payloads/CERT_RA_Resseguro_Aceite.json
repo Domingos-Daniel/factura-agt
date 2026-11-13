@@ -1,0 +1,79 @@
+{
+  "schemaVersion": "2.0",
+  "submissionUUID": "f10a769d-5d2b-45f9-9742-5eeef0a3b133",
+  "taxRegistrationNumber": "5000660086",
+  "submissionTimeStamp": "2026-03-02T09:15:35Z",
+  "softwareInfo": {
+    "softwareInfoDetail": {
+      "productId": "SafeFacturas",
+      "productVersion": "1.0.1",
+      "softwareValidationNumber": "FE/BB/AGT/2026",
+      "signatureVersion": 1
+    },
+    "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+  },
+  "numberOfEntries": 1,
+  "documents": [
+    {
+      "documentNo": "RA 2026A/000019",
+      "documentStatus": "N",
+      "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiUkEgMjAyNkEvMDAwMDE5IiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6IlJBIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJSRVNTRUdVUkFET1JBIEFUTMOCTlRJQ08sIFMuQS4iLCJkb2N1bWVudFRvdGFscyI6eyJ0YXhQYXlhYmxlIjoxNTYwMCwibmV0VG90YWwiOjI0NjAwMDAsImdyb3NzVG90YWwiOjI0NzU2MDB9fQ.nWL5V5GpoSLpncx1DVdFNMOlxRXgjqihtNocG_yOD3ZYiBkam2f8opbwWJqiawB4qbG4zrdYWPlAHOgVjH_MpioSG5M1IOXht4Xv52F2jKu-O-0EvIKjp6bTWQvPOlMEOtpwnxi9kDk5peucEKhd85keD7Iq4bYJ_Ao07rP9bzRrc7QMLoegqMpVEy_s_Kpp6TTyHAAbfTXrZ7KPGSS2kZ6TNALE4d1BydPuUbjQTgCEOaj44Kg8w-MIB81I_BvuLp-wYAwoy-oBHapjWNnpexjVIKNjc8LGusAlU4yKNpxpXu3uvdwV_WEVQco-0P4O9UPfaf6KDHIOzgO615d6-Q",
+      "documentDate": "2026-03-02",
+      "documentType": "RA",
+      "eacCode": "65200",
+      "systemEntryDate": "2026-03-02T09:15:30Z",
+      "customerCountry": "AO",
+      "customerTaxID": "003043657LA038",
+      "companyName": "RESSEGURADORA ATLÂNTICO, S.A.",
+      "lines": [
+        {
+          "lineNumber": 1,
+          "operationType": "SIF",
+          "productCode": "RES-CED-001",
+          "productDescription": "Prémio de resseguro aceite - tratado proporcional 2026",
+          "quantity": 1,
+          "unitOfMeasure": "Tratado",
+          "unitPriceBase": 2400000,
+          "unitPrice": 2400000,
+          "creditAmount": 2400000,
+          "taxes": [
+            {
+              "taxType": "IS",
+              "taxCountryRegion": "AO",
+              "taxCode": "22.1.5",
+              "taxPercentage": 0.3,
+              "taxContribution": 7200
+            }
+          ],
+          "settlementAmount": 0
+        },
+        {
+          "lineNumber": 2,
+          "operationType": "SIF",
+          "productCode": "RES-COM-001",
+          "productDescription": "Comissão de resseguro",
+          "quantity": 1,
+          "unitOfMeasure": "Serviço",
+          "unitPriceBase": 60000,
+          "unitPrice": 60000,
+          "creditAmount": 60000,
+          "taxes": [
+            {
+              "taxType": "IVA",
+              "taxCountryRegion": "AO",
+              "taxCode": "NOR",
+              "taxPercentage": 14,
+              "taxContribution": 8400
+            }
+          ],
+          "settlementAmount": 0
+        }
+      ],
+      "documentTotals": {
+        "taxPayable": 15600,
+        "netTotal": 2460000,
+        "grossTotal": 2475600
+      }
+    }
+  ]
+}

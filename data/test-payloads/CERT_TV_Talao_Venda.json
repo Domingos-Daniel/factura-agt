@@ -1,0 +1,108 @@
+{
+  "schemaVersion": "2.0",
+  "submissionUUID": "4fc544c1-6641-4609-a00a-029a921d41ed",
+  "taxRegistrationNumber": "5000660086",
+  "submissionTimeStamp": "2026-03-02T09:15:35Z",
+  "softwareInfo": {
+    "softwareInfoDetail": {
+      "productId": "SafeFacturas",
+      "productVersion": "1.0.1",
+      "softwareValidationNumber": "FE/BB/AGT/2026",
+      "signatureVersion": 1
+    },
+    "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+  },
+  "numberOfEntries": 1,
+  "documents": [
+    {
+      "documentNo": "TV 2026A/001842",
+      "documentStatus": "N",
+      "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiVFYgMjAyNkEvMDAxODQyIiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6IlRWIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJDT05TVU1JRE9SIEZJTkFMIiwiZG9jdW1lbnRUb3RhbHMiOnsidGF4UGF5YWJsZSI6MTAyNjIuNCwibmV0VG90YWwiOjM5OTAwLCJncm9zc1RvdGFsIjo1MDE2Mi40fX0.KfudrrG4de4oaNcsShcEfuFiyYk_Qk_3GZOyHRW-0-9CEYjVsCEg0zkY8DfxIOpZ09GCrQCUSPwW2blh5K-whEYLF2uZHdGe9LdkC8-ZT5C7UWjzGOgXwmjf7c2qkoLzKtQJr0kuRnrA8caCZ4h6vQ3zEHjMQGoVVB-3cph2U3syIkVyRYAnUGPz8Kn3n7gzHM5bxKWgxjJt3ZUQu5taoNTZAhkvadKfcLIHFCzn-DAN7FjfrhgeNDLpa7jx1W4B-9xkJoxnXCodt2467mnjJdqKHpHQujlIA_48MFRpcFHSaxrGDgURNFdz_JdHDB2-Kj2gGqNze5OuE8TkHGh-gA",
+      "documentDate": "2026-03-02",
+      "documentType": "TV",
+      "eacCode": "47190",
+      "systemEntryDate": "2026-03-02T09:15:30Z",
+      "customerCountry": "AO",
+      "customerTaxID": "003043657LA038",
+      "companyName": "CONSUMIDOR FINAL",
+      "lines": [
+        {
+          "lineNumber": 1,
+          "operationType": "TB",
+          "productCode": "TAL-001",
+          "productDescription": "Arroz agulha 5kg - bem alimentar isento",
+          "quantity": 3,
+          "unitOfMeasure": "Unidade",
+          "unitPriceBase": 4500,
+          "unitPrice": 4500,
+          "creditAmount": 13500,
+          "taxes": [
+            {
+              "taxType": "IVA",
+              "taxCountryRegion": "AO",
+              "taxCode": "ISE",
+              "taxPercentage": 0,
+              "taxContribution": 0,
+              "taxExemptionCode": "M10"
+            }
+          ],
+          "settlementAmount": 0
+        },
+        {
+          "lineNumber": 2,
+          "operationType": "TB",
+          "productCode": "TAL-002",
+          "productDescription": "Bebida não alcoólica 1,5L",
+          "quantity": 6,
+          "unitOfMeasure": "Unidade",
+          "unitPriceBase": 1200,
+          "unitPrice": 1200,
+          "creditAmount": 7200,
+          "taxes": [
+            {
+              "taxType": "IVA",
+              "taxCountryRegion": "AO",
+              "taxCode": "NOR",
+              "taxPercentage": 14,
+              "taxContribution": 1008
+            }
+          ],
+          "settlementAmount": 0
+        },
+        {
+          "lineNumber": 3,
+          "operationType": "TB",
+          "productCode": "TAL-003",
+          "productDescription": "Cerveja nacional - garrafa 0,33L",
+          "quantity": 24,
+          "unitOfMeasure": "Unidade",
+          "unitPriceBase": 800,
+          "unitPrice": 800,
+          "creditAmount": 19200,
+          "taxes": [
+            {
+              "taxType": "IVA",
+              "taxCountryRegion": "AO",
+              "taxCode": "NOR",
+              "taxPercentage": 14,
+              "taxContribution": 3494.4
+            },
+            {
+              "taxType": "IEC",
+              "taxCountryRegion": "AO",
+              "taxCode": "2203",
+              "taxPercentage": 30,
+              "taxContribution": 5760
+            }
+          ],
+          "settlementAmount": 0
+        }
+      ],
+      "documentTotals": {
+        "taxPayable": 10262.4,
+        "netTotal": 39900,
+        "grossTotal": 50162.4
+      }
+    }
+  ]
+}

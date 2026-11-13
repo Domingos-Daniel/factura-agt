@@ -1,0 +1,79 @@
+{
+  "schemaVersion": "2.0",
+  "submissionUUID": "a2f9257d-54c0-47cb-8eaa-71991445c2a2",
+  "taxRegistrationNumber": "5000660086",
+  "submissionTimeStamp": "2026-03-02T09:15:35Z",
+  "softwareInfo": {
+    "softwareInfoDetail": {
+      "productId": "SafeFacturas",
+      "productVersion": "1.0.1",
+      "softwareValidationNumber": "FE/BB/AGT/2026",
+      "signatureVersion": 1
+    },
+    "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+  },
+  "numberOfEntries": 1,
+  "documents": [
+    {
+      "documentNo": "FR 2026B/000042",
+      "documentStatus": "N",
+      "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiRlIgMjAyNkIvMDAwMDQyIiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6IkZSIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJESVNUUklCVUlET1JBIENFTlRSQUwgRE8gSFVBTUJPLCBMREEiLCJkb2N1bWVudFRvdGFscyI6eyJ0YXhQYXlhYmxlIjo0ODcyMCwibmV0VG90YWwiOjM0ODAwMCwiZ3Jvc3NUb3RhbCI6Mzk2NzIwfX0.UKXRsNN8k0sEt7WzCL5k_9Zk1YRNmoIh29q5Fb7HoQdqi4q0rAjbxw5hXpLrPwCxi4PiHy4CCxf9xV0pJym79GPqif3bSpvzJ7u6OFhkKICKKMfCGHFERkyGhllJXSvAPVohJnETmKvJpOJvv1PgJknpFSnJs2sGkzT3atJ4SywK43YCjvKjNogi1LQQzI2bQj87qGNjV7ouIt1PtS9_zbVV7Yvfx6z5x6Bv9yCkAFIWeMg5ZH29B68LqjOxiYFF0U4WTCqeA9UOs_xQsNQWqlH91zCz63RBiTdRoOVq7qXYflFqLnRRU7obg_tA46LNhyazao7YsifThutDJefoSw",
+      "documentDate": "2026-03-02",
+      "documentType": "FR",
+      "eacCode": "47190",
+      "systemEntryDate": "2026-03-02T09:15:30Z",
+      "customerCountry": "AO",
+      "customerTaxID": "003043657LA038",
+      "companyName": "DISTRIBUIDORA CENTRAL DO HUAMBO, LDA",
+      "lines": [
+        {
+          "lineNumber": 1,
+          "operationType": "TB",
+          "productCode": "PROD-MON-001",
+          "productDescription": "Monitor LED 27\" Full HD",
+          "quantity": 4,
+          "unitOfMeasure": "Unidade",
+          "unitPriceBase": 42000,
+          "unitPrice": 42000,
+          "creditAmount": 168000,
+          "taxes": [
+            {
+              "taxType": "IVA",
+              "taxCountryRegion": "AO",
+              "taxCode": "NOR",
+              "taxPercentage": 14,
+              "taxContribution": 23520
+            }
+          ],
+          "settlementAmount": 0
+        },
+        {
+          "lineNumber": 2,
+          "operationType": "TB",
+          "productCode": "PROD-IMP-002",
+          "productDescription": "Impressora multifunções laser monocromática",
+          "quantity": 1,
+          "unitOfMeasure": "Unidade",
+          "unitPriceBase": 180000,
+          "unitPrice": 180000,
+          "creditAmount": 180000,
+          "taxes": [
+            {
+              "taxType": "IVA",
+              "taxCountryRegion": "AO",
+              "taxCode": "NOR",
+              "taxPercentage": 14,
+              "taxContribution": 25200
+            }
+          ],
+          "settlementAmount": 0
+        }
+      ],
+      "documentTotals": {
+        "taxPayable": 48720,
+        "netTotal": 348000,
+        "grossTotal": 396720
+      }
+    }
+  ]
+}

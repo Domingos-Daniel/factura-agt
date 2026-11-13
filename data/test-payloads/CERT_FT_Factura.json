@@ -1,0 +1,91 @@
+{
+  "schemaVersion": "2.0",
+  "submissionUUID": "03c7cfba-94e9-4510-b789-50aa7008762c",
+  "taxRegistrationNumber": "5000660086",
+  "submissionTimeStamp": "2026-03-02T09:15:35Z",
+  "softwareInfo": {
+    "softwareInfoDetail": {
+      "productId": "SafeFacturas",
+      "productVersion": "1.0.1",
+      "softwareValidationNumber": "FE/BB/AGT/2026",
+      "signatureVersion": 1
+    },
+    "jwsSoftwareSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0SWQiOiJTYWZlRmFjdHVyYXMiLCJwcm9kdWN0VmVyc2lvbiI6IjEuMC4xIiwic29mdHdhcmVWYWxpZGF0aW9uTnVtYmVyIjoiRkUvQkIvQUdULzIwMjYiLCJzaWduYXR1cmVWZXJzaW9uIjoxfQ.6nd7YiDcKH2Ba3LJ_BUG95Q_yc6xpx-913LQSTDWAKxI7MI6dXk162_kmElQ8kbwahOJtI4zCL7d8gSXawHUqkclUuoMCZQHMoqAstkbd_Ph1J84W5k2oYVG7VmGCTxSv7J2Av36x0gZaGir1lqm_aIBuDTGHwvq2LrYg1Pbm0Q9_jbDq8zktAt94-nKfRDE_Uwikft1DLj_P-ssp-7zvZ-zkhdnaPLhayUK69aorwGnzBVLk_cstygTVEFfJj03LyGzct7Z0M3MfO3hlFd2liuaRMQKu9B5KYVCS2QdiU_tUKRhAeup1EbVa8Vz5yZPd8L08tzO2UlnS5YU3HJg9Q"
+  },
+  "numberOfEntries": 1,
+  "documents": [
+    {
+      "documentNo": "FT 2026A/000125",
+      "documentStatus": "N",
+      "jwsDocumentSignature": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb2N1bWVudE5vIjoiRlQgMjAyNkEvMDAwMTI1IiwidGF4UmVnaXN0cmF0aW9uTnVtYmVyIjoiNTAwMDY2MDA4NiIsImRvY3VtZW50VHlwZSI6IkZUIiwiZG9jdW1lbnREYXRlIjoiMjAyNi0wMy0wMiIsImN1c3RvbWVyVGF4SUQiOiIwMDMwNDM2NTdMQTAzOCIsImN1c3RvbWVyQ291bnRyeSI6IkFPIiwiY29tcGFueU5hbWUiOiJDTElFTlRFIENPUlBPUkFUSVZPIExVQU5EQSwgUy5BLiIsImRvY3VtZW50VG90YWxzIjp7InRheFBheWFibGUiOjE4OTAwMCwibmV0VG90YWwiOjEzNTAwMDAsImdyb3NzVG90YWwiOjE1MzkwMDAsImN1cnJlbmN5Ijp7ImN1cnJlbmN5Q29kZSI6IkVVUiIsImN1cnJlbmN5QW1vdW50IjoxNzEwLCJleGNoYW5nZVJhdGUiOjkwMH19fQ.GoGRSWDY_cNdDQbHWkkt_jJGe92MnWZfVhZ_wQSMLLG5uxrx1V9UdH61cN1_F4IVr7mTYy3mMZszOkjIh7E4jGJiLyTkJgClrtHf0kj9M0OEMeCYluiWcUxI2Ahjvz10qWjKojGvLqGo9FxIsOiSt6GtgLjdI8SrG9c5ECgyUVjdvClHbAlYXJUGtTU2qjNfMUy9KreR-D0Jj6yyPygY6cmd8k6LeBgWx2TWtpsnJkRONnTR79UMMazfPYT4fqMghHZP9lIlj_pFY2tx2dNmY9zBJuoyATMugo2Mlya9dF7Fs7KARpxCtJbdpXQS3K-2wDeVCN1M75pFoKNC_jfixw",
+      "documentDate": "2026-03-02",
+      "documentType": "FT",
+      "eacCode": "70220",
+      "systemEntryDate": "2026-03-02T09:15:30Z",
+      "customerCountry": "AO",
+      "customerTaxID": "003043657LA038",
+      "companyName": "CLIENTE CORPORATIVO LUANDA, S.A.",
+      "lines": [
+        {
+          "lineNumber": 1,
+          "operationType": "SG",
+          "productCode": "SERV-AUD-001",
+          "productDescription": "Auditoria financeira e revisão de contas - exercício 2025",
+          "quantity": 40,
+          "unitOfMeasure": "Hora",
+          "unitPriceBase": 25000,
+          "unitPrice": 25000,
+          "creditAmount": 1000000,
+          "taxes": [
+            {
+              "taxType": "IVA",
+              "taxCountryRegion": "AO",
+              "taxCode": "NOR",
+              "taxPercentage": 14,
+              "taxContribution": 140000
+            }
+          ],
+          "settlementAmount": 0
+        },
+        {
+          "lineNumber": 2,
+          "operationType": "SG",
+          "productCode": "SERV-REL-001",
+          "productDescription": "Relatório executivo de auditoria e recomendações",
+          "quantity": 1,
+          "unitOfMeasure": "Unidade",
+          "unitPriceBase": 350000,
+          "unitPrice": 350000,
+          "creditAmount": 350000,
+          "taxes": [
+            {
+              "taxType": "IVA",
+              "taxCountryRegion": "AO",
+              "taxCode": "NOR",
+              "taxPercentage": 14,
+              "taxContribution": 49000
+            }
+          ],
+          "settlementAmount": 0
+        }
+      ],
+      "documentTotals": {
+        "taxPayable": 189000,
+        "netTotal": 1350000,
+        "grossTotal": 1539000,
+        "currency": {
+          "currencyCode": "EUR",
+          "currencyAmount": 1710,
+          "exchangeRate": 900
+        }
+      },
+      "withholdingTaxList": [
+        {
+          "withholdingTaxType": "IVA",
+          "withholdingTaxDescription": "Retenção de IVA na fonte - 6,5% do imposto (art. 26.º do CIVA)",
+          "withholdingTaxAmount": 12285
+        }
+      ]
+    }
+  ]
+}
